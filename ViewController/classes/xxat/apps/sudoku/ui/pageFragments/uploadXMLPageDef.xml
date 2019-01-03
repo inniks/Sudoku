@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="uploadXMLPageDef"
+                Package="xxat.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="FileUpdDwnEOView1" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="FileUpdDwnEOView1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="FileUpdDwnEOView1Iterator" id="FileUpdDwnEOView1">
+      <nodeDefinition DefName="xxat.apps.sudoku.model.vo.FileUpdDwnEOView"
+                      Name="FileUpdDwnEOView10">
+        <AttrNames>
+          <Item Value="FileName"/>
+          <Item Value="Path"/>
+          <Item Value="ContentType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

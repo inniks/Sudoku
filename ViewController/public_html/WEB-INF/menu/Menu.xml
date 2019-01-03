@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<menu xmlns="http://myfaces.apache.org/trinidad/menu">
+  <itemNode id="itemNode_SudokuHome" label="Sudoku Home"
+            action="SudokuHome" focusViewId="/SudokuHome"/>
+  <itemNode focusViewId="/Quoting" label="Quote Header" action="Quoting" id="itemNode_Quoting"/>
+</menu>

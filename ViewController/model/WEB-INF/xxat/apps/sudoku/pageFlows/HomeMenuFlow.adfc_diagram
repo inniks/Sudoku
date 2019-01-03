@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <WildcardControlFlowRule
+      id="WildcardControlFlowRule5">
+      <property
+         name="activityId">*</property>
+      <property
+         name="y">117.29883</property>
+      <property
+         name="x">383.0</property>
+   </WildcardControlFlowRule>
+   <View
+      id="View6">
+      <property
+         name="activityId">SudokuHome</property>
+      <property
+         name="page">/xxat/apps/sudoku/ui/pages/SudokuHome.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>SudokuHome&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">149.79883</property>
+      <property
+         name="x">199.35449</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase7"
+      from="WildcardControlFlowRule5"
+      to="View6">
+      <property
+         name="fromOutcome">SudokuHome</property>
+      <property
+         name="sdm:polyPoints">L50,347.0,117.44824,240.35449,149.44824,R50</property>
+   </ControlFlowCase>
+   <View
+      id="View5">
+      <property
+         name="activityId">Quoting</property>
+      <property
+         name="page">/xxat/apps/sudoku/ui/pages/Quoting.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>Quoting&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">162.79883</property>
+      <property
+         name="x">588.5</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase6"
+      from="WildcardControlFlowRule5"
+      to="View5">
+      <property
+         name="fromOutcome">Quoting</property>
+      <property
+         name="sdm:polyPoints">R50,419.0,117.44824,547.5,162.44824,L50</property>
+   </ControlFlowCase>
+</SDM>
