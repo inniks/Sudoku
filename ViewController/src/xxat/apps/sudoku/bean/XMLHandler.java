@@ -85,7 +85,7 @@ public class XMLHandler {
     }
 
     public void validateXML(ActionEvent actionEvent) {
-        
+        //Added comments
         File folder = new File("D://FileStore/Uploads");
         File[] listOfFiles = folder.listFiles();
         for(File f : listOfFiles){
