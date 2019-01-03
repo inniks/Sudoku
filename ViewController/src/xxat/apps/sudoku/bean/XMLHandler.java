@@ -24,7 +24,7 @@ public class XMLHandler {
     }
 
     public void fileUploadVCE(ValueChangeEvent vce) {
-        System.out.println("Inside VCE");
+        System.out.println("Inside Value Listener");
         if (vce.getNewValue() != null) {
             //Get File Object from VC Event
             UploadedFile fileVal = (UploadedFile)vce.getNewValue();
