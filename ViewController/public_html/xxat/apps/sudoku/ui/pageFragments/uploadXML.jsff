@@ -10,7 +10,7 @@
     <af:panelGroupLayout id="pgl1" layout="horizontal">
       <af:inputFile label="Upload File" id="if1"
                     valueChangeListener="#{pageFlowScope.XMLHandlerBean.fileUploadVCE}"
-                    autoSubmit="true"/>
+                    autoSubmit="true" uploadType="auto"/>
       <af:spacer width="10" height="20" id="s2"/>
       <af:commandButton text="Validate XML" id="cb1"
                         actionListener="#{pageFlowScope.XMLHandlerBean.validateXML}"/>
