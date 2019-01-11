@@ -17,7 +17,10 @@ import oracle.binding.OperationBinding;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxat.apps.sudoku.util.ADFUtils;
+import xxat.apps.sudoku.util.JaxbParser;
 import xxat.apps.sudoku.util.XMLUtils;
+import xxat.apps.sudoku.viewmodel.pojo.V93kQuote;
+import xxat.apps.sudoku.viewmodel.pojo.XMLParentElement;
 
 public class XMLHandler {
     public XMLHandler() {
@@ -93,11 +96,16 @@ public class XMLHandler {
                 boolean validated;
                 try {
                     validated =
-                            XMLUtils.validateXMLSchema("D://FileStore//V93000 C&Q 3.0 - XML File Schema.xsd",f );
+                            XMLUtils.validateXMLSchema("D://Projects//Advantest//ImportConfigPage//V93000 C&Q 3.0 - XML File Example",f );
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public void parseXMLToPojo(ActionEvent actionEvent) {
+        V93kQuote parent = JaxbParser.jaxbXMLToObject();
+        //System.out.println("Quote details "+parent.getConfigObject().getPmfObject().getMap().get(0));
     }
 }

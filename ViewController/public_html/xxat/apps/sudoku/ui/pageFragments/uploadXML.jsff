@@ -14,6 +14,8 @@
       <af:spacer width="10" height="20" id="s2"/>
       <af:commandButton text="Validate XML" id="cb1"
                         actionListener="#{pageFlowScope.XMLHandlerBean.validateXML}"/>
+      <af:commandButton text="Parse XML" id="cb2"
+                        actionListener="#{pageFlowScope.XMLHandlerBean.parseXMLToPojo}"/>
     </af:panelGroupLayout>
     <af:spacer width="10" height="40" id="s1"/>
     <af:panelCollection id="pc1" styleClass="AFStretchWidth">
