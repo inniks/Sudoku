@@ -44,7 +44,7 @@ public class QHeader {
     public void setDealObject(Deal DealObject) {
         this.DealObject = DealObject;
     }
-
+@XmlElement(name = "deal")
     public Deal getDealObject() {
         return DealObject;
     }
@@ -52,7 +52,7 @@ public class QHeader {
     public void setSalesteamObject(Salesteam SalesteamObject) {
         this.SalesteamObject = SalesteamObject;
     }
-
+@XmlElement(name = "salesteam")
     public Salesteam getSalesteamObject() {
         return SalesteamObject;
     }

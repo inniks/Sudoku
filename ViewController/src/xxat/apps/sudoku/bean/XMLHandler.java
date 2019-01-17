@@ -1,11 +1,18 @@
 package xxat.apps.sudoku.bean;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.HashMap;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -17,6 +24,7 @@ import oracle.binding.OperationBinding;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxat.apps.sudoku.util.ADFUtils;
+import xxat.apps.sudoku.util.JSONUtils;
 import xxat.apps.sudoku.util.JaxbParser;
 import xxat.apps.sudoku.util.XMLUtils;
 import xxat.apps.sudoku.viewmodel.pojo.V93kQuote;
@@ -106,6 +114,10 @@ public class XMLHandler {
 
     public void parseXMLToPojo(ActionEvent actionEvent) {
         V93kQuote parent = JaxbParser.jaxbXMLToObject();
-        //System.out.println("Quote details "+parent.getConfigObject().getPmfObject().getMap().get(0));
+        String jsonStr = JSONUtils.convertObjToJson(parent);
+        System.out.println(jsonStr);
+        Object obj = JSONUtils.convertJsonToObject(jsonStr);
+        
     }
+    
 }
