@@ -1,18 +1,23 @@
 package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="dutif-util")
 public class DutifUtil {
-    ArrayList < Object > item = new ArrayList < Object > ();
+    List < ConfiguratorNodePOJO > dutifUtilItems = new ArrayList < ConfiguratorNodePOJO > ();
     public DutifUtil() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
+    public void setDutifUtilItems(List<ConfiguratorNodePOJO> dutifUtilItems) {
+        this.dutifUtilItems = dutifUtilItems;
     }
-
-    public ArrayList<Object> getItem() {
-        return item;
+    @XmlElement(name="item")
+    public List<ConfiguratorNodePOJO> getDutifUtilItems() {
+        return dutifUtilItems;
     }
 }

@@ -1,18 +1,24 @@
 package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="thead")
 public class Thead {
-    ArrayList < Object > item = new ArrayList < Object > ();
+
+    List < ConfiguratorNodePOJO > theadItems = new ArrayList < ConfiguratorNodePOJO > ();
     public Thead() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
+    public void setTheadItems(List<ConfiguratorNodePOJO> theadItems) {
+        this.theadItems = theadItems;
     }
-
-    public ArrayList<Object> getItem() {
-        return item;
+    @XmlElement(name = "item")
+    public List<ConfiguratorNodePOJO> getTheadItems() {
+        return theadItems;
     }
 }

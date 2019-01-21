@@ -2,20 +2,23 @@ package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "dps")
 public class Dps {
-    ArrayList < Object > item = new ArrayList < Object > ();
+    List < ConfiguratorNodePOJO > dpsItems = new ArrayList < ConfiguratorNodePOJO > ();
     public Dps() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
+    public void setDpsItems(List<ConfiguratorNodePOJO> dpsItems) {
+        this.dpsItems = dpsItems;
     }
-
-    public ArrayList<Object> getItem() {
-        return item;
+    @XmlElement(name="item")
+    public List<ConfiguratorNodePOJO> getDpsItems() {
+        return dpsItems;
     }
 }

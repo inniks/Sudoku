@@ -2,20 +2,24 @@ package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="sw-licenses")
 public class SwLicenses {
-    ArrayList < Object > item = new ArrayList < Object > ();
+    List < ConfiguratorNodePOJO > swlicenseItems = new ArrayList < ConfiguratorNodePOJO > ();
     public SwLicenses() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
-    }
 
-    public ArrayList<Object> getItem() {
-        return item;
+    public void setSwlicenseItems(List<ConfiguratorNodePOJO> swlicenseItems) {
+        this.swlicenseItems = swlicenseItems;
+    }
+    @XmlElement(name="item")
+    public List<ConfiguratorNodePOJO> getSwlicenseItems() {
+        return swlicenseItems;
     }
 }

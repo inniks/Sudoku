@@ -2,20 +2,24 @@ package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="cooling")
 public class Cooling {
-    ArrayList < Object > item = new ArrayList < Object > ();
+    List < ConfiguratorNodePOJO > coolingItems = new ArrayList < ConfiguratorNodePOJO > ();
     public Cooling() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
-    }
 
-    public ArrayList<Object> getItem() {
-        return item;
+    public void setCoolingItems(List<ConfiguratorNodePOJO> coolingItems) {
+        this.coolingItems = coolingItems;
+    }
+    @XmlElement(name = "item")
+    public List<ConfiguratorNodePOJO> getCoolingItems() {
+        return coolingItems;
     }
 }

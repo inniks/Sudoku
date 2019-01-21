@@ -2,20 +2,24 @@ package xxat.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="digital")
 public class Digital {
-    ArrayList < Object > item = new ArrayList < Object > ();
+    List < ConfiguratorNodePOJO > digitalItems = new ArrayList < ConfiguratorNodePOJO > ();
     public Digital() {
         super();
     }
 
-    public void setItem(ArrayList<Object> item) {
-        this.item = item;
-    }
 
-    public ArrayList<Object> getItem() {
-        return item;
+    public void setDigitalItems(List<ConfiguratorNodePOJO> digitalItems) {
+        this.digitalItems = digitalItems;
+    }
+    @XmlElement(name="item")
+    public List<ConfiguratorNodePOJO> getDigitalItems() {
+        return digitalItems;
     }
 }
