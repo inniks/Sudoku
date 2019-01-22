@@ -45,7 +45,8 @@ public class ModelBom {
     public void setClassObject(XClass ClassObject) {
         this.ClassObject = ClassObject;
     }
-@XmlElement(name = "class")
+
+    @XmlElement(name = "class")
     public XClass getClassObject() {
         return ClassObject;
     }

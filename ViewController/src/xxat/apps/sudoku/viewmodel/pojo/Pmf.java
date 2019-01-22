@@ -18,7 +18,9 @@ public class Pmf {
     
     List < PogoMappingFile > pmfMap ;
     public Pmf() {
+       
         super();
+        System.out.println("PMF Constructor Called "+pmfMap);
     }
 
 

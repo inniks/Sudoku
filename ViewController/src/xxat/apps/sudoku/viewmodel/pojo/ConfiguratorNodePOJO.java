@@ -1,7 +1,15 @@
 package xxat.apps.sudoku.viewmodel.pojo;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
+
+import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 @XmlRootElement(name = "item")
 public class ConfiguratorNodePOJO {
@@ -20,7 +28,6 @@ public class ConfiguratorNodePOJO {
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName;
     }
-    @XmlAttribute(name = "")
     public String getNodeName() {
         return nodeName;
     }
@@ -44,7 +51,6 @@ public class ConfiguratorNodePOJO {
     public void setNodeQty(String nodeQty) {
         this.nodeQty = nodeQty;
     }
-    @XmlAttribute(name="qty")
     public String getNodeQty() {
         return nodeQty;
     }

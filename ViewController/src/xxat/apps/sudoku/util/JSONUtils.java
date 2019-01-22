@@ -2,6 +2,7 @@ package xxat.apps.sudoku.util;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,6 +47,15 @@ public class JSONUtils {
         }
         
         return jsonInString;
+    }
+    
+    public static void prettyPrintJson(Object obj){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
     
 }

@@ -14,6 +14,7 @@ import java.io.InputStream;
 
 import java.util.HashMap;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
@@ -97,26 +98,29 @@ public class XMLHandler {
 
     public void validateXML(ActionEvent actionEvent) {
         //Added comments
-        File folder = new File("D://FileStore/Uploads");
-        File[] listOfFiles = folder.listFiles();
-        for(File f : listOfFiles){
-            if(f.isFile()){
-                boolean validated;
+        String validated;
+        File f = new File("D://Projects//Advantest//Xml_samples/V93000 C&Q 3.0 - XML File Example.xml");
                 try {
                     validated =
-                            XMLUtils.validateXMLSchema("D://Projects//Advantest//ImportConfigPage//V93000 C&Q 3.0 - XML File Example",f );
+                            XMLUtils.validateXMLSchema("D://Projects//Advantest//Xml_samples//V93000 C&Q 3.0 - XML File Schema.xsd",f );
+                    if(validated!=null && validated.equalsIgnoreCase("Y")){
+                        parseXMLToPojo(null);
+                    }
+                    else{
+                        ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, validated);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
     }
 
     public void parseXMLToPojo(ActionEvent actionEvent) {
         V93kQuote parent = JaxbParser.jaxbXMLToObject();
         String jsonStr = JSONUtils.convertObjToJson(parent);
-        System.out.println(jsonStr);
         Object obj = JSONUtils.convertJsonToObject(jsonStr);
+        XMLImportPageBean impBean = new XMLImportPageBean();
+        impBean.setAllPmf(parent.getConfigObject().getPmfObject().getPmfMap());
+        //JSONUtils.prettyPrintJson(obj);
         
     }
     

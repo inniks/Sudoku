@@ -18,7 +18,7 @@ public class XMLUtils {
     }
 
 
-    public static boolean validateXMLSchema(String xsdPath, File xmlFile) {
+    public static String validateXMLSchema(String xsdPath, File xmlFile) {
         try {
             SchemaFactory factory =
                 SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -27,9 +27,9 @@ public class XMLUtils {
             validator.validate(new StreamSource(xmlFile));
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
-            return false;
+            return e.getMessage();
         }
-        return true;
+        return "Y";
     }
 
 

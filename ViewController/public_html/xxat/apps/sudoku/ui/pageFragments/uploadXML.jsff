@@ -18,32 +18,27 @@
                         actionListener="#{pageFlowScope.XMLHandlerBean.parseXMLToPojo}"/>
     </af:panelGroupLayout>
     <af:spacer width="10" height="40" id="s1"/>
-    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        partialTriggers="::cb2 ::cb1">
       <f:facet name="menus"/>
       <f:facet name="toolbar"/>
       <f:facet name="statusbar"/>
-      <af:table value="#{bindings.FileUpdDwnEOView1.collectionModel}" var="row"
-                rows="#{bindings.FileUpdDwnEOView1.rangeSize}"
-                emptyText="#{bindings.FileUpdDwnEOView1.viewable ? 'No data to display.' : 'Access Denied.'}"
-                fetchSize="#{bindings.FileUpdDwnEOView1.rangeSize}"
-                rowBandingInterval="0" id="t1" styleClass="AFStretchWidth">
-        <af:column sortProperty="#{bindings.FileUpdDwnEOView1.hints.FileName.name}"
-                   sortable="false"
-                   headerText="#{bindings.FileUpdDwnEOView1.hints.FileName.label}"
-                   id="c3" width="200">
-          <af:outputText value="#{row.FileName}" id="ot3"/>
+      <af:table var="row" rowBandingInterval="0" id="t1"
+                value="#{pageFlowScope.XMLImportPageBean.allPmf}"
+                styleClass="AFStretchWidth"
+                binding="#{pageFlowScope.XMLImportPageBean.pmfTable}"
+                partialTriggers=":::cb2">
+        <af:column sortable="false" headerText="Reference Id" id="c5">
+          <af:outputText value="#{row.refId}" id="ot2"/>
         </af:column>
-        <af:column sortProperty="#{bindings.FileUpdDwnEOView1.hints.Path.name}"
-                   sortable="false"
-                   headerText="#{bindings.FileUpdDwnEOView1.hints.Path.label}"
-                   id="c1" width="200">
-          <af:outputText value="#{row.Path}" id="ot1"/>
+        <af:column sortable="false" id="c4" headerText="Product Name">
+          <af:outputText value="#{row.productName}" id="ot5"/>
         </af:column>
-        <af:column sortProperty="#{bindings.FileUpdDwnEOView1.hints.ContentType.name}"
-                   sortable="false"
-                   headerText="#{bindings.FileUpdDwnEOView1.hints.ContentType.label}"
-                   id="c2" width="200">
-          <af:outputText value="#{row.ContentType}" id="ot2"/>
+        <af:column sortable="false" headerText="Pogo Name" id="c1">
+          <af:outputText value="#{row.pogoName}" id="ot3"/>
+        </af:column>
+        <af:column sortable="false" headerText="Pogo Mapping" id="c3">
+          <af:outputText value="#{row.pogoMapping}" id="ot4"/>
         </af:column>
       </af:table>
     </af:panelCollection>
