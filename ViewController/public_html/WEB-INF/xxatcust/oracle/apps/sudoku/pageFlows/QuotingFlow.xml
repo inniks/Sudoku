@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="QuotingFlow">
+    <default-activity id="__1">quoting</default-activity>
+    <view id="quoting">
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/quoting.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -16,7 +16,7 @@
       <property
          name="activityId">SudokuHome</property>
       <property
-         name="page">/xxat/apps/sudoku/ui/pages/SudokuHome.jspx</property>
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pages/SudokuHome.jspx</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>SudokuHome&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
@@ -41,7 +41,7 @@
       <property
          name="activityId">Quoting</property>
       <property
-         name="page">/xxat/apps/sudoku/ui/pages/Quoting.jspx</property>
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>Quoting&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="SudokuHome">
+    <page>/xxatcust/oracle/apps/sudoku/ui/pages/SudokuHome.jspx</page>
+  </view>
+  <view id="Quoting">
+    <page>/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx</page>
+  </view>
+  <control-flow-rule id="__7">
+    <from-activity-id id="__6">*</from-activity-id>
+    <control-flow-case id="__8">
+      <from-outcome id="__10">SudokuHome</from-outcome>
+      <to-activity-id id="__9">SudokuHome</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__1">
+      <from-outcome id="__3">Quoting</from-outcome>
+      <to-activity-id id="__2">Quoting</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__11">
+    <description id="__13">Menu Model Managed Bean</description>
+    <managed-bean-name id="__12">HomeMenu</managed-bean-name>
+    <managed-bean-class>oracle.adf.view.rich.model.MDSMenuModel</managed-bean-class>
+    <managed-bean-scope id="__14">request</managed-bean-scope>
+    <managed-property id="__16">
+      <property-name id="__17">createHiddenNodes</property-name>
+      <value id="__15">false</value>
+    </managed-property>
+    <managed-property id="__20">
+      <property-name id="__19">source</property-name>
+      <property-class id="__18">java.lang.String</property-class>
+      <value id="__21">/WEB-INF/menu/Menu.xml</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name id="__22">TemplateBean</managed-bean-name>
+    <managed-bean-class id="__5">xxatcust.oracle.apps.sudoku.bean.bean.TemplateBean</managed-bean-class>
+    <managed-bean-scope id="__23">pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

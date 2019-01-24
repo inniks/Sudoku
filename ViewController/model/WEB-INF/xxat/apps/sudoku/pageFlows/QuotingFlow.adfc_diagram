@@ -7,7 +7,7 @@
       <property
          name="activityId">quoting</property>
       <property
-         name="page">/xxat/apps/sudoku/ui/pageFragments/quoting.jsff</property>
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/quoting.jsff</property>
       <property
          name="start">true</property>
       <property
@@ -17,8 +17,8 @@
       <property
          name="y">126.29883</property>
       <property
-         name="x">354.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">354.0</property>
    </View>
 </SDM>

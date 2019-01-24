@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="QuotingPageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.ui.pages">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <taskFlow id="QuotingFlow1"
+              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+  </executables>
+  <bindings/>
+</pageDefinition>

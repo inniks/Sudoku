@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
+      <AppModuleConfig name="SudokuAMLocal" DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
+         <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/defaultHrDS"/>
+      </AppModuleConfig>
+      <AppModuleConfig name="SudokuAMShared" DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
+         <AM-Pooling jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1"/>
+         <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
+         <Custom JDBCDataSource="java:comp/env/jdbc/defaultHrDS"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

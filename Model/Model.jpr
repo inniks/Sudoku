@@ -54,8 +54,8 @@
       <string v="oracle.adfdtinternal.model.ide.settings.ADFMSettings/adfmContentSet"/>
       <string v="oracle.toplink.workbench.addin/toplinkContentSet"/>
    </list>
-   <value n="defaultPackage" v="xxat.apps.sudoku.model"/>
-   <value n="jbo.JpxName" v="xxat.apps.sudoku.model.Model"/>
+   <value n="defaultPackage" v="xxatcust.oracle.apps.sudoku.model"/>
+   <value n="jbo.JpxName" v="xxatcust.oracle.apps.sudoku.model.Model"/>
    <value n="JboProject" v="true"/>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">

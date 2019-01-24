@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.64.93" id="DataBindings" SeparateXMLFiles="false"
+             Package="xxatcust.oracle.apps.sudoku.view.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/uploadXML.jsff"
+          usageId="xxat_apps_sudoku_view_uploadXMLPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuHome.jspx"
+          usageId="xxat_apps_sudoku_view_SudokuHomePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx"
+          usageId="xxat_apps_sudoku_view_QuotingPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.ui.pageFragments.uploadXMLPageDef"/>
+    <page id="xxat_apps_sudoku_view_SudokuHomePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.ui.pages.SudokuHomePageDef"/>
+    <page id="xxat_apps_sudoku_view_QuotingPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.ui.pages.QuotingPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="SudokuAMDataControl"
+                     Package="xxatcust.oracle.apps.sudoku.model.module"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl"
+                     SupportsTransactions="true" SupportsFindMode="true"
+                     SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true" Configuration="SudokuAMLocal"
+                     syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>
