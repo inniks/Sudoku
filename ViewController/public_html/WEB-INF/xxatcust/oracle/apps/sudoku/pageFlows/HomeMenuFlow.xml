@@ -34,7 +34,7 @@
   </managed-bean>
   <managed-bean id="__4">
     <managed-bean-name id="__22">TemplateBean</managed-bean-name>
-    <managed-bean-class id="__5">xxatcust.oracle.apps.sudoku.bean.bean.TemplateBean</managed-bean-class>
+    <managed-bean-class id="__5">xxatcust.oracle.apps.sudoku.bean.TemplateBean</managed-bean-class>
     <managed-bean-scope id="__23">pageFlow</managed-bean-scope>
   </managed-bean>
 </adfc-config>
