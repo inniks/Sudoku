@@ -12,10 +12,13 @@ import javax.xml.bind.annotation.XmlValue;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 
 @XmlRootElement(name = "item")
+@XmlAccessorType(XmlAccessType.NONE)
 public class ConfiguratorNodePOJO {
+    @XmlValue
     String nodeName;
     String nodeDescription;
     String nodeValue;
+    @XmlAttribute(name = "qty")
     String nodeQty;
     String unitPrice;
     String extendedPrice;
@@ -51,7 +54,6 @@ public class ConfiguratorNodePOJO {
     public void setNodeQty(String nodeQty) {
         this.nodeQty = nodeQty;
     }
-    @XmlAttribute(name = "qty")
     public String getNodeQty() {
         return nodeQty;
     }

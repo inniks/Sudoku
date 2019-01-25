@@ -1,6 +1,7 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -117,6 +118,17 @@ public class XMLHandler {
         V93kQuote parent = JaxbParser.jaxbXMLToObject();
         String jsonStr = JSONUtils.convertObjToJson(parent);
         Object obj = JSONUtils.convertJsonToObject(jsonStr);
+        //Reading JSOn from File to POJO
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            obj =    mapper.readValue(new File("D://FileStore//sample.json"), V93kQuote.class);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         XMLImportPageBean impBean = new XMLImportPageBean();
         impBean.setAllPmf(parent.getConfigObject().getPmfObject().getPmfMap());
         //JSONUtils.prettyPrintJson(obj);
