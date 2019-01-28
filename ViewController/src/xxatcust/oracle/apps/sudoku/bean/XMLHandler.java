@@ -48,7 +48,7 @@ public class XMLHandler {
             ResetUtils.reset(vce.getComponent());
         }
     }
-    
+
     /**Method to upload file to actual path on Server*/
     private String uploadFile(UploadedFile file) {
         UploadedFile myfile = file;
@@ -83,7 +83,7 @@ public class XMLHandler {
         //Returns the path where file is stored
         return path;
     }
-    
+
     public OperationBinding executeOperation(String operation) {
         OperationBinding createParam = ADFUtils.findOperation(operation);
         return createParam;
@@ -93,37 +93,41 @@ public class XMLHandler {
     public void validateXML(ActionEvent actionEvent) {
         //Added comments
         String validated;
-        File f = new File("D://Projects//Advantest//Xml_samples/V93000 C&Q 3.0 - XML File Example.xml");
-                try {
-                    validated = XMLUtils.validateXMLSchema("D://Projects//Advantest//Xml_samples//V93000 C&Q 3.0 - XML File Schema.xsd",f );
-                    if(validated!=null && validated.equalsIgnoreCase("Y")){
-                        parseXMLToPojo(null);
-                    }
-                    else{
+        File f =
+            new File("D://Projects//Advantest//Xml_samples/V93000 C&Q 3.0 - XML File Example.xml");
+        try {
+            validated =
+                    XMLUtils.validateXMLSchema("D://Projects//Advantest//Xml_samples//V93000 C&Q 3.0 - XML File Schema.xsd",
+                                               f);
+            if (validated != null && validated.equalsIgnoreCase("Y")) {
+                parseXMLToPojo(null);
+            } else {
                 ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, validated);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void parseXMLToPojo(ActionEvent actionEvent) {
         V93kQuote parent = JaxbParser.jaxbXMLToObject();
-        ADFUtils.setPageFlowScopeValue("parentObject", parent) ;
         String jsonStr = JSONUtils.convertObjToJson(parent);
-        //Object obj = JSONUtils.convertJsonToObject(jsonStr);
+        Object obj = JSONUtils.convertJsonToObject(jsonStr);
         //Reading JSOn from File to POJO
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            obj =    mapper.readValue(new File("D://FileStore//sample.json"), V93kQuote.class);
-//        } catch (JsonParseException e) {
-//            e.printStackTrace();
-//        } catch (JsonMappingException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            obj =
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse//response.json"),
+                 V93kQuote.class);
+            ADFUtils.setPageFlowScopeValue("parentObject", obj);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
-    
+
 }

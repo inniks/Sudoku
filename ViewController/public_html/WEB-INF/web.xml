@@ -16,6 +16,10 @@
     <param-name>oracle.adf.view.rich.versionString.HIDDEN</param-name>
     <param-value>true</param-value>
   </context-param>
+  <context-param>
+    <param-name>APPL_SERVER_ID</param-name>
+    <param-value>true</param-value>
+  </context-param>
   <filter>
     <filter-name>JpsFilter</filter-name>
     <filter-class>oracle.security.jps.ee.http.JpsFilter</filter-class>

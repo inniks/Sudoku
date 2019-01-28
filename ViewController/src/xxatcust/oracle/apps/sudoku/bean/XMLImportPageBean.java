@@ -71,7 +71,7 @@ public class XMLImportPageBean {
                 null, msNodes = null, dpsNodes = null, dockingNodes =
                 null, miscNodes = null, coolingNodes = null, dufifUtilNodes =
                 null, maniNodes = null, theadNodes = null, wkstaNodes = null;
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
+            if (v93Obj.getConfigObject().getModelbomObject().getInfraUpgradeObject() !=
                 null) {
                 infraUpgradeNodes =
                         v93Obj.getConfigObject().getModelbomObject().getInfraUpgradeObject().getInfraUpgradeItems();

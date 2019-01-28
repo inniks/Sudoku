@@ -18,6 +18,28 @@
       <f:facet name="menus"/>
       <f:facet name="toolbar"/>
       <f:facet name="statusbar"/>
+      <af:table var="row" rowBandingInterval="0" id="t1"
+                value="#{pageFlowScope.XMLImportPageBean.allNodes}"
+                styleClass="AFStretchWidth" autoHeightRows="50">
+        <af:column sortable="false" headerText="col1" id="c3" width="200">
+          <af:outputText value="#{row.nodeName}" id="ot6"/>
+        </af:column>
+        <af:column sortable="false" headerText="col2" id="c2" width="300">
+          <af:outputText value="#{row.nodeDescription}" id="ot3"/>
+        </af:column>
+        <af:column sortable="false" headerText="col3" id="c1">
+          <af:outputText value="#{row.nodeQty}" id="ot4"/>
+        </af:column>
+        <af:column sortable="false" headerText="col4" id="c6">
+          <af:outputText value="#{row.nodeValue}" id="ot1"/>
+        </af:column>
+        <af:column sortable="false" headerText="col5" id="c4">
+          <af:outputText value="#{row.nodeCategory}" id="ot5"/>
+        </af:column>
+        <af:column sortable="false" headerText="col6" id="c5">
+          <af:outputText value="#{row.extendedPrice}" id="ot2"/>
+        </af:column>
+      </af:table>
     </af:panelCollection>
   </af:panelBox>
 </jsp:root>
