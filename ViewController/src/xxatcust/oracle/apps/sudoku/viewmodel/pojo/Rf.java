@@ -2,6 +2,9 @@ package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="rf")
 public class Rf {
     List<ConfiguratorNodePOJO> allRf ;
     public Rf() {

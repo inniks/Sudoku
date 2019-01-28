@@ -8,18 +8,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ModelBom {
     private String cid;
     private String pricelist;
-    XClass ClassObject;
-    Ruleset RulesetObject;
-    Infra InfraObject;
-    Digital DigitalObject;
-    Dps DpsObject;
-    private String ms;
-    private String rf;
-    SwLicenses swlicensesObject;
-    Docking DockingObject;
-    private String misc;
-    private String caldiag;
-    WtySupport wtysupportObject;
+    private XClass ClassObject;
+    private Ruleset RulesetObject;
+    private Infra InfraObject;
+    private Digital DigitalObject;
+    private Dps DpsObject;
+    private Ms ms;
+    private Rf rf;
+    private SwLicenses swlicensesObject;
+    private Docking DockingObject;
+    private Misc misc;
+    private CalDiag caldiag;
+    private WtySupport wtysupportObject;
+    private InfraUpgrade infraUpgradeObject;
     private String _id;
 
     public ModelBom() {
@@ -87,19 +88,20 @@ public class ModelBom {
         return DpsObject;
     }
 
-    public void setMs(String ms) {
+    public void setMs(Ms ms) {
         this.ms = ms;
     }
-
-    public String getMs() {
+    @XmlElement(name="ms")
+    public Ms getMs() {
         return ms;
     }
 
-    public void setRf(String rf) {
+    public void setRf(Rf rf) {
         this.rf = rf;
     }
 
-    public String getRf() {
+    @XmlElement(name = "rf")
+    public Rf getRf() {
         return rf;
     }
 
@@ -121,20 +123,21 @@ public class ModelBom {
         return DockingObject;
     }
 
-    public void setMisc(String misc) {
+    public void setMisc(Misc misc) {
         this.misc = misc;
     }
 
-    public String getMisc() {
+    @XmlElement(name = "misc")
+    public Misc getMisc() {
         return misc;
     }
 
-    public void setCaldiag(String caldiag) {
+    public void setCaldiag(CalDiag caldiag) {
         this.caldiag = caldiag;
     }
 
-    @XmlAttribute(name = "cal-diag")
-    public String getCaldiag() {
+    @XmlElement(name = "cal-diag")
+    public CalDiag getCaldiag() {
         return caldiag;
     }
 
@@ -159,5 +162,14 @@ public class ModelBom {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    public void setInfraUpgradeObject(InfraUpgrade infraUpgradeObject) {
+        this.infraUpgradeObject = infraUpgradeObject;
+    }
+
+    @XmlElement(name = "infra-upgrade")
+    public InfraUpgrade getInfraUpgradeObject() {
+        return infraUpgradeObject;
     }
 }

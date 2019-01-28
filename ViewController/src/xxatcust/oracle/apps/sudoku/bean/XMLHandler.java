@@ -43,6 +43,7 @@ public class XMLHandler {
             UploadedFile fileVal = (UploadedFile)vce.getNewValue();
             //Upload File to path- Return actual server path
             String path = uploadFile(fileVal);
+            parseXMLToPojo(null);
             System.out.println(fileVal.getContentType());
             ResetUtils.reset(vce.getComponent());
         }
@@ -108,21 +109,21 @@ public class XMLHandler {
 
     public void parseXMLToPojo(ActionEvent actionEvent) {
         V93kQuote parent = JaxbParser.jaxbXMLToObject();
+        ADFUtils.setPageFlowScopeValue("parentObject", parent) ;
         String jsonStr = JSONUtils.convertObjToJson(parent);
-        Object obj = JSONUtils.convertJsonToObject(jsonStr);
+        //Object obj = JSONUtils.convertJsonToObject(jsonStr);
         //Reading JSOn from File to POJO
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            obj =    mapper.readValue(new File("D://FileStore//sample.json"), V93kQuote.class);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        XMLImportPageBean impBean = new XMLImportPageBean();
-        impBean.setAllPmf(parent.getConfigObject().getPmfObject().getPmfMap());
+//        ObjectMapper mapper = new ObjectMapper();
+//        try {
+//            obj =    mapper.readValue(new File("D://FileStore//sample.json"), V93kQuote.class);
+//        } catch (JsonParseException e) {
+//            e.printStackTrace();
+//        } catch (JsonMappingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        
     }
     
 }

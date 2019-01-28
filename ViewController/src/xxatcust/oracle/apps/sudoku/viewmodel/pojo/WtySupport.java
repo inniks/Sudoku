@@ -1,19 +1,22 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="wty-support")
 public class WtySupport {
-    private String item;
+    private List<ConfiguratorNodePOJO> allWtySupportItems;
     public WtySupport() {
         super();
     }
 
-    public void setItem(String item) {
-        this.item = item;
+
+    public void setAllWtySupportItems(List<ConfiguratorNodePOJO> allWtySupportItems) {
+        this.allWtySupportItems = allWtySupportItems;
     }
 
-    public String getItem() {
-        return item;
+    public List<ConfiguratorNodePOJO> getAllWtySupportItems() {
+        return allWtySupportItems;
     }
 }

@@ -2,6 +2,9 @@ package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="misc")
 public class Misc {
     List<ConfiguratorNodePOJO> miscItems ;
     public Misc() {
