@@ -44,20 +44,12 @@ public class XMLHandler {
             //Upload File to path- Return actual server path
             String path = uploadFile(fileVal);
             System.out.println(fileVal.getContentType());
-            //Method to insert data in table to keep track of uploaded files
-//            OperationBinding ob = executeOperation("setFileData");
-//            ob.getParamsMap().put("name", fileVal.getFilename());
-//            ob.getParamsMap().put("path", path);
-//            ob.getParamsMap().put("contTyp", fileVal.getContentType());
-//            ob.execute();
-            // Reset inputFile component after upload
             ResetUtils.reset(vce.getComponent());
         }
     }
     
     /**Method to upload file to actual path on Server*/
     private String uploadFile(UploadedFile file) {
-
         UploadedFile myfile = file;
         String path = null;
         if (myfile == null) {
@@ -131,8 +123,6 @@ public class XMLHandler {
         }
         XMLImportPageBean impBean = new XMLImportPageBean();
         impBean.setAllPmf(parent.getConfigObject().getPmfObject().getPmfMap());
-        //JSONUtils.prettyPrintJson(obj);
-        
     }
     
 }
