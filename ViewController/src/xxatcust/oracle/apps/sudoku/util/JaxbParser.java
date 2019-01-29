@@ -2,10 +2,14 @@ package xxatcust.oracle.apps.sudoku.util;
 
 import java.io.File;
 
+import java.io.InputStream;
+
 import javax.xml.bind.JAXBContext;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+
+import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Config;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Contract;
@@ -38,10 +42,7 @@ public class JaxbParser {
     }
 
 
-    public static V93kQuote jaxbXMLToObject() {
-        File f =
-            new File("D://Projects//Advantest//ImportConfigPage//Test Case 001.xml");
-        System.out.println("File found " + f.getName());
+    public static V93kQuote jaxbXMLToObject(InputStream inputStream) {
         try {
             JAXBContext context =
                 JAXBContext.newInstance(V93kQuote.class, Config.class,
@@ -55,7 +56,7 @@ public class JaxbParser {
                                         Thead.class, Wksta.class,
                                         WtySupport.class, XClass.class,Pmf.class,PogoMappingFile.class);
             Unmarshaller un = context.createUnmarshaller();
-            V93kQuote parent = (V93kQuote)un.unmarshal(f);
+            V93kQuote parent = (V93kQuote)un.unmarshal(inputStream);
             ADFUtils.setPageFlowScopeValue("parentObject", parent);
             return parent;
         } catch (JAXBException e) {

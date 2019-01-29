@@ -2,18 +2,13 @@
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="UploadXMLFlow">
     <default-activity id="__1">uploadXML</default-activity>
-    <managed-bean id="__2">
-      <managed-bean-name id="__4">XMLHandlerBean</managed-bean-name>
-      <managed-bean-class id="__3">xxatcust.oracle.apps.sudoku.bean.XMLHandler</managed-bean-class>
-      <managed-bean-scope id="__5">pageFlow</managed-bean-scope>
-    </managed-bean>
     <managed-bean id="__11">
       <managed-bean-name id="__12">XMLImportPageBean</managed-bean-name>
       <managed-bean-class id="__13">xxatcust.oracle.apps.sudoku.bean.XMLImportPageBean</managed-bean-class>
-      <managed-bean-scope id="__10">pageFlow</managed-bean-scope>
+      <managed-bean-scope id="__10">session</managed-bean-scope>
     </managed-bean>
     <view id="uploadXML">
-      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/uploadXML.jsff</page>
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff</page>
     </view>
     <use-page-fragments/>
   </task-flow-definition>

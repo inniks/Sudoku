@@ -1,11 +1,30 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
+import oracle.adf.view.rich.util.ResetUtils;
+
+import org.apache.myfaces.trinidad.model.UploadedFile;
+
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
+import xxatcust.oracle.apps.sudoku.util.JSONUtils;
+import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.*;
 
 public class XMLImportPageBean {
@@ -58,6 +77,46 @@ public class XMLImportPageBean {
             }
         }
         return allNodes;
+    }
+
+    public void fileUploadVCE(ValueChangeEvent vce) {
+        System.out.println("Inside Value Listener");
+        //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
+        if (vce.getNewValue() != null) {
+            ADFUtils.setSessionScopeValue("parentObject", null);
+            allNodes = null;
+            //Get File Object from VC Event
+            UploadedFile fileVal = (UploadedFile)vce.getNewValue();
+            //Upload File to path- Return actual server path
+            InputStream inputStream = uploadFile(fileVal);
+            parseXMLToPojo(inputStream);
+            ResetUtils.reset(vce.getComponent());
+        }
+    }
+
+    /**Method to upload file to actual path on Server*/
+    private InputStream uploadFile(UploadedFile file) {
+        UploadedFile myfile = file;
+        InputStream inputStream = null;
+        if (myfile == null) {
+
+        } else {            
+            try {
+                inputStream = myfile.getInputStream();
+            } catch (Exception ex) {
+                // handle exception
+                ex.printStackTrace();
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        //Returns the path where file is stored
+        return inputStream;
     }
 
     private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj) {
@@ -204,4 +263,26 @@ public class XMLImportPageBean {
         }
         return nodeList;
     }
+
+    public void parseXMLToPojo(InputStream inputStream) {
+        V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
+        String jsonStr = JSONUtils.convertObjToJson(parent);
+        Object obj = null;
+        //Reading JSOn from File to POJO
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String responseJson =
+                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            obj = mapper.readValue(responseJson, V93kQuote.class);
+            ADFUtils.setSessionScopeValue("parentObject", obj);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

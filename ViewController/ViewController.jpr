@@ -70,9 +70,7 @@
       <hash n="resourcesContentSet">
          <list n="constituent-sets">
             <hash>
-               <list n="pattern-filters">
-                  <string v="+response.json"/>
-               </list>
+               <list n="pattern-filters"/>
                <list n="url-path">
                   <url path="../../../JsonResponse/"/>
                </list>

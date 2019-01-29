@@ -7,20 +7,27 @@
          value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
   <af:panelBox text="Upload XML" id="pb1">
     <f:facet name="toolbar"/>
+    <af:spacer width="10" height="10" id="s3"/>
     <af:panelGroupLayout id="pgl1" layout="horizontal">
       <af:inputFile label="Upload File" id="if1"
-                    valueChangeListener="#{pageFlowScope.XMLHandlerBean.fileUploadVCE}"
+                    valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
                     autoSubmit="true"/>
       <af:spacer width="10" height="20" id="s2"/>
     </af:panelGroupLayout>
     <af:spacer width="10" height="40" id="s1"/>
-    <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                        partialTriggers="::if1">
       <f:facet name="menus"/>
-      <f:facet name="toolbar"/>
+      <f:facet name="toolbar">
+        <af:toolbar id="t2">
+          <af:commandButton text="Refresh Table" id="cb1"/>
+        </af:toolbar>
+      </f:facet>
       <f:facet name="statusbar"/>
-      <af:table var="row" rowBandingInterval="0" id="t1"
-                value="#{pageFlowScope.XMLImportPageBean.allNodes}"
-                styleClass="AFStretchWidth" autoHeightRows="50">
+      <af:table var="row" rowBandingInterval="1" id="t1"
+                value="#{XMLImportPageBean.allNodes}"
+                styleClass="AFStretchWidth" autoHeightRows="50"
+                columnStretching="column:c2" filterVisible="true">
         <af:column sortable="false" headerText="col1" id="c3" width="200">
           <af:outputText value="#{row.nodeName}" id="ot6"/>
         </af:column>

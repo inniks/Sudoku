@@ -8,7 +8,7 @@
     <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
   </definitionFactories>
   <pageMap>
-    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/uploadXML.jsff"
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff"
           usageId="xxat_apps_sudoku_view_uploadXMLPageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuHome.jspx"
           usageId="xxat_apps_sudoku_view_SudokuHomePageDef"/>
