@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.faces.event.ValueChangeEvent;
 
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
+import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.util.ResetUtils;
 
 import org.apache.myfaces.trinidad.model.UploadedFile;
@@ -32,6 +34,9 @@ public class XMLImportPageBean {
     List<ConfiguratorNodePOJO> allNodes;
     private RichTable pmfTable;
     V93kQuote v93Obj;
+    private RichOutputFormatted fileNameBinding;
+    private RichOutputFormatted timestampBinding;
+    private RichOutputFormatted uploadedByBinding;
 
     public XMLImportPageBean() {
         super();
@@ -81,16 +86,21 @@ public class XMLImportPageBean {
 
     public void fileUploadVCE(ValueChangeEvent vce) {
         System.out.println("Inside Value Listener");
-        //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
+        //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null,
         if (vce.getNewValue() != null) {
             ADFUtils.setSessionScopeValue("parentObject", null);
             allNodes = null;
             //Get File Object from VC Event
             UploadedFile fileVal = (UploadedFile)vce.getNewValue();
+            //Set file bindings
+            fileNameBinding.setValue(fileVal.getFilename());
+            timestampBinding.setValue(new Date());
+            uploadedByBinding.setValue("Default User");
             //Upload File to path- Return actual server path
             InputStream inputStream = uploadFile(fileVal);
-            parseXMLToPojo(inputStream);
-            ResetUtils.reset(vce.getComponent());
+            //comment in local run
+            //parseXMLToPojo(inputStream);
+            //ResetUtils.reset(vce.getComponent());
         }
     }
 
@@ -285,4 +295,27 @@ public class XMLImportPageBean {
 
     }
 
+    public void setFileNameBinding(RichOutputFormatted fileNameBinding) {
+        this.fileNameBinding = fileNameBinding;
+    }
+
+    public RichOutputFormatted getFileNameBinding() {
+        return fileNameBinding;
+    }
+
+    public void setTimestampBinding(RichOutputFormatted timestampBinding) {
+        this.timestampBinding = timestampBinding;
+    }
+
+    public RichOutputFormatted getTimestampBinding() {
+        return timestampBinding;
+    }
+
+    public void setUploadedByBinding(RichOutputFormatted uploadedByBinding) {
+        this.uploadedByBinding = uploadedByBinding;
+    }
+
+    public RichOutputFormatted getUploadedByBinding() {
+        return uploadedByBinding;
+    }
 }

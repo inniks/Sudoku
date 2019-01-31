@@ -57,7 +57,7 @@ public class JaxbParser {
                                         WtySupport.class, XClass.class,Pmf.class,PogoMappingFile.class);
             Unmarshaller un = context.createUnmarshaller();
             V93kQuote parent = (V93kQuote)un.unmarshal(inputStream);
-            ADFUtils.setPageFlowScopeValue("parentObject", parent);
+            //ADFUtils.setPageFlowScopeValue("parentObject", parent);
             return parent;
         } catch (JAXBException e) {
             e.printStackTrace();

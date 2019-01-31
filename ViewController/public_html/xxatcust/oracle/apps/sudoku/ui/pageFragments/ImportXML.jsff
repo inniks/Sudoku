@@ -8,19 +8,46 @@
   <af:panelBox text="Upload XML" id="pb1">
     <f:facet name="toolbar"/>
     <af:spacer width="10" height="10" id="s3"/>
-    <af:panelGroupLayout id="pgl1" layout="horizontal">
-      <af:inputFile label="Upload File" id="if1"
-                    valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
-                    autoSubmit="true"/>
-      <af:spacer width="10" height="20" id="s2"/>
+    <af:panelGroupLayout id="pgl3" layout="horizontal">
+      <af:panelGroupLayout id="pgl1" layout="horizontal">
+        <af:inputFile label="Upload File" id="if1"
+                      valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
+                      autoSubmit="true"/>
+        <af:spacer width="10" height="20" id="s2"/>
+      </af:panelGroupLayout>
+      <af:spacer width="10" height="10" id="s7"/>
+      <af:panelGroupLayout id="pgl2" layout="horizontal" partialTriggers="if1">
+        <af:panelLabelAndMessage label="Uploaded File Name" id="plam1"
+                                 inlineStyle="font-size:x-large; font-weight:bolder;">
+          <af:outputFormatted id="of1"
+                              binding="#{XMLImportPageBean.fileNameBinding}"
+                              inlineStyle="color:Teal; font-size:medium;"/>
+        </af:panelLabelAndMessage>
+        <af:spacer width="20" height="10" id="s5"/>
+        <af:panelLabelAndMessage label="Timestamp" id="plam2"
+                                 inlineStyle="font-weight:bolder; font-size:x-large;">
+          <af:outputFormatted id="of2"
+                              binding="#{XMLImportPageBean.timestampBinding}"
+                              inlineStyle="color:Navy; font-size:medium;"/>
+        </af:panelLabelAndMessage>
+        <af:spacer width="10" height="10" id="s6"/>
+        <af:panelLabelAndMessage label="Uploaded By" id="plam3"
+                                 inlineStyle="font-weight:bolder; font-size:x-large;">
+          <af:outputFormatted id="of3"
+                              binding="#{XMLImportPageBean.uploadedByBinding}"
+                              inlineStyle="color:Navy; font-size:medium;"/>
+        </af:panelLabelAndMessage>
+      </af:panelGroupLayout>
     </af:panelGroupLayout>
-    <af:spacer width="10" height="40" id="s1"/>
+    <af:spacer width="10" height="20" id="s1"/>
     <af:panelCollection id="pc1" styleClass="AFStretchWidth"
                         partialTriggers="::if1">
       <f:facet name="menus"/>
       <f:facet name="toolbar">
         <af:toolbar id="t2">
-          <af:commandButton text="Refresh Table" id="cb1"/>
+          <af:commandButton text="Show Product Numbers" id="cb2"/>
+          <af:spacer width="10" height="10" id="s4"/>
+          <af:commandButton text="Show Product Prices" id="cb1"/>
         </af:toolbar>
       </f:facet>
       <f:facet name="statusbar"/>
@@ -28,22 +55,22 @@
                 value="#{XMLImportPageBean.allNodes}"
                 styleClass="AFStretchWidth" autoHeightRows="50"
                 columnStretching="column:c2" filterVisible="true">
-        <af:column sortable="false" headerText="col1" id="c3" width="200">
+        <af:column sortable="false" headerText="Product Number" id="c3" width="200">
           <af:outputText value="#{row.nodeName}" id="ot6"/>
         </af:column>
-        <af:column sortable="false" headerText="col2" id="c2" width="300">
+        <af:column sortable="false" headerText="Product Description" id="c2" width="300">
           <af:outputText value="#{row.nodeDescription}" id="ot3"/>
         </af:column>
-        <af:column sortable="false" headerText="col3" id="c1">
+        <af:column sortable="false" headerText="Quantity" id="c1">
           <af:outputText value="#{row.nodeQty}" id="ot4"/>
         </af:column>
-        <af:column sortable="false" headerText="col4" id="c6">
+        <af:column sortable="false" id="c6">
           <af:outputText value="#{row.nodeValue}" id="ot1"/>
         </af:column>
-        <af:column sortable="false" headerText="col5" id="c4">
+        <af:column sortable="false" id="c4">
           <af:outputText value="#{row.nodeCategory}" id="ot5"/>
         </af:column>
-        <af:column sortable="false" headerText="col6" id="c5">
+        <af:column sortable="false" id="c5">
           <af:outputText value="#{row.extendedPrice}" id="ot2"/>
         </af:column>
       </af:table>

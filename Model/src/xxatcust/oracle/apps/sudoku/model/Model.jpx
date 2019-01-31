@@ -15,27 +15,11 @@
       <Attr Name="_NamedConnection" Value="defaultHr"/>
    </DesignTime>
    <Containee
-      Name="eo"
-      PackageName="xxatcust.oracle.apps.sudoku.model.eo"
-      ObjectType="JboPackage">
-      <DesignTime>
-         <Attr Name="_EO" Value="true"/>
-      </DesignTime>
-   </Containee>
-   <Containee
       Name="module"
       PackageName="xxatcust.oracle.apps.sudoku.model.module"
       ObjectType="JboPackage">
       <DesignTime>
          <Attr Name="_AM" Value="true"/>
-      </DesignTime>
-   </Containee>
-   <Containee
-      Name="vo"
-      PackageName="xxatcust.oracle.apps.sudoku.model.vo"
-      ObjectType="JboPackage">
-      <DesignTime>
-         <Attr Name="_VO" Value="true"/>
       </DesignTime>
    </Containee>
 </JboProject>
