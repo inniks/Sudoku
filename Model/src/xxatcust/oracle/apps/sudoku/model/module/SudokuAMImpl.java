@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -21,13 +22,12 @@ import oracle.apps.fnd.ext.common.CookieStatus;
 import oracle.apps.fnd.ext.common.EBiz;
 import oracle.apps.fnd.ext.common.Session;
 
+import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.SessionData;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
 import oracle.jbo.server.ViewObjectImpl;
-
-import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
 
 
 // ---------------------------------------------------------------------
@@ -36,7 +36,7 @@ import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
 // ---    Custom code may be added to this class.
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
-public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
+public class SudokuAMImpl extends ApplicationModuleImpl {
     /**
      * This is the default constructor (do not remove).
      */
@@ -152,18 +152,22 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
         return true;
     }
 
-    public HashMap<String,String> getNodeCategoryList() {
+    public Hashtable<String, String> getNodeCategoryMap() {
         ViewObjectImpl nodeCategoryVO = this.getNodeCategoryVO1();
         nodeCategoryVO.executeQuery();
         RowSetIterator rsi = nodeCategoryVO.createRowSetIterator(null);
-        List<String> nodeCategoryList = new ArrayList<String>();
-        HashMap nodeCategoryMap = new HashMap<String,String>();
+        Hashtable<String, String> nodeCategoryMap =
+            new Hashtable<String, String>();
         while (rsi.hasNext()) {
-            nodeCategoryMap.put((String)rsi.next().getAttribute("Attribute7"), (String)rsi.next().getAttribute("Attribute7"));
-            nodeCategoryList.add((String)rsi.next().getAttribute("Attribute7"));
+            Row currRow = rsi.getCurrentRow() ;
+            if (currRow!=null && currRow.getAttribute("Segment1") != null &&
+                currRow.getAttribute("Attribute7") != null) {
+                nodeCategoryMap.put((String)currRow.getAttribute("Segment1"),
+                                    (String)currRow.getAttribute("Attribute7"));
+            }
         }
         rsi.closeRowSetIterator();
-        return nodeCategoryList;
+        return nodeCategoryMap;
     }
 
     /**

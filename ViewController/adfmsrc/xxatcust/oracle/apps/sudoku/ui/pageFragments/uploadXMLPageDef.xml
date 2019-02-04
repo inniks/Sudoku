@@ -6,12 +6,5 @@
   <executables>
     <variableIterator id="variables"/>
   </executables>
-  <bindings>
-    <methodAction id="getNodeCategoryList"
-                  InstanceName="SudokuAMDataControl.dataProvider"
-                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
-                  Action="invokeMethod" MethodName="getNodeCategoryList"
-                  IsViewObjectMethod="false"
-                  ReturnName="data.SudokuAMDataControl.methodResults.getNodeCategoryList_SudokuAMDataControl_dataProvider_getNodeCategoryList_result"/>
-  </bindings>
+  <bindings/>
 </pageDefinition>
