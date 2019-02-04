@@ -5,12 +5,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = "map")
+@XmlAccessorType(XmlAccessType.NONE)
 public class PogoMappingFile {
     String refId = null; //it is ref-id
     String productName = null; //it is card
     String pogoName = null; //it is pogo
+    @XmlValue
     String pogoMapping = null;
 
     public PogoMappingFile() {
@@ -44,7 +47,6 @@ public class PogoMappingFile {
     public void setPogoMapping(String pogoMapping) {
         this.pogoMapping = pogoMapping;
     }
-    @XmlAttribute(name = "")
     public String getPogoMapping() {
         return pogoMapping;
     }

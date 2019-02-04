@@ -11,19 +11,24 @@ import java.net.URL;
 
 import java.util.Map;
 
+import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.context.AdfFacesContext;
+
+import xxatcust.oracle.apps.sudoku.bean.XMLImportPageBean;
 
 public class ConfiguratorUtils {
     public ConfiguratorUtils() {
         super();
     }
-
+    private static ADFLogger _logger =
+        ADFLogger.createADFLogger(ConfiguratorUtils.class);
     public static String callConfiguratorServlet(String jsonStr) {
         // Add event code here...
         StringBuffer strBuf = new StringBuffer();
         try {
             URL url =
                 new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServlet?modelId=21412791&closeConfiguration=NO");
+            _logger.info("Print url in callConfiguratorServlet " +url);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             // inform the connection that we will send output and accept input
             con.setDoInput(true);
@@ -40,22 +45,30 @@ public class ConfiguratorUtils {
             OutputStream os = con.getOutputStream();
             os.write(jsonStr.getBytes("UTF-8"));
             InputStream input = con.getInputStream();
+            _logger.info("Print input in callConfiguratorServlet " +input);
             BufferedReader in = null;
+            
             try {
                 in = new BufferedReader(new InputStreamReader(input));
+                _logger.info("Print in in callConfiguratorServlet " +in);
             } catch (Exception e) {
                 e.printStackTrace();
+                _logger.info("error Exception Print in in callConfiguratorServlet " +e);
             }
 
 
             String inputLine = null;
             
             try {
-                while ((inputLine = in.readLine()) != null) {
+                while ((inputLine = in.readLine()) != null) 
+                {
                     strBuf.append("" + inputLine);
+                    _logger.info(" Print  in inputLine " +inputLine);   
+                    
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                _logger.info(" Print  Exception error in inputLine " +e);   
             }
 
             String configIdStr = strBuf.toString();
@@ -73,7 +86,8 @@ public class ConfiguratorUtils {
 
                 configId = configIdStr.replace("=" + revision, "");
             }
-
+            _logger.info(" Print  configId " +configId);  
+            
             System.out.println("print first button press configId" + configId);
 
             System.out.println("print first button press revision" + revision);

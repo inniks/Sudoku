@@ -20,7 +20,7 @@ public class JSONUtils {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
         try {
-            obj = mapper.readValue(new File("D:\\FileStore\\V93kQuote.json"), V93kQuote.class);
+            obj = mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response.json"), V93kQuote.class);
         } catch (JsonParseException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {

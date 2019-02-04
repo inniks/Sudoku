@@ -7,9 +7,25 @@
   Version="11.1.1.64.93"
   InheritPersonalization="true"
   ClearCacheOnRollback="true"
-  ComponentClass="xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl">
+  ComponentClass="xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl"
+  ComponentInterface="xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM"
+  ClientProxyName="xxatcust.oracle.apps.sudoku.model.module.client.SudokuAMClient">
   <DesignTime>
     <Attr Name="_deployType" Value="0"/>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
+  <ViewUsage
+    Name="NodeCategoryVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.NodeCategoryVO"/>
+  <ClientInterface>
+    <Method
+      Name="getNodeCategoryList">
+      <Return
+        Type="java.util.List"
+        IsGeneric="true">
+        <Element
+          Type="java.lang.String"/>
+      </Return>
+    </Method>
+  </ClientInterface>
 </AppModule>

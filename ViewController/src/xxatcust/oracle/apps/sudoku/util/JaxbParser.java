@@ -21,6 +21,7 @@ import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Docking;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Dps;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.DutifUtil;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Infra;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.InfraUpgrade;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Mani;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ModelBom;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Pmf;
@@ -54,7 +55,7 @@ public class JaxbParser {
                                         Infra.class, Mani.class, Ruleset.class,
                                         Salesteam.class, SwLicenses.class,
                                         Thead.class, Wksta.class,
-                                        WtySupport.class, XClass.class,Pmf.class,PogoMappingFile.class);
+                                        WtySupport.class, XClass.class,Pmf.class,PogoMappingFile.class,InfraUpgrade.class);
             Unmarshaller un = context.createUnmarshaller();
             V93kQuote parent = (V93kQuote)un.unmarshal(inputStream);
             //ADFUtils.setPageFlowScopeValue("parentObject", parent);

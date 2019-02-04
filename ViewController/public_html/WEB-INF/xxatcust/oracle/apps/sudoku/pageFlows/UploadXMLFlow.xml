@@ -10,6 +10,7 @@
     <view id="uploadXML">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff</page>
     </view>
+    <method-call id="getNodeCategory"></method-call>
     <use-page-fragments/>
   </task-flow-definition>
 </adfc-config>

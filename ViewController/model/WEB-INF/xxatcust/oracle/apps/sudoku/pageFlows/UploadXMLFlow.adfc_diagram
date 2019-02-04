@@ -20,10 +20,23 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">98.79883</property>
+         name="y">62.097656</property>
+      <property
+         name="x">174.5</property>
       <property
          name="pageFragment">true</property>
-      <property
-         name="x">91.5</property>
    </View>
+   <MethodCall
+      id="MethodCall3">
+      <property
+         name="activityId">getNodeCategory</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>getNodeCategory&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">44.597656</property>
+      <property
+         name="x">-91.0</property>
+   </MethodCall>
 </SDM>
