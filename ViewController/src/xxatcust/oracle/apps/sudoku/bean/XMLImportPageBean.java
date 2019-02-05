@@ -12,9 +12,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+
+import java.util.Map;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
@@ -34,6 +38,7 @@ import oracle.jbo.RowSetIterator;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
+import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
@@ -44,50 +49,19 @@ import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.*;
 
 public class XMLImportPageBean {
-    List<PogoMappingFile> allPmf;
     List<ConfiguratorNodePOJO> allNodes;
-    private RichTable pmfTable;
     V93kQuote v93Obj;
     private RichOutputFormatted fileNameBinding;
     private RichOutputFormatted timestampBinding;
     private RichOutputFormatted uploadedByBinding;
+    ChildPropertyTreeModel categoryTree;
+    private ArrayList<NodeCategory> root;
 
     public XMLImportPageBean() {
         super();
     }
     private static ADFLogger _logger =
         ADFLogger.createADFLogger(XMLImportPageBean.class);
-
-    public void setAllPmf(List<PogoMappingFile> allPmf) {
-
-        this.allPmf = allPmf;
-    }
-
-    public List<PogoMappingFile> getAllPmf() {
-        if (allPmf == null) {
-            Object parentObj = ADFUtils.getPageFlowScopeValue("parentObject");
-            _logger.info("Print parentObj in List<PogoMappingFile> " +
-                         parentObj);
-            if (parentObj != null) {
-                v93Obj = (V93kQuote)parentObj;
-                _logger.info("Print v93Obj in List<PogoMappingFile>" + v93Obj);
-                allPmf = v93Obj.getConfigObject().getPmfObject().getPmfMap();
-                _logger.info("Print allPmf in List<PogoMappingFile> " +
-                             allPmf);
-            }
-        }
-        return allPmf;
-        //System.out.println(allPmf);
-
-    }
-
-    public void setPmfTable(RichTable pmfTable) {
-        this.pmfTable = pmfTable;
-    }
-
-    public RichTable getPmfTable() {
-        return pmfTable;
-    }
 
     public void setAllNodes(List<ConfiguratorNodePOJO> allNodes) {
         this.allNodes = allNodes;
@@ -115,6 +89,7 @@ public class XMLImportPageBean {
         //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
         if (vce.getNewValue() != null) {
             ADFUtils.setSessionScopeValue("parentObject", null);
+            categoryTree = null;
             _logger.info("Print parentObject from session in fileUploadVCE " +
                          ADFUtils.getSessionScopeValue("parentObject"));
             allNodes = null;
@@ -165,184 +140,10 @@ public class XMLImportPageBean {
     private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj) {
         List<ConfiguratorNodePOJO> nodeList =
             new ArrayList<ConfiguratorNodePOJO>();
-
         if (v93Obj != null) {
             //Get All ModelBom Nodes
-            List<ConfiguratorNodePOJO> infraUpgradeNodes =
-                null, swLicensesNodes = null, wtySupportNodes =
-                null, calDiagNodes = null, rfNodes = null, digitalNodes =
-                null, msNodes = null, dpsNodes = null, dockingNodes =
-                null, miscNodes = null, coolingNodes = null, dufifUtilNodes =
-                null, maniNodes = null, theadNodes = null, wkstaNodes = null;
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraUpgradeObject() !=
-                null) {
-                infraUpgradeNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraUpgradeObject().getInfraUpgradeItems();
-                _logger.info("Print infraUpgradeNodes  List<ConfiguratorNodePOJO>" +
-                             infraUpgradeNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getSwlicensesObject() !=
-                null) {
-                swLicensesNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getSwlicensesObject().getSwlicenseItems();
-                _logger.info("Print swLicensesNodes  List<ConfiguratorNodePOJO>" +
-                             swLicensesNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getWtysupportObject() !=
-                null) {
-                wtySupportNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getWtysupportObject().getAllWtySupportItems();
-                _logger.info("Print wtySupportNodes  List<ConfiguratorNodePOJO>" +
-                             wtySupportNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getCaldiag() !=
-                null) {
-                calDiagNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getCaldiag().getCalDiagItems();
-                _logger.info("Print calDiagNodes  List<ConfiguratorNodePOJO>" +
-                             calDiagNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getRf() != null) {
-                rfNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getRf().getAllRf();
-                _logger.info("Print rfNodes  List<ConfiguratorNodePOJO>" +
-                             rfNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getDigitalObject() !=
-                null) {
-                digitalNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getDigitalObject().getDigitalItems();
-                _logger.info("Print digitalNodes  List<ConfiguratorNodePOJO>" +
-                             digitalNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getMs() != null) {
-                msNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getMs().getAllMs();
-                _logger.info("Print msNodes  List<ConfiguratorNodePOJO>" +
-                             msNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getDpsObject() !=
-                null) {
-                dpsNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getDpsObject().getDpsItems();
-                _logger.info("Print dpsNodes  List<ConfiguratorNodePOJO>" +
-                             dpsNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getDockingObject() !=
-                null) {
-                dockingNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getDockingObject().getAllDockingItems();
-                _logger.info("Print dockingNodes  List<ConfiguratorNodePOJO>" +
-                             dockingNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject() != null) {
-                miscNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getMisc().getMiscItems();
-                _logger.info("Print miscNodes  List<ConfiguratorNodePOJO>" +
-                             miscNodes);
-            }
-            //Inside ModelBom-->Infra
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
-                null &&
-                v93Obj.getConfigObject().getModelbomObject().getInfraObject().getCoolingObject() !=
-                null) {
-                coolingNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraObject().getCoolingObject().getCoolingItems();
-                _logger.info("Print coolingNodes  List<ConfiguratorNodePOJO>" +
-                             coolingNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
-                null &&
-                v93Obj.getConfigObject().getModelbomObject().getInfraObject().getDutifutilObject() !=
-                null) {
-                dufifUtilNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraObject().getDutifutilObject().getDutifUtilItems();
-
-                _logger.info("Print dufifUtilNodes  List<ConfiguratorNodePOJO>" +
-                             dufifUtilNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
-                null &&
-                v93Obj.getConfigObject().getModelbomObject().getInfraObject().getManiObject() !=
-                null) {
-                maniNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraObject().getManiObject().getAllManiItems();
-                _logger.info("Print maniNodes  List<ConfiguratorNodePOJO>" +
-                             maniNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
-                null &&
-                v93Obj.getConfigObject().getModelbomObject().getInfraObject().getTheadObject() !=
-                null) {
-                List<ConfiguratorNodePOJO> theaditems =
-                    v93Obj.getConfigObject().getModelbomObject().getInfraObject().getTheadObject().getTheadItems();
-                for (ConfiguratorNodePOJO o : theaditems) {
-                    o.setNodeCategory("THEAD CATEGORY");
-                }
-                theadNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraObject().getTheadObject().getTheadItems();
-                _logger.info("Print theadNodes  List<ConfiguratorNodePOJO>" +
-                             theadNodes);
-            }
-            if (v93Obj.getConfigObject().getModelbomObject().getInfraObject() !=
-                null &&
-                v93Obj.getConfigObject().getModelbomObject().getInfraObject().getWkstaObject() !=
-                null) {
-                wkstaNodes =
-                        v93Obj.getConfigObject().getModelbomObject().getInfraObject().getWkstaObject().getWkstaItems();
-
-                _logger.info("Print wkstaNodes  List<ConfiguratorNodePOJO>" +
-                             wkstaNodes);
-            }
-
-            if (infraUpgradeNodes != null && infraUpgradeNodes.size() > 0) {
-                nodeList.addAll(infraUpgradeNodes);
-            }
-            if (swLicensesNodes != null && swLicensesNodes.size() > 0) {
-                nodeList.addAll(swLicensesNodes);
-            }
-            if (wtySupportNodes != null && wtySupportNodes.size() > 0) {
-                nodeList.addAll(wtySupportNodes);
-            }
-            if (calDiagNodes != null && calDiagNodes.size() > 0) {
-                nodeList.addAll(calDiagNodes);
-            }
-            if (rfNodes != null && rfNodes.size() > 0) {
-                nodeList.addAll(rfNodes);
-            }
-            if (digitalNodes != null && digitalNodes.size() > 0) {
-                nodeList.addAll(digitalNodes);
-            }
-            if (msNodes != null && msNodes.size() > 0) {
-                nodeList.addAll(msNodes);
-            }
-            if (dpsNodes != null && dpsNodes.size() > 0) {
-                nodeList.addAll(dpsNodes);
-            }
-            if (dockingNodes != null && dockingNodes.size() > 0) {
-                nodeList.addAll(dockingNodes);
-            }
-            if (miscNodes != null && miscNodes.size() > 0) {
-                nodeList.addAll(miscNodes);
-            }
-
-            if (coolingNodes != null && coolingNodes.size() > 0) {
-                nodeList.addAll(coolingNodes);
-            }
-            if (dufifUtilNodes != null && dufifUtilNodes.size() > 0) {
-                nodeList.addAll(dufifUtilNodes);
-            }
-            if (maniNodes != null && maniNodes.size() > 0) {
-                nodeList.addAll(maniNodes);
-            }
-            if (theadNodes != null && theadNodes.size() > 0) {
-                nodeList.addAll(theadNodes);
-            }
-            if (wkstaNodes != null && wkstaNodes.size() > 0) {
-                nodeList.addAll(wkstaNodes);
-            }
+            nodeList = v93Obj.getNodeCollection();
         }
-        //mapCategoriesToNodes(allNodes);
         return nodeList;
     }
 
@@ -413,72 +214,68 @@ public class XMLImportPageBean {
     public RichOutputFormatted getUploadedByBinding() {
         return uploadedByBinding;
     }
-    //
-    //    public List<HashMap> executeCategoryVO(){
-    //        OperationBinding op = ADFUtils.findOperation("getNodeCategoryList");
-    //        if(op!=null){
-    //           List<String> nodeCatList = (List<String>)op.execute();
-    //           System.out.println(nodeCatList);
-    //           if(nodeCatList!=null && nodeCatList.size()>0){
-    //               ADFUtils.setSessionScopeValue("nodeCategoryList", nodeCatList);
-    //           }
-    //        }
-    //    }
-    //
 
-    public Boolean get(Object key) {
-        String attrName = (String)key;
-        boolean isSame = false;
-        // get the currently processed row, using row expression #{row}
-        JUCtrlHierNodeBinding row =
-            (JUCtrlHierNodeBinding)ADFUtils.resolveExpression("#{row}");
-        JUCtrlHierBinding tableBinding = row.getHierBinding();
-        int rowRangeIndex = row.getViewObject().getRangeIndexOf(row.getRow());
-        Object currentAttrValue = row.getRow().getAttribute(attrName);
-        if (rowRangeIndex > 0) {
-            Object previousAttrValue =
-                tableBinding.getAttributeFromRow(rowRangeIndex - 1, attrName);
-            isSame =
-                    currentAttrValue != null && currentAttrValue.equals(previousAttrValue);
-        } else if (tableBinding.getRangeStart() > 0) {
-            // previous row is in previous range, we create separate rowset iterator,
-            // so we can change the range start without messing up the table rendering which uses
-            // the default rowset iterator
-            int absoluteIndexPreviousRow = tableBinding.getRangeStart() - 1;
-            RowSetIterator rsi = null;
-            try {
-                rsi =
-tableBinding.getViewObject().getRowSet().createRowSetIterator(null);
-                rsi.setRangeStart(absoluteIndexPreviousRow);
-                Row previousRow = rsi.getRowAtRangeIndex(0);
-                Object previousAttrValue = previousRow.getAttribute(attrName);
-                isSame =
-                        currentAttrValue != null && currentAttrValue.equals(previousAttrValue);
-            } finally {
-                rsi.closeRowSetIterator();
-            }
-        }
-        System.out.println("Is SAME: " + isSame);
-        return isSame;
+
+    private List<String> removeDuplicatesFromList(List<String> inputList) {
+        Set<String> set = new HashSet<String>(inputList);
+        List<String> outputList = new ArrayList<String>();
+        outputList.clear();
+        outputList.addAll(set);
+        return outputList;
     }
 
-    private List<ConfiguratorNodePOJO> mapCategoriesToNodes(List<ConfiguratorNodePOJO> allNodes) {
-        OperationBinding op = ADFUtils.findOperation("getNodeCategoryMap");
-        Hashtable<String, String> nodeCatMap = new Hashtable<String, String>();
-        if (op != null) {
-            nodeCatMap = (Hashtable<String, String>)op.execute();
-        }
-        if (allNodes!=null && allNodes.size()>0) {
-            for (Iterator<ConfiguratorNodePOJO> iter = allNodes.iterator();
-                 iter.hasNext(); ) {
-                ConfiguratorNodePOJO element = iter.next();
-                if (nodeCatMap != null &&
-                    nodeCatMap.get(element.getNodeName()) != null) {
-                    element.setNodeCategory(nodeCatMap.get(element.getNodeName()));
+
+    public ChildPropertyTreeModel getEmployeeTree() {
+        // employeeTree =null ;
+        if (categoryTree == null) {
+            Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+            if (parentObj != null) {
+                V93kQuote obj = (V93kQuote)parentObj;
+                List<String> catList = new ArrayList<String>();
+                List<String> distinctList = new ArrayList<String>();
+                List<ConfiguratorNodePOJO> allNodesList =
+                    obj.getNodeCollection();
+                HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                    new HashMap<String, List<ConfiguratorNodePOJO>>();
+                for (ConfiguratorNodePOJO node : allNodesList) {
+                    catList.add(node.getNodeCategory());
                 }
-            }
-        }
-        return allNodes;
-    }
+                distinctList = removeDuplicatesFromList(catList);
 
+                for (String distinctCategory : distinctList) {
+                    List<ConfiguratorNodePOJO> temp =
+                        new ArrayList<ConfiguratorNodePOJO>();        
+                    for (ConfiguratorNodePOJO node : allNodesList) {                                      
+                        if (distinctCategory != null &&
+                            distinctCategory.equalsIgnoreCase(node.getNodeCategory())) {
+                            temp.add(node);                           
+                        }                        
+                    }
+                    allNodesByCategoriesMap.put(distinctCategory, temp);
+                }
+                root = new ArrayList<NodeCategory>();
+                Iterator it = allNodesByCategoriesMap.entrySet().iterator();
+                NodeCategory firstLevel = null ;
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    String category = (String)pair.getKey();
+                    firstLevel = new NodeCategory(category, null);
+                    root.add(firstLevel);
+                    List<ConfiguratorNodePOJO> childList =
+                        (List<ConfiguratorNodePOJO>)pair.getValue();
+                    for (ConfiguratorNodePOJO node : childList) {
+                        NodeCategory secondLevel =
+                            new NodeCategory(category, node.getNodeName());
+                        firstLevel.addNodes(secondLevel);
+                    }
+
+                }
+                categoryTree = new ChildPropertyTreeModel(root, "childNodes");
+            }
+
+        }
+
+        return categoryTree;
+
+    }
 }

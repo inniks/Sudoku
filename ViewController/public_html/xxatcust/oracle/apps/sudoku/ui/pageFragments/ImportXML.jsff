@@ -41,7 +41,7 @@
     </af:panelGroupLayout>
     <af:spacer width="10" height="20" id="s1"/>
     <af:panelCollection id="pc1" styleClass="AFStretchWidth"
-                        partialTriggers="::if1">
+                        partialTriggers="::if1" rendered="false">
       <f:facet name="menus"/>
       <f:facet name="toolbar">
         <af:toolbar id="t2">
@@ -63,10 +63,12 @@
         <af:column sortable="false" id="c4">
           <af:outputText value="#{row.nodeCategory}" id="ot5"/>
         </af:column>
-        <af:column sortable="false" headerText="Product Number" id="c3" width="200">
+        <af:column sortable="false" headerText="Product Number" id="c3"
+                   width="200">
           <af:outputText value="#{row.nodeName}" id="ot6"/>
         </af:column>
-        <af:column sortable="false" headerText="Product Description" id="c2" width="300">
+        <af:column sortable="false" headerText="Product Description" id="c2"
+                   width="300">
           <af:outputText value="#{row.nodeDescription}" id="ot3"/>
         </af:column>
         <af:column sortable="false" headerText="Quantity" id="c1">
@@ -80,5 +82,17 @@
         </af:column>
       </af:table>
     </af:panelCollection>
+    <af:treeTable id="tt1" var="row"
+                  value="#{XMLImportPageBean.employeeTree}"
+                  partialTriggers="::if1">
+      <f:facet name="nodeStamp">
+        <af:column id="nCol" headerText="Name">
+          <af:outputText id="nOt" value="#{row.category}"/>
+        </af:column>
+      </f:facet>
+      <af:column id="lCol" headerText="Location">
+        <af:outputText id="lOt" value="#{row.nodeName}"/>
+      </af:column>
+    </af:treeTable>
   </af:panelBox>
 </jsp:root>

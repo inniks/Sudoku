@@ -10,6 +10,7 @@ public class V93kQuote {
     Config ConfigObject;
     List<ConfiguratorNodePOJO> nodeCollection ;
     SessionDetails sessionDetails ;
+    //ExceptionHandlerPOJO exceptionMap ;
     public V93kQuote() {
         super();
     }
@@ -45,4 +46,12 @@ public class V93kQuote {
     public SessionDetails getSessionDetails() {
         return sessionDetails;
     }
+
+//    public void setExceptionMap(ExceptionHandlerPOJO exceptionMap) {
+//        this.exceptionMap = exceptionMap;
+//    }
+//
+//    public ExceptionHandlerPOJO getExceptionMap() {
+//        return exceptionMap;
+//    }
 }
