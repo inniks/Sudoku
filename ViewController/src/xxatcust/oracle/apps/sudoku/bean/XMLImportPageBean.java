@@ -225,7 +225,7 @@ public class XMLImportPageBean {
     }
 
 
-    public ChildPropertyTreeModel getEmployeeTree() {
+    public ChildPropertyTreeModel getCategoryTree() {
         // employeeTree =null ;
         if (categoryTree == null) {
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
@@ -270,7 +270,9 @@ public class XMLImportPageBean {
                     }
 
                 }
+                
                 categoryTree = new ChildPropertyTreeModel(root, "childNodes");
+                System.out.println("No of tree nodes "+categoryTree.getDepth());
             }
 
         }

@@ -40,59 +40,45 @@
       </af:panelGroupLayout>
     </af:panelGroupLayout>
     <af:spacer width="10" height="20" id="s1"/>
-    <af:panelCollection id="pc1" styleClass="AFStretchWidth"
-                        partialTriggers="::if1" rendered="false">
-      <f:facet name="menus"/>
-      <f:facet name="toolbar">
-        <af:toolbar id="t2">
-          <af:commandButton text="Show Product Numbers" id="cb2"/>
-          <af:spacer width="10" height="10" id="s4"/>
-          <af:commandButton text="Show Product Prices" id="cb1"/>
-        </af:toolbar>
+    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth"
+                           dimensionsFrom="parent">
+      <f:facet name="bottom"/>
+      <f:facet name="center">
+        <af:panelGroupLayout id="pgl4" layout="scroll">
+          <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}"
+                       var="node" selection="single"
+                       groupDisclosurePolicy="initiallyExpanded"
+                       partialTriggers="::if1">
+            <f:facet name="groupHeaderStamp">
+              <af:listItem id="li3" styleClass="ABHeader">
+                <af:outputText value="#{node.category}" id="ot142"
+                               inlineStyle="font-weight:bold;"/>
+              </af:listItem>
+            </f:facet>
+            <af:listItem id="li2">
+              <af:panelGridLayout id="pg1l3">
+                <af:gridRow marginTop="5px" marginBottom="5px" height="auto"
+                            id="gr1">
+                  <af:gridCell marginStart="5px" width="34%" id="gc2">
+                    <af:outputText value="#{node.nodeName}" id="ot21"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" width="33%" id="gc6">
+                    <af:outputText value="#{node.category}" id="ot33"/>
+                  </af:gridCell>
+                  <af:gridCell marginStart="5px" marginEnd="5px" width="33%"
+                               id="gc1">
+                    <af:inputText value="#{node.nodeName}" simple="true"
+                                  id="it7"/>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:listItem>
+          </af:listView>
+        </af:panelGroupLayout>
       </f:facet>
-      <f:facet name="statusbar"/>
-      <af:table var="row" rowBandingInterval="1" id="t1"
-                value="#{XMLImportPageBean.allNodes}"
-                styleClass="AFStretchWidth" autoHeightRows="50"
-                columnStretching="column:c2" filterVisible="true">
-        <af:column id="c7">
-          <af:outputText value="1" id="ot7">
-            <af:convertNumber groupingUsed="false"/>
-          </af:outputText>
-        </af:column>
-        <af:column sortable="false" id="c4">
-          <af:outputText value="#{row.nodeCategory}" id="ot5"/>
-        </af:column>
-        <af:column sortable="false" headerText="Product Number" id="c3"
-                   width="200">
-          <af:outputText value="#{row.nodeName}" id="ot6"/>
-        </af:column>
-        <af:column sortable="false" headerText="Product Description" id="c2"
-                   width="300">
-          <af:outputText value="#{row.nodeDescription}" id="ot3"/>
-        </af:column>
-        <af:column sortable="false" headerText="Quantity" id="c1">
-          <af:outputText value="#{row.nodeQty}" id="ot4"/>
-        </af:column>
-        <af:column sortable="false" id="c6">
-          <af:outputText value="#{row.nodeValue}" id="ot1"/>
-        </af:column>
-        <af:column sortable="false" id="c5">
-          <af:outputText value="#{row.extendedPrice}" id="ot2"/>
-        </af:column>
-      </af:table>
-    </af:panelCollection>
-    <af:treeTable id="tt1" var="row"
-                  value="#{XMLImportPageBean.employeeTree}"
-                  partialTriggers="::if1">
-      <f:facet name="nodeStamp">
-        <af:column id="nCol" headerText="Name">
-          <af:outputText id="nOt" value="#{row.category}"/>
-        </af:column>
-      </f:facet>
-      <af:column id="lCol" headerText="Location">
-        <af:outputText id="lOt" value="#{row.nodeName}"/>
-      </af:column>
-    </af:treeTable>
+      <f:facet name="start"/>
+      <f:facet name="end"/>
+      <f:facet name="top"/>
+    </af:panelStretchLayout>
   </af:panelBox>
 </jsp:root>
