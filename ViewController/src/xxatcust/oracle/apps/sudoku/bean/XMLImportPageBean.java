@@ -259,20 +259,19 @@ public class XMLImportPageBean {
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry)it.next();
                     String category = (String)pair.getKey();
-                    firstLevel = new NodeCategory(category, null);
+                    firstLevel = new NodeCategory(category, null,null,null,null,null,null);
                     root.add(firstLevel);
                     List<ConfiguratorNodePOJO> childList =
                         (List<ConfiguratorNodePOJO>)pair.getValue();
                     for (ConfiguratorNodePOJO node : childList) {
                         NodeCategory secondLevel =
-                            new NodeCategory(category, node.getNodeName());
+                            new NodeCategory(category, node.getNodeName(),node.getNodeDescription(),node.getNodeQty(),node.getNodeValue(),node.getUnitPrice(),node.getExtendedPrice());
                         firstLevel.addNodes(secondLevel);
                     }
 
                 }
                 
                 categoryTree = new ChildPropertyTreeModel(root, "childNodes");
-                System.out.println("No of tree nodes "+categoryTree.getDepth());
             }
 
         }

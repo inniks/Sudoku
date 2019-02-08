@@ -42,7 +42,6 @@
     <af:spacer width="10" height="20" id="s1"/>
     <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth"
                            dimensionsFrom="parent">
-      <f:facet name="bottom"/>
       <f:facet name="center">
         <af:panelGroupLayout id="pgl4" layout="scroll">
           <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}"
@@ -56,19 +55,28 @@
               </af:listItem>
             </f:facet>
             <af:listItem id="li2">
-              <af:panelGridLayout id="pg1l3">
+              <af:panelGridLayout id="pg1l3" dimensionsFrom="children">
                 <af:gridRow marginTop="5px" marginBottom="5px" height="auto"
                             id="gr1">
                   <af:gridCell marginStart="5px" width="34%" id="gc2">
                     <af:outputText value="#{node.nodeName}" id="ot21"/>
                   </af:gridCell>
                   <af:gridCell marginStart="5px" width="33%" id="gc6">
-                    <af:outputText value="#{node.category}" id="ot33"/>
+                    <af:outputText value="#{node.nodeDescription}" id="ot33"/>
                   </af:gridCell>
                   <af:gridCell marginStart="5px" marginEnd="5px" width="33%"
                                id="gc1">
-                    <af:inputText value="#{node.nodeName}" simple="true"
+                    <af:outputText value="#{node.nodeQty}" 
                                   id="it7"/>
+                  </af:gridCell>
+                  <af:gridCell id="gc4">
+                    <af:outputText value="#{node.uom}" id="ot2"/>
+                  </af:gridCell>
+                  <af:gridCell id="gc3">
+                    <af:outputText value="#{node.unitPrice}" id="ot1"/>
+                  </af:gridCell>
+                  <af:gridCell id="gc5">
+                    <af:outputText value="#{node.extendedPrice}" id="ot3"/>
                   </af:gridCell>
                 </af:gridRow>
               </af:panelGridLayout>
@@ -76,9 +84,6 @@
           </af:listView>
         </af:panelGroupLayout>
       </f:facet>
-      <f:facet name="start"/>
-      <f:facet name="end"/>
-      <f:facet name="top"/>
     </af:panelStretchLayout>
   </af:panelBox>
 </jsp:root>
