@@ -3,87 +3,88 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:c="http://java.sun.com/jsp/jstl/core">
-  <c:set var="viewcontrollerBundle"
-         value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
-  <af:panelBox text="Import Configuration" id="pb1">
+  <af:panelHeader text="panelHeader 1" id="ph1">
+    <f:facet name="context"/>
+    <f:facet name="menuBar"/>
     <f:facet name="toolbar"/>
-    <af:spacer width="10" height="10" id="s3"/>
-    <af:panelGroupLayout id="pgl3" layout="horizontal">
-      <af:panelGroupLayout id="pgl1" layout="horizontal">
-        <af:inputFile label="Upload File" id="if1"
-                      valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
-                      autoSubmit="true"/>
-        <af:spacer width="10" height="20" id="s2"/>
-      </af:panelGroupLayout>
-      <af:spacer width="10" height="10" id="s7"/>
-      <af:panelGroupLayout id="pgl2" layout="horizontal" partialTriggers="if1">
-        <af:panelLabelAndMessage label="Uploaded File Name" id="plam1"
-                                 inlineStyle="font-size:x-large; font-weight:bolder;">
-          <af:outputFormatted id="of1"
-                              binding="#{XMLImportPageBean.fileNameBinding}"
-                              inlineStyle="color:Teal; font-size:medium;"/>
-        </af:panelLabelAndMessage>
-        <af:spacer width="20" height="10" id="s5"/>
-        <af:panelLabelAndMessage label="Timestamp" id="plam2"
-                                 inlineStyle="font-weight:bolder; font-size:x-large;">
-          <af:outputFormatted id="of2"
-                              binding="#{XMLImportPageBean.timestampBinding}"
-                              inlineStyle="color:Navy; font-size:medium;"/>
-        </af:panelLabelAndMessage>
-        <af:spacer width="10" height="10" id="s6"/>
-        <af:panelLabelAndMessage label="Uploaded By" id="plam3"
-                                 inlineStyle="font-weight:bolder; font-size:x-large;">
-          <af:outputFormatted id="of3"
-                              binding="#{XMLImportPageBean.uploadedByBinding}"
-                              inlineStyle="color:Navy; font-size:medium;"/>
-        </af:panelLabelAndMessage>
-      </af:panelGroupLayout>
-    </af:panelGroupLayout>
-    <af:spacer width="10" height="20" id="s1"/>
-    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth"
-                           dimensionsFrom="parent">
-      <f:facet name="center">
-        <af:panelGroupLayout id="pgl4" layout="scroll">
-          <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}"
-                       var="node" selection="single"
-                       groupDisclosurePolicy="initiallyExpanded"
-                       partialTriggers="::if1">
-            <f:facet name="groupHeaderStamp">
-              <af:listItem id="li3" styleClass="ABHeader">
-                <af:outputText value="#{node.category}" id="ot142"
-                               inlineStyle="font-weight:bold;"/>
-              </af:listItem>
-            </f:facet>
-            <af:listItem id="li2">
-              <af:panelGridLayout id="pg1l3" dimensionsFrom="children">
-                <af:gridRow marginTop="5px" marginBottom="5px" height="auto"
-                            id="gr1">
-                  <af:gridCell marginStart="5px" width="34%" id="gc2">
-                    <af:outputText value="#{node.nodeName}" id="ot21"/>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" width="33%" id="gc6">
-                    <af:outputText value="#{node.nodeDescription}" id="ot33"/>
-                  </af:gridCell>
-                  <af:gridCell marginStart="5px" marginEnd="5px" width="33%"
-                               id="gc1">
-                    <af:outputText value="#{node.nodeQty}" 
-                                  id="it7"/>
-                  </af:gridCell>
-                  <af:gridCell id="gc4">
-                    <af:outputText value="#{node.uom}" id="ot2"/>
-                  </af:gridCell>
-                  <af:gridCell id="gc3">
-                    <af:outputText value="#{node.unitPrice}" id="ot1"/>
-                  </af:gridCell>
-                  <af:gridCell id="gc5">
-                    <af:outputText value="#{node.extendedPrice}" id="ot3"/>
-                  </af:gridCell>
-                </af:gridRow>
-              </af:panelGridLayout>
-            </af:listItem>
-          </af:listView>
+    <f:facet name="legend"/>
+    <f:facet name="info"/>
+    <af:panelBox text="Import Configuration" id="pb1">
+      <f:facet name="toolbar"/>
+      <af:spacer width="10" height="10" id="s3"/>
+      <af:panelGroupLayout id="pgl3" layout="horizontal">
+        <af:panelGroupLayout id="pgl1" layout="horizontal">
+          <af:inputFile label="Upload File" id="if1"
+                        valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
+                        autoSubmit="true"/>
+          <af:spacer width="10" height="20" id="s2"/>
         </af:panelGroupLayout>
-      </f:facet>
-    </af:panelStretchLayout>
-  </af:panelBox>
+        <af:spacer width="10" height="10" id="s7"/>
+        <af:panelGroupLayout id="pgl2" layout="horizontal"
+                             partialTriggers="if1">
+          <af:panelLabelAndMessage label="Uploaded File Name" id="plam1"
+                                   inlineStyle="font-size:x-large; font-weight:bolder;">
+            <af:outputFormatted id="of1"
+                                binding="#{XMLImportPageBean.fileNameBinding}"
+                                inlineStyle="color:Teal; font-size:medium;"/>
+          </af:panelLabelAndMessage>
+          <af:spacer width="20" height="10" id="s5"/>
+          <af:panelLabelAndMessage label="Timestamp" id="plam2"
+                                   inlineStyle="font-weight:bolder; font-size:x-large;">
+            <af:outputFormatted id="of2"
+                                binding="#{XMLImportPageBean.timestampBinding}"
+                                inlineStyle="color:Navy; font-size:medium;"/>
+          </af:panelLabelAndMessage>
+          <af:spacer width="10" height="10" id="s6"/>
+          <af:panelLabelAndMessage label="Uploaded By" id="plam3"
+                                   inlineStyle="font-weight:bolder; font-size:x-large;">
+            <af:outputFormatted id="of3"
+                                binding="#{XMLImportPageBean.uploadedByBinding}"
+                                inlineStyle="color:Navy; font-size:medium;"/>
+          </af:panelLabelAndMessage>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+      <af:spacer width="10" height="20" id="s1"/>
+      <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}" var="node"
+                   selection="single" groupDisclosurePolicy="initiallyExpanded"
+                   partialTriggers="::if1">
+        <f:facet name="groupHeaderStamp">
+          <af:listItem id="li3" styleClass="ABHeader">
+            <af:outputText value="#{node.category}" id="ot142"
+                           inlineStyle="font-weight:bold;"/>
+          </af:listItem>
+        </f:facet>
+        <af:listItem id="li2">
+          <af:panelGridLayout id="pgl5">
+            <af:gridRow marginTop="5px" height="auto" id="gr2">
+              <af:gridCell marginStart="5px" width="15%" id="gc9">
+                <af:outputText value="#{node.nodeName}" id="ot1"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="15%" id="gc4">
+                <af:outputText value="#{node.nodeDescription}" id="ot2"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" marginEnd="5px" width="14%"
+                           id="gc5">
+                <af:spacer width="400" height="10" id="s4"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="14%" id="gc3">
+                <af:outputText value="#{node.nodeQty}" id="ot3"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="14%" id="gc8">
+                <af:outputText id="ot4" value="#{node.uom}"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="14%" id="gc11">
+                <af:outputText value="#{node.unitPrice}" id="ot5"/>
+              </af:gridCell>
+              <af:gridCell marginStart="5px" width="14%" id="gc6">
+                <af:outputText value="#{node.extendedPrice}" id="ot6"/>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </af:listItem>
+      </af:listView>
+    </af:panelBox>
+    <c:set var="viewcontrollerBundle"
+           value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
+  </af:panelHeader>
 </jsp:root>

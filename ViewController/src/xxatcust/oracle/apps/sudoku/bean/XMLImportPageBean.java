@@ -33,6 +33,7 @@ import oracle.adf.view.rich.util.ResetUtils;
 
 import oracle.binding.OperationBinding;
 
+import oracle.jbo.JboException;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
@@ -229,53 +230,65 @@ public class XMLImportPageBean {
         // employeeTree =null ;
         if (categoryTree == null) {
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+
             if (parentObj != null) {
                 V93kQuote obj = (V93kQuote)parentObj;
-                List<String> catList = new ArrayList<String>();
-                List<String> distinctList = new ArrayList<String>();
-                List<ConfiguratorNodePOJO> allNodesList =
-                    obj.getNodeCollection();
-                HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
-                    new HashMap<String, List<ConfiguratorNodePOJO>>();
-                for (ConfiguratorNodePOJO node : allNodesList) {
-                    catList.add(node.getNodeCategory());
-                }
-                distinctList = removeDuplicatesFromList(catList);
-
-                for (String distinctCategory : distinctList) {
-                    List<ConfiguratorNodePOJO> temp =
-                        new ArrayList<ConfiguratorNodePOJO>();        
-                    for (ConfiguratorNodePOJO node : allNodesList) {                                      
-                        if (distinctCategory != null &&
-                            distinctCategory.equalsIgnoreCase(node.getNodeCategory())) {
-                            temp.add(node);                           
-                        }                        
+                //Check if no exceptions from configurator
+                HashMap<String, ArrayList<String>> exceptionMap =
+                    obj.getExceptionMap().getErrorMap();
+                    List<String> catList = new ArrayList<String>();
+                    List<String> distinctList = new ArrayList<String>();
+                    List<ConfiguratorNodePOJO> allNodesList =
+                        obj.getNodeCollection();
+                    HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                        new HashMap<String, List<ConfiguratorNodePOJO>>();
+                    for (ConfiguratorNodePOJO node : allNodesList) {
+                        catList.add(node.getNodeCategory());
                     }
-                    allNodesByCategoriesMap.put(distinctCategory, temp);
-                }
-                root = new ArrayList<NodeCategory>();
-                Iterator it = allNodesByCategoriesMap.entrySet().iterator();
-                NodeCategory firstLevel = null ;
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    String category = (String)pair.getKey();
-                    firstLevel = new NodeCategory(category, null,null,null,null,null,null);
-                    root.add(firstLevel);
-                    List<ConfiguratorNodePOJO> childList =
-                        (List<ConfiguratorNodePOJO>)pair.getValue();
-                    for (ConfiguratorNodePOJO node : childList) {
-                        NodeCategory secondLevel =
-                            new NodeCategory(category, node.getNodeName(),node.getNodeDescription(),node.getNodeQty(),node.getNodeValue(),node.getUnitPrice(),node.getExtendedPrice());
-                        firstLevel.addNodes(secondLevel);
+                    distinctList = removeDuplicatesFromList(catList);
+
+                    for (String distinctCategory : distinctList) {
+                        List<ConfiguratorNodePOJO> temp =
+                            new ArrayList<ConfiguratorNodePOJO>();
+                        for (ConfiguratorNodePOJO node : allNodesList) {
+                            if (distinctCategory != null &&
+                                distinctCategory.equalsIgnoreCase(node.getNodeCategory())) {
+                                temp.add(node);
+                            }
+                        }
+                        allNodesByCategoriesMap.put(distinctCategory, temp);
+                    }
+                    root = new ArrayList<NodeCategory>();
+                    Iterator it =
+                        allNodesByCategoriesMap.entrySet().iterator();
+                    NodeCategory firstLevel = null;
+                    while (it.hasNext()) {
+                        Map.Entry pair = (Map.Entry)it.next();
+                        String category = (String)pair.getKey();
+                        firstLevel =
+                                new NodeCategory(category, null, null, null,
+                                                 null, null, null);
+                        root.add(firstLevel);
+                        List<ConfiguratorNodePOJO> childList =
+                            (List<ConfiguratorNodePOJO>)pair.getValue();
+                        for (ConfiguratorNodePOJO node : childList) {
+                            NodeCategory secondLevel =
+                                new NodeCategory(category, node.getNodeName(),
+                                                 node.getNodeDescription(),
+                                                 node.getNodeQty(),
+                                                 node.getNodeValue(),
+                                                 node.getUnitPrice(),
+                                                 node.getExtendedPrice());
+                            firstLevel.addNodes(secondLevel);
+                        }
+
                     }
 
+                    categoryTree =
+                            new ChildPropertyTreeModel(root, "childNodes");
                 }
-                
-                categoryTree = new ChildPropertyTreeModel(root, "childNodes");
+
             }
-
-        }
-
         return categoryTree;
 
     }
