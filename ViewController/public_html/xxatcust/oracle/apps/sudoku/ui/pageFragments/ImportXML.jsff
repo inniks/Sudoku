@@ -3,15 +3,9 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:c="http://java.sun.com/jsp/jstl/core">
-  <af:panelHeader text="panelHeader 1" id="ph1">
-    <f:facet name="context"/>
-    <f:facet name="menuBar"/>
-    <f:facet name="toolbar"/>
-    <f:facet name="legend"/>
-    <f:facet name="info"/>
-    <af:panelBox text="Import Configuration" id="pb1">
-      <f:facet name="toolbar"/>
-      <af:spacer width="10" height="10" id="s3"/>
+  <af:panelSplitter id="ps1" orientation="vertical" dimensionsFrom="children"
+                    splitterPosition="50">
+    <f:facet name="first">
       <af:panelGroupLayout id="pgl3" layout="horizontal">
         <af:panelGroupLayout id="pgl1" layout="horizontal">
           <af:inputFile label="Upload File" id="if1"
@@ -44,7 +38,10 @@
           </af:panelLabelAndMessage>
         </af:panelGroupLayout>
       </af:panelGroupLayout>
-      <af:spacer width="10" height="20" id="s1"/>
+      <c:set var="viewcontrollerBundle"
+             value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
+    </f:facet>
+    <f:facet name="second">
       <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}" var="node"
                    selection="single" groupDisclosurePolicy="initiallyExpanded"
                    partialTriggers="::if1">
@@ -83,8 +80,6 @@
           </af:panelGridLayout>
         </af:listItem>
       </af:listView>
-    </af:panelBox>
-    <c:set var="viewcontrollerBundle"
-           value="#{adfBundle['xxat.apps.sudoku.view.ViewControllerBundle']}"/>
-  </af:panelHeader>
+    </f:facet>
+  </af:panelSplitter>
 </jsp:root>
