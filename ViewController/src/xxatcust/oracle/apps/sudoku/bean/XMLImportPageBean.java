@@ -1,5 +1,6 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,14 +22,23 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
+import javax.xml.bind.JAXBException;
+
+import oracle.adf.controller.ControllerContext;
+import oracle.adf.controller.ViewPortContext;
+import oracle.adf.model.BindingContext;
+import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
+import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
+import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.util.ResetUtils;
 
 import oracle.binding.OperationBinding;
@@ -57,6 +67,8 @@ public class XMLImportPageBean {
     private RichOutputFormatted uploadedByBinding;
     ChildPropertyTreeModel categoryTree;
     private ArrayList<NodeCategory> root;
+    private RichPopup warningPopup;
+    private RichOutputFormatted warnText;
 
     public XMLImportPageBean() {
         super();
@@ -117,24 +129,11 @@ public class XMLImportPageBean {
         } else {
             try {
                 inputStream = myfile.getInputStream();
-                _logger.info("Print inputStream  uploadFile" + inputStream);
-            } catch (Exception ex) {
-                // handle exception
-                ex.printStackTrace();
-                //  _logger.("error in uploadFile" +ex);
-                _logger.info("error Exception in uploadFile" + ex);
-
-            } finally {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    _logger.info("error in IOException uploadFile" + e);
-                }
+            } catch (IOException e) {
+                ADFUtils.routeExceptions(e);
             }
-
+            _logger.info("Print inputStream  uploadFile" + inputStream);
         }
-        //Returns the path where file is stored
         return inputStream;
     }
 
@@ -149,46 +148,51 @@ public class XMLImportPageBean {
     }
 
     public void parseXMLToPojo(InputStream inputStream) {
-        V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
-        _logger.info("Print parent  parseXMLToPojo" + parent);
-        //Add Session details on the parent object
-        SessionDetails sessionDetails = new SessionDetails();
-        sessionDetails.setApplicationId("880");
-        sessionDetails.setRespId("51156");
-        sessionDetails.setUserId("11639");
-        parent.setSessionDetails(sessionDetails);
-        String jsonStr = JSONUtils.convertObjToJson(parent);
-        V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-        ADFUtils.setSessionScopeValue("parentObject", obj);
-        //        _logger.info("Print jsonStr  parseXMLToPojo" +jsonStr);
-        //        Object obj = null;
-        //        //Reading JSOn from File to POJO
-        //        ObjectMapper mapper = new ObjectMapper();
-        //        _logger.info("Print mapper  parseXMLToPojo" +mapper);
-        //        try {
-        //            //comment this to run locally
-        //            String responseJson =
-        //                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        //            _logger.info("Print responseJson  parseXMLToPojo" +responseJson);
-        //           //String responseJson = (String)JSONUtils.convertJsonToObject(null);
-        //            obj = mapper.readValue(responseJson, V93kQuote.class);
-        //            _logger.info("Print obj  parseXMLToPojo" +obj);
-        //            ADFUtils.setSessionScopeValue("parentObject", obj);
-        //            _logger.info("Print parentObject from session in parseXMLToPojo " +ADFUtils.getSessionScopeValue("parentObject"));
-        //        } catch (JsonParseException e)
-        //        {   ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Exception in Parsing json:"+e.getOriginalMessage());
-        //            e.printStackTrace();
-        //            _logger.info("error Print JsonParseException  parseXMLToPojo" +e);
-        //        } catch (JsonMappingException e)
-        //        {
-        //            _logger.info("error Print JsonMappingException  parseXMLToPojo" +e);
-        //            e.printStackTrace();
-        //
-        //        } catch (IOException e) {
-        //            _logger.info("error Print IOException  parseXMLToPojo" +e);
-        //            e.printStackTrace();
-        //
-        //        }
+        try {
+            V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
+            _logger.info("Print parent  parseXMLToPojo" + parent);
+            //Add Session details on the parent object
+            SessionDetails sessionDetails = new SessionDetails();
+            sessionDetails.setApplicationId("880");
+            sessionDetails.setRespId("51156");
+            sessionDetails.setUserId("11639");
+            parent.setSessionDetails(sessionDetails);
+            String jsonStr = JSONUtils.convertObjToJson(parent);
+            V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+            ADFUtils.setSessionScopeValue("parentObject", obj);
+            //        _logger.info("Print jsonStr  parseXMLToPojo" +jsonStr);
+            //        Object obj = null;
+            //        //Reading JSOn from File to POJO
+            //        ObjectMapper mapper = new ObjectMapper();
+            //        _logger.info("Print mapper  parseXMLToPojo" +mapper);
+            //        try {
+            //            //comment this to run locally
+            //            String responseJson =
+            //                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            //            _logger.info("Print responseJson  parseXMLToPojo" +responseJson);
+            //           //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+            //            obj = mapper.readValue(responseJson, V93kQuote.class);
+            //            _logger.info("Print obj  parseXMLToPojo" +obj);
+            //            ADFUtils.setSessionScopeValue("parentObject", obj);
+            //            _logger.info("Print parentObject from session in parseXMLToPojo " +ADFUtils.getSessionScopeValue("parentObject"));
+            //        } catch (JsonParseException e)
+            //        {   ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Exception in Parsing json:"+e.getOriginalMessage());
+            //            e.printStackTrace();
+            //            _logger.info("error Print JsonParseException  parseXMLToPojo" +e);
+            //        } catch (JsonMappingException e)
+            //        {
+            //            _logger.info("error Print JsonMappingException  parseXMLToPojo" +e);
+            //            e.printStackTrace();
+            //
+            //        } catch (IOException e) {
+            //            _logger.info("error Print IOException  parseXMLToPojo" +e);
+            //            e.printStackTrace();
+            //
+            //        }
+        } catch (Exception ex) {
+            ADFUtils.routeExceptions(ex);
+
+        }
 
     }
 
@@ -228,14 +232,49 @@ public class XMLImportPageBean {
 
     public ChildPropertyTreeModel getCategoryTree() {
         // employeeTree =null ;
-        if (categoryTree == null) {
-            Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+        try {
+            if (categoryTree == null) {
+                Object parentObj =
+                    ADFUtils.getSessionScopeValue("parentObject");
 
-            if (parentObj != null) {
-                V93kQuote obj = (V93kQuote)parentObj;
-                //Check if no exceptions from configurator
-                HashMap<String, ArrayList<String>> exceptionMap =
-                    obj.getExceptionMap().getErrorMap();
+                if (parentObj != null) {
+                    V93kQuote obj = (V93kQuote)parentObj;
+                    //Check if no exceptions from configurator
+                    if (obj.getExceptionMap() != null &&
+                        obj.getExceptionMap().getErrorMap() != null) {
+                        HashMap<String, ArrayList<String>> exceptionMap =
+                            obj.getExceptionMap().getErrorMap();
+                        List<String> configErrors = exceptionMap.get("ERROR");
+                        if (configErrors != null && configErrors.size() > 0) {
+                            StringBuilder errMessage =
+                                new StringBuilder("<html><body>");
+                            for (String err : configErrors) {
+                                errMessage.append("<p><b>" + err + "</b></p>");
+                            }
+                            errMessage.append("</body></html>");
+                            throw new JboException(errMessage.toString());
+                        }
+                        //Check for warnings from configurator
+                        List<String> configWarnings =
+                            exceptionMap.get("NODE_MAPPING_WARN");
+                        if (configWarnings != null &&
+                            configWarnings.size() > 0) {
+                            StringBuilder warningMessage =
+                                new StringBuilder("<html><body>");
+                            for (String warning : configWarnings) {
+                                warningMessage.append("<p><b>" + warning +
+                                                      "</b></p>");
+                            }
+                            warningMessage.append("</body></html>");
+                            RichPopup.PopupHints hints =
+                                new RichPopup.PopupHints();
+                            warnText.setValue(warningMessage.toString());
+                            warningPopup.show(hints);
+                        }
+
+                    }
+
+
                     List<String> catList = new ArrayList<String>();
                     List<String> distinctList = new ArrayList<String>();
                     List<ConfiguratorNodePOJO> allNodesList =
@@ -289,7 +328,48 @@ public class XMLImportPageBean {
                 }
 
             }
+        } catch (Exception e) {
+            ADFUtils.routeExceptions(e);
+        }
         return categoryTree;
 
+    }
+
+    public void controllerExceptionHandler() {
+        ControllerContext context = ControllerContext.getInstance();
+        ViewPortContext currentRootViewPort = context.getCurrentRootViewPort();
+        Exception exceptionData = currentRootViewPort.getExceptionData();
+        if (currentRootViewPort.isExceptionPresent()) {
+            exceptionData.printStackTrace();
+            currentRootViewPort.clearException();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null,
+                                    new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                                     exceptionData.getMessage(),
+                                                     null));
+        }
+    }
+
+    public void raiseException(ActionEvent actionEvent) {
+        // Add event code here...
+        JboException ex = new JboException("Custome Exveption");
+        BindingContext bctx = BindingContext.getCurrent();
+        ((DCBindingContainer)bctx.getCurrentBindingsEntry()).reportException(ex);
+    }
+
+    public void setWarningPopup(RichPopup warningPopup) {
+        this.warningPopup = warningPopup;
+    }
+
+    public RichPopup getWarningPopup() {
+        return warningPopup;
+    }
+
+    public void setWarnText(RichOutputFormatted warnText) {
+        this.warnText = warnText;
+    }
+
+    public RichOutputFormatted getWarnText() {
+        return warnText;
     }
 }

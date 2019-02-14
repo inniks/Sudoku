@@ -4,11 +4,13 @@
       <AppModuleConfig DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" name="SudokuAMLocal" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
          <Database jbo.locking.mode="optimistic"/>
          <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
+         <Custom JDBCDataSource="jdbc/myDS1"/>
       </AppModuleConfig>
       <AppModuleConfig DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" name="SudokuAMShared" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
          <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
          <Database jbo.locking.mode="optimistic"/>
          <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
+         <Custom JDBCDataSource="jdbc/myDS1"/>
       </AppModuleConfig>
    </AppModuleConfigBag>
 </BC4JConfig>

@@ -9,7 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.eclipse.persistence.oxm.annotations.XmlPath;
+
+import xxatcust.oracle.apps.sudoku.util.StringTrimAdapter;
 
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.NONE)

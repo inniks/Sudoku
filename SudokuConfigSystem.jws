@@ -83,5 +83,9 @@
       <list n="profileList">
          <string v="SudokuConfigSystem_application1"/>
       </list>
+      <value n="Security-Deployment-Migrate-Users-And-Groups-Key" v="false"/>
+      <value n="Security-Deployment-Overwrite-Application-Policies-Key" v="false"/>
+      <value n="Security-Deployment-Overwrite-Credentials-Key" v="false"/>
+      <value n="Weblogic-JDBC-Auto-Sync-Key" v="false"/>
    </hash>
 </jws:workspace>

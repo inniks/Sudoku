@@ -16,36 +16,22 @@ public class JSONUtils {
         super();
     }
 
-    public static Object convertJsonToObject(String jsonString) {
+    public static Object convertJsonToObject(String jsonString) throws IOException,
+                                                                       JsonParseException,
+                                                                       JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
-        try {
             obj = mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response.json"), V93kQuote.class);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return obj; 
     }
     
-    public static String convertObjToJson(Object obj){
+    public static String convertObjToJson(Object obj) throws IOException,
+                                                             JsonGenerationException,
+                                                             JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = null ;
-        try {
             mapper.writeValue(new File("D:\\FileStore\\V93kQuote.json"), obj);
             jsonInString = mapper.writeValueAsString(obj);
-            
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
         return jsonInString;
     }
     

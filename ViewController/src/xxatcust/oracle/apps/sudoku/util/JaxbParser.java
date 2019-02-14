@@ -43,8 +43,7 @@ public class JaxbParser {
     }
 
 
-    public static V93kQuote jaxbXMLToObject(InputStream inputStream) {
-        try {
+    public static V93kQuote jaxbXMLToObject(InputStream inputStream) throws JAXBException {
             JAXBContext context =
                 JAXBContext.newInstance(V93kQuote.class, Config.class,
                                         QHeader.class, Customer.class,
@@ -60,10 +59,6 @@ public class JaxbParser {
             V93kQuote parent = (V93kQuote)un.unmarshal(inputStream);
             //ADFUtils.setPageFlowScopeValue("parentObject", parent);
             return parent;
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

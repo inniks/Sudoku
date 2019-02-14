@@ -55,6 +55,7 @@ import oracle.binding.OperationBinding;
 
 import oracle.javatools.resourcebundle.BundleFactory;
 
+import oracle.jbo.JboException;
 import oracle.jbo.Key;
 import oracle.jbo.NavigatableRowIterator;
 import oracle.jbo.Row;
@@ -1432,5 +1433,11 @@ public class ADFUtils {
         UIViewRoot UIV = ViewH.createView(fctx, refreshpage);
         UIV.setViewId(refreshpage);
         fctx.setViewRoot(UIV);
+    }
+    
+    public static void routeExceptions(Exception ex){
+        JboException jboex = new JboException(ex.getMessage());
+        BindingContext bctx = BindingContext.getCurrent();
+          ((DCBindingContainer)bctx.getCurrentBindingsEntry()).reportException(jboex);
     }
 }

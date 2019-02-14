@@ -147,6 +147,9 @@
                         <hash>
                            <value n="type" v="7"/>
                         </hash>
+                        <hash>
+                           <value n="type" v="6"/>
+                        </hash>
                      </list>
                      <value n="displayName" v="WEB-INF/classes"/>
                      <hash n="filters">
@@ -568,6 +571,23 @@
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
       <url n="outputDirectory" path="classes/"/>
+   </hash>
+   <hash n="oracle.jdevimpl.webapp.jsp.JspVeProjectSettings">
+      <list n="filters">
+         <string v="trinidad"/>
+      </list>
+      <list n="servlet_listeners">
+         <string v="com.sun.faces.config.ConfigureListener"/>
+      </list>
+      <list n="servlet_listeners_unselected">
+         <string v="oracle.bc4j.mbean.BC4JConfigLifeCycleCallBack"/>
+         <string v="oracle.adf.mbean.share.connection.ADFConnectionLifeCycleCallBack"/>
+         <string v="oracle.adf.mbean.share.config.ADFConfigLifeCycleCallBack"/>
+      </list>
+      <list n="servlets">
+         <string v="Faces Servlet"/>
+         <string v="resources"/>
+      </list>
    </hash>
    <hash n="oracle.jdevimpl.webapp.jsp.libraries.model.ProjectTagLibraries">
       <list n="tag-libraries">

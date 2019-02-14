@@ -23,7 +23,7 @@
               <af:panelGroupLayout id="panelGroupLayout1" layout="horizontal">
                 <af:spacer width="6" height="10" id="pt_s6"/>
                 <af:outputText value="Sudoku Configurator" id="pt_ot3"
-                               inlineStyle="font-size:medium; font-weight:bold; color:Background;"/>
+                               inlineStyle="font-size:large; font-weight:bold; color:Blue;"/>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"
                                    visible="false">
@@ -39,24 +39,27 @@
               </af:panelGroupLayout>
             </af:panelGroupLayout>
             <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
-                                 halign="right" styleClass="AFStretchWidth">
-              <af:spacer width="50" height="10" id="pt_s3"/>
-              <af:panelGroupLayout id="pt_pgl3" layout="horizontal"
-                                   halign="right" valign="middle"
-                                   styleClass="AFStretchWidth">
-                <af:spacer width="20" height="10" id="pt_s5"/>
-                <af:panelGroupLayout id="pt_pgl8" layout="horizontal">
+                                 halign="center" styleClass="AFStretchWidth">
+              <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth"
+                                   halign="center">
+                <af:panelGroupLayout id="pt_pgl8" layout="horizontal"
+                                     valign="baseline">
                   <af:outputText value="Instance Name : PTH" id="outputText1"
                                  styleClass="AFHeaderLevelTwo"
-                                 inlineStyle="font-size:medium; color:Background;"/>
+                                 inlineStyle="font-size:medium; color:Background;"
+                                 noWrap="true"/>
                 </af:panelGroupLayout>
-                <af:spacer width="100" height="10" id="spacer1"/>
-                <af:outputText value="WELCOME  :  " id="pt_ot1"
-                               styleClass="AFHeaderLevelTwo" noWrap="true"/>
-                <af:spacer width="4" height="10" id="pt_s4"/>
-                <af:outputText value="User name :#{securityContext.userName}" id="pt_ot4"
-                               styleClass="AFHeaderLevelTwo"/>
-                <af:spacer width="50" height="10" id="spacer2"/>
+                <af:spacer width="20" height="10" id="spacer1"/>
+                <af:panelGroupLayout id="pt_pgl9" layout="horizontal">
+                  <af:outputText value="WELCOME  :  " id="pt_ot1"
+                                 styleClass="AFHeaderLevelTwo" noWrap="true"
+                                 inlineStyle="font-size:medium; color:Background;"/>
+                  <af:spacer width="3" height="10" id="pt_s4"/>
+                  <af:outputText value="#{securityContext.userName}" id="pt_ot4"
+                                 styleClass="AFHeaderLevelTwo"
+                                 inlineStyle='font-size:medium; color:Background;'/>
+                </af:panelGroupLayout>
+                <af:spacer width="150" height="10" id="spacer2"/>
                 <af:image id="pt_i1"
                           source="/Resources/images/adv.gif"
                           inlineStyle="width:215px;"/>

@@ -40,84 +40,87 @@ import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 
 public class SudokuPagePhaseListener implements PagePhaseListener {
     private static ADFLogger _logger =
-            ADFLogger.createADFLogger(SudokuPagePhaseListener.class);
-    String _home_url=null;
-    String currentUrlName=null;
-    String _logout_url=null;
-   
+        ADFLogger.createADFLogger(SudokuPagePhaseListener.class);
+    String _home_url = null;
+    String currentUrlName = null;
+    String _logout_url = null;
+
     public SudokuPagePhaseListener() {
         super();
     }
-    public void manageAttributes(SudokuAMImpl amClient) 
-    {
+
+    public void manageAttributes(SudokuAMImpl amClient) {
         FacesContext fctx = FacesContext.getCurrentInstance();
         Session session = amClient.getAppsSession();
-     //   Map ebsAttribs = session.getInfo();
-        currentUrlName=amClient.getCurrentUrl();
-        _home_url = currentUrlName+"OA.jsp?OAFunc=OAHOMEPAGE#";
-        _logout_url = currentUrlName+"OALogout.jsp?menu=Y";
+        //   Map ebsAttribs = session.getInfo();
+        currentUrlName = amClient.getCurrentUrl();
+        _home_url = currentUrlName + "OA.jsp?OAFunc=OAHOMEPAGE#";
+        _logout_url = currentUrlName + "OALogout.jsp?menu=Y";
         ExternalContext ectx = fctx.getExternalContext();
         HttpSession httpSession = (HttpSession)ectx.getSession(false);
         httpSession.setAttribute("_home_url", _home_url);
         httpSession.setAttribute("_logout_url", _logout_url);
     }
+
     public void afterPhase(PagePhaseEvent pagePhaseEvent) {
     }
 
-    public void beforePhase(PagePhaseEvent pagePhaseEvent) 
-    {
-//        if (pagePhaseEvent.getPhaseId() == Lifecycle.PREPARE_RENDER_ID ||
-//            pagePhaseEvent.getPhaseId() == Lifecycle.INIT_CONTEXT_ID) 
-//        {
+    public void beforePhase(PagePhaseEvent pagePhaseEvent) {
+        if (pagePhaseEvent.getPhaseId() == Lifecycle.PREPARE_RENDER_ID ||
+            pagePhaseEvent.getPhaseId() == Lifecycle.INIT_CONTEXT_ID) {
 //            String agent = null;
 //            _logger.info("In before Phase");
-//            //ApplicationModule am = this.getAppModule(); 
-//           System.out.println("In before phase");
-//           
-//           
+//            //ApplicationModule am = this.getAppModule();
+//
 //            FacesContext fctx = FacesContext.getCurrentInstance();
-//            _logger.info("print fctx"+fctx);
+//            _logger.info("print fctx" + fctx);
 //            HttpServletRequest request =
 //                (HttpServletRequest)fctx.getExternalContext().getRequest();
-//            _logger.info("print request"+request);
+//            _logger.info("print request" + request);
 //            HttpServletResponse response =
 //                (HttpServletResponse)fctx.getExternalContext().getResponse();
-//            _logger.info("print response"+response);
+//            _logger.info("print response" + response);
 //            CookieStatus icxCookieStatus = null;
 //            String currentUser = null;
 //            String currentUserId;
 //            try {
 //                ApplicationModule am = getAppModule();
-//                SudokuAMImpl amClient = (SudokuAMImpl)am; 
+//                SudokuAMImpl amClient = (SudokuAMImpl)am;
 //                manageAttributes(amClient);
 //                Map map = ADFContext.getCurrent().getSessionScope();
-//                _logger.info("print am" + am);                  
-//               
-//                
+//                _logger.info("print am" + am);
+//
 //
 //                Connection EBSconn = getConnFromDS((ApplicationModuleImpl)am);
-//                _logger.info("print EBSconn" + EBSconn);     
+//                _logger.info("print EBSconn" + EBSconn);
 //                ServletContext servContext =
 //                    (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
-//                _logger.info("print servContext" + servContext);    
+//                _logger.info("print servContext" + servContext);
 //                String applServerID =
 //                    servContext.getInitParameter("APPL_SERVER_ID");
-//                
-//                
+//
+//                applServerID =
+//                        "79B78EF8A6FD7CD3E0533CBF730AD57519655739064505939664236109398312";
 //                _logger.info("print applServerID==>" + applServerID);
 //                EBiz instance = new EBiz(EBSconn, applServerID);
 //                _logger.info("print instance" + instance);
 //                AppsRequestWrapper wrappedRequest =
 //                    new AppsRequestWrapper(request, response, EBSconn,
 //                                           instance);
-//                _logger.info("print wrappedRequest" + wrappedRequest);
+//                _logger.info("Info from wrapped session " +
+//                             wrappedRequest.getCurrentSessionId() +
+//                             "CurrentUseriD " +
+//                             wrappedRequest.getCurrentUserId() +
+//                             ": ContextPath " +
+//                             wrappedRequest.getContextPath() +
+//                             " Cookie Status " +
+//                             wrappedRequest.getICXCookieStatus() +
+//                             " Parameter map " +
+//                             wrappedRequest.getParameterMap());
 //                map.put("applServerID", applServerID);
 //                map.put("instance", instance);
 //                map.put("wrappedRequest", wrappedRequest);
-//
-//
 //                Session session = wrappedRequest.getAppsSession();
-//                _logger.info("print session" + session);
 //                icxCookieStatus =
 //                        session.getCurrentState().getIcxCookieStatus();
 //                _logger.info("print icxCookieStatus" + icxCookieStatus);
@@ -129,9 +132,9 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 //                map.put("currentUser", currentUser);
 //                _logger.info("print currentUserId" + currentUserId);
 //                _logger.info("ADFContext.getCurrent().getSecurityContext().getUserName()==>" +
-//                 ADFContext.getCurrent().getSecurityContext().getUserName());
+//                             ADFContext.getCurrent().getSecurityContext().getUserName());
 //
-//                
+//
 //                map.put("LoggedInUser", currentUser);
 //                map.put("LoggedInUserId", currentUserId);
 //
@@ -178,39 +181,37 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 //                return;
 //                //  } catch (IOException e) {
 //                // }
-//               
+//
 //            }
 //            //  FacesMessage message =
 //            //      new FacesMessage("Session is : " + icxCookieStatus + " " + currentUser + " " + currentUserId);
 //            // fctx.addMessage(null, message);
 //            System.out.println("Out before phase");
-//        }
+        }
     }
-    
-    
-    
-    public static ApplicationModule getAppModule() 
-    {
-            BindingContext bctx = BindingContext.getCurrent();
-            DCDataControl dc = bctx.findDataControl("SudokuAMDataControl");
-            ApplicationModule am = (ApplicationModule)dc.getDataProvider();
 
-            return am;
-        }
-    
+
+    public static ApplicationModule getAppModule() {
+        BindingContext bctx = BindingContext.getCurrent();
+        DCDataControl dc = bctx.findDataControl("SudokuAMDataControl");
+        ApplicationModule am = (ApplicationModule)dc.getDataProvider();
+
+        return am;
+    }
+
     public Connection getConnFromDS(ApplicationModuleImpl am) {
-            Statement st = am.getDBTransaction().createStatement(0);
-            Connection conn = null;
-            try {
-                conn = st.getConnection();
-                st.close();
-            } catch (SQLException ex) {
-                _logger.severe("Error , ", ex);
-                throw (new JboException(ex));
-            }
-            return conn;
+        Statement st = am.getDBTransaction().createStatement(0);
+        Connection conn = null;
+        try {
+            conn = st.getConnection();
+            st.close();
+        } catch (SQLException ex) {
+            _logger.severe("Error , ", ex);
+            throw (new JboException(ex));
         }
-    
+        return conn;
+    }
+
 
     private void initializeAppsContext(String respId, String userId,
                                        String applicationId) {
@@ -219,7 +220,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
         CallableStatement st = null;
         try {
 
-            st = txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); END;",
+            st =
+ txn.createCallableStatement("BEGIN fnd_global.apps_initialize(:1, :2, :3); END;",
                              0);
             st.setString(1, userId);
             st.setString(2, respId);
@@ -296,5 +298,5 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             throw (new JboException(ex));
         }
     }
-    
+
 }
