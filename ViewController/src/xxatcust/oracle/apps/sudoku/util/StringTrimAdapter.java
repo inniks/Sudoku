@@ -2,21 +2,33 @@ package xxatcust.oracle.apps.sudoku.util;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class StringTrimAdapter extends XmlAdapter<String, String> {
+import org.apache.commons.lang.StringUtils;
+
+public class StringTrimAdapter {
     public StringTrimAdapter() {
         super();
     }
 
-    public String unmarshal(String v) throws Exception {
-        if (v == null)
+    public static String removeLeadingSpaces(String param) {
+        if (param == null) {
             return null;
-        System.out.println("Item "+v);
-        return v.trim();
-    }
+        }
 
-    public String marshal(String v) throws Exception {
-        if (v == null)
-            return null;
-        return v.trim();
+        if (param.isEmpty()) {
+            return "";
+        }
+
+        int arrayIndex = 0;
+        while (true) {
+            if (!Character.isWhitespace(param.charAt(arrayIndex++))) {
+                break;
+            }
+        }
+        return param.substring(arrayIndex - 1);
+    }
+    
+    public static String stripSpaces(String input){
+        String stripped = StringUtils.stripEnd(input," ");
+        return stripped ;
     }
 }

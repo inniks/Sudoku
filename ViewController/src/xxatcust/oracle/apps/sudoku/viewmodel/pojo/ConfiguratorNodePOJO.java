@@ -9,11 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.eclipse.persistence.oxm.annotations.XmlPath;
-
 import xxatcust.oracle.apps.sudoku.util.StringTrimAdapter;
 
 @XmlRootElement(name = "item")
@@ -37,6 +32,14 @@ public class ConfiguratorNodePOJO {
         this.nodeName = nodeName;
     }
     public String getNodeName() {
+        
+        if(nodeName!=null){
+            //nodeName = removeLeadingSpaces(nodeName) ;
+            //System.out.println(nodeName);
+            nodeName = StringTrimAdapter.removeLeadingSpaces(nodeName) ;
+            nodeName = StringTrimAdapter.stripSpaces(nodeName) ;
+        }
+       
         return nodeName;
     }
 
@@ -86,4 +89,5 @@ public class ConfiguratorNodePOJO {
     public String getNodeCategory() {
         return nodeCategory;
     }
+   
 }

@@ -69,7 +69,7 @@ public class XMLImportPageBean {
     private ArrayList<NodeCategory> root;
     private RichPopup warningPopup;
     private RichOutputFormatted warnText;
-
+    private boolean showListHeader = false ; 
     public XMLImportPageBean() {
         super();
     }
@@ -115,7 +115,9 @@ public class XMLImportPageBean {
             //Upload File to path- Return actual server path
             InputStream inputStream = uploadFile(fileVal);
             _logger.info("Print inputStream  fileUploadVCE" + inputStream);
+            //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
             parseXMLToPojo(inputStream);
+            showListHeader = true ;
             //ResetUtils.reset(vce.getComponent());
         }
     }
@@ -371,5 +373,13 @@ public class XMLImportPageBean {
 
     public RichOutputFormatted getWarnText() {
         return warnText;
+    }
+
+    public void setShowListHeader(boolean showListHeader) {
+        this.showListHeader = showListHeader;
+    }
+
+    public boolean isShowListHeader() {
+        return showListHeader;
     }
 }

@@ -2,6 +2,9 @@ package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import xxatcust.oracle.apps.sudoku.util.StringTrimAdapter;
 
 @XmlRootElement(name = "qheader")
 public class QHeader {
@@ -44,7 +47,8 @@ public class QHeader {
     public void setDealObject(Deal DealObject) {
         this.DealObject = DealObject;
     }
-@XmlElement(name = "deal")
+
+    @XmlElement(name = "deal")
     public Deal getDealObject() {
         return DealObject;
     }
@@ -52,7 +56,8 @@ public class QHeader {
     public void setSalesteamObject(Salesteam SalesteamObject) {
         this.SalesteamObject = SalesteamObject;
     }
-@XmlElement(name = "salesteam")
+
+    @XmlElement(name = "salesteam")
     public Salesteam getSalesteamObject() {
         return SalesteamObject;
     }
