@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -35,6 +36,7 @@ import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
+import oracle.adf.view.rich.component.rich.data.RichListView;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
@@ -49,7 +51,10 @@ import oracle.jbo.RowSetIterator;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
+import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
+import org.apache.myfaces.trinidad.model.CollectionModel;
+import org.apache.myfaces.trinidad.model.RowKeySet;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
@@ -69,7 +74,11 @@ public class XMLImportPageBean {
     private ArrayList<NodeCategory> root;
     private RichPopup warningPopup;
     private RichOutputFormatted warnText;
-    private boolean showListHeader = false ; 
+    private boolean showListHeader = false;
+    private RichOutputFormatted dubugMsgBinding;
+    private RichOutputFormatted debugMsgBind;
+    private Boolean productsRendered = true;
+
     public XMLImportPageBean() {
         super();
     }
@@ -102,6 +111,12 @@ public class XMLImportPageBean {
         //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
         if (vce.getNewValue() != null) {
             ADFUtils.setSessionScopeValue("parentObject", null);
+            ResetUtils.reset(warnText);
+            ResetUtils.reset(debugMsgBind);
+            ResetUtils.reset((UIComponent)vce.getSource());
+            ResetUtils.reset(fileNameBinding);
+            ResetUtils.reset(timestampBinding);
+            ResetUtils.reset(uploadedByBinding);
             categoryTree = null;
             _logger.info("Print parentObject from session in fileUploadVCE " +
                          ADFUtils.getSessionScopeValue("parentObject"));
@@ -117,7 +132,7 @@ public class XMLImportPageBean {
             _logger.info("Print inputStream  fileUploadVCE" + inputStream);
             //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
             parseXMLToPojo(inputStream);
-            showListHeader = true ;
+            showListHeader = true;
             //ResetUtils.reset(vce.getComponent());
         }
     }
@@ -134,7 +149,6 @@ public class XMLImportPageBean {
             } catch (IOException e) {
                 ADFUtils.routeExceptions(e);
             }
-            _logger.info("Print inputStream  uploadFile" + inputStream);
         }
         return inputStream;
     }
@@ -273,6 +287,20 @@ public class XMLImportPageBean {
                             warnText.setValue(warningMessage.toString());
                             warningPopup.show(hints);
                         }
+                        //Check for debug messages from configurator
+                        List<String> debugMessages = exceptionMap.get("DEBUG");
+                        if (debugMessages != null &&
+                            debugMessages.size() > 0) {
+                            StringBuilder debugStr =
+                                new StringBuilder("<html><body>");
+                            for (String debugStatement : debugMessages) {
+                                System.out.println(debugStatement);
+                                debugStr.append("<p><b>" + debugStatement +
+                                                "</b></p>");
+                            }
+                            debugStr.append("</body></html>");
+                            debugMsgBind.setValue(debugStr.toString());
+                        }
 
                     }
 
@@ -308,7 +336,7 @@ public class XMLImportPageBean {
                         String category = (String)pair.getKey();
                         firstLevel =
                                 new NodeCategory(category, null, null, null,
-                                                 null, null, null);
+                                                 null, null, null, null);
                         root.add(firstLevel);
                         List<ConfiguratorNodePOJO> childList =
                             (List<ConfiguratorNodePOJO>)pair.getValue();
@@ -319,7 +347,8 @@ public class XMLImportPageBean {
                                                  node.getNodeQty(),
                                                  node.getNodeValue(),
                                                  node.getUnitPrice(),
-                                                 node.getExtendedPrice());
+                                                 node.getExtendedPrice(),
+                                                 node.getNodeColor());
                             firstLevel.addNodes(secondLevel);
                         }
 
@@ -381,5 +410,69 @@ public class XMLImportPageBean {
 
     public boolean isShowListHeader() {
         return showListHeader;
+    }
+
+    public void listViewRowSelection(SelectionEvent selectionEvent) {
+        CollectionModel treeModel = null;
+        RichListView listView = (RichListView)selectionEvent.getSource();
+        treeModel = (CollectionModel)listView.getValue();
+        RowKeySet selectedChildKeys = listView.getSelectedRowKeys();
+        if (!selectedChildKeys.isEmpty()) {
+            List<NodeCategory> nodeList =
+                (List<NodeCategory>)treeModel.getWrappedData();
+            Iterator selectedCharIter = selectedChildKeys.iterator();
+            while (selectedCharIter.hasNext()) {
+                List val = (List)selectedCharIter.next();
+                NodeCategory nc =
+                    nodeList.get(Integer.parseInt(val.get(0).toString()));
+                List childNodes = nc.getChildNodes();
+                if (val.size() > 0) {
+                    NodeCategory nc1 =
+                        (NodeCategory)childNodes.get(Integer.parseInt(val.get(1).toString()));
+                    System.out.println(nc1.getNodeName());
+                    ADFUtils.showFacesMessage("Row Selected:: " +
+                                              nc1.getNodeName() + " " +
+                                              nc1.getNodeDescription(),
+                                              FacesMessage.SEVERITY_INFO);
+                }
+            }
+        }
+    }
+
+    public void setDubugMsgBinding(RichOutputFormatted dubugMsgBinding) {
+        this.dubugMsgBinding = dubugMsgBinding;
+    }
+
+    public RichOutputFormatted getDubugMsgBinding() {
+        return dubugMsgBinding;
+    }
+
+    public void setDebugMsgBind(RichOutputFormatted debugMsgBind) {
+        this.debugMsgBind = debugMsgBind;
+    }
+
+    public RichOutputFormatted getDebugMsgBind() {
+        return debugMsgBind;
+    }
+
+    public void setProductsRendered(Boolean productsRendered) {
+        this.productsRendered = productsRendered;
+    }
+
+    public Boolean getProductsRendered() {
+        return productsRendered;
+    }
+
+
+    public void hideProducts(ActionEvent actionEvent) {
+        if (productsRendered) {
+            setProductsRendered(false);
+        }
+    }
+
+    public void showProducts(ActionEvent actionEvent) {
+        if (!productsRendered) {
+            setProductsRendered(true);
+        }
     }
 }

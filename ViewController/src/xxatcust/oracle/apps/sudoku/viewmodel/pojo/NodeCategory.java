@@ -12,10 +12,11 @@ public class NodeCategory {
     String unitPrice;
     String extendedPrice;
     String uom ;
+    String nodeColor;
     List<NodeCategory> childNodes;
 
 
-    public NodeCategory(String category,String nodeName,String nodeDescription,String nodeQty,String nodeValue,String unitPrice,String extendedPrice) {
+    public NodeCategory(String category,String nodeName,String nodeDescription,String nodeQty,String nodeValue,String unitPrice,String extendedPrice,String nodeColor) {
         this.nodeName = nodeName ;
         this.category = category;
         this.nodeDescription = nodeDescription ;
@@ -24,6 +25,7 @@ public class NodeCategory {
         this.unitPrice = unitPrice ;
         this.extendedPrice = extendedPrice ;
         this.uom = "EA" ;
+        this.nodeColor = nodeColor ;
         childNodes = new ArrayList<NodeCategory>();
     }
 
@@ -101,5 +103,13 @@ public class NodeCategory {
 
     public String getUom() {
         return uom;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public String getNodeColor() {
+        return nodeColor;
     }
 }

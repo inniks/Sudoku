@@ -21,7 +21,7 @@ public class JSONUtils {
                                                                        JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
-            obj = mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response.json"), V93kQuote.class);
+            obj = mapper.readValue(new File("D://Projects//Advantest//JsonResponse/errorResponse.json"), V93kQuote.class);
         return obj; 
     }
     

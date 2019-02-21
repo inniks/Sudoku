@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-import xxatcust.oracle.apps.sudoku.util.StringTrimAdapter;
-
 @XmlRootElement(name = "item")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ConfiguratorNodePOJO {
@@ -23,6 +21,7 @@ public class ConfiguratorNodePOJO {
     String unitPrice;
     String extendedPrice;
     String nodeCategory;
+    String nodeColor;
 
     public ConfiguratorNodePOJO() {
         super();
@@ -32,14 +31,6 @@ public class ConfiguratorNodePOJO {
         this.nodeName = nodeName;
     }
     public String getNodeName() {
-        
-        if(nodeName!=null){
-            //nodeName = removeLeadingSpaces(nodeName) ;
-            //System.out.println(nodeName);
-            nodeName = StringTrimAdapter.removeLeadingSpaces(nodeName) ;
-            nodeName = StringTrimAdapter.stripSpaces(nodeName) ;
-        }
-       
         return nodeName;
     }
 
@@ -89,5 +80,12 @@ public class ConfiguratorNodePOJO {
     public String getNodeCategory() {
         return nodeCategory;
     }
-   
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public String getNodeColor() {
+        return nodeColor;
+    }
 }

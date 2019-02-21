@@ -1,17 +1,23 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
+import java.util.ArrayList;
+
 public class SessionDetails {
     private String userId;
     private String applicationId;
     private String respId;
     private String modelId;
+    private String topItemId;
     private String publicationId;
+    private String publicationUsage;
     private String masterOrgID;
     private String modelName;
     private String priceListID;
     private Double conversionRateToUSD;
     private String configHdrId;
     private String configRevNbr;
+    private String configurationMode;
+    private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
     
     public SessionDetails() {
         super();
@@ -104,4 +110,41 @@ public class SessionDetails {
     public String getConfigRevNbr() {
         return configRevNbr;
     }
+
+    public void setPublicationUsage(String publicationUsage) {
+        this.publicationUsage = publicationUsage;
+    }
+
+    public String getPublicationUsage() {
+        return publicationUsage;
+    }
+
+    public void setTopItemId(String topItemId) {
+        this.topItemId = topItemId;
+    }
+
+    public String getTopItemId() {
+        return topItemId;
+    }
+
+    public void setConfigurationMode(String configurationMode) {
+        this.configurationMode = configurationMode;
+    }
+
+    public String getConfigurationMode() {
+        return configurationMode;
+    }
+
+    public void setNonComplaintsItems(ArrayList<String> nonComplaintsItems) {
+        this.nonComplaintsItems = nonComplaintsItems;
+    }
+
+    public ArrayList<String> getNonComplaintsItems() {
+        return nonComplaintsItems;
+    }
+
+    public void addNonComplaintsItems(String nonComplaintsItems) {
+        this.nonComplaintsItems.add(nonComplaintsItems);
+    }
+
 }
