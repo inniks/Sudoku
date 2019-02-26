@@ -73,6 +73,8 @@
         <f:facet name="toolbar"/>
         <f:facet name="legend"/>
         <f:facet name="info"/>
+        <af:spacer width="10" height="10" id="s17"/>
+        <af:separator id="s18"/>
         <af:panelGroupLayout layout="scroll"
                              xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                              id="pgl4" partialTriggers="ctb1">
@@ -102,6 +104,11 @@
                              inlineStyle="color:Black;  font-weight:bold;"
                              noWrap="true"/>
               <af:spacer width="145" height="10" id="s12"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="pgl8">
+              <af:outputFormatted id="of6"
+                                  binding="#{XMLImportPageBean.modeName}"
+                                  inlineStyle="font-size:medium; font-weight:bolder;"/>
             </af:panelGroupLayout>
             <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}"
                          var="node" selection="single"
