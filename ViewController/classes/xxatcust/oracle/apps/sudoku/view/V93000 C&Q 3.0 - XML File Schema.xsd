@@ -1,0 +1,182 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="V93000-Quote">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="qheader">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="qtitle"/>
+              <xs:element name="customer">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:float" name="cnumber"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="deal">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="currency"/>
+                    <xs:element type="xs:string" name="dincoterm"/>
+                    <xs:element type="xs:string" name="dpayterm"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="salesteam">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="ou"/>
+                    <xs:element type="xs:string" name="srespo"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="config">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="modelbom">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ruleset">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="item"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="infra">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="thead">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:byte" name="qty" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="dutif-util">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:byte" name="qty" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="cooling">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="item" maxOccurs="unbounded" minOccurs="0"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="mani">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element type="xs:string" name="item"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="wksta">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:string">
+                                        <xs:attribute type="xs:byte" name="qty" use="optional"/>
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="digital">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:byte" name="qty" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="ms">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="item" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rf">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="item" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="sw-licenses"/>
+                    <xs:element type="xs:string" name="docking"/>
+                    <xs:element type="xs:string" name="misc"/>
+                    <xs:element name="cal-diag">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="item" maxOccurs="unbounded" minOccurs="0"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element type="xs:string" name="wty-support"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="id"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="pmf">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="map" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:byte" name="ref-id" use="optional"/>
+                            <xs:attribute type="xs:string" name="card" use="optional"/>
+                            <xs:attribute type="xs:string" name="cable" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:float" name="version"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

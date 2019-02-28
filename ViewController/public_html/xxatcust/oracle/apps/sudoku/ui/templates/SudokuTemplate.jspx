@@ -57,7 +57,7 @@
                                  styleClass="AFHeaderLevelTwo" noWrap="true"
                                  inlineStyle="font-size:small; color:Background;"/>
                   <af:spacer width="3" height="10" id="pt_s4"/>
-                  <af:outputText value="#{securityContext.userName}" id="pt_ot4"
+                  <af:outputText value="#{sessionScope.UserName}" id="pt_ot4"
                                  styleClass="AFHeaderLevelTwo"
                                  inlineStyle='font-size:medium; color:Background;'/>
                 </af:panelGroupLayout>

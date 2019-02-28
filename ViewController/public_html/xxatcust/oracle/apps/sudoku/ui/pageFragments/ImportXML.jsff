@@ -7,57 +7,50 @@
                     splitterPosition="60">
     <f:facet name="first">
       <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top">
-        <!--   <af:resource type="css" source="/css/Style.css"/> -->
-        <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle"
-                             partialTriggers="if1">
-          <af:inputFile label="Upload File" id="if1"
-                        valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
-                        autoSubmit="true" styleClass="inputFile"/>
-          <af:spacer width="10" height="10" id="s2"/>
-          <af:panelGroupLayout id="pgl2" layout="horizontal"
-                               partialTriggers="if1" valign="baseline">
-            <af:panelLabelAndMessage label="Uploaded By" id="plam3">
-              <af:outputFormatted id="of3"
-                                  binding="#{XMLImportPageBean.uploadedByBinding}"
-                                  inlineStyle="color:Navy; font-size:small; font-weight:bold;"/>
-            </af:panelLabelAndMessage>
-            <af:spacer width="10" height="10" id="s14"/>
-            <af:panelLabelAndMessage label="Timestamp" id="plam2">
-              <af:outputFormatted id="of2"
-                                  binding="#{XMLImportPageBean.timestampBinding}"
-                                  inlineStyle="color:Navy; font-size:small; font-weight:bold;"/>
-            </af:panelLabelAndMessage>
-            <af:spacer width="30" height="10" id="s6"/>
-            <af:panelLabelAndMessage label="Uploaded File Name" id="plam1"
-                                     inlineStyle="font-size:small; font-weight:bolder; color:Blue;">
-              <af:outputFormatted id="of1"
-                                  binding="#{XMLImportPageBean.fileNameBinding}"
-                                  inlineStyle="font-size:small; color:Navy;"/>
-            </af:panelLabelAndMessage>
-            <af:spacer width="10" height="10" id="s16"/>
-            <af:panelLabelAndMessage label="Currency :" id="plam4">
-              <af:outputText value="USD" id="ot13"
-                             inlineStyle="font-size:small; color:Navy;"/>
-            </af:panelLabelAndMessage>
+        <af:panelHeader text="Reference Configuration" id="ph1" size="-1"
+                        inlineStyle="color:Green;">
+          <af:spacer width="10" height="10" id="s17"/>
+          <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle"
+                               partialTriggers="if1">
+            <af:inputFile label="Upload File" id="if1"
+                          valueChangeListener="#{XMLImportPageBean.fileUploadVCE}" styleClass="inputFile"
+                          immediate="true"
+                          binding="#{XMLImportPageBean.uploadFileBinding}"
+                          shortDesc="Select and upload the import configuration XML file to load the configuration."/>
+            <af:spacer width="10" height="10" id="s2"/>
+            <af:commandButton text="Import Configuration" id="cb1"
+                              actionListener="#{XMLImportPageBean.importConfiguration}"
+                              immediate="true"/>
+            <af:spacer width="10" height="10" id="s21"/>
+            <af:panelGroupLayout id="pgl2" layout="horizontal"
+                                 partialTriggers="if1" valign="baseline">
+              <af:panelLabelAndMessage label="Uploaded By" id="plam3">
+                <af:outputFormatted id="of3"
+                                    binding="#{XMLImportPageBean.uploadedByBinding}"
+                                    inlineStyle="color:Navy; font-size:small; font-weight:bold;"/>
+              </af:panelLabelAndMessage>
+              <af:spacer width="10" height="10" id="s14"/>
+              <af:panelLabelAndMessage label="Timestamp" id="plam2">
+                <af:outputFormatted id="of2"
+                                    binding="#{XMLImportPageBean.timestampBinding}"
+                                    inlineStyle="color:Navy; font-size:small; font-weight:bold;"/>
+              </af:panelLabelAndMessage>
+              <af:spacer width="30" height="10" id="s6"/>
+              <af:panelLabelAndMessage label="Uploaded File Name" id="plam1"
+                                       inlineStyle="font-size:small; font-weight:bolder; color:Blue;">
+                <af:outputFormatted id="of1"
+                                    binding="#{XMLImportPageBean.fileNameBinding}"
+                                    inlineStyle="font-size:small; color:Navy;"/>
+              </af:panelLabelAndMessage>
+              <af:spacer width="10" height="10" id="s16"/>
+              <af:panelLabelAndMessage label="Currency :" id="plam4">
+                <af:outputText value="USD" id="ot13"
+                               inlineStyle="font-size:small; color:Navy; font-weight:bolder;"/>
+              </af:panelLabelAndMessage>
+            </af:panelGroupLayout>
           </af:panelGroupLayout>
-          <af:toolbar id="t1">
-            <af:spacer width="10" height="10" id="s13"/>
-            <af:commandToolbarButton text="Show Products" id="ctb1"
-                                     actionListener="#{XMLImportPageBean.showProducts}"
-                                     rendered="#{!XMLImportPageBean.productsRendered}"
-                                     partialTriggers="ctb4"/>
-            <af:commandToolbarButton text="Hide Products" id="ctb4"
-                                     actionListener="#{XMLImportPageBean.hideProducts}"
-                                     rendered="#{XMLImportPageBean.productsRendered}"
-                                     partialTriggers="ctb1"/>
-            <af:spacer width="10" height="10" id="s15"/>
-            <af:commandToolbarButton text="Show Prices" id="ctb2"/>
-            <af:spacer width="10" height="10" id="s7"/>
-            <af:commandToolbarButton text="Show Debug Logs" id="ctb3">
-            <af:showPopupBehavior popupId="debugPop" triggerType="click"/>
-            </af:commandToolbarButton>
-          </af:toolbar>
-        </af:panelGroupLayout>
+        </af:panelHeader>
+        <!--   <af:resource type="css" source="/css/Style.css"/> -->
         <f:facet name="separator">
           <af:spacer width="200" height="10" id="s1"/>
         </f:facet>
@@ -67,52 +60,81 @@
     </f:facet>
     <f:facet name="second">
       <!-- <af:panelGroupLayout id="pgl4"> -->
-      <af:panelHeader text="Reference Configuration" id="ph1">
-        <f:facet name="context"/>
-        <f:facet name="menuBar"/>
-        <f:facet name="toolbar"/>
-        <f:facet name="legend"/>
-        <f:facet name="info"/>
-        <af:spacer width="10" height="10" id="s17"/>
-        <af:separator id="s18"/>
+      <af:panelGroupLayout layout="scroll"
+                           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                           id="pgl8">
+        <af:toolbar id="t1" partialTriggers="ctb1 ctb4">
+          <af:commandToolbarButton text="Show Products" id="ctb1"
+                                   actionListener="#{XMLImportPageBean.showProducts}"
+                                   rendered="#{!XMLImportPageBean.productsRendered}"
+                                   partialTriggers="ctb4"/>
+          <af:commandToolbarButton text="Hide Products" id="ctb4"
+                                   actionListener="#{XMLImportPageBean.hideProducts}"
+                                   rendered="#{XMLImportPageBean.productsRendered}"
+                                   partialTriggers="ctb1"/>
+          <af:spacer width="10" height="10" id="s15"/>
+          <af:commandToolbarButton text="Show Prices" id="ctb2"/>
+          <af:spacer width="10" height="10" id="s7"/>
+          <af:commandToolbarButton text="Show Debug Logs" id="ctb3">
+            <af:showPopupBehavior popupId="debugPop" triggerType="click"/>
+          </af:commandToolbarButton>
+          <af:spacer width="10" height="10" id="s19"/>
+          <af:commandToolbarButton text="Show Warning Messages" id="ctb5">
+            <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
+          </af:commandToolbarButton>
+        </af:toolbar>
+        <af:spacer width="10" height="10" id="s20"/>
         <af:panelGroupLayout layout="scroll"
                              xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                              id="pgl4" partialTriggers="ctb1">
+          <af:spacer width="10" height="10" id="s13"/>
           <af:panelBox text=" " id="pb1" showDisclosure="false"
                        showHeader="never" partialTriggers="if1">
             <af:panelGroupLayout id="pgl5" layout="horizontal"
                                  inlineStyle="background-color:#ebe7ef;"
                                  partialTriggers="if1"
                                  rendered="#{XMLImportPageBean.showListHeader eq true}">
-              <af:spacer width="20" height="10" id="s3"/>
+              <af:spacer width="30" height="10" id="s3"/>
               <af:outputText value="Product Number" id="ot7"
-                             inlineStyle="color:Black;  font-weight:bold;"/>
+                             inlineStyle="color:Black;  font-weight:bold;"
+                             rendered="#{XMLImportPageBean.productsRendered}"
+                             partialTriggers="if1" styleClass="ABHeader"/>
               <af:spacer width="80" height="10" id="s5"/>
               <af:outputText value="Product Description" id="ot8"
-                             inlineStyle="color:Black; font-weight:bold;"/>
+                             inlineStyle="color:Black; font-weight:bold;"
+                             styleClass="ABHeader"/>
               <af:spacer width="290" height="10" id="s8"/>
-              <af:outputText value="Qty" id="ot9"
-                             inlineStyle="color:Black;  font-weight:bold;"/>
+              <af:outputText value="Quantity" id="ot9"
+                             inlineStyle="color:Black;  font-weight:bold;"
+                             styleClass="ABHeader"/>
               <af:spacer width="160" height="10" id="s9"/>
               <af:outputText value="UOM" id="ot10"
-                             inlineStyle="color:Black;  font-weight:bold;"/>
+                             inlineStyle="color:Black;  font-weight:bold;"
+                             styleClass="ABHeader"/>
               <af:spacer width="160" height="10" id="s10"/>
               <af:outputText value="Unit Price" id="ot11"
-                             inlineStyle="color:Black;  font-weight:bold;"/>
+                             inlineStyle="color:Black;  font-weight:bold;"
+                             styleClass="ABHeader"/>
               <af:spacer width="85" height="10" id="s11"/>
               <af:outputText value="Extended Price" id="ot12"
                              inlineStyle="color:Black;  font-weight:bold;"
-                             noWrap="true"/>
+                             noWrap="true" styleClass="ABHeader"/>
               <af:spacer width="145" height="10" id="s12"/>
             </af:panelGroupLayout>
-            <af:panelGroupLayout id="pgl8">
+            <af:panelGroupLayout id="pgl15" layout="horizontal"
+                                 inlineStyle="background-color:#ebe7ef;"
+                                 partialTriggers="if1"
+                                 rendered="#{XMLImportPageBean.showListHeader eq true}">
+              <af:outputText value="1" id="otg17"
+                             inlineStyle="color:Black; font-weight:bold; font-size:medium;"
+                             partialTriggers="if1" styleClass="ABHeader"/>
+              <af:spacer width="30" height="10" id="s113"/>
               <af:outputFormatted id="of6"
-                                  binding="#{XMLImportPageBean.modeName}"
-                                  inlineStyle="font-size:medium; font-weight:bolder;"/>
+                                  binding="#{XMLImportPageBean.modeName}"/>
             </af:panelGroupLayout>
             <af:listView id="lv2" value="#{XMLImportPageBean.categoryTree}"
                          var="node" selection="single"
-                         groupDisclosurePolicy="initiallyExpanded"
+                         groupDisclosurePolicy="noDisclosure"
                          partialTriggers="::if1 ::ctb1"
                          selectionListener="#{XMLImportPageBean.listViewRowSelection}">
               <f:facet name="groupHeaderStamp">
@@ -122,7 +144,7 @@
                 </af:listItem>
               </f:facet>
               <af:listItem id="li2">
-                <af:panelGridLayout id="pgl15">
+                <af:panelGridLayout id="pgl15k">
                   <af:gridRow marginTop="5px" height="auto" id="gr2">
                     <af:gridCell marginStart="5px" width="15%" id="gc9"
                                  inlineStyle='Color:#{node.nodeColor eq "RED" ? "Red" : null};'
@@ -163,7 +185,8 @@
             <af:popup id="wrnPop" autoCancel="disabled"
                       binding="#{XMLImportPageBean.warningPopup}">
               <af:dialog id="d1"
-                         title="Configurations has below warnings , Do you want to continue?">
+                         title="Configurations has below warnings."
+                         contentWidth="600" contentHeight="400">
                 <af:panelGroupLayout id="pg12l4">
                   <af:outputFormatted id="of4"
                                       binding="#{XMLImportPageBean.warnText}"/>
@@ -188,7 +211,7 @@
             <f:facet name="toolbar"/>
           </af:panelBox>
         </af:panelGroupLayout>
-      </af:panelHeader>
+      </af:panelGroupLayout>
     </f:facet>
   </af:panelSplitter>
 </jsp:root>

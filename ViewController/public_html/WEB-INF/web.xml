@@ -18,7 +18,7 @@
   </context-param>
   <context-param>
     <param-name>APPL_SERVER_ID</param-name>
-    <param-value>true</param-value>
+    <param-value>823D6DCA758C8E6EE0533CBF730A92A815519600413391746013458855872197</param-value>
   </context-param>
   <filter>
     <filter-name>JpsFilter</filter-name>

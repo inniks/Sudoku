@@ -3,6 +3,7 @@ package xxatcust.oracle.apps.sudoku.bean;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -11,17 +12,25 @@ import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import javax.sql.DataSource;
+
+import oracle.adf.controller.v2.lifecycle.ADFLifecycle;
 import oracle.adf.controller.v2.lifecycle.Lifecycle;
 import oracle.adf.controller.v2.lifecycle.PagePhaseEvent;
 import oracle.adf.controller.v2.lifecycle.PagePhaseListener;
 import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCDataControl;
 import oracle.adf.share.ADFContext;
+import oracle.adf.share.Environment;
 import oracle.adf.share.logging.ADFLogger;
 
 import oracle.apps.fnd.ext.common.AppsRequestWrapper;
@@ -29,6 +38,8 @@ import oracle.apps.fnd.ext.common.AppsSessionHelper;
 import oracle.apps.fnd.ext.common.CookieStatus;
 import oracle.apps.fnd.ext.common.EBiz;
 import oracle.apps.fnd.ext.common.Session;
+
+import oracle.apps.fnd.ext.common.State;
 
 import oracle.jbo.ApplicationModule;
 import oracle.jbo.JboException;
@@ -66,128 +77,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
     }
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
-        if (pagePhaseEvent.getPhaseId() == Lifecycle.PREPARE_RENDER_ID ||
-            pagePhaseEvent.getPhaseId() == Lifecycle.INIT_CONTEXT_ID) {
-//            String agent = null;
-//            _logger.info("In before Phase");
-//            //ApplicationModule am = this.getAppModule();
-//
-//            FacesContext fctx = FacesContext.getCurrentInstance();
-//            _logger.info("print fctx" + fctx);
-//            HttpServletRequest request =
-//                (HttpServletRequest)fctx.getExternalContext().getRequest();
-//            _logger.info("print request" + request);
-//            HttpServletResponse response =
-//                (HttpServletResponse)fctx.getExternalContext().getResponse();
-//            _logger.info("print response" + response);
-//            CookieStatus icxCookieStatus = null;
-//            String currentUser = null;
-//            String currentUserId;
-//            try {
-//                ApplicationModule am = getAppModule();
-//                SudokuAMImpl amClient = (SudokuAMImpl)am;
-//                manageAttributes(amClient);
-//                Map map = ADFContext.getCurrent().getSessionScope();
-//                _logger.info("print am" + am);
-//
-//
-//                Connection EBSconn = getConnFromDS((ApplicationModuleImpl)am);
-//                _logger.info("print EBSconn" + EBSconn);
-//                ServletContext servContext =
-//                    (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
-//                _logger.info("print servContext" + servContext);
-//                String applServerID =
-//                    servContext.getInitParameter("APPL_SERVER_ID");
-//
-//                applServerID =
-//                        "79B78EF8A6FD7CD3E0533CBF730AD57519655739064505939664236109398312";
-//                _logger.info("print applServerID==>" + applServerID);
-//                EBiz instance = new EBiz(EBSconn, applServerID);
-//                _logger.info("print instance" + instance);
-//                AppsRequestWrapper wrappedRequest =
-//                    new AppsRequestWrapper(request, response, EBSconn,
-//                                           instance);
-//                _logger.info("Info from wrapped session " +
-//                             wrappedRequest.getCurrentSessionId() +
-//                             "CurrentUseriD " +
-//                             wrappedRequest.getCurrentUserId() +
-//                             ": ContextPath " +
-//                             wrappedRequest.getContextPath() +
-//                             " Cookie Status " +
-//                             wrappedRequest.getICXCookieStatus() +
-//                             " Parameter map " +
-//                             wrappedRequest.getParameterMap());
-//                map.put("applServerID", applServerID);
-//                map.put("instance", instance);
-//                map.put("wrappedRequest", wrappedRequest);
-//                Session session = wrappedRequest.getAppsSession();
-//                icxCookieStatus =
-//                        session.getCurrentState().getIcxCookieStatus();
-//                _logger.info("print icxCookieStatus" + icxCookieStatus);
-//                agent = wrappedRequest.getEbizInstance().getAppsServletAgent();
-//                _logger.info("print icxCookieStatus" + icxCookieStatus);
-//                currentUser = session.getUserName();
-//                currentUserId = session.getUserId();
-//                _logger.info("print currentUser" + currentUser);
-//                map.put("currentUser", currentUser);
-//                _logger.info("print currentUserId" + currentUserId);
-//                _logger.info("ADFContext.getCurrent().getSecurityContext().getUserName()==>" +
-//                             ADFContext.getCurrent().getSecurityContext().getUserName());
-//
-//
-//                map.put("LoggedInUser", currentUser);
-//                map.put("LoggedInUserId", currentUserId);
-//
-//                //                if(currentUserId == null || "".equals(currentUserId)){
-//                //                    logoutEBS();
-//                //                }
-//                //
-//                if (!icxCookieStatus.equals(CookieStatus.VALID)) {
-//                    //   response.sendRedirect(agent + "AppsLocalLogin.jsp");
-//                    logoutEBS();
-//                    return;
-//                } else if (session != null) {
-//                    FacesContext.getCurrentInstance().getViewRoot().setLocale(session.getLocale());
-//
-//                    Map ebsSessionMap = session.getInfo();
-//                    _logger.info("print ebsSessionMap" + ebsSessionMap);
-//                    String respId =
-//                        (String)ebsSessionMap.get("RESPONSIBILITY_ID");
-//                    _logger.info("print respId" + respId);
-//                    String applicationId =
-//                        (String)ebsSessionMap.get("RESP_APPL_ID");
-//                    _logger.info("print applicationId" + applicationId);
-//                    String orgId = (String)ebsSessionMap.get("ORG_ID");
-//                    _logger.info("print orgId" + orgId);
-//                    String userId = (String)ebsSessionMap.get("USER_ID");
-//                    _logger.info("print userId" + userId);
-//                    initializeAppsContext(respId, userId, applicationId);
-//
-//                    _logger.info("respId==>" + respId);
-//                    _logger.info("applicationId==>" + applicationId);
-//                    _logger.info("orgId==>" + orgId);
-//                    _logger.info("userId==>" + userId);
-//                }
-//
-//
-//            } catch (Exception ob) {
-//                Map map = ADFContext.getCurrent().getSessionScope();
-//                map.put("LoggedInUser",
-//                        ADFContext.getCurrent().getSecurityContext().getUserName());
-//                ob.printStackTrace();
-//                _logger.info("print error Exception" + ob);
-//                //   try {
-//                //  response.sendRedirect("http://CompanyHostName/InstancePortal.mht");
-//                return;
-//                //  } catch (IOException e) {
-//                // }
-//
-//            }
-//            //  FacesMessage message =
-//            //      new FacesMessage("Session is : " + icxCookieStatus + " " + currentUser + " " + currentUserId);
-//            // fctx.addMessage(null, message);
-//            System.out.println("Out before phase");
-        }
+        validateEBSSession(pagePhaseEvent);
     }
 
 
@@ -242,7 +132,6 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             (HttpServletRequest)fctx.getExternalContext().getRequest();
         HttpServletResponse response =
             (HttpServletResponse)fctx.getExternalContext().getResponse();
-
         //invalidate ICX session & HTTP session
         AppsRequestWrapper wrappedRequest = null;
         String logoutEbsUrl = null;
@@ -258,13 +147,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 servContext.getInitParameter("APPL_SERVER_ID");
             _logger.info("applServerID==>" + applServerID);
             EBiz instance = new EBiz(EBSconn, applServerID);
-
-
-            //invalidate ICX session & HTTP session
             wrappedRequest =
                     new AppsRequestWrapper(request, response, EBSconn, instance);
-
-
             logoutEbsUrl =
                     wrappedRequest.getEbizInstance().getAppsServletAgent();
             logoutEbsUrl = logoutEbsUrl + "OALogout.jsp?menu=Y";
@@ -277,8 +161,6 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 helper.destroyAppsSession(wrappedRequest.getAppsSession(),
                                           wrappedRequest, response);
             }
-
-
             ExternalContext ectx =
                 FacesContext.getCurrentInstance().getExternalContext();
             HttpSession sessionHttp = (HttpSession)ectx.getSession(false);
@@ -290,13 +172,125 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                    ex);
                 }
             }
-            //wrappedRequest.getRequestDispatcher("/WEB-INF/logout.jsp").forward(wrappedRequest, response);
             response.sendRedirect(logoutEbsUrl);
             fctx.responseComplete();
         } catch (Exception ex) {
             _logger.severe("Error , ", ex);
             throw (new JboException(ex));
         }
+    }
+
+    public void validateEBSSession(PagePhaseEvent pagePhaseEvent) {
+        if (ADFLifecycle.INIT_CONTEXT_ID == pagePhaseEvent.getPhaseId()) {
+            EBiz INSTANCE = null;
+            Environment env = ADFContext.getCurrent().getEnvironment();
+            HttpServletRequest request =
+                ((HttpServletRequest)env.getRequest());
+            HttpServletResponse response =
+                ((HttpServletResponse)env.getResponse());
+            HttpSession sessionADF = request.getSession();
+            AppsRequestWrapper wrappedRequest = null;
+            String applServerID = null;
+            Connection EBSconn = null;
+            try {
+                ApplicationModule am = getAppModule();
+                EBSconn = getConnFromDS((ApplicationModuleImpl)am);
+                ServletContext servContext =
+                    (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
+                _logger.info("servLetContext : " + servContext);
+                applServerID = servContext.getInitParameter("APPL_SERVER_ID");
+                _logger.info("applServerID: " + applServerID);
+                INSTANCE = new EBiz(EBSconn, applServerID);
+                wrappedRequest =
+                        new AppsRequestWrapper(request, response, EBSconn,
+                                               INSTANCE);
+                _logger.info("wrappedRequest : " + wrappedRequest);
+                oracle.apps.fnd.ext.common.Session sessionEBS =
+                    wrappedRequest.getAppsSession();
+                _logger.info("sessionEBS : " + sessionEBS);
+                if (sessionEBS != null) {
+                    if (!isEBSSessionValid(sessionEBS)) {
+                        _logger.info("EBS Session Not valid ,Logging out ");
+                        logoutEBS();
+                        return;
+                    } else {
+                        String userId = sessionEBS.getUserId();
+                        _logger.info("UserId : " + userId);
+                        String userName = sessionEBS.getUserName();
+                        _logger.info("userName : " + userName);
+                        String language = wrappedRequest.getLangCode();
+                        _logger.info("language : " + language);
+                        Map<String, String> info = sessionEBS.getInfo();
+                        String respId = info.get("RESPONSIBILITY_ID");
+                        _logger.info("respId : " + respId);
+                        String respApplId =
+                            info.get("RESPONSIBILITY_APPLICATION_ID");
+                        _logger.info("respApplId : " + respApplId);
+                        String applicationId = info.get("RESP_APPL_ID");
+                        _logger.info("applicationId : " + applicationId);
+                        String secGrpId = info.get("SECURITY_GROUP_ID");
+                        _logger.info("secGrpId : " + secGrpId);
+                        String orgId = info.get("ORG_ID");
+                        _logger.info("orgId : " + orgId);
+                        //Initialize appsContext
+                        _logger.info("Initializing Apps Context.....");
+                        initializeAppsContext(respId, userId, applicationId);
+                        _logger.info("Apps Context Initialized.....");
+                        String sessionCookieValue =
+                            wrappedRequest.getICXCookieValue();
+
+                        sessionADF.setAttribute("EBS_SESSION_INSTANCE",
+                                                INSTANCE);
+                        sessionADF.setAttribute("EBS_APPS_SESSION_INSTANCE",
+                                                sessionEBS);
+                        sessionADF.setAttribute("SessionCookieValue",
+                                                sessionCookieValue);
+                        sessionADF.setAttribute("UserId", userId);
+                        sessionADF.setAttribute("RespId", respId);
+                        sessionADF.setAttribute("ApplId", respApplId);
+                        sessionADF.setAttribute("UserName", userName);
+                        sessionADF.setAttribute("Language", language);
+                        sessionADF.setAttribute("SecGrpId", secGrpId);
+                        sessionADF.setAttribute("OrgId", orgId);
+
+                        javax.servlet.http.Cookie cookie =
+                            wrappedRequest.getICXCookie();
+                        String icxcookieName = cookie.getName();
+                        String icxcookieValue = cookie.getValue();
+                        sessionADF.setAttribute("cookie", cookie);
+                        sessionADF.setAttribute("icxcookieName",
+                                                icxcookieName);
+                        sessionADF.setAttribute("icxcookieValue",
+                                                icxcookieValue);
+                    }
+                }
+
+            } catch (SQLException se) {
+                _logger.info("Exception in " + this.getClass().getName() +
+                             se.getMessage());
+            } catch (Exception e) {
+                _logger.info("Exception in " + this.getClass().getName() +
+                             e.getMessage());
+            } finally {
+                try {
+                    if (EBSconn != null) {
+                        EBSconn.close();
+                    }
+                } catch (SQLException se) {
+                    _logger.info("Exception in " + this.getClass().getName() +
+                                 se.getMessage());
+                }
+            }
+        }
+    }
+
+    public boolean isEBSSessionValid(oracle.apps.fnd.ext.common.Session sessionEBS) {
+        State state = sessionEBS.getCurrentState();
+        CookieStatus icxSessionStatus = state.getIcxCookieStatus();
+        if (!icxSessionStatus.equals(CookieStatus.VALID)) {
+            return false;
+        }
+        return true;
     }
 
 }

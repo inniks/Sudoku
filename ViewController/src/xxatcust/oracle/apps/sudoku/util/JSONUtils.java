@@ -21,21 +21,23 @@ public class JSONUtils {
                                                                        JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
-            obj = mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response.json"), V93kQuote.class);
-        return obj; 
+        obj =
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response1.json"),
+                 V93kQuote.class);
+        return obj;
     }
-    
+
     public static String convertObjToJson(Object obj) throws IOException,
                                                              JsonGenerationException,
                                                              JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonInString = null ;
-            mapper.writeValue(new File("D:\\FileStore\\V93kQuote.json"), obj);
-            jsonInString = mapper.writeValueAsString(obj);
+        //        String jsonInString = null ;
+        //            mapper.writeValue(new File("D:\\FileStore\\V93kQuote.json"), obj);
+        String jsonInString = mapper.writeValueAsString(obj);
         return jsonInString;
     }
-    
-    public static void prettyPrintJson(Object obj){
+
+    public static void prettyPrintJson(Object obj) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj));
@@ -43,5 +45,5 @@ public class JSONUtils {
             e.printStackTrace();
         }
     }
-    
+
 }
