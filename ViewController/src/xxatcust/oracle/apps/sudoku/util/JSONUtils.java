@@ -22,7 +22,7 @@ public class JSONUtils {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
         obj =
-mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response2.json"),
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response3.json"),
                  V93kQuote.class);
         return obj;
     }

@@ -132,7 +132,7 @@ public class XMLImportPageBean {
         //Validate uploaded file against XSD
         UploadedFile fileVal =
             (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
-        
+
         InputStream inputStream = uploadFile(fileVal);
         ADFUtils.clearControllerException();
         ADFUtils.setSessionScopeValue("parentObject", null);
@@ -157,7 +157,6 @@ public class XMLImportPageBean {
         //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
         parseXMLToPojo(inputStream);
         showListHeader = true;
-
         //ResetUtils.reset(vce.getComponent());
     }
 
@@ -171,9 +170,9 @@ public class XMLImportPageBean {
             sessionDetails.setRespId("51156");
             sessionDetails.setUserId("11639");
             parent.setSessionDetails(sessionDetails);
-            String jsonStr= JSONUtils.convertObjToJson(parent);
-//            V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-//            ADFUtils.setSessionScopeValue("parentObject", obj);
+            String jsonStr = JSONUtils.convertObjToJson(parent);
+             //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+             //ADFUtils.setSessionScopeValue("parentObject", obj);
             _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
             Object obj = null;
             //Reading JSOn from File to POJO
@@ -363,7 +362,8 @@ public class XMLImportPageBean {
                             warnText.setValue(warningMessage.toString());
                             // debugMsgBind.setValue(debugStr.toString());
                         }
-                        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                        RichPopup.PopupHints hints =
+                            new RichPopup.PopupHints();
                         warningPopup.show(hints);
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
@@ -390,12 +390,12 @@ public class XMLImportPageBean {
                         debugMsgBind.setValue(debugMessage.toString());
                     }
 
-                    if (obj != null && obj.getSessionDetails() != null &&
-                        obj.getSessionDetails().getModelName() != null) {
-                        modelName.setValue(obj.getSessionDetails().getModelName());
-                        System.out.println("Model name " +
-                                           obj.getSessionDetails().getModelName());
-                    }
+//                    if (obj != null && obj.getSessionDetails() != null &&
+//                        obj.getSessionDetails().getModelName() != null) {
+//                        modelName.setValue(obj.getSessionDetails().getModelName());
+//                        System.out.println("Model name " +
+//                                           obj.getSessionDetails().getModelName());
+//                    }
 
                     List<String> catList = new ArrayList<String>();
                     List<String> distinctList = new ArrayList<String>();
@@ -619,4 +619,6 @@ public class XMLImportPageBean {
     public Boolean getSpaceRendered() {
         return spaceRendered;
     }
+
+  
 }
