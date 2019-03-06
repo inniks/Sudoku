@@ -7,7 +7,7 @@
          value="#{adfBundle['view.ViewControllerBundle']}"/>
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <af:pageTemplateDef var="attrs">
-    <af:panelStretchLayout id="pt_psl1" topHeight="100px"
+    <af:panelStretchLayout id="pt_psl1" topHeight="119px"
                            dimensionsFrom="parent">
       <f:facet name="center">
         <af:facetRef facetName="ConsumerFacet"/>
@@ -20,13 +20,29 @@
                                styleClass="AFStretchWidth">
             <af:panelGroupLayout id="pgl1" layout="horizontal"
                                  styleClass="AFStretchWidth">
-              <af:panelGroupLayout id="panelGroupLayout1" layout="horizontal">
-                <af:spacer width="6" height="10" id="pt_s6"/>
+              <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
                 <af:image id="pt_ot3"
                           inlineStyle="font-size:smaller; font-weight:bold; color:Blue;"
                           source="/Resources/images/iconfinder_Sudoku_39883.png"
                           shortDesc="Sudoku Configurator System"/>
+                <af:spacer width="6" height="10" id="pt_s6"/>
+                <af:navigationPane id="pt_np1" value="#{HomeMenu}"
+                                   var="menuItem" level="0" hint="bar">
+                  <f:facet name="nodeStamp">
+                    <af:commandNavigationItem text="#{menuItem.label}"
+                                              id="pt_cni1"
+                                              action="#{menuItem.doAction}"
+                                              rendered="#{menuItem.rendered}"
+                                              immediate="true"
+                                              inlineStyle="font-size:medium;">
+                      <af:setActionListener from="#{pageFlowScope.TemplateBean.currentTimeStamp}"
+                                            to="#{pageFlowScope.TemplateBean.taskFlowParam}"/>
+                    </af:commandNavigationItem>
+                  </f:facet>
+                </af:navigationPane>
               </af:panelGroupLayout>
+              <af:outputText value="V93000 Configurator" id="pt_ot5"  styleClass="AFHeaderLevelTwo"
+                             inlineStyle="font-size:x-large; color:Navy; font-weight:bold;"/>
               <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"
                                    visible="false">
                 <af:outputText id="pt_ot101" value="HSCPT"
@@ -42,8 +58,12 @@
             </af:panelGroupLayout>
             <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
                                  halign="center" styleClass="AFStretchWidth">
-              <af:panelGroupLayout id="pt_pgl3" layout="horizontal" styleClass="AFStretchWidth"
-                                   halign="center">
+              <af:panelGroupLayout id="pt_pgl3" layout="vertical" styleClass="AFStretchWidth"
+                                   halign="end">
+                <af:panelGroupLayout id="pt_pgl10" halign="end">
+                  <af:image id="pt_i1" source="/Resources/images/adv.gif"
+                            inlineStyle="width:215px;"/>
+                </af:panelGroupLayout>
                 <af:panelGroupLayout id="pt_pgl8" layout="horizontal"
                                      valign="baseline">
                   <af:outputText value="Instance Name : PTH" id="outputText1"
@@ -51,47 +71,25 @@
                                  inlineStyle="font-size:small; color:Background;"
                                  noWrap="true"/>
                 </af:panelGroupLayout>
-                <af:spacer width="20" height="10" id="spacer1"/>
+                <af:spacer width="20" height="5" id="spacer1"/>
                 <af:panelGroupLayout id="pt_pgl9" layout="horizontal">
                   <af:outputText value="WELCOME  :  " id="pt_ot1"
                                  styleClass="AFHeaderLevelTwo" noWrap="true"
                                  inlineStyle="font-size:small; color:Background;"/>
-                  <af:spacer width="3" height="10" id="pt_s4"/>
-                  <af:outputText value="#{sessionScope.UserName}" id="pt_ot4"
+                  <af:spacer width="3" height="7" id="pt_s4"/>
+                  <af:outputText value="#{securityContext.userName}" id="pt_ot4"
                                  styleClass="AFHeaderLevelTwo"
-                                 inlineStyle='font-size:medium; color:Background;'/>
-                </af:panelGroupLayout>
-                <af:spacer width="150" height="10" id="spacer2"/>
-                <af:panelGroupLayout id="pt_pgl10" halign="end">
-                  <af:image id="pt_i1" source="/Resources/images/adv.gif"
-                            inlineStyle="width:215px;"/>
+                                 inlineStyle='font-size:small; color:Background;'/>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
             </af:panelGroupLayout>
+            <af:spacer width="10" height="10" id="pt_s1"/>
           </af:panelGroupLayout>
           <!--/af:panelGroupLayout-->
           <af:panelGroupLayout id="pt_pgl2" styleClass="AFStretchWidth"
-                               layout="vertical">
-            <af:panelGroupLayout id="pt_pgl5" styleClass="AFStretchWidth"
-                                 halign="right" valign="top">
-              <af:navigationPane id="pt_np1" value="#{HomeMenu}" var="menuItem"
-                                 level="0" hint="bar">
-                <f:facet name="nodeStamp">
-                  <af:commandNavigationItem text="#{menuItem.label}"
-                                            id="pt_cni1"
-                                            action="#{menuItem.doAction}"
-                                            rendered="#{menuItem.rendered}"
-                                            immediate="true"
-                                            inlineStyle="font-size:medium;">
-                    <af:setActionListener from="#{pageFlowScope.TemplateBean.currentTimeStamp}"
-                                          to="#{pageFlowScope.TemplateBean.taskFlowParam}"/>
-                  </af:commandNavigationItem>
-                </f:facet>
-              </af:navigationPane>
-            </af:panelGroupLayout>
-            <af:spacer width="10" height="5" id="pt_s1"/>
+                               layout="vertical" rendered="false">
             <af:panelGroupLayout id="pt_pgl6" styleClass="AFStretchWidth"
-                                 halign="right">
+                                 halign="right" rendered="false">
               <af:navigationPane id="pt_np2" value="#{HomeMenu}" var="menuItem"
                                  level="1" hint="bar">
                 <f:facet name="nodeStamp">
@@ -104,7 +102,6 @@
                 </f:facet>
               </af:navigationPane>
             </af:panelGroupLayout>
-            <af:spacer width="10" height="8" id="pt_s2"/>
           </af:panelGroupLayout>
         </af:panelGroupLayout>
       </f:facet>

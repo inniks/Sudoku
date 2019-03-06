@@ -18,6 +18,7 @@ public class SessionDetails {
     private String configRevNbr;
     private String configurationMode;
     private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
+    private String servletMode; // value is EBS when using from EBS side manually testing
     
     public SessionDetails() {
         super();
@@ -147,4 +148,11 @@ public class SessionDetails {
         this.nonComplaintsItems.add(nonComplaintsItems);
     }
 
+    public void setServletMode(String servletMode) {
+        this.servletMode = servletMode;
+    }
+
+    public String getServletMode() {
+        return servletMode;
+    }
 }

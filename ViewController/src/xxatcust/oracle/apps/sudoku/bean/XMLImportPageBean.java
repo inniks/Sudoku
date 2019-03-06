@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.TreeMap;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -89,6 +91,7 @@ public class XMLImportPageBean {
     private RichOutputFormatted dubugMsgBinding;
     private RichOutputFormatted debugMsgBind;
     private Boolean productsRendered = true;
+    private Boolean spaceRendered = false;
     private final String resourcePath =
         "/Resources/files/V93000 C&Q 3.0 - XML File Schema.xsd";
     private RichOutputFormatted modelName;
@@ -122,39 +125,96 @@ public class XMLImportPageBean {
     }
 
     public void fileUploadVCE(ValueChangeEvent vce) {
-//        UIComponent uiComponent = (UIComponent)vce.getSource();
-//        uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        //        UIComponent uiComponent = (UIComponent)vce.getSource();
+        //        uiComponent.processUpdates(FacesContext.getCurrentInstance());
         System.out.println("Inside Value Listener");
         //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
-            //Validate uploaded file against XSD
-            UploadedFile fileVal = (UploadedFile)uploadFileBinding.getValue();//(UploadedFile)vce.getNewValue();
-            InputStream inputStream = uploadFile(fileVal);
-            ADFUtils.clearControllerException();
-            ADFUtils.setSessionScopeValue("parentObject", null);
-            /* ResetUtils.reset(warnText);
+        //Validate uploaded file against XSD
+        UploadedFile fileVal =
+            (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
+        
+        InputStream inputStream = uploadFile(fileVal);
+        ADFUtils.clearControllerException();
+        ADFUtils.setSessionScopeValue("parentObject", null);
+        /* ResetUtils.reset(warnText);
             ResetUtils.reset(debugMsgBind);
             ResetUtils.reset((UIComponent)vce.getSource());
             ResetUtils.reset(fileNameBinding);
             ResetUtils.reset(timestampBinding);
             ResetUtils.reset(uploadedByBinding); */
-            categoryTree = null;
-            _logger.info("Print parentObject from session in fileUploadVCE " +
-                         ADFUtils.getSessionScopeValue("parentObject"));
-            allNodes = null;
-            //Get File Object from VC Event
+        categoryTree = null;
+        _logger.info("Print parentObject from session in fileUploadVCE " +
+                     ADFUtils.getSessionScopeValue("parentObject"));
+        allNodes = null;
+        //Get File Object from VC Event
 
-            fileNameBinding.setValue(fileVal.getFilename());
-            uploadedByBinding.setValue(ADFContext.getCurrent().getSecurityContext().getUserName());
-            timestampBinding.setValue(new Date());
-            _logger.info("Print fileVal  fileUploadVCE" + fileVal);
-            //Upload File to path- Return actual server path
-            _logger.info("Print inputStream  fileUploadVCE" + inputStream);
-            //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
-            parseXMLToPojo(inputStream);
-            showListHeader = true;
-            
-            //ResetUtils.reset(vce.getComponent());
+        fileNameBinding.setValue(fileVal.getFilename());
+        uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
+        timestampBinding.setValue(new Date());
+        _logger.info("Print fileVal  fileUploadVCE" + fileVal);
+        //Upload File to path- Return actual server path
+        _logger.info("Print inputStream  fileUploadVCE" + inputStream);
+        //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
+        parseXMLToPojo(inputStream);
+        showListHeader = true;
+
+        //ResetUtils.reset(vce.getComponent());
     }
+
+    public void parseXMLToPojo(InputStream inputStream) {
+        try {
+            V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
+            _logger.info("Print parent  parseXMLToPojo" + parent);
+            //Add Session details on the parent object
+            SessionDetails sessionDetails = new SessionDetails();
+            sessionDetails.setApplicationId("880");
+            sessionDetails.setRespId("51156");
+            sessionDetails.setUserId("11639");
+            parent.setSessionDetails(sessionDetails);
+            String jsonStr= JSONUtils.convertObjToJson(parent);
+//            V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+//            ADFUtils.setSessionScopeValue("parentObject", obj);
+            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+            Object obj = null;
+            //Reading JSOn from File to POJO
+            ObjectMapper mapper = new ObjectMapper();
+            _logger.info("Print mapper  parseXMLToPojo" + mapper);
+            try {
+                //comment this to run locally
+                String responseJson =
+                    (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+                _logger.info("Print responseJson  parseXMLToPojo" +
+                             responseJson);
+                //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+                obj = mapper.readValue(responseJson, V93kQuote.class);
+                _logger.info("Print obj  parseXMLToPojo" + obj);
+                ADFUtils.setSessionScopeValue("parentObject", obj);
+                _logger.info("Print parentObject from session in parseXMLToPojo " +
+                             ADFUtils.getSessionScopeValue("parentObject"));
+            } catch (JsonParseException e) {
+                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
+                                    "Exception in Parsing json:" +
+                                    e.getOriginalMessage());
+                e.printStackTrace();
+                _logger.info("error Print JsonParseException  parseXMLToPojo" +
+                             e);
+            } catch (JsonMappingException e) {
+                _logger.info("error Print JsonMappingException  parseXMLToPojo" +
+                             e);
+                e.printStackTrace();
+
+            } catch (IOException e) {
+                _logger.info("error Print IOException  parseXMLToPojo" + e);
+                e.printStackTrace();
+
+            }
+        } catch (Exception ex) {
+            ADFUtils.routeExceptions(ex);
+
+        }
+
+    }
+
 
     /**Method to upload file to actual path on Server*/
     private InputStream uploadFile(UploadedFile file) {
@@ -182,54 +242,6 @@ public class XMLImportPageBean {
         return nodeList;
     }
 
-    public void parseXMLToPojo(InputStream inputStream) {
-        try {
-            V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
-            _logger.info("Print parent  parseXMLToPojo" + parent);
-            //Add Session details on the parent object
-            SessionDetails sessionDetails = new SessionDetails();
-            sessionDetails.setApplicationId("880");
-            sessionDetails.setRespId("51156");
-            sessionDetails.setUserId("11639");
-            parent.setSessionDetails(sessionDetails);
-            String jsonStr = JSONUtils.convertObjToJson(parent);
-            //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            //ADFUtils.setSessionScopeValue("parentObject", obj);
-                  //  _logger.info("Print jsonStr  parseXMLToPojo" +jsonStr);
-                    Object obj = null;
-                    //Reading JSOn from File to POJO
-                    ObjectMapper mapper = new ObjectMapper();
-                    _logger.info("Print mapper  parseXMLToPojo" +mapper);
-                    try {
-                        //comment this to run locally
-                        String responseJson =
-                            (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                        _logger.info("Print responseJson  parseXMLToPojo" +responseJson);
-                       //String responseJson = (String)JSONUtils.convertJsonToObject(null);
-                        obj = mapper.readValue(responseJson, V93kQuote.class);
-                        _logger.info("Print obj  parseXMLToPojo" +obj);
-                        ADFUtils.setSessionScopeValue("parentObject", obj);
-                        _logger.info("Print parentObject from session in parseXMLToPojo " +ADFUtils.getSessionScopeValue("parentObject"));
-                    } catch (JsonParseException e)
-                    {   ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, "Exception in Parsing json:"+e.getOriginalMessage());
-                        e.printStackTrace();
-                        _logger.info("error Print JsonParseException  parseXMLToPojo" +e);
-                    } catch (JsonMappingException e)
-                    {
-                        _logger.info("error Print JsonMappingException  parseXMLToPojo" +e);
-                        e.printStackTrace();
-            
-                    } catch (IOException e) {
-                        _logger.info("error Print IOException  parseXMLToPojo" +e);
-                        e.printStackTrace();
-            
-                    }
-        } catch (Exception ex) {
-            ADFUtils.routeExceptions(ex);
-
-        }
-
-    }
 
     public void setFileNameBinding(RichOutputFormatted fileNameBinding) {
         this.fileNameBinding = fileNameBinding;
@@ -242,6 +254,7 @@ public class XMLImportPageBean {
     public void setTimestampBinding(RichOutputFormatted timestampBinding) {
         this.timestampBinding = timestampBinding;
     }
+
 
     public RichOutputFormatted getTimestampBinding() {
         return timestampBinding;
@@ -267,9 +280,11 @@ public class XMLImportPageBean {
 
     public ChildPropertyTreeModel getCategoryTree() {
         try {
-            String refreshImport = (String)ADFUtils.getSessionScopeValue("refreshImport");
-            System.out.println("Refresh Import is "+refreshImport);
-            if (categoryTree == null && refreshImport!=null && refreshImport.equalsIgnoreCase("Y")) {
+            String refreshImport =
+                (String)ADFUtils.getSessionScopeValue("refreshImport");
+            System.out.println("Refresh Import is " + refreshImport);
+            if (categoryTree == null && refreshImport != null &&
+                refreshImport.equalsIgnoreCase("Y")) {
                 Object parentObj =
                     ADFUtils.getSessionScopeValue("parentObject");
                 ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -279,57 +294,107 @@ public class XMLImportPageBean {
                     //Check if no exceptions from configurator
                     if (obj.getExceptionMap() != null &&
                         obj.getExceptionMap().getErrorMap() != null) {
-                        HashMap<String, ArrayList<String>> exceptionMap =
-                            obj.getExceptionMap().getErrorMap();
-                        List<String> configErrors = exceptionMap.get("ERROR");
-                        if (configErrors != null && configErrors.size() > 0) {
+                        TreeMap<String, ArrayList<String>> exceptionMap =
+                            obj.getExceptionMap().getErrors();
+                        TreeMap<String, ArrayList<String>> notifications =
+                            obj.getExceptionMap().getNotificationList();
+                        TreeMap<String, ArrayList<String>> warnings =
+                            obj.getExceptionMap().getWarningList();
+                        TreeMap<String, ArrayList<String>> debugList =
+                            obj.getExceptionMap().getDebugMessageList();
+                        List<String> debugMessages =
+                            obj.getExceptionMap().getDebugMessages();
+                        if (exceptionMap != null && exceptionMap.size() > 0) {
                             StringBuilder errMessage =
                                 new StringBuilder("<html><body>");
-                            for (String err : configErrors) {
-                                errMessage.append("<p><b>" + err + "</b></p>");
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 exceptionMap.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    errMessage.append("<p><b>" + str +
+                                                      "</b></p>");
+                                }
                             }
+
                             errMessage.append("</body></html>");
                             throw new JboException(errMessage.toString());
                         }
                         //Check for warnings from configurator
-                        List<String> configWarnings =
-                            exceptionMap.get("WARNING");
-                        if (configWarnings != null &&
-                            configWarnings.size() > 0) {
-                            StringBuilder warningMessage =
-                                new StringBuilder("<html><body>");
-                            for (String warning : configWarnings) {
-                                warningMessage.append("<p><b>" + warning +
-                                                      "</b></p>");
+                        StringBuilder warningMessage =
+                            new StringBuilder("<html><body>");
+                        if (warnings != null && warnings.size() > 0) {
+
+
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 warnings.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    warningMessage.append("<p><b>" + key +
+                                                          " : " + str +
+                                                          "</b></p>");
+                                }
                             }
                             warningMessage.append("</body></html>");
-                            //                            RichPopup.PopupHints hints =
-                            //                                new RichPopup.PopupHints();
-                            warnText.setValue(warningMessage.toString());
+                            //warnText.setValue(warningMessage.toString());
                             //warningPopup.show(hints);
                         }
-                        //Check for debug messages from configurator
-                        List<String> debugMessages = exceptionMap.get("DEBUG");
+                        //Check for notification messages from configurator
+
+                        if (notifications != null &&
+                            notifications.size() > 0) {
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 notifications.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    warningMessage.append("<p><b>" + key +
+                                                          " : " + str +
+                                                          "</b></p>");
+                                }
+                            }
+                            //                            for (String debugStatement : debugMessages) {
+                            //                                System.out.println(debugStatement);
+                            //                                debugStr.append("<p><b>" + debugStatement +
+                            //                                                "</b></p>");
+                            //                            }
+                            warningMessage.append("</body></html>");
+                            warnText.setValue(warningMessage.toString());
+                            // debugMsgBind.setValue(debugStr.toString());
+                        }
+                        RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                        warningPopup.show(hints);
+                        StringBuilder debugMessage =
+                            new StringBuilder("<html><body>");
+                        if (debugList != null && debugList.size() > 0) {
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 debugList.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    debugMessage.append("<p><b>" + key +
+                                                        " : " + str +
+                                                        "</b></p>");
+                                }
+                            }
+                            debugMessage.append("</body></html>");
+                        }
                         if (debugMessages != null &&
                             debugMessages.size() > 0) {
-                            StringBuilder debugStr =
-                                new StringBuilder("<html><body>");
-                            for (String debugStatement : debugMessages) {
-                                System.out.println(debugStatement);
-                                debugStr.append("<p><b>" + debugStatement +
-                                                "</b></p>");
+                            for (String str : debugMessages) {
+                                debugMessage.append("<p><b>" + str +
+                                                    "</b></p>");
                             }
-                            debugStr.append("</body></html>");
-                            debugMsgBind.setValue(debugStr.toString());
                         }
-
+                        debugMsgBind.setValue(debugMessage.toString());
                     }
 
-                    if (v93Obj != null && v93Obj.getSessionDetails() != null &&
-                        v93Obj.getSessionDetails().getModelName() != null) {
-                        modelName.setValue(v93Obj.getSessionDetails().getModelName());
+                    if (obj != null && obj.getSessionDetails() != null &&
+                        obj.getSessionDetails().getModelName() != null) {
+                        modelName.setValue(obj.getSessionDetails().getModelName());
                         System.out.println("Model name " +
-                                           v93Obj.getSessionDetails().getModelName());
+                                           obj.getSessionDetails().getModelName());
                     }
 
                     List<String> catList = new ArrayList<String>();
@@ -380,10 +445,10 @@ public class XMLImportPageBean {
                         }
 
                     }
-                    
+
                     categoryTree =
                             new ChildPropertyTreeModel(root, "childNodes");
-                   
+
                 }
 
             }
@@ -496,12 +561,14 @@ public class XMLImportPageBean {
         if (productsRendered) {
             setProductsRendered(false);
         }
+        setSpaceRendered(true);
     }
 
     public void showProducts(ActionEvent actionEvent) {
         if (!productsRendered) {
             setProductsRendered(true);
         }
+        setSpaceRendered(false);
     }
     public static final String PREFIX = "stream2file";
     public static final String SUFFIX = ".tmp";
@@ -534,8 +601,7 @@ public class XMLImportPageBean {
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         System.out.println("Button Pressed");
         fileUploadVCE(null);
-        }
-
+    }
 
 
     public void setUploadFileBinding(RichInputFile uploadFileBinding) {
@@ -544,5 +610,13 @@ public class XMLImportPageBean {
 
     public RichInputFile getUploadFileBinding() {
         return uploadFileBinding;
+    }
+
+    public void setSpaceRendered(Boolean spaceRendered) {
+        this.spaceRendered = spaceRendered;
+    }
+
+    public Boolean getSpaceRendered() {
+        return spaceRendered;
     }
 }
