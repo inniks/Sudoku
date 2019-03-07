@@ -14,9 +14,9 @@ public class NodeCategory {
     String uom ;
     String nodeColor;
     List<NodeCategory> childNodes;
+    String printGroupLevel ;
 
-
-    public NodeCategory(String category,String nodeName,String nodeDescription,String nodeQty,String nodeValue,String unitPrice,String extendedPrice,String nodeColor) {
+    public NodeCategory(String category,String nodeName,String nodeDescription,String nodeQty,String nodeValue,String unitPrice,String extendedPrice,String nodeColor,String printGrpLevel) {
         this.nodeName = nodeName ;
         this.category = category;
         this.nodeDescription = nodeDescription ;
@@ -26,6 +26,7 @@ public class NodeCategory {
         this.extendedPrice = extendedPrice ;
         this.uom = "EA" ;
         this.nodeColor = nodeColor ;
+        this.printGroupLevel = printGrpLevel ;
         childNodes = new ArrayList<NodeCategory>();
     }
 
@@ -111,5 +112,13 @@ public class NodeCategory {
 
     public String getNodeColor() {
         return nodeColor;
+    }
+
+    public void setPrintGroupLevel(String printGroupLevel) {
+        this.printGroupLevel = printGroupLevel;
+    }
+
+    public String getPrintGroupLevel() {
+        return printGroupLevel;
     }
 }

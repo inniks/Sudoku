@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +17,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,9 +74,11 @@ import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.ConfigNodeComparator;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
 import xxatcust.oracle.apps.sudoku.util.JSONUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
+import xxatcust.oracle.apps.sudoku.util.NodeComparator;
 import xxatcust.oracle.apps.sudoku.util.XMLUtils;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.*;
 
@@ -96,6 +101,11 @@ public class XMLImportPageBean {
         "/Resources/files/V93000 C&Q 3.0 - XML File Schema.xsd";
     private RichOutputFormatted modelName;
     private RichInputFile uploadFileBinding;
+    private RichOutputText modelNameBind;
+    private RichOutputText modelDescBind;
+    private RichOutputText modelQtyBind;
+    private RichOutputText modelPriceBind;
+    private RichOutputText extendedPriceBind;
 
     public XMLImportPageBean() {
         super();
@@ -125,23 +135,12 @@ public class XMLImportPageBean {
     }
 
     public void fileUploadVCE(ValueChangeEvent vce) {
-        //        UIComponent uiComponent = (UIComponent)vce.getSource();
-        //        uiComponent.processUpdates(FacesContext.getCurrentInstance());
-        System.out.println("Inside Value Listener");
-        //Whenever a new file is uploaded , Set the page flow object to null and allNodes to null
-        //Validate uploaded file against XSD
         UploadedFile fileVal =
             (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
 
         InputStream inputStream = uploadFile(fileVal);
         ADFUtils.clearControllerException();
         ADFUtils.setSessionScopeValue("parentObject", null);
-        /* ResetUtils.reset(warnText);
-            ResetUtils.reset(debugMsgBind);
-            ResetUtils.reset((UIComponent)vce.getSource());
-            ResetUtils.reset(fileNameBinding);
-            ResetUtils.reset(timestampBinding);
-            ResetUtils.reset(uploadedByBinding); */
         categoryTree = null;
         _logger.info("Print parentObject from session in fileUploadVCE " +
                      ADFUtils.getSessionScopeValue("parentObject"));
@@ -171,8 +170,8 @@ public class XMLImportPageBean {
             sessionDetails.setUserId("11639");
             parent.setSessionDetails(sessionDetails);
             String jsonStr = JSONUtils.convertObjToJson(parent);
-             //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-             //ADFUtils.setSessionScopeValue("parentObject", obj);
+            // V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+            // ADFUtils.setSessionScopeValue("parentObject", obj);
             _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
             Object obj = null;
             //Reading JSOn from File to POJO
@@ -269,6 +268,7 @@ public class XMLImportPageBean {
 
 
     private List<String> removeDuplicatesFromList(List<String> inputList) {
+
         Set<String> set = new HashSet<String>(inputList);
         List<String> outputList = new ArrayList<String>();
         outputList.clear();
@@ -281,20 +281,25 @@ public class XMLImportPageBean {
         try {
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
-            System.out.println("Refresh Import is " + refreshImport);
+            String modelName = null;
+            String modelDesc = null;
+            String modelQty = null;
+            String modelUOM = null;
+            String modelUnitPrice = null;
+            String modelExtendedPrice = null;
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y")) {
+                //Need to reset everything at this place
+                resetAllBindings();
                 Object parentObj =
                     ADFUtils.getSessionScopeValue("parentObject");
                 ADFUtils.setSessionScopeValue("refreshImport", null);
-                System.out.println("Inside Get Model");
                 if (parentObj != null) {
                     V93kQuote obj = (V93kQuote)parentObj;
                     //Check if no exceptions from configurator
-                    if (obj.getExceptionMap() != null &&
-                        obj.getExceptionMap().getErrorMap() != null) {
+                    if (obj.getExceptionMap() != null) {
                         TreeMap<String, ArrayList<String>> exceptionMap =
-                            obj.getExceptionMap().getErrors();
+                            obj.getExceptionMap().getErrorList();
                         TreeMap<String, ArrayList<String>> notifications =
                             obj.getExceptionMap().getNotificationList();
                         TreeMap<String, ArrayList<String>> warnings =
@@ -303,9 +308,12 @@ public class XMLImportPageBean {
                             obj.getExceptionMap().getDebugMessageList();
                         List<String> debugMessages =
                             obj.getExceptionMap().getDebugMessages();
+                        List<String> errorMessages =
+                            obj.getExceptionMap().getErrorsMessages();
+                        StringBuilder errMessage =
+                            new StringBuilder("<html><body>");
                         if (exceptionMap != null && exceptionMap.size() > 0) {
-                            StringBuilder errMessage =
-                                new StringBuilder("<html><body>");
+
                             for (Map.Entry<String, ArrayList<String>> entry :
                                  exceptionMap.entrySet()) {
                                 String key = entry.getKey();
@@ -317,6 +325,17 @@ public class XMLImportPageBean {
                             }
 
                             errMessage.append("</body></html>");
+
+                        }
+                        if (errorMessages != null &&
+                            errorMessages.size() > 0) {
+                            for (String str : errorMessages) {
+                                errMessage.append("<p><b>" + str + "</b></p>");
+                            }
+                            errMessage.append("</body></html>");
+                        }
+                        if (errMessage != null &&
+                            !errMessage.toString().equalsIgnoreCase("<html><body>")) {
                             throw new JboException(errMessage.toString());
                         }
                         //Check for warnings from configurator
@@ -328,16 +347,16 @@ public class XMLImportPageBean {
                             for (Map.Entry<String, ArrayList<String>> entry :
                                  warnings.entrySet()) {
                                 String key = entry.getKey();
+                                //iterate for each key
+                                warningMessage.append("<p><b>" + key + " : " +
+                                                      "</b></p>");
                                 ArrayList<String> value = entry.getValue();
                                 for (String str : value) {
-                                    warningMessage.append("<p><b>" + key +
-                                                          " : " + str +
+                                    warningMessage.append("<p><b>" + str +
                                                           "</b></p>");
                                 }
                             }
                             warningMessage.append("</body></html>");
-                            //warnText.setValue(warningMessage.toString());
-                            //warningPopup.show(hints);
                         }
                         //Check for notification messages from configurator
 
@@ -347,24 +366,23 @@ public class XMLImportPageBean {
                                  notifications.entrySet()) {
                                 String key = entry.getKey();
                                 ArrayList<String> value = entry.getValue();
+                                warningMessage.append("<p><b>" + key + " : " +
+                                                      "</b></p>");
                                 for (String str : value) {
-                                    warningMessage.append("<p><b>" + key +
-                                                          " : " + str +
+                                    warningMessage.append("<p><b>" + str +
                                                           "</b></p>");
                                 }
                             }
-                            //                            for (String debugStatement : debugMessages) {
-                            //                                System.out.println(debugStatement);
-                            //                                debugStr.append("<p><b>" + debugStatement +
-                            //                                                "</b></p>");
-                            //                            }
                             warningMessage.append("</body></html>");
                             warnText.setValue(warningMessage.toString());
                             // debugMsgBind.setValue(debugStr.toString());
                         }
                         RichPopup.PopupHints hints =
                             new RichPopup.PopupHints();
-                        warningPopup.show(hints);
+                        if (warningMessage != null &&
+                            !warningMessage.equals("<html><body>")) {
+                            warningPopup.show(hints);
+                        }
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
                         if (debugList != null && debugList.size() > 0) {
@@ -372,9 +390,10 @@ public class XMLImportPageBean {
                                  debugList.entrySet()) {
                                 String key = entry.getKey();
                                 ArrayList<String> value = entry.getValue();
+                                debugMessage.append("<p><b>" + key + " : " +
+                                                    "</b></p>");
                                 for (String str : value) {
-                                    debugMessage.append("<p><b>" + key +
-                                                        " : " + str +
+                                    debugMessage.append("<p><b>" + str +
                                                         "</b></p>");
                                 }
                             }
@@ -390,12 +409,12 @@ public class XMLImportPageBean {
                         debugMsgBind.setValue(debugMessage.toString());
                     }
 
-//                    if (obj != null && obj.getSessionDetails() != null &&
-//                        obj.getSessionDetails().getModelName() != null) {
-//                        modelName.setValue(obj.getSessionDetails().getModelName());
-//                        System.out.println("Model name " +
-//                                           obj.getSessionDetails().getModelName());
-//                    }
+                    if (obj != null && obj.getSessionDetails() != null &&
+                        obj.getSessionDetails().getModelName() != null) {
+                        //modelName.setValue(obj.getSessionDetails().getModelName());
+                        modelName = obj.getSessionDetails().getModelName();
+                        System.out.println("Model Name is " + modelName);
+                    }
 
                     List<String> catList = new ArrayList<String>();
                     List<String> distinctList = new ArrayList<String>();
@@ -404,16 +423,38 @@ public class XMLImportPageBean {
                     HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                         new HashMap<String, List<ConfiguratorNodePOJO>>();
                     for (ConfiguratorNodePOJO node : allNodesList) {
-                        catList.add(node.getNodeCategory());
+                        if (modelName != null &&
+                            modelName.equalsIgnoreCase(node.getNodeName())) {
+                            System.out.println("Entered Header Model " +
+                                               node.getNodeName() + " " +
+                                               node.getNodeDescription());
+                            modelDesc = node.getNodeDescription();
+                            modelQty = node.getNodeQty();
+                            modelExtendedPrice = node.getExtendedPrice();
+                            modelUnitPrice = node.getUnitPrice();
+                            modelUOM = "EA";
+                            modelNameBind.setValue(modelName);
+                            modelDescBind.setValue(modelDesc);
+                            modelQtyBind.setValue(modelQty);
+                            modelPriceBind.setValue(modelUnitPrice);
+                            extendedPriceBind.setValue(modelExtendedPrice);
+                        }
+                        if (node.getNodeCategory() != null &&
+                            node.getPrintGroupLevel() != null) {
+                            catList.add(node.getNodeCategory() + "-" +
+                                        (node.getPrintGroupLevel() != null ?
+                                         node.getPrintGroupLevel() : "0"));
+                        }
                     }
                     distinctList = removeDuplicatesFromList(catList);
-
                     for (String distinctCategory : distinctList) {
                         List<ConfiguratorNodePOJO> temp =
                             new ArrayList<ConfiguratorNodePOJO>();
                         for (ConfiguratorNodePOJO node : allNodesList) {
                             if (distinctCategory != null &&
-                                distinctCategory.equalsIgnoreCase(node.getNodeCategory())) {
+                                distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
+                                                                  "-" +
+                                                                  node.getPrintGroupLevel())) {
                                 temp.add(node);
                             }
                         }
@@ -425,10 +466,15 @@ public class XMLImportPageBean {
                     NodeCategory firstLevel = null;
                     while (it.hasNext()) {
                         Map.Entry pair = (Map.Entry)it.next();
-                        String category = (String)pair.getKey();
+                        String Key = (String)pair.getKey();
+                        System.out.println("Key " + Key);
+                        String[] arr = Key.split("-");
+                        String category = arr[0];
+                        String printGrpLevel = arr[1];
                         firstLevel =
                                 new NodeCategory(category, null, null, null,
-                                                 null, null, null, null);
+                                                 null, null, null, null,
+                                                 printGrpLevel);
                         root.add(firstLevel);
                         List<ConfiguratorNodePOJO> childList =
                             (List<ConfiguratorNodePOJO>)pair.getValue();
@@ -440,12 +486,24 @@ public class XMLImportPageBean {
                                                  node.getNodeValue(),
                                                  node.getUnitPrice(),
                                                  node.getExtendedPrice(),
-                                                 node.getNodeColor());
+                                                 node.getNodeColor(),
+                                                 node.getPrintGroupLevel());
                             firstLevel.addNodes(secondLevel);
                         }
 
                     }
+                    //Trying to sort root
+                    for (NodeCategory nc : root) {
+                        System.out.println(nc.getCategory() + " " +
+                                           nc.getPrintGroupLevel());
+                    }
+                    NodeComparator comparator = new NodeComparator();
+                    Collections.sort(root, comparator);
 
+                    for (NodeCategory nc : root) {
+                        System.out.println(nc.getCategory() + " " +
+                                           nc.getPrintGroupLevel());
+                    }
                     categoryTree =
                             new ChildPropertyTreeModel(root, "childNodes");
 
@@ -453,7 +511,13 @@ public class XMLImportPageBean {
 
             }
         } catch (Exception e) {
+
             ADFUtils.routeExceptions(e);
+        } finally {
+            //cleanup
+            ADFUtils.setSessionScopeValue("refreshImport", null);
+            ADFUtils.setSessionScopeValue("parentObject", null);
+            //categoryTree = null ;
         }
         return categoryTree;
 
@@ -600,6 +664,12 @@ public class XMLImportPageBean {
         uiComponent.processUpdates(FacesContext.getCurrentInstance());
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         System.out.println("Button Pressed");
+        //Trying to clear previous values here
+        warnText.setValue(null);
+        showListHeader = false;
+        debugMsgBind.setValue(null);
+        productsRendered = true;
+        spaceRendered = false;
         fileUploadVCE(null);
     }
 
@@ -620,5 +690,63 @@ public class XMLImportPageBean {
         return spaceRendered;
     }
 
-  
+
+    public void setModelNameBind(RichOutputText modelNameBind) {
+        this.modelNameBind = modelNameBind;
+    }
+
+    public RichOutputText getModelNameBind() {
+        return modelNameBind;
+    }
+
+    public void setModelDescBind(RichOutputText modelDescBind) {
+        this.modelDescBind = modelDescBind;
+    }
+
+    public RichOutputText getModelDescBind() {
+        return modelDescBind;
+    }
+
+    public void setModelQtyBind(RichOutputText modelQtyBind) {
+        this.modelQtyBind = modelQtyBind;
+    }
+
+    public RichOutputText getModelQtyBind() {
+        return modelQtyBind;
+    }
+
+    public void setModelPriceBind(RichOutputText modelPriceBind) {
+        this.modelPriceBind = modelPriceBind;
+    }
+
+    public RichOutputText getModelPriceBind() {
+        return modelPriceBind;
+    }
+
+    public void setExtendedPriceBind(RichOutputText extendedPriceBind) {
+        this.extendedPriceBind = extendedPriceBind;
+    }
+
+    public RichOutputText getExtendedPriceBind() {
+        return extendedPriceBind;
+    }
+
+    private void resetAllBindings() {
+        //        ResetUtils.reset(fileNameBinding);
+        //        ResetUtils.reset(timestampBinding);
+        //        ResetUtils.reset(uploadedByBinding);
+        //        ResetUtils.reset(warnText);
+        //        ResetUtils.reset(dubugMsgBinding);
+        //        ResetUtils.reset(debugMsgBind);
+        //        ResetUtils.reset(modelName);
+        //        ResetUtils.reset(uploadFileBinding);
+        //        ResetUtils.reset(modelNameBind);
+        //        ResetUtils.reset(modelDescBind);
+        //        ResetUtils.reset(modelQtyBind);
+        //        ResetUtils.reset(modelPriceBind);
+        //        ResetUtils.reset(extendedPriceBind);
+        //        showListHeader = false;
+        //        productsRendered = true;
+        //        spaceRendered = false;
+    }
 }

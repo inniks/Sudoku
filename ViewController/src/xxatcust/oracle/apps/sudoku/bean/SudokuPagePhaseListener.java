@@ -78,7 +78,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
 
     public void beforePhase(PagePhaseEvent pagePhaseEvent) {
         //Comment for local run
-       // validateEBSSession(pagePhaseEvent);
+        validateEBSSession(pagePhaseEvent);
     }
 
 
@@ -207,12 +207,12 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                                INSTANCE);
                 _logger.info("wrappedRequest : " + wrappedRequest);
                 oracle.apps.fnd.ext.common.Session sessionEBS =
-                    wrappedRequest.getAppsSession(true);
+                    wrappedRequest.getAppsSession();
                 _logger.info("sessionEBS : " + sessionEBS);
                 if (sessionEBS != null) {
                     if (!isEBSSessionValid(sessionEBS)) {
                         _logger.info("EBS Session Not valid ,Logging out ");
-                        logoutEBS();
+                        //logoutEBS();
                         return;
                     } else {
                         String userId = sessionEBS.getUserId();
@@ -286,8 +286,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
     }
 
     public boolean isEBSSessionValid(oracle.apps.fnd.ext.common.Session sessionEBS) {
-        State state = sessionEBS.getCurrentState();
-        
+        State state = sessionEBS.getCurrentState();       
         CookieStatus icxSessionStatus = state.getIcxCookieStatus();
         _logger.info("Cookie Status : " + icxSessionStatus);
         if (!icxSessionStatus.equals(CookieStatus.VALID)) {

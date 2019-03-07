@@ -1,6 +1,7 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SessionDetails {
     private String userId;
@@ -19,7 +20,7 @@ public class SessionDetails {
     private String configurationMode;
     private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
     private String servletMode; // value is EBS when using from EBS side manually testing
-    
+    private HashMap<String, String> fndMessages = new HashMap<String, String>();    
     public SessionDetails() {
         super();
     }
@@ -154,5 +155,13 @@ public class SessionDetails {
 
     public String getServletMode() {
         return servletMode;
+    }
+
+    public void setFndMessages(HashMap<String, String> fndMessages) {
+        this.fndMessages = fndMessages;
+    }
+
+    public HashMap<String, String> getFndMessages() {
+        return fndMessages;
     }
 }

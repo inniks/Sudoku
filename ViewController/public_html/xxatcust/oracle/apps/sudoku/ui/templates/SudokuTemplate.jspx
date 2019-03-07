@@ -21,10 +21,6 @@
             <af:panelGroupLayout id="pgl1" layout="horizontal"
                                  styleClass="AFStretchWidth">
               <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
-                <af:image id="pt_ot3"
-                          inlineStyle="font-size:smaller; font-weight:bold; color:Blue;"
-                          source="/Resources/images/iconfinder_Sudoku_39883.png"
-                          shortDesc="Sudoku Configurator System"/>
                 <af:spacer width="6" height="10" id="pt_s6"/>
                 <af:navigationPane id="pt_np1" value="#{HomeMenu}"
                                    var="menuItem" level="0" hint="bar">

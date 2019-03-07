@@ -22,6 +22,7 @@ public class ConfiguratorNodePOJO {
     String extendedPrice;
     String nodeCategory;
     String nodeColor;
+    String printGroupLevel;
 
     public ConfiguratorNodePOJO() {
         super();
@@ -87,5 +88,13 @@ public class ConfiguratorNodePOJO {
 
     public String getNodeColor() {
         return nodeColor;
+    }
+
+    public void setPrintGroupLevel(String printGroupLevel) {
+        this.printGroupLevel = printGroupLevel;
+    }
+
+    public String getPrintGroupLevel() {
+        return printGroupLevel;
     }
 }

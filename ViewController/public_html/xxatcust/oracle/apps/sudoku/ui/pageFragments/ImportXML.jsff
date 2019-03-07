@@ -61,11 +61,10 @@
                                        rendered="#{XMLImportPageBean.productsRendered}"
                                        partialTriggers="ctb1"/>
               <af:spacer width="10" height="10" id="s15"/>
-              <af:checkUncommittedDataBehavior/>
               <af:commandToolbarButton text="Show Prices" id="ctb2"
-                                       partialTriggers="ctb6"/>
+                                       partialTriggers="ctb6" rendered="false"/>
               <af:commandToolbarButton text="Hide Prices" id="ctb6"
-                                       partialTriggers="ctb2"/>
+                                       partialTriggers="ctb2" rendered="false"/>
               <af:spacer width="10" height="10" id="s7"/>
               <af:commandToolbarButton text="Show Debug Logs" id="ctb3">
                 <af:showPopupBehavior popupId="debugPop" triggerType="click"/>
@@ -76,6 +75,13 @@
               </af:commandToolbarButton>
             </af:toolbar>
           </af:panelGroupLayout>
+          <f:facet name="context">
+            <af:group id="g1">
+              <af:spacer width="10" height="10" id="s27"/>
+              <af:statusIndicator id="si1" shortDesc="Processing....."/>
+            </af:group>
+          </f:facet>
+          <f:facet name="info"/>
         </af:panelHeader>
         <!--   <af:resource type="css" source="/css/Style.css"/> -->
         <f:facet name="separator">
@@ -97,7 +103,8 @@
         <af:panelBox text=" " id="pb1" showDisclosure="false" showHeader="never"
                      maximized="true" styleClass="AFStretchWidth">
           <af:panelGroupLayout id="pgl8" layout="vertical"
-                               styleClass="AFStretchWidth">
+                               styleClass="AFStretchWidth"
+                               partialTriggers="cb1">
             <!--    <af:panelGroupLayout id="pgl11"> -->
             <af:panelGroupLayout id="pgl5"
                                  inlineStyle="background-color:#ebe7ef;"
@@ -154,41 +161,46 @@
                              inlineStyle="color:Black; font-weight:bold; font-size:small;"
                              styleClass="ABHeader"/>
               <af:spacer width="13" height="10" id="pgl115_s3"/>
-              <af:outputText value="E8008SYS" id="pgl115_ot7"
+              <af:outputText id="pgl115_ot7"
                              inlineStyle="color:Black;  font-weight:bold;"
                              rendered="#{XMLImportPageBean.productsRendered}"
-                             styleClass="ABHeader"/>
+                             styleClass="ABHeader"
+                             binding="#{XMLImportPageBean.modelNameBind}"/>
               <af:spacer width="96" height="10" id="pgl115_s5"
                          rendered="#{XMLImportPageBean.productsRendered}"/>
-              <af:outputText value="V93000 SOC Series System - Wave Scale"
+              <af:outputText
                              id="pgl115_ot8"
                              inlineStyle="color:Black; font-weight:bold;"
-                             styleClass="ABHeader"/>
+                             styleClass="ABHeader"
+                             binding="#{XMLImportPageBean.modelDescBind}"/>
               <af:spacer width="215" height="10" id="pgl115_s8"/>
               <af:spacer width="25" height="10" id="pgl115_s13"
                          rendered="#{XMLImportPageBean.spaceRendered}"/>
-              <af:outputText value="1.0" id="pgl115_ot9"
+              <af:outputText id="pgl115_ot9"
                              inlineStyle="color:Black;  font-weight:bold;"
-                             styleClass="ABHeader"/>
+                             styleClass="ABHeader"
+                             binding="#{XMLImportPageBean.modelQtyBind}"/>
               <af:spacer width="154" height="10" id="pgl115_s9"/>
               <af:spacer height="10" id="pgl115_s22"
                          rendered="#{XMLImportPageBean.spaceRendered}"
                          width="34"/>
-              <af:outputText value="null" id="pgl115_ot10"
+              <af:outputText id="pgl115_ot10"
                              inlineStyle="color:Black;  font-weight:bold;"
                              styleClass="ABHeader"/>
               <af:spacer width="168" height="10" id="pgl115_s10"/>
               <af:spacer width="16" height="10" id="pgl115_s20"
                          rendered="#{XMLImportPageBean.spaceRendered}"/>
-              <af:outputText value="656198.9" id="opgl115_t11"
+              <af:outputText id="opgl115_t11"
                              inlineStyle="color:Black;  font-weight:bold;"
-                             styleClass="ABHeader"/>
+                             styleClass="ABHeader"
+                             binding="#{XMLImportPageBean.modelPriceBind}"/>
               <af:spacer width="105" height="10" id="pgl115_s11"/>
               <af:spacer width="35" height="10" id="pgl115_s24"
                          rendered="#{XMLImportPageBean.spaceRendered}"/>
-              <af:outputText value="656198.9" id="pgl115_ot12"
+              <af:outputText id="pgl115_ot12"
                              inlineStyle="color:Black;  font-weight:bold;"
-                             noWrap="true" styleClass="ABHeader"/>
+                             noWrap="true" styleClass="ABHeader"
+                             binding="#{XMLImportPageBean.extendedPriceBind}"/>
               <af:spacer width="108" height="10" id="pgl115_s12"/>
               <af:spacer width="41" height="10" id="pgl115_s23"
                          rendered="#{XMLImportPageBean.spaceRendered}"/>
@@ -265,8 +277,8 @@
             </af:panelGroupLayout>
             <af:popup id="wrnPop" autoCancel="disabled"
                       binding="#{XMLImportPageBean.warningPopup}">
-              <af:dialog id="d1" title="Configurations has below warnings."
-                         contentWidth="600" contentHeight="400">
+              <af:dialog id="d1"
+                         title="Configurations has below warning(s)/notification(s).">
                 <af:panelGroupLayout id="pg12l4">
                   <af:outputFormatted id="of4"
                                       binding="#{XMLImportPageBean.warnText}"/>
