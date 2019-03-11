@@ -38,7 +38,7 @@
                 </af:navigationPane>
               </af:panelGroupLayout>
               <af:outputText value="V93000 Configurator" id="pt_ot5"  styleClass="AFHeaderLevelTwo"
-                             inlineStyle="font-size:x-large; color:Navy; font-weight:bold;"/>
+                             inlineStyle="font-size:x-large; color:#910048; font-weight:bold;"/>
               <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"
                                    visible="false">
                 <af:outputText id="pt_ot101" value="HSCPT"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <menu xmlns="http://myfaces.apache.org/trinidad/menu">
-  <itemNode id="itemNode_SudokuHome" label="V9300 Configs And Quotes"
+  <itemNode id="itemNode_SudokuHome" label="Import Configuration"
             action="SudokuHome" focusViewId="/SudokuHome"/>
 </menu>

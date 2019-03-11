@@ -26,14 +26,14 @@ public class XMLUtils {
     }
 
 
-    public static String validateXMLSchema(String xsdPath, File xmlFile) {
+    public static String validateXMLSchema(File xsdFile, File xmlFile) {
         boolean validated = true ;
         SchemaFactory factory =
             SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = null;
-        File xsdFile = new File(xsdPath) ;
+        //File xsdFile = new File(xsdPath) ;
         try {
-            schema = factory.newSchema(new File(xsdPath));
+            schema = factory.newSchema(xsdFile);
         } catch (SAXException e) {
             e.printStackTrace();
         }
@@ -41,9 +41,9 @@ public class XMLUtils {
         try {
             validator.validate(new StreamSource(xmlFile));
         } catch (SAXException e) {
-            e.printStackTrace();
+           ADFUtils.routeExceptions(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            ADFUtils.routeExceptions(e);
         }
         return "Y";
     }

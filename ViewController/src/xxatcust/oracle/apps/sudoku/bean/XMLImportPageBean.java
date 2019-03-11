@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import java.util.TreeMap;
@@ -43,6 +44,7 @@ import javax.xml.bind.JAXBException;
 
 import oracle.adf.controller.ControllerContext;
 import oracle.adf.controller.ViewPortContext;
+import oracle.adf.model.AttributeBinding;
 import oracle.adf.model.BindingContext;
 import oracle.adf.model.binding.DCBindingContainer;
 import oracle.adf.share.ADFContext;
@@ -56,6 +58,7 @@ import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.util.ResetUtils;
 
+import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
 import oracle.jbo.JboException;
@@ -97,8 +100,9 @@ public class XMLImportPageBean {
     private RichOutputFormatted debugMsgBind;
     private Boolean productsRendered = true;
     private Boolean spaceRendered = false;
-    private final String resourcePath =
-        "/Resources/files/V93000 C&Q 3.0 - XML File Schema.xsd";
+    private final String PROPERTY_FILE =
+        "xxatcust/oracle/apps/sudoku/view/V93000 C&Q 3.0 - XML File Schema.xsd";
+    private Properties mViewProperties = null;
     private RichOutputFormatted modelName;
     private RichInputFile uploadFileBinding;
     private RichOutputText modelNameBind;
@@ -145,15 +149,11 @@ public class XMLImportPageBean {
         _logger.info("Print parentObject from session in fileUploadVCE " +
                      ADFUtils.getSessionScopeValue("parentObject"));
         allNodes = null;
-        //Get File Object from VC Event
-
         fileNameBinding.setValue(fileVal.getFilename());
         uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
         timestampBinding.setValue(new Date());
         _logger.info("Print fileVal  fileUploadVCE" + fileVal);
-        //Upload File to path- Return actual server path
         _logger.info("Print inputStream  fileUploadVCE" + inputStream);
-        //InputStream trimmedIs = JaxbParser.trimWhiteSpaces(inputStream);
         parseXMLToPojo(inputStream);
         showListHeader = true;
         //ResetUtils.reset(vce.getComponent());
@@ -161,6 +161,7 @@ public class XMLImportPageBean {
 
     public void parseXMLToPojo(InputStream inputStream) {
         try {
+            System.out.println("Input Stream is "+inputStream);
             V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
             _logger.info("Print parent  parseXMLToPojo" + parent);
             //Add Session details on the parent object
@@ -170,42 +171,42 @@ public class XMLImportPageBean {
             sessionDetails.setUserId("11639");
             parent.setSessionDetails(sessionDetails);
             String jsonStr = JSONUtils.convertObjToJson(parent);
-            // V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            // ADFUtils.setSessionScopeValue("parentObject", obj);
-            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
-            Object obj = null;
-            //Reading JSOn from File to POJO
-            ObjectMapper mapper = new ObjectMapper();
-            _logger.info("Print mapper  parseXMLToPojo" + mapper);
-            try {
-                //comment this to run locally
-                String responseJson =
-                    (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-                _logger.info("Print responseJson  parseXMLToPojo" +
-                             responseJson);
-                //String responseJson = (String)JSONUtils.convertJsonToObject(null);
-                obj = mapper.readValue(responseJson, V93kQuote.class);
-                _logger.info("Print obj  parseXMLToPojo" + obj);
-                ADFUtils.setSessionScopeValue("parentObject", obj);
-                _logger.info("Print parentObject from session in parseXMLToPojo " +
-                             ADFUtils.getSessionScopeValue("parentObject"));
-            } catch (JsonParseException e) {
-                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-                                    "Exception in Parsing json:" +
-                                    e.getOriginalMessage());
-                e.printStackTrace();
-                _logger.info("error Print JsonParseException  parseXMLToPojo" +
-                             e);
-            } catch (JsonMappingException e) {
-                _logger.info("error Print JsonMappingException  parseXMLToPojo" +
-                             e);
-                e.printStackTrace();
-
-            } catch (IOException e) {
-                _logger.info("error Print IOException  parseXMLToPojo" + e);
-                e.printStackTrace();
-
-            }
+            V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+            ADFUtils.setSessionScopeValue("parentObject", obj);
+            //            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+            //            Object obj = null;
+            //            //Reading JSOn from File to POJO
+            //            ObjectMapper mapper = new ObjectMapper();
+            //            _logger.info("Print mapper  parseXMLToPojo" + mapper);
+            //            try {
+            //                //comment this to run locally
+            //                String responseJson =
+            //                    (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            //                _logger.info("Print responseJson  parseXMLToPojo" +
+            //                             responseJson);
+            //                //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+            //                obj = mapper.readValue(responseJson, V93kQuote.class);
+            //                _logger.info("Print obj  parseXMLToPojo" + obj);
+            //                ADFUtils.setSessionScopeValue("parentObject", obj);
+            //                _logger.info("Print parentObject from session in parseXMLToPojo " +
+            //                             ADFUtils.getSessionScopeValue("parentObject"));
+            //            } catch (JsonParseException e) {
+            //                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
+            //                                    "Exception in Parsing json:" +
+            //                                    e.getOriginalMessage());
+            //                e.printStackTrace();
+            //                _logger.info("error Print JsonParseException  parseXMLToPojo" +
+            //                             e);
+            //            } catch (JsonMappingException e) {
+            //                _logger.info("error Print JsonMappingException  parseXMLToPojo" +
+            //                             e);
+            //                e.printStackTrace();
+            //
+            //            } catch (IOException e) {
+            //                _logger.info("error Print IOException  parseXMLToPojo" + e);
+            //                e.printStackTrace();
+            //
+            //            }
         } catch (Exception ex) {
             ADFUtils.routeExceptions(ex);
 
@@ -223,6 +224,10 @@ public class XMLImportPageBean {
         } else {
             try {
                 inputStream = myfile.getInputStream();
+                //File xmlFile = stream2file(inputStream, "FileX", ".xml");
+                //File xsdFile = readXsdResource();
+//                String validated =
+//                    XMLUtils.validateXMLSchema(xsdFile, xmlFile);
             } catch (IOException e) {
                 ADFUtils.routeExceptions(e);
             }
@@ -281,16 +286,9 @@ public class XMLImportPageBean {
         try {
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
-            String modelName = null;
-            String modelDesc = null;
-            String modelQty = null;
-            String modelUOM = null;
-            String modelUnitPrice = null;
-            String modelExtendedPrice = null;
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y")) {
-                //Need to reset everything at this place
-                resetAllBindings();
+                //resetAllBindings();
                 Object parentObj =
                     ADFUtils.getSessionScopeValue("parentObject");
                 ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -374,13 +372,16 @@ public class XMLImportPageBean {
                                 }
                             }
                             warningMessage.append("</body></html>");
-                            warnText.setValue(warningMessage.toString());
+
                             // debugMsgBind.setValue(debugStr.toString());
                         }
+                        warnText.setValue(warningMessage.toString());
                         RichPopup.PopupHints hints =
                             new RichPopup.PopupHints();
                         if (warningMessage != null &&
-                            !warningMessage.equals("<html><body>")) {
+                            !warningMessage.toString().equalsIgnoreCase("<html><body>")) {
+                            System.out.println("Warning Message " +
+                                               warningMessage.toString());
                             warningPopup.show(hints);
                         }
                         StringBuilder debugMessage =
@@ -412,7 +413,6 @@ public class XMLImportPageBean {
                     if (obj != null && obj.getSessionDetails() != null &&
                         obj.getSessionDetails().getModelName() != null) {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
-                        modelName = obj.getSessionDetails().getModelName();
                         System.out.println("Model Name is " + modelName);
                     }
 
@@ -423,22 +423,6 @@ public class XMLImportPageBean {
                     HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                         new HashMap<String, List<ConfiguratorNodePOJO>>();
                     for (ConfiguratorNodePOJO node : allNodesList) {
-                        if (modelName != null &&
-                            modelName.equalsIgnoreCase(node.getNodeName())) {
-                            System.out.println("Entered Header Model " +
-                                               node.getNodeName() + " " +
-                                               node.getNodeDescription());
-                            modelDesc = node.getNodeDescription();
-                            modelQty = node.getNodeQty();
-                            modelExtendedPrice = node.getExtendedPrice();
-                            modelUnitPrice = node.getUnitPrice();
-                            modelUOM = "EA";
-                            modelNameBind.setValue(modelName);
-                            modelDescBind.setValue(modelDesc);
-                            modelQtyBind.setValue(modelQty);
-                            modelPriceBind.setValue(modelUnitPrice);
-                            extendedPriceBind.setValue(modelExtendedPrice);
-                        }
                         if (node.getNodeCategory() != null &&
                             node.getPrintGroupLevel() != null) {
                             catList.add(node.getNodeCategory() + "-" +
@@ -637,9 +621,8 @@ public class XMLImportPageBean {
     public static final String PREFIX = "stream2file";
     public static final String SUFFIX = ".tmp";
 
-    public static File stream2file(InputStream in) throws IOException {
-        String PREFIX = "stream2file";
-        String SUFFIX = ".tmp";
+    public File stream2file(InputStream in, String PREFIX,
+                            String SUFFIX) throws IOException {
         final File tempFile = File.createTempFile(PREFIX, SUFFIX);
         tempFile.deleteOnExit();
         try {
@@ -749,4 +732,49 @@ public class XMLImportPageBean {
         //        productsRendered = true;
         //        spaceRendered = false;
     }
+
+
+    public void readRes(ActionEvent actionEvent) {
+        InputStream asStream =
+            this.getClass().getClassLoader().getResourceAsStream(PROPERTY_FILE);
+        if (asStream == null) {
+            // file not foun
+            System.out.println("File Not found");
+            _logger.info("File not found: '" + PROPERTY_FILE + "'");
+            return;
+        } else {
+            System.out.println("Stream found");
+            File f;
+            try {
+                f = stream2file(asStream, "V93", ".xsd");
+                System.out.println("File Name " + f.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public File readXsdResource() {
+        File f = null;
+        InputStream asStream =
+            this.getClass().getClassLoader().getResourceAsStream(PROPERTY_FILE);
+        if (asStream == null) {
+            // file not foun
+            System.out.println("File Not found");
+            _logger.info("File not found: '" + PROPERTY_FILE + "'");
+        } else {
+            System.out.println("Stream found");
+
+            try {
+                f = stream2file(asStream, "V93", ".xsd");
+                System.out.println("File Name " + f.getName());
+                return f;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return f;
+    }
+    
+    
 }

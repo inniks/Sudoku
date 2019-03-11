@@ -16,14 +16,20 @@ public class JSONUtils {
         super();
     }
 
-    public static Object convertJsonToObject(String jsonString) throws IOException,
-                                                                       JsonParseException,
-                                                                       JsonMappingException {
+    public static Object convertJsonToObject(String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
         Object obj = null;
-        obj =
+        try {
+            obj =
 mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response3.json"),
                  V93kQuote.class);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return obj;
     }
 

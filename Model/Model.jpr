@@ -206,7 +206,7 @@
          <list n="libraryDefinitions">
             <hash>
                <list n="classPath">
-                  <url path="../../../../../Cz_jars/fndext.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/fndext.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Fndext.jar"/>
