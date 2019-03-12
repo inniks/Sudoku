@@ -14,7 +14,6 @@
             <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle"
                                  partialTriggers="if1">
               <af:inputFile label="Upload File" id="if1"
-                            valueChangeListener="#{XMLImportPageBean.fileUploadVCE}"
                             styleClass="inputFile" immediate="true"
                             binding="#{XMLImportPageBean.uploadFileBinding}"
                             shortDesc="Select and upload the import configuration XML file to load the configuration."/>
@@ -73,8 +72,6 @@
               <af:commandToolbarButton text="Show Warning(s)/Notification(s) Messages" id="ctb5">
                 <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
               </af:commandToolbarButton>
-              <af:commandToolbarButton text="commandToolbarButton 1" id="ctb7"
-                                       actionListener="#{XMLImportPageBean.readRes}"/>
             </af:toolbar>
           </af:panelGroupLayout>
           <f:facet name="context">
@@ -232,6 +229,17 @@
                 <af:panelGroupLayout id="pg12l4" layout="scroll">
                   <af:outputFormatted id="of4"
                                       binding="#{XMLImportPageBean.warnText}"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <af:popup id="p1" binding="#{XMLImportPageBean.errorPopup}">
+              <af:dialog id="d3" title="Exceptions occurred :"
+                         contentWidth="450" contentHeight="200" type="cancel"
+                         inlineStyle="color:Red;">
+                <af:panelGroupLayout id="pgl11" layout="scroll">
+                  <af:outputText id="ot15"
+                                 inlineStyle="color:Red;"
+                                 binding="#{XMLImportPageBean.validationError}"/>
                 </af:panelGroupLayout>
               </af:dialog>
             </af:popup>

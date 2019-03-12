@@ -75,7 +75,8 @@ import org.apache.myfaces.trinidad.model.CollectionModel;
 import org.apache.myfaces.trinidad.model.RowKeySet;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
-import xxatcust.oracle.apps.sudoku.model.module.SudokuAMImpl;
+import org.xml.sax.SAXException;
+
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfigNodeComparator;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
@@ -110,6 +111,8 @@ public class XMLImportPageBean {
     private RichOutputText modelQtyBind;
     private RichOutputText modelPriceBind;
     private RichOutputText extendedPriceBind;
+    private RichOutputText validationError;
+    private RichPopup errorPopup;
 
     public XMLImportPageBean() {
         super();
@@ -138,79 +141,92 @@ public class XMLImportPageBean {
         return allNodes;
     }
 
-    public void fileUploadVCE(ValueChangeEvent vce) {
-        UploadedFile fileVal =
-            (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
+    public void fileUploadVCE() {
+        try {
+            UploadedFile fileVal =
+                (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
 
-        InputStream inputStream = uploadFile(fileVal);
-        ADFUtils.clearControllerException();
-        ADFUtils.setSessionScopeValue("parentObject", null);
-        categoryTree = null;
-        _logger.info("Print parentObject from session in fileUploadVCE " +
-                     ADFUtils.getSessionScopeValue("parentObject"));
-        allNodes = null;
-        fileNameBinding.setValue(fileVal.getFilename());
-        uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
-        timestampBinding.setValue(new Date());
-        _logger.info("Print fileVal  fileUploadVCE" + fileVal);
-        _logger.info("Print inputStream  fileUploadVCE" + inputStream);
-        parseXMLToPojo(inputStream);
-        showListHeader = true;
+            InputStream inputStream = uploadFile(fileVal);
+            ADFUtils.clearControllerException();
+            ADFUtils.setSessionScopeValue("parentObject", null);
+            categoryTree = null;
+            _logger.info("Print parentObject from session in fileUploadVCE " +
+                         ADFUtils.getSessionScopeValue("parentObject"));
+            allNodes = null;
+            fileNameBinding.setValue(fileVal.getFilename());
+            uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
+            timestampBinding.setValue(new Date());
+            _logger.info("Print fileVal  fileUploadVCE" + fileVal);
+            _logger.info("Print inputStream  fileUploadVCE" + inputStream);
+            parseXMLToPojo(inputStream);
+            showListHeader = true;
+        } catch (JAXBException jaxbe) {
+            // TODO: Add catch code
+            validationError.setValue("Error in XML validation "+jaxbe.getMessage());
+            RichPopup.PopupHints hints =
+                new RichPopup.PopupHints();
+            errorPopup.show(hints);
+            
+        } catch (JsonMappingException jme) {
+            // TODO: Add catch code
+            validationError.setValue(jme.getMessage());
+            RichPopup.PopupHints hints =
+                new RichPopup.PopupHints();
+            errorPopup.show(hints);
+        } catch (JsonGenerationException jge) {
+            validationError.setValue(jge.getMessage());
+            RichPopup.PopupHints hints =
+                new RichPopup.PopupHints();
+            errorPopup.show(hints);
+        } catch (IOException ioe) {
+            // TODO: Add catch code
+            ADFUtils.routeExceptions(ioe);
+        } catch (SAXException saxe) {
+            // TODO: Add catch code
+            validationError.setValue(saxe.getMessage());
+            RichPopup.PopupHints hints =
+                new RichPopup.PopupHints();
+            errorPopup.show(hints);
+
+        }
         //ResetUtils.reset(vce.getComponent());
     }
 
-    public void parseXMLToPojo(InputStream inputStream) {
-        try {
-            System.out.println("Input Stream is "+inputStream);
-            V93kQuote parent = JaxbParser.jaxbXMLToObject(inputStream);
-            _logger.info("Print parent  parseXMLToPojo" + parent);
-            //Add Session details on the parent object
-            SessionDetails sessionDetails = new SessionDetails();
-            sessionDetails.setApplicationId("880");
-            sessionDetails.setRespId("51156");
-            sessionDetails.setUserId("11639");
-            parent.setSessionDetails(sessionDetails);
-            String jsonStr = JSONUtils.convertObjToJson(parent);
-            V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            ADFUtils.setSessionScopeValue("parentObject", obj);
-            //            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
-            //            Object obj = null;
-            //            //Reading JSOn from File to POJO
-            //            ObjectMapper mapper = new ObjectMapper();
-            //            _logger.info("Print mapper  parseXMLToPojo" + mapper);
-            //            try {
-            //                //comment this to run locally
-            //                String responseJson =
-            //                    (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            //                _logger.info("Print responseJson  parseXMLToPojo" +
-            //                             responseJson);
-            //                //String responseJson = (String)JSONUtils.convertJsonToObject(null);
-            //                obj = mapper.readValue(responseJson, V93kQuote.class);
-            //                _logger.info("Print obj  parseXMLToPojo" + obj);
-            //                ADFUtils.setSessionScopeValue("parentObject", obj);
-            //                _logger.info("Print parentObject from session in parseXMLToPojo " +
-            //                             ADFUtils.getSessionScopeValue("parentObject"));
-            //            } catch (JsonParseException e) {
-            //                ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR,
-            //                                    "Exception in Parsing json:" +
-            //                                    e.getOriginalMessage());
-            //                e.printStackTrace();
-            //                _logger.info("error Print JsonParseException  parseXMLToPojo" +
-            //                             e);
-            //            } catch (JsonMappingException e) {
-            //                _logger.info("error Print JsonMappingException  parseXMLToPojo" +
-            //                             e);
-            //                e.printStackTrace();
-            //
-            //            } catch (IOException e) {
-            //                _logger.info("error Print IOException  parseXMLToPojo" + e);
-            //                e.printStackTrace();
-            //
-            //            }
-        } catch (Exception ex) {
-            ADFUtils.routeExceptions(ex);
+    public void parseXMLToPojo(InputStream inputStream) throws IOException,
+                                                               JsonGenerationException,
+                                                               JsonMappingException,
+                                                               JAXBException,
+                                                               SAXException {
+        System.out.println("Input Stream is " + inputStream);
+        File xsdFile = readXsdResource();
+        V93kQuote parent = null;
+        parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
 
-        }
+        _logger.info("Print parent  parseXMLToPojo" + parent);
+        //Add Session details on the parent object
+        SessionDetails sessionDetails = new SessionDetails();
+        sessionDetails.setApplicationId("880");
+        sessionDetails.setRespId("51156");
+        sessionDetails.setUserId("11639");
+        parent.setSessionDetails(sessionDetails);
+        String jsonStr = JSONUtils.convertObjToJson(parent);
+        V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+        ADFUtils.setSessionScopeValue("parentObject", obj);
+        //        _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+        //        Object obj = null;
+        //        //Reading JSOn from File to POJO
+        //        ObjectMapper mapper = new ObjectMapper();
+        //        _logger.info("Print mapper  parseXMLToPojo" + mapper);
+        //            //comment this to run locally
+        //            String responseJson =
+        //                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        //            _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
+        //            //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+        //            obj = mapper.readValue(responseJson, V93kQuote.class);
+        //            _logger.info("Print obj  parseXMLToPojo" + obj);
+        //            ADFUtils.setSessionScopeValue("parentObject", obj);
+        //            _logger.info("Print parentObject from session in parseXMLToPojo " +
+        //                         ADFUtils.getSessionScopeValue("parentObject"));
 
     }
 
@@ -224,10 +240,6 @@ public class XMLImportPageBean {
         } else {
             try {
                 inputStream = myfile.getInputStream();
-                //File xmlFile = stream2file(inputStream, "FileX", ".xml");
-                //File xsdFile = readXsdResource();
-//                String validated =
-//                    XMLUtils.validateXMLSchema(xsdFile, xmlFile);
             } catch (IOException e) {
                 ADFUtils.routeExceptions(e);
             }
@@ -496,7 +508,8 @@ public class XMLImportPageBean {
             }
         } catch (Exception e) {
 
-            ADFUtils.routeExceptions(e);
+            //ADFUtils.routeExceptions(e);
+            e.printStackTrace();
         } finally {
             //cleanup
             ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -653,7 +666,9 @@ public class XMLImportPageBean {
         debugMsgBind.setValue(null);
         productsRendered = true;
         spaceRendered = false;
-        fileUploadVCE(null);
+        validationError.setValue(null);
+        fileUploadVCE();
+
     }
 
 
@@ -749,7 +764,7 @@ public class XMLImportPageBean {
                 f = stream2file(asStream, "V93", ".xsd");
                 System.out.println("File Name " + f.getName());
             } catch (IOException e) {
-                e.printStackTrace();
+                ADFUtils.routeExceptions(e);
             }
         }
     }
@@ -775,6 +790,21 @@ public class XMLImportPageBean {
         }
         return f;
     }
-    
-    
+
+
+    public void setValidationError(RichOutputText validationError) {
+        this.validationError = validationError;
+    }
+
+    public RichOutputText getValidationError() {
+        return validationError;
+    }
+
+    public void setErrorPopup(RichPopup errorPopup) {
+        this.errorPopup = errorPopup;
+    }
+
+    public RichPopup getErrorPopup() {
+        return errorPopup;
+    }
 }

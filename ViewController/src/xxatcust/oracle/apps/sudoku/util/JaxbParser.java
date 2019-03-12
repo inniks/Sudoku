@@ -14,13 +14,19 @@ import java.io.StringWriter;
 
 import java.nio.charset.Charset;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.myfaces.trinidad.model.UploadedFile;
+
+import org.xml.sax.SAXException;
 
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Config;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Contract;
@@ -54,7 +60,9 @@ public class JaxbParser {
     }
 
 
-    public static V93kQuote jaxbXMLToObject(InputStream inputStream) throws JAXBException {
+    public static V93kQuote jaxbXMLToObject(InputStream inputStream,
+                                            File xsdFile) throws JAXBException,
+                                                                 SAXException {
         JAXBContext context =
             JAXBContext.newInstance(V93kQuote.class, Config.class,
                                     QHeader.class, Customer.class,
@@ -68,7 +76,10 @@ public class JaxbParser {
                                     PogoMappingFile.class, InfraUpgrade.class);
         Unmarshaller un = context.createUnmarshaller();
         V93kQuote parent = (V93kQuote)un.unmarshal(inputStream);
-        //ADFUtils.setPageFlowScopeValue("parentObject", parent);
+        SchemaFactory sf =
+            SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Schema employeeSchema = sf.newSchema((xsdFile));
+        un.setSchema(employeeSchema);
         return parent;
     }
 
@@ -82,10 +93,10 @@ public class JaxbParser {
                 new BufferedReader(new StringReader(theString));
             StringBuffer result = new StringBuffer();
             String line;
-            while ((line = reader.readLine()) != null){
-                
+            while ((line = reader.readLine()) != null) {
+
                 result.append(line.trim());
-                System.out.println("Line "+line);
+                System.out.println("Line " + line);
             }
             InputStream is =
                 new ByteArrayInputStream(result.toString().getBytes(Charset.forName("UTF-8")));

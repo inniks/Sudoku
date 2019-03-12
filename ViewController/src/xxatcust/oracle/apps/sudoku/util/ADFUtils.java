@@ -1537,7 +1537,9 @@ public class ADFUtils {
     }
 
     public static void routeExceptions(Exception ex) {
-        JboException jboex = new JboException(ex.getMessage());
+        String rootCause = ex.getMessage() ;
+        System.out.println("Error cause "+ex.getMessage());
+        JboException jboex = new JboException(rootCause);
         BindingContext bctx = BindingContext.getCurrent();
         ((DCBindingContainer)bctx.getCurrentBindingsEntry()).reportException(jboex);
     }
