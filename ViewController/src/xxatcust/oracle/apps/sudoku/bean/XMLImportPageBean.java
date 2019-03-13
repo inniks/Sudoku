@@ -162,21 +162,19 @@ public class XMLImportPageBean {
             showListHeader = true;
         } catch (JAXBException jaxbe) {
             // TODO: Add catch code
-            validationError.setValue("Error in XML validation "+jaxbe.getMessage());
-            RichPopup.PopupHints hints =
-                new RichPopup.PopupHints();
+            validationError.setValue("Error in XML validation " +
+                                     jaxbe.getMessage());
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
             errorPopup.show(hints);
-            
+
         } catch (JsonMappingException jme) {
             // TODO: Add catch code
             validationError.setValue(jme.getMessage());
-            RichPopup.PopupHints hints =
-                new RichPopup.PopupHints();
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
             errorPopup.show(hints);
         } catch (JsonGenerationException jge) {
             validationError.setValue(jge.getMessage());
-            RichPopup.PopupHints hints =
-                new RichPopup.PopupHints();
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
             errorPopup.show(hints);
         } catch (IOException ioe) {
             // TODO: Add catch code
@@ -184,8 +182,7 @@ public class XMLImportPageBean {
         } catch (SAXException saxe) {
             // TODO: Add catch code
             validationError.setValue(saxe.getMessage());
-            RichPopup.PopupHints hints =
-                new RichPopup.PopupHints();
+            RichPopup.PopupHints hints = new RichPopup.PopupHints();
             errorPopup.show(hints);
 
         }
@@ -210,23 +207,23 @@ public class XMLImportPageBean {
         sessionDetails.setUserId("11639");
         parent.setSessionDetails(sessionDetails);
         String jsonStr = JSONUtils.convertObjToJson(parent);
-        V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+        //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+        //ADFUtils.setSessionScopeValue("parentObject", obj);
+        _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+        Object obj = null;
+        //Reading JSOn from File to POJO
+        ObjectMapper mapper = new ObjectMapper();
+        _logger.info("Print mapper  parseXMLToPojo" + mapper);
+        //comment this to run locally
+        String responseJson =
+            (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
+        //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+        obj = mapper.readValue(responseJson, V93kQuote.class);
+        _logger.info("Print obj  parseXMLToPojo" + obj);
         ADFUtils.setSessionScopeValue("parentObject", obj);
-        //        _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
-        //        Object obj = null;
-        //        //Reading JSOn from File to POJO
-        //        ObjectMapper mapper = new ObjectMapper();
-        //        _logger.info("Print mapper  parseXMLToPojo" + mapper);
-        //            //comment this to run locally
-        //            String responseJson =
-        //                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        //            _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
-        //            //String responseJson = (String)JSONUtils.convertJsonToObject(null);
-        //            obj = mapper.readValue(responseJson, V93kQuote.class);
-        //            _logger.info("Print obj  parseXMLToPojo" + obj);
-        //            ADFUtils.setSessionScopeValue("parentObject", obj);
-        //            _logger.info("Print parentObject from session in parseXMLToPojo " +
-        //                         ADFUtils.getSessionScopeValue("parentObject"));
+        _logger.info("Print parentObject from session in parseXMLToPojo " +
+                     ADFUtils.getSessionScopeValue("parentObject"));
 
     }
 
@@ -318,36 +315,7 @@ public class XMLImportPageBean {
                             obj.getExceptionMap().getDebugMessageList();
                         List<String> debugMessages =
                             obj.getExceptionMap().getDebugMessages();
-                        List<String> errorMessages =
-                            obj.getExceptionMap().getErrorsMessages();
-                        StringBuilder errMessage =
-                            new StringBuilder("<html><body>");
-                        if (exceptionMap != null && exceptionMap.size() > 0) {
 
-                            for (Map.Entry<String, ArrayList<String>> entry :
-                                 exceptionMap.entrySet()) {
-                                String key = entry.getKey();
-                                ArrayList<String> value = entry.getValue();
-                                for (String str : value) {
-                                    errMessage.append("<p><b>" + str +
-                                                      "</b></p>");
-                                }
-                            }
-
-                            errMessage.append("</body></html>");
-
-                        }
-                        if (errorMessages != null &&
-                            errorMessages.size() > 0) {
-                            for (String str : errorMessages) {
-                                errMessage.append("<p><b>" + str + "</b></p>");
-                            }
-                            errMessage.append("</body></html>");
-                        }
-                        if (errMessage != null &&
-                            !errMessage.toString().equalsIgnoreCase("<html><body>")) {
-                            throw new JboException(errMessage.toString());
-                        }
                         //Check for warnings from configurator
                         StringBuilder warningMessage =
                             new StringBuilder("<html><body>");
@@ -420,6 +388,37 @@ public class XMLImportPageBean {
                             }
                         }
                         debugMsgBind.setValue(debugMessage.toString());
+
+                        List<String> errorMessages =
+                            obj.getExceptionMap().getErrorsMessages();
+                        StringBuilder errMessage =
+                            new StringBuilder("<html><body>");
+                        if (exceptionMap != null && exceptionMap.size() > 0) {
+
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 exceptionMap.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    errMessage.append("<p><b>" + str +
+                                                      "</b></p>");
+                                }
+                            }
+
+                            errMessage.append("</body></html>");
+
+                        }
+                        if (errorMessages != null &&
+                            errorMessages.size() > 0) {
+                            for (String str : errorMessages) {
+                                errMessage.append("<p><b>" + str + "</b></p>");
+                            }
+                            errMessage.append("</body></html>");
+                        }
+                        if (errMessage != null &&
+                            !errMessage.toString().equalsIgnoreCase("<html><body>")) {
+                            throw new JboException(errMessage.toString());
+                        }
                     }
 
                     if (obj != null && obj.getSessionDetails() != null &&
