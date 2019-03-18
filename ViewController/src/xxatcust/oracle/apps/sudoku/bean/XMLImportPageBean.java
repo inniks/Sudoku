@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,6 +16,10 @@ import java.io.InputStream;
 
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+
+import java.io.OutputStreamWriter;
+
+import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,6 +71,8 @@ import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
+
+import oracle.jbo.uicli.binding.JUCtrlHierTypeBinding;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -806,4 +813,6 @@ public class XMLImportPageBean {
     public RichPopup getErrorPopup() {
         return errorPopup;
     }
+
+   
 }

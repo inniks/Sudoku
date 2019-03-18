@@ -207,7 +207,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                                                INSTANCE);
                 _logger.info("wrappedRequest : " + wrappedRequest);
                 oracle.apps.fnd.ext.common.Session sessionEBS =
-                    wrappedRequest.getAppsSession();
+                    wrappedRequest.getAppsSession(true);
                 _logger.info("sessionEBS : " + sessionEBS);
                 if (sessionEBS != null) {
                     if (!isEBSSessionValid(sessionEBS)) {

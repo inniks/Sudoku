@@ -71,7 +71,7 @@
               <af:spacer width="10" height="10" id="s19"/>
               <af:commandToolbarButton text="Show Warning(s)/Notification(s) Messages" id="ctb5">
                 <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
-              </af:commandToolbarButton>
+              </af:commandToolbarButton>           
             </af:toolbar>
           </af:panelGroupLayout>
           <f:facet name="context">
