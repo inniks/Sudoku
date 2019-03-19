@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="QuotingFlow_QuotingFlow_initQuoteSearchPageDef"
+                Package="xxatcust.oracle.apps.sudoku.pageFlows"
+                SkipValidation="true">
+  <parameters/>
+  <executables/>
+  <bindings>
+    <action id="initQuoteSearch" RequiresUpdateModel="true"
+            Action="invokeMethod" MethodName="initQuoteSearch"
+            IsViewObjectMethod="false" DataControl="SudokuAMDataControl"
+            InstanceName="SudokuAMDataControl.dataProvider"/>
+  </bindings>
+</pageDefinition>

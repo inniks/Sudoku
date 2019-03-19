@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelHeader text="Quote Search Page" id="ph1">
+    <f:facet name="context"/>
+    <f:facet name="toolbar">
+      <af:toolbar id="t3">
+        <af:commandToolbarButton text="Search" id="ctb1"
+                                 actionListener="#{pageFlowScope.QuotingBean.searchQuote}"/>
+        <af:spacer width="10" height="10" id="s1"/>
+        <af:commandToolbarButton text="Clear" id="ctb2" action="clear"/>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="legend"/>
+    <f:facet name="info"/>
+    <af:panelGroupLayout id="pgl1" layout="horizontal" partialTriggers="ctb2">
+      <af:inputText value="#{bindings.QuoteNumber.inputValue}"
+                    label="#{bindings.QuoteNumber.hints.label}"
+                    required="#{bindings.QuoteNumber.hints.mandatory}"
+                    columns="#{bindings.QuoteNumber.hints.displayWidth}"
+                    maximumLength="#{bindings.QuoteNumber.hints.precision}"
+                    shortDesc="#{bindings.QuoteNumber.hints.tooltip}" id="it1">
+        <f:validator binding="#{bindings.QuoteNumber.validator}"/>
+      </af:inputText>
+      <af:inputListOfValues id="customer1Id"
+                            popupTitle="Search and Select: #{bindings.Customer.hints.label}"
+                            value="#{bindings.Customer.inputValue}"
+                            label="#{bindings.Customer.hints.label}"
+                            model="#{bindings.Customer.listOfValuesModel}"
+                            required="#{bindings.Customer.hints.mandatory}"
+                            columns="#{bindings.Customer.hints.displayWidth}"
+                            shortDesc="#{bindings.Customer.hints.tooltip}">
+        <f:validator binding="#{bindings.Customer.validator}"/>
+      </af:inputListOfValues>
+      <af:inputListOfValues id="organizationUnit1Id"
+                            popupTitle="Search and Select: #{bindings.OrganizationUnit.hints.label}"
+                            value="#{bindings.OrganizationUnit.inputValue}"
+                            label="#{bindings.OrganizationUnit.hints.label}"
+                            model="#{bindings.OrganizationUnit.listOfValuesModel}"
+                            required="#{bindings.OrganizationUnit.hints.mandatory}"
+                            columns="#{bindings.OrganizationUnit.hints.displayWidth}"
+                            shortDesc="#{bindings.OrganizationUnit.hints.tooltip}">
+        <f:validator binding="#{bindings.OrganizationUnit.validator}"/>
+      </af:inputListOfValues>
+    </af:panelGroupLayout>
+  </af:panelHeader>
+  <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                      partialTriggers="::ctb1 ::ctb2">
+    <f:facet name="menus"/>
+    <f:facet name="toolbar">
+      <af:toolbar id="t2">
+        <af:commandToolbarButton text="Create New" id="ctb3"
+                                 action="createQuote"/>
+        <af:commandToolbarButton text="Export" id="ctb4" rendered="false"/>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="statusbar"/>
+    <af:table value="#{bindings.QuoteSearchTabVO.collectionModel}" var="row"
+              rows="#{bindings.QuoteSearchTabVO.rangeSize}"
+              emptyText="#{bindings.QuoteSearchTabVO.viewable ? 'No data to display.' : 'Access Denied.'}"
+              fetchSize="#{bindings.QuoteSearchTabVO.rangeSize}"
+              rowBandingInterval="0"
+              selectedRowKeys="#{bindings.QuoteSearchTabVO.collectionModel.selectedRow}"
+              selectionListener="#{bindings.QuoteSearchTabVO.collectionModel.makeCurrent}"
+              rowSelection="single" id="t1" columnStretching="column:c1"
+              partialTriggers=":::ctb1 :::ctb2">
+      <af:column sortProperty="#{bindings.QuoteSearchTabVO.hints.Quotename.name}"
+                 sortable="false"
+                 headerText="#{bindings.QuoteSearchTabVO.hints.Quotename.label}"
+                 id="c4" align="center" width="131">
+        <af:outputText value="#{row.Quotename}" id="ot2"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.QuoteSearchTabVO.hints.Customer.name}"
+                 sortable="false"
+                 headerText="#{bindings.QuoteSearchTabVO.hints.Customer.label}"
+                 id="c1" align="center" width="79">
+        <af:outputText value="#{row.Customer}" id="ot3"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.QuoteSearchTabVO.hints.StatusCode.name}"
+                 sortable="false"
+                 headerText="#{bindings.QuoteSearchTabVO.hints.StatusCode.label}"
+                 id="c5" width="105" align="center">
+        <af:outputText value="#{row.StatusCode}" id="ot5"/>
+      </af:column>
+      <af:column sortProperty="#{bindings.QuoteSearchTabVO.hints.PaymentAmount.name}"
+                 sortable="false"
+                 headerText="#{bindings.QuoteSearchTabVO.hints.PaymentAmount.label}"
+                 id="c2" width="105" align="center">
+        <af:outputText value="#{row.PaymentAmount}" id="ot1"/>
+      </af:column>
+    </af:table>
+  </af:panelCollection>
+</jsp:root>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="SearchQuotePageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="QuoteSearchVO" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="QuoteSearchVOIterator"/>
+    <iterator Binds="QuoteSearchTabVO" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="QuoteSearchTabVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="QuoteSearchVOIterator" id="QuoteNumber">
+      <AttrNames>
+        <Item Value="QuoteNumber"/>
+        <Item Value="Customer"/>
+        <Item Value="OrganizationUnit"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="QuoteSearchTabVOIterator" id="QuoteSearchTabVO">
+      <nodeDefinition DefName="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuoteSearchTabVO"
+                      Name="QuoteSearchTabVO0">
+        <AttrNames>
+          <Item Value="QuoteHeaderId"/>
+          <Item Value="Customer"/>
+          <Item Value="Quotename"/>
+          <Item Value="PaymentAmount"/>
+          <Item Value="StatusCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false" IterBinding="QuoteSearchVOIterator"
+                  Uses="LOV_Customer" id="Customer"/>
+    <listOfValues StaticList="false" IterBinding="QuoteSearchVOIterator"
+                  Uses="LOV_OrganizationUnit" id="OrganizationUnit"/>
+    <methodAction id="searchQuote"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="searchQuote"
+                  IsViewObjectMethod="false"/>
+  </bindings>
+</pageDefinition>

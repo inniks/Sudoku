@@ -1,14 +1,19 @@
 package xxatcust.oracle.apps.sudoku.model.module;
 
+import java.math.BigDecimal;
+
+import java.sql.CallableStatement;
+
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Types;
+
 import java.util.Hashtable;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +30,14 @@ import oracle.apps.fnd.ext.common.Session;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
 import oracle.jbo.SessionData;
+import oracle.jbo.ViewCriteria;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
+
 import oracle.jbo.server.ViewObjectImpl;
+
+import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
+import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
 
 
 // ---------------------------------------------------------------------
@@ -36,7 +46,7 @@ import oracle.jbo.server.ViewObjectImpl;
 // ---    Custom code may be added to this class.
 // ---    Warning: Do not modify method signatures of generated methods.
 // ---------------------------------------------------------------------
-public class SudokuAMImpl extends ApplicationModuleImpl {
+public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     /**
      * This is the default constructor (do not remove).
      */
@@ -159,8 +169,8 @@ public class SudokuAMImpl extends ApplicationModuleImpl {
         Hashtable<String, String> nodeCategoryMap =
             new Hashtable<String, String>();
         while (rsi.hasNext()) {
-            Row currRow = rsi.getCurrentRow() ;
-            if (currRow!=null && currRow.getAttribute("Segment1") != null &&
+            Row currRow = rsi.getCurrentRow();
+            if (currRow != null && currRow.getAttribute("Segment1") != null &&
                 currRow.getAttribute("Attribute7") != null) {
                 nodeCategoryMap.put((String)currRow.getAttribute("Segment1"),
                                     (String)currRow.getAttribute("Attribute7"));
@@ -168,6 +178,285 @@ public class SudokuAMImpl extends ApplicationModuleImpl {
         }
         rsi.closeRowSetIterator();
         return nodeCategoryMap;
+    }
+
+    //    public void callGlobalpackage(){
+    //        CallableStatement  cs = getDBTransaction().createCallableStatement("fnd_global.set_nls_context('AMERICAN')", 0);
+    //
+    //        if(cs !=null){
+    //            try {
+    //                cs.execute();
+    //            } catch (SQLException e) {
+    //                e.printStackTrace();
+    //            }
+    //            finally{
+    //                if(cs!=null){
+    //                    try{
+    //                    cs.close();
+    //                    }
+    //                    catch(Exception e){
+    //                        e.printStackTrace();
+    //                        }
+    //                    }
+    //                }
+    //        }
+    //
+    //
+    //        }
+
+    public void callQuoteAPI() {
+        ViewObjectImpl quoteVO = this.getQuotesVO();
+        String returnMessage = "";
+        //        callGlobalpackage();
+        //        DBTransaction dbTrans = (DBTransaction)this.getTransaction();
+        if (quoteVO != null) {
+            Row quoteVORow = quoteVO.getCurrentRow();
+            if (quoteVORow != null) {
+                CallableStatement cs = null;
+                String stmt =
+                    "apps.XXAT_ASO_QUOTE_PKG.create_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15)";
+
+                try {
+                    //            cs = dbTrans.createCallableStatement(("BEGIN xxat_quote_create_pkg.create_quote_hdr(?,?,?,?,?,?,?,?,?,?,?,?"+
+                    //                                                                             ");" + "END;"), 12);
+
+
+                    cs =
+ this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",
+                                                 0);
+
+                    if (quoteVORow.getAttribute("OrganizationUnit") != null) {
+                        cs.setString(1,
+                                     quoteVORow.getAttribute("OrganizationUnit").toString());
+                        System.out.println("OrganizationUnit:" +
+                                           quoteVORow.getAttribute("OrganizationUnit").toString());
+                    }
+                    if (quoteVORow.getAttribute("QuoteDescription") != null) {
+                        cs.setString(2,
+                                     quoteVORow.getAttribute("QuoteDescription").toString());
+                        System.out.println("QuoteDescription:" +
+                                           quoteVORow.getAttribute("QuoteDescription").toString());
+                    }
+                    if (quoteVORow.getAttribute("CustomerNumber") != null) {
+                        cs.setString(3,
+                                     quoteVORow.getAttribute("CustomerNumber").toString());
+                        System.out.println("CustomerNumber:" +
+                                           quoteVORow.getAttribute("CustomerNumber").toString());
+                    }
+                    if (quoteVORow.getAttribute("OrderType") != null) {
+                        cs.setString(4,
+                                     quoteVORow.getAttribute("OrderType").toString());
+                        System.out.println("OrderType:" +
+                                           quoteVORow.getAttribute("OrderType").toString());
+                    }
+                    //                if(quoteVORow.getAttribute("OrganizationUnit")!=null)
+                    cs.setString(5, "Systems Corporate Price List");
+                    System.out.println("Price List:" +
+                                       "Systems Corporate Price List");
+                    if (quoteVORow.getAttribute("SalesChannel") != null) {
+                        cs.setString(6,
+                                     quoteVORow.getAttribute("SalesChannel").toString());
+                        System.out.println("SalesChannel:" +
+                                           quoteVORow.getAttribute("SalesChannel").toString());
+                    }
+                    if (quoteVORow.getAttribute("SalesRepresentative") !=
+                        null) {
+                        cs.setString(7,
+                                     quoteVORow.getAttribute("SalesRepresentative").toString());
+                        System.out.println("SalesRepresentative:" +
+                                           quoteVORow.getAttribute("SalesRepresentative").toString());
+                    }
+                    if (quoteVORow.getAttribute("PaymentTerms") != null) {
+                        cs.setString(8,
+                                     quoteVORow.getAttribute("PaymentTerms").toString());
+                        System.out.println("PaymentTerms:" +
+                                           quoteVORow.getAttribute("PaymentTerms").toString());
+                    }
+                    if (quoteVORow.getAttribute("Currency") != null) {
+                        cs.setString(9,
+                                     quoteVORow.getAttribute("Currency").toString());
+                        System.out.println("Currency:" +
+                                           quoteVORow.getAttribute("Currency").toString());
+
+                    }
+                    if (quoteVORow.getAttribute("IncoTerms") != null) {
+                        cs.setString(10,
+                                     quoteVORow.getAttribute("IncoTerms").toString());
+                        System.out.println("IncoTerms:" +
+                                           quoteVORow.getAttribute("IncoTerms").toString());
+                    }
+                    if (quoteVORow.getAttribute("CustomerSupportRepresent") !=
+                        null) {
+                        cs.setString(11,
+                                     quoteVORow.getAttribute("CustomerSupportRepresent").toString());
+                        System.out.println("CustomerSupportRepresent:" +
+                                           quoteVORow.getAttribute("CustomerSupportRepresent").toString());
+                    }
+//                    if(quoteVORow.getAttribute("DealId")!=null){
+//                            cs.setString(12,quoteVORow.getAttribute("DealId").toString());
+//                            }
+//                    if(quoteVORow.getAttribute("DealId")){
+//                            cs.setString(13,quoteVORow.getAttribute("DealId").toString());
+//                            }
+//                    cs.setString(1, "USS-OU-8203");
+//                    cs.setString(2, "Test Quote--Nik");
+//                    cs.setString(3, "103413");
+//                    cs.setString(4, "USS-8203 Sales: Trade");
+//                    cs.setString(5, "Systems Corporate Price List");
+//                    cs.setString(6, "AKM");
+//                    cs.setString(7, "No Sales Credit");
+//                    cs.setString(8, "20-280-E-JPY");
+//                    cs.setString(9, "USD");
+//                    cs.setString(10, "DAP");
+//                    cs.setString(11, "Abdul Jamil, Yasmin (Yasmin)");
+                    cs.setString(12, "1234567");
+                    cs.setString(13, "Attemtiona to Dept");
+                    cs.setString(14, "bcdefg@xyz.com");
+                    cs.registerOutParameter(15, Types.VARCHAR);
+                    cs.executeUpdate();
+                    returnMessage = cs.getString(15);
+                    if (returnMessage != null)
+                        System.out.println("return Message is:" +returnMessage + " ::msg::");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (cs != null)
+                            cs.close();
+                    } catch (SQLException s) {
+                        s.printStackTrace();
+                    }
+                }
+            }
+
+        }
+    }
+
+    public void searchQuote() {
+        ViewObjectImpl quoteSearchVO = this.getQuoteSearchVO();
+        Row quoteSearchVORow = quoteSearchVO.getCurrentRow();
+        ViewObjectImpl quoteResultTabVO = this.getQuoteSearchTabVO();
+        if (quoteResultTabVO != null) {
+            quoteResultTabVO.setWhereClause(null);
+            quoteResultTabVO.applyViewCriteria(null);
+            quoteResultTabVO.reset();
+            ViewCriteria quoteSearchTabVC =
+                quoteResultTabVO.getViewCriteria("QuoteSearchTabVC");
+            quoteSearchTabVC.resetCriteria();
+            quoteResultTabVO.setNamedWhereClauseParam("p_quoteNum", null);
+            quoteResultTabVO.setNamedWhereClauseParam("p_custName", null);
+            quoteResultTabVO.setNamedWhereClauseParam("p_orgId", null);
+            quoteResultTabVO.setNamedWhereClauseParam("p_quoteNum",
+                                                      quoteSearchVORow.getAttribute("QuoteNumber"));
+            quoteResultTabVO.setNamedWhereClauseParam("p_custName",
+                                                      quoteSearchVORow.getAttribute("Customer"));
+            quoteResultTabVO.setNamedWhereClauseParam("p_orgId",
+                                                      quoteSearchVORow.getAttribute("OUId"));
+//            System.out.println("Quote Number" +
+//                               quoteSearchVORow.getAttribute("QuoteNumber"));
+//            System.out.println("Org id" +
+//                               quoteSearchVORow.getAttribute("OUId"));
+            quoteResultTabVO.applyViewCriteria(null);
+            quoteResultTabVO.applyViewCriteria(quoteSearchTabVC);
+//            String query = quoteResultTabVO.getQuery().toString();
+//            System.out.println("query is:" + query);
+            quoteResultTabVO.executeQuery();
+
+        }
+
+
+    }
+
+ /*    public void getFaxNum() {
+        ViewObjectImpl queryVO = this.getQuotesVO();
+        Row row = queryVO.getCurrentRow();
+        
+        BigDecimal parentId;
+        System.out.println("Description:"+row.getAttribute("QuoteDescription"));
+        System.out.println("Customer name is:"+row.getAttribute("CustomerName"));
+        System.out.println("CSR" +
+                           row.getAttribute("CustomerSupportRepresent"));
+        System.out.println("CCN" + row.getAttribute("CustomerContactName"));
+
+        System.out.println(row.getAttribute("Customerparentid"));
+        parentId = (BigDecimal)row.getAttribute("Customerparentid");
+        String faxNum = null;
+        PreparedStatement pstmt = null;
+        String faxNumber =
+            "select PHONE_NUMBER Fax from per_phones where PHONE_TYPE='WF' AND parent_id=?";
+        if (parentId != null)
+            pstmt = getDBTransaction().createPreparedStatement(faxNumber, 0);
+        try {
+            pstmt.setBigDecimal(1, parentId);
+            pstmt.execute();
+            ResultSet rs = pstmt.getResultSet();
+            while (rs.next()) {
+                faxNum = rs.getString(1);
+                System.out.println("fax Number is:" + faxNum);
+            }
+
+            row.setAttribute("CustomerFaxNum", faxNum);
+        } catch (SQLException sqle) {
+            // TODO: Add catch code
+            sqle.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException closeerr) {
+                closeerr.printStackTrace();
+            }
+        }
+    }    */
+
+    //    public void getFaxNum(){
+    //
+    //        ViewObjectImpl vo =
+    //
+    //        }
+    
+    public void initQuoteSearch(){
+        ViewObjectImpl searchVO = this.getQuoteSearchVO();
+        ViewObjectImpl searchTabVO = this.getQuoteSearchTabVO();
+        if(searchVO!=null && searchTabVO !=null){
+                searchVO.executeEmptyRowSet();
+                searchTabVO.executeEmptyRowSet();
+                        RowSetIterator iter = searchVO.createRowSetIterator("clear");
+                        if (iter != null) {
+                            if (iter.hasNext())
+                                iter.next().remove();
+                            iter.closeRowSetIterator();
+                        }
+                searchTabVO.setWhereClause("1=2");
+                searchTabVO.executeQuery();              
+                searchVO.clearCache();
+                Row row = searchVO.createRow();
+                if (row != null) {
+                    searchVO.insertRow(row);
+                    searchVO.setCurrentRow(row);
+                }
+                
+            }
+        }
+
+    public void clearQuoteFields() {
+        ViewObjectImpl quoteVO = this.getQuotesVO();
+        if (quoteVO != null)
+            quoteVO.executeEmptyRowSet();
+//        RowSetIterator iter = quoteVO.createRowSetIterator("clear");
+//        if (iter != null) {
+//            if (iter.hasNext())
+//                iter.next().remove();
+//            iter.closeRowSetIterator();
+//        }
+        quoteVO.clearCache();
+        Row row = quoteVO.createRow();
+        if (row != null) {
+            quoteVO.insertRow(row);
+            quoteVO.setCurrentRow(row);
+        }
     }
 
     /**
@@ -189,5 +478,37 @@ public class SudokuAMImpl extends ApplicationModuleImpl {
     @Override
     public void prepareSession(SessionData sessionData) {
         super.prepareSession(sessionData);
+    }
+
+    /**
+     * Container's getter for QuotesVO1.
+     * @return QuotesVO1
+     */
+    public ViewObjectImpl getQuotesVO() {
+        return (ViewObjectImpl)findViewObject("QuotesVO");
+    }
+
+    /**
+     * Container's getter for CustomerFaxNumForQuoteVO.
+     * @return CustomerFaxNumForQuoteVO
+     */
+    public ViewObjectImpl getCustomerFaxNumForQuoteVO() {
+        return (ViewObjectImpl)findViewObject("CustomerFaxNumForQuoteVO");
+    }
+
+    /**
+     * Container's getter for QuoteSearchVO1.
+     * @return QuoteSearchVO1
+     */
+    public ViewObjectImpl getQuoteSearchVO() {
+        return (ViewObjectImpl)findViewObject("QuoteSearchVO");
+    }
+
+    /**
+     * Container's getter for QuoteSearchTabVO1.
+     * @return QuoteSearchTabVO1
+     */
+    public ViewObjectImpl getQuoteSearchTabVO() {
+        return (ViewObjectImpl)findViewObject("QuoteSearchTabVO");
     }
 }

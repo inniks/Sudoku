@@ -14,6 +14,14 @@
           usageId="xxat_apps_sudoku_view_SudokuHomePageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx"
           usageId="xxat_apps_sudoku_view_QuotingPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/quoting.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_quotingPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/SearchQuote.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_SearchQuotePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@initQuoteSearch"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@clearQuoteFields"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -22,6 +30,14 @@
           path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuHomePageDef"/>
     <page id="xxat_apps_sudoku_view_QuotingPageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pages.QuotingPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_quotingPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.quotingPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SearchQuotePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.SearchQuotePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuoteSearchPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

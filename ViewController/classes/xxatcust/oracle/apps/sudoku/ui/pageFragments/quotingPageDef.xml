@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="quotingPageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="QuotesVO" RangeSize="25" DataControl="SudokuAMDataControl"
+              id="QuotesVOIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="QuotesVOIterator" id="QuoteDescription">
+      <AttrNames>
+        <Item Value="QuoteDescription"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="DealId">
+      <AttrNames>
+        <Item Value="DealId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_SalesChannel" id="SalesChannel" DTSupportsMRU="false"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_SalesRepresentative" id="SalesRepresentative"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_CustomerSupportRepresent"
+                  id="CustomerSupportRepresent"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_OrganizationUnit" id="OrganizationUnit"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_OrderType" id="OrderType"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_CustomerName" id="CustomerName"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_CustomerNumber" id="CustomerNumber"/>
+    <attributeValues IterBinding="QuotesVOIterator"
+                     id="AdvantestQuotationNumber">
+      <AttrNames>
+        <Item Value="AdvantestQuotationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="QuotationDate">
+      <AttrNames>
+        <Item Value="QuotationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="Page">
+      <AttrNames>
+        <Item Value="Page"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="Systemid">
+      <AttrNames>
+        <Item Value="Systemid"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_PaymentTerms" id="PaymentTerms" DTSupportsMRU="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false" Uses="LOV_IncoTerms"
+          id="IncoTerms" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="QuotesVOIterator" id="QuoteTo">
+      <AttrNames>
+        <Item Value="QuoteTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="PartyId">
+      <AttrNames>
+        <Item Value="PartyId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="SalesContactName">
+      <AttrNames>
+        <Item Value="SalesContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="SalesEmail">
+      <AttrNames>
+        <Item Value="SalesEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="SalesFaxNum">
+      <AttrNames>
+        <Item Value="SalesFaxNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="SalesPhoneNum">
+      <AttrNames>
+        <Item Value="SalesPhoneNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="CustomerContactName">
+      <AttrNames>
+        <Item Value="CustomerContactName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="CustomerEmail">
+      <AttrNames>
+        <Item Value="CustomerEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="CustomerFaxNum">
+      <AttrNames>
+        <Item Value="CustomerFaxNum"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="CustomerPhoneNum">
+      <AttrNames>
+        <Item Value="CustomerPhoneNum"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callQuoteAPI"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callQuoteAPI"
+                  IsViewObjectMethod="false"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false" Uses="LOV_Currency"
+          id="Currency" DTSupportsMRU="true"/>
+    <methodAction id="clearQuoteFields"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="clearQuoteFields"
+                  IsViewObjectMethod="false"/>
+  </bindings>
+</pageDefinition>
