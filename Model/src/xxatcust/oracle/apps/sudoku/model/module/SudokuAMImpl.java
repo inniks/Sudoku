@@ -37,7 +37,7 @@ import oracle.jbo.server.DBTransaction;
 import oracle.jbo.server.ViewObjectImpl;
 
 import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
-import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
+//import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
 
 
 // ---------------------------------------------------------------------
@@ -203,9 +203,84 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     //
     //
     //        }
-
-    public void callQuoteAPI() {
+    
+    public void getQuoteCustmerAddress(){
+        String query = "SELECT \n" + 
+        "  hzsu.site_use_id   SITE_USE_ID,\n" + 
+        "  hzl.address1||DECODE(hzl.address2,\n" + 
+        "  NULL,\n" + 
+        "  NULL,\n" + 
+        "  ',\n" + 
+        "  '||hzl.address2)||',\n" + 
+        "  '||hzl.city||',\n" + 
+        "  '||hzl.country||',\n" + 
+        "  '||hzl.postal_code LOCATION,\n" + 
+        "  hzp.party_id,\n" + 
+        "  hzp.PARTY_NAME\n" + 
+        "FROM \n" + 
+        "  hz_parties hzp,\n" + 
+        "  hz_cust_accounts hza,\n" + 
+        "  hz_cust_acct_sites_all hzas,\n" + 
+        "  hz_cust_site_uses_all hzsu,\n" + 
+        "  hz_party_sites hzps,\n" + 
+        "  hz_locations hzl\n" + 
+        "WHERE \n" + 
+        "hzp.party_id = ?    and\n" + 
+        "  hza.party_id = hzp.party_id      AND\n" + 
+        "  hzas.cust_account_id = hza.cust_account_id      --AND\n" + 
+        "  and hzps.party_site_id = hzas.party_site_id      AND\n" + 
+        "  hzl.location_id = hzps.location_id      AND\n" + 
+        "  hzsu.site_use_code = ?      AND\n" + 
+        "  hzsu.PRIMARY_FLAG='Y' AND\n" + 
+        "  hzsu.ORG_ID=? AND\n" + 
+        "  hzsu.cust_acct_site_id = hzas.cust_acct_site_id      AND\n" + 
+        "  hzsu.org_id = hzas.org_id\n "; 
+        String shipTo ="";
+        String quoteTo = "";
+        PreparedStatement cs = null,cs1 = null;
+        
         ViewObjectImpl quoteVO = this.getQuotesVO();
+        if(quoteVO !=null){
+            Row row = quoteVO.getCurrentRow();
+            if(row!=null){
+            BigDecimal partyId = (BigDecimal)row.getAttribute("PartyId");
+            BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
+            
+                    try {
+            cs = this.getDBTransaction().createPreparedStatement(query, 0);   
+                    cs.setBigDecimal(1, partyId);
+                    cs.setString(2, "BILL_TO");
+                    cs.setBigDecimal(3, orgid);
+                       
+              ResultSet rs = cs.executeQuery();
+                        while(rs.next()){
+                          quoteTo = rs.getString(2);
+                            System.out.println("quoteTo is:"+quoteTo);
+                            }
+                cs1 = this.getDBTransaction().createPreparedStatement(query, 0);       
+                    cs1.setBigDecimal(1, partyId);
+                    cs1.setString(2, "SHIP_TO");
+                    cs1.setBigDecimal(3, orgid);
+                    ResultSet rs1 = cs1.executeQuery();
+                        while(rs1.next()){
+                          shipTo = rs1.getString(2);
+                                System.out.println("ShipTo is:"+shipTo);
+                            }
+             row.setAttribute("QuoteTo", quoteTo);   
+             row.setAttribute("ShipTo", shipTo);   
+            System.out.println("QuoteTo:"+quoteTo+":shipto:"+shipTo);
+             
+                } catch (SQLException e) {
+                        e.printStackTrace();
+                }                    
+            }
+            }
+        }
+
+    public String callQuoteAPI() {
+        ViewObjectImpl quoteVO = this.getQuotesVO();
+        String returnval = null;
+        StringBuilder errorMsg = new StringBuilder("<html><body>");
         String returnMessage = "";
         //        callGlobalpackage();
         //        DBTransaction dbTrans = (DBTransaction)this.getTransaction();
@@ -214,7 +289,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             if (quoteVORow != null) {
                 CallableStatement cs = null;
                 String stmt =
-                    "apps.XXAT_ASO_QUOTE_PKG.create_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15)";
+                    "apps.XXAT_ASO_QUOTE_PKG.create_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,:16,:17)";
 
                 try {
                     //            cs = dbTrans.createCallableStatement(("BEGIN xxat_quote_create_pkg.create_quote_hdr(?,?,?,?,?,?,?,?,?,?,?,?"+
@@ -231,24 +306,36 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                         System.out.println("OrganizationUnit:" +
                                            quoteVORow.getAttribute("OrganizationUnit").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Organization Unit is required.</b></p>");
+                        }
                     if (quoteVORow.getAttribute("QuoteDescription") != null) {
                         cs.setString(2,
                                      quoteVORow.getAttribute("QuoteDescription").toString());
                         System.out.println("QuoteDescription:" +
                                            quoteVORow.getAttribute("QuoteDescription").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Quote Description is required.</b></p>");
+                        }
                     if (quoteVORow.getAttribute("CustomerNumber") != null) {
                         cs.setString(3,
                                      quoteVORow.getAttribute("CustomerNumber").toString());
                         System.out.println("CustomerNumber:" +
                                            quoteVORow.getAttribute("CustomerNumber").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Customer Number is required.</b></p>");
+                        }
                     if (quoteVORow.getAttribute("OrderType") != null) {
                         cs.setString(4,
                                      quoteVORow.getAttribute("OrderType").toString());
                         System.out.println("OrderType:" +
                                            quoteVORow.getAttribute("OrderType").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Order Type is required.</b></p>");
+                        }
                     //                if(quoteVORow.getAttribute("OrganizationUnit")!=null)
                     cs.setString(5, "Systems Corporate Price List");
                     System.out.println("Price List:" +
@@ -259,45 +346,75 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                         System.out.println("SalesChannel:" +
                                            quoteVORow.getAttribute("SalesChannel").toString());
                     }
-                    if (quoteVORow.getAttribute("SalesRepresentative") !=
-                        null) {
+                    else{
+                        errorMsg.append("<p><bSales Channel is required.</b></p>");
+                        }
+                    if (quoteVORow.getAttribute("SalesRepresentative") !=null) {
                         cs.setString(7,
                                      quoteVORow.getAttribute("SalesRepresentative").toString());
                         System.out.println("SalesRepresentative:" +
                                            quoteVORow.getAttribute("SalesRepresentative").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Sales Representative is required.</b></p>");
+                                            }
+                    
                     if (quoteVORow.getAttribute("PaymentTerms") != null) {
                         cs.setString(8,
                                      quoteVORow.getAttribute("PaymentTerms").toString());
                         System.out.println("PaymentTerms:" +
                                            quoteVORow.getAttribute("PaymentTerms").toString());
                     }
+                    else{
+                        errorMsg.append("<p><b>Payment Terms is required.</b></p>");
+                        }
                     if (quoteVORow.getAttribute("Currency") != null) {
                         cs.setString(9,
                                      quoteVORow.getAttribute("Currency").toString());
                         System.out.println("Currency:" +
                                            quoteVORow.getAttribute("Currency").toString());
-
                     }
+                    else{
+                        errorMsg.append("<p><b>Currency is required.</b></p>");
+                        }
+                    
                     if (quoteVORow.getAttribute("IncoTerms") != null) {
                         cs.setString(10,
                                      quoteVORow.getAttribute("IncoTerms").toString());
                         System.out.println("IncoTerms:" +
                                            quoteVORow.getAttribute("IncoTerms").toString());
                     }
-                    if (quoteVORow.getAttribute("CustomerSupportRepresent") !=
-                        null) {
+                    else{
+                        errorMsg.append("<p><b>Inco Terms is required.</b></p>");
+                        }
+                    if (quoteVORow.getAttribute("CustomerSupportRepresent") !=null) {
                         cs.setString(11,
                                      quoteVORow.getAttribute("CustomerSupportRepresent").toString());
                         System.out.println("CustomerSupportRepresent:" +
                                            quoteVORow.getAttribute("CustomerSupportRepresent").toString());
                     }
-//                    if(quoteVORow.getAttribute("DealId")!=null){
-//                            cs.setString(12,quoteVORow.getAttribute("DealId").toString());
-//                            }
-//                    if(quoteVORow.getAttribute("DealId")){
-//                            cs.setString(13,quoteVORow.getAttribute("DealId").toString());
-//                            }
+                    else{
+                        errorMsg.append("<p><b>Organization Unit is required.</b></p>");
+                        }
+                    if(quoteVORow.getAttribute("DealId")!=null){
+                            cs.setString(12,quoteVORow.getAttribute("DealId").toString());
+                            }
+                    else{
+                        errorMsg.append("<p><b>Deal Id is required.</b></p>");
+                        }
+                    if(quoteVORow.getAttribute("AttentionToOrDept")!=null){
+                            cs.setString(13,quoteVORow.getAttribute("AttentionToOrDept").toString());
+                            }
+                    else{
+                        errorMsg.append("<p><b>AttentionTo/Dept is required.</b></p>");
+                        }
+                    if(quoteVORow.getAttribute("QuoteEmail")!=null){
+                            cs.setString(14,quoteVORow.getAttribute("QuoteEmail").toString());
+                            }
+                    else{
+                        errorMsg.append("<p><b>Email is required.</b></p>");
+                        }
+                    
 //                    cs.setString(1, "USS-OU-8203");
 //                    cs.setString(2, "Test Quote--Nik");
 //                    cs.setString(3, "103413");
@@ -309,14 +426,25 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
 //                    cs.setString(9, "USD");
 //                    cs.setString(10, "DAP");
 //                    cs.setString(11, "Abdul Jamil, Yasmin (Yasmin)");
-                    cs.setString(12, "1234567");
-                    cs.setString(13, "Attemtiona to Dept");
-                    cs.setString(14, "bcdefg@xyz.com");
-                    cs.registerOutParameter(15, Types.VARCHAR);
-                    cs.executeUpdate();
-                    returnMessage = cs.getString(15);
+//                    cs.setString(12, "1234567");
+//                    cs.setString(13, "Attemtiona to Dept");
+//                    cs.setString(14, "bcdefg@xyz.com");
+                    cs.setInt(15,51157);
+                    cs.setInt(16, 11639);
+                    cs.registerOutParameter(17, Types.VARCHAR);
+                    errorMsg.append("</body></html>");
+                        if(errorMsg ==null && "<html><body></body></html>".equals(errorMsg)){
+                                cs.executeUpdate();
+                            }
+                    
+                    returnMessage = cs.getString(17);
+                   
                     if (returnMessage != null)
                         System.out.println("return Message is:" +returnMessage + " ::msg::");
+                    if(returnMessage.contains("Quote Header Id")){
+                            String[] arrOfStr = returnMessage.split(": ", 2); 
+                            quoteVORow.setAttribute("AdvantestQuotationNumber", arrOfStr[1]);
+                        }                    
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -331,6 +459,13 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             }
 
         }
+        if(errorMsg !=null && !"<html><body></body></html>".equals(errorMsg)){
+            returnval = errorMsg.toString();
+            }
+        else{
+                returnval = returnMessage;
+            }
+        return returnval;
     }
 
     public void searchQuote() {

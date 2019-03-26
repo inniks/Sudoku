@@ -24,6 +24,7 @@
     <![CDATA[SELECT 
   lookup_code,
   meaning,
+  Description,
   view_application_id,
   lookup_type,
   tag
@@ -80,6 +81,20 @@ WHERE
           Value="20"/>
       </SchemaBasedProperties>
     </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="Description"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Precision="240"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="DESCRIPTION"
+    Expression="DESCRIPTION"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="240"/>
+    </DesignTime>
   </ViewAttribute>
   <ViewAttribute
     Name="ViewApplicationId"

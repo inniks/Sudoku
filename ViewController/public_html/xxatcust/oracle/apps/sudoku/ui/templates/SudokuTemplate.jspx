@@ -7,8 +7,9 @@
          value="#{adfBundle['view.ViewControllerBundle']}"/>
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <af:pageTemplateDef var="attrs">
-    <af:panelStretchLayout id="pt_psl1" topHeight="119px"
-                           dimensionsFrom="parent">
+    <af:panelStretchLayout id="pt_psl1" topHeight="110px"
+                           dimensionsFrom="parent" startWidth="10px"
+                           endWidth="10px" bottomHeight="30px">
       <f:facet name="center">
         <af:facetRef facetName="ConsumerFacet"/>
       </f:facet>
@@ -30,27 +31,17 @@
                                               action="#{menuItem.doAction}"
                                               rendered="#{menuItem.rendered}"
                                               immediate="true"
-                                              inlineStyle="font-size:medium;">
+                                              inlineStyle="font-size:medium;"
+                                              icon="/Resources/images/icons8-file-32.png">
                       <af:setActionListener from="#{pageFlowScope.TemplateBean.currentTimeStamp}"
                                             to="#{pageFlowScope.TemplateBean.taskFlowParam}"/>
                     </af:commandNavigationItem>
                   </f:facet>
                 </af:navigationPane>
               </af:panelGroupLayout>
-              <af:outputText value="V93000 Configurator" id="pt_ot5"  styleClass="AFHeaderLevelTwo"
-                             inlineStyle="font-size:x-large; color:#910048; font-weight:bold;"/>
+             
               <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"
-                                   visible="false">
-                <af:outputText id="pt_ot101" value="HSCPT"
-                               inlineStyle="color:Orange; font-weight:bolder; text-decoration:underline; font-family:'Courier New', Courier, monospace; background-color:Lime; border-color:Aqua; border-style:solid; border-width:medium; font-size:large;"/>
-                <af:spacer id="s1" width="100" height="10"/>
-                <af:panelLabelAndMessage label="LOGGED IN USER"
-                                         id="pt_plam1"
-                                         inlineStyle="color:Blue; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:xx-small; font-weight:bold;">
-                  <af:outputText value="User Name :" id="pt_ot2"
-                                 inlineStyle="font-size:large;"/>
-                </af:panelLabelAndMessage>
-              </af:panelGroupLayout>
+                                   visible="false"/>
             </af:panelGroupLayout>
             <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
                                  halign="center" styleClass="AFStretchWidth">
@@ -60,28 +51,24 @@
                   <af:image id="pt_i1" source="/Resources/images/adv.gif"
                             inlineStyle="width:215px;"/>
                 </af:panelGroupLayout>
-                <af:panelGroupLayout id="pt_pgl8" layout="horizontal"
-                                     valign="baseline">
-                  <af:outputText value="Instance Name : PTH" id="outputText1"
-                                 styleClass="AFHeaderLevelTwo"
-                                 inlineStyle="font-size:small; color:Background;"
-                                 noWrap="true"/>
-                </af:panelGroupLayout>
                 <af:spacer width="20" height="5" id="spacer1"/>
-                <af:panelGroupLayout id="pt_pgl9" layout="horizontal">
-                  <af:outputText value="WELCOME  :  " id="pt_ot1"
-                                 styleClass="AFHeaderLevelTwo" noWrap="true"
-                                 inlineStyle="font-size:small; color:Background;"/>
-                  <af:spacer width="3" height="7" id="pt_s4"/>
-                  <af:outputText value="#{securityContext.userName}" id="pt_ot4"
-                                 styleClass="AFHeaderLevelTwo"
-                                 inlineStyle='font-size:small; color:Background;'/>
+                <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
+                                     halign="left">
+                  <af:commandImageLink id="pt_cil2"
+                                       icon="/Resources/images/icons8-shutdown-32.png"
+                                       actionListener="#{pageFlowScope.TemplateBean.logout}"
+                                       shortDesc="Logout.."/>
+                  <af:spacer width="20" height="10" id="pt_s2"/>
+                  <af:commandImageLink id="pt_cil1"
+                                       icon="/Resources/images/icons8-home-page-32.png"
+                                       actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
+                                       shortDesc="Redirect to EBS Home.."
+                                       rendered="true"/>
                 </af:panelGroupLayout>
               </af:panelGroupLayout>
             </af:panelGroupLayout>
             <af:spacer width="10" height="10" id="pt_s1"/>
           </af:panelGroupLayout>
-          <!--/af:panelGroupLayout-->
           <af:panelGroupLayout id="pt_pgl2" styleClass="AFStretchWidth"
                                layout="vertical" rendered="false">
             <af:panelGroupLayout id="pt_pgl6" styleClass="AFStretchWidth"
@@ -93,13 +80,33 @@
                                             id="pt_cni2"
                                             action="#{menuItem.doAction}"
                                             rendered="#{menuItem.rendered}"
-                                            inlineStyle="font-size:medium;"
+                                            inlineStyle="font-size:medium; color:Red;"
                                             immediate="true"/>
                 </f:facet>
               </af:navigationPane>
             </af:panelGroupLayout>
           </af:panelGroupLayout>
         </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="bottom">
+        <af:panelGroupLayout id="pt_pgl5" halign="right">
+          <af:panelBox text="Welcome : #{sessionScope.UserName}" id="pt_pb1"
+                       showDisclosure="false" ramp="highlight"
+                       background="light"
+                       contentStyle="font-size:x-large; color:#910048; font-weight:bold;">
+            <f:facet name="toolbar">
+              <af:outputText value="V93000 Configurator" id="pt_ot5"
+                             styleClass="AFHeaderLevelTwo"
+                             inlineStyle="font-size:x-large; color:#910048; font-weight:bold;"/>
+            </f:facet>
+          </af:panelBox>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="start">
+        <af:panelGroupLayout id="pt_pgl8"/>
+      </f:facet>
+      <f:facet name="end">
+        <af:panelGroupLayout id="pt_pgl9"/>
       </f:facet>
     </af:panelStretchLayout>
     <af:xmlContent>

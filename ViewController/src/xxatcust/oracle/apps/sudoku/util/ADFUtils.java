@@ -1537,7 +1537,11 @@ public class ADFUtils {
     }
 
     public static void routeExceptions(Exception ex) {
-        String rootCause = ex.getMessage() ;
+        String rootCause = ex.getMessage();
+        while(ex.getCause()!=null){
+           ex= (Exception)ex.getCause();       
+        }
+        rootCause = ex.getMessage() ;
         System.out.println("Error cause "+ex.getMessage());
         JboException jboex = new JboException(rootCause);
         BindingContext bctx = BindingContext.getCurrent();

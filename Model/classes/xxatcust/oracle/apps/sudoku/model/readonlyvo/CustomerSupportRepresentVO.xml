@@ -25,7 +25,7 @@
   <SQLQuery>
     <![CDATA[select ppf.person_id, 
        pp.PHONE_NUMBER,
-       ppf.Global_name Customer_name, 
+       ppf.full_name Customer_name, 
        ppf.EMAIL_ADDRESS ,
        ppfax.PHONE_NUMBER Fax
        from

@@ -212,7 +212,7 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 if (sessionEBS != null) {
                     if (!isEBSSessionValid(sessionEBS)) {
                         _logger.info("EBS Session Not valid ,Logging out ");
-                        //logoutEBS();
+                        logoutEBS();
                         return;
                     } else {
                         String userId = sessionEBS.getUserId();
@@ -267,11 +267,14 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
                 }
 
             } catch (SQLException se) {
+               
                 _logger.info("Exception in " + this.getClass().getName() +
                              se.getMessage());
+                se.printStackTrace();
             } catch (Exception e) {
                 _logger.info("Exception in " + this.getClass().getName() +
                              e.getMessage());
+                e.printStackTrace();
             } finally {
                 try {
                     if (EBSconn != null) {

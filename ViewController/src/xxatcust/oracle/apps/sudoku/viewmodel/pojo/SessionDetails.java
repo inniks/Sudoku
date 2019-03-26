@@ -20,7 +20,8 @@ public class SessionDetails {
     private String configurationMode;
     private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
     private String servletMode; // value is EBS when using from EBS side manually testing
-    private HashMap<String, String> fndMessages = new HashMap<String, String>();    
+    private HashMap<String, String> fndMessages = new HashMap<String, String>(); 
+    private boolean reloadInExpertMode = false;
     public SessionDetails() {
         super();
     }
@@ -163,5 +164,13 @@ public class SessionDetails {
 
     public HashMap<String, String> getFndMessages() {
         return fndMessages;
+    }
+
+    public void setReloadInExpertMode(boolean reloadInExpertMode) {
+        this.reloadInExpertMode = reloadInExpertMode;
+    }
+
+    public boolean isReloadInExpertMode() {
+        return reloadInExpertMode;
     }
 }

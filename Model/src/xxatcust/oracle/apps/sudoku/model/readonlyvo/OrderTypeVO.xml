@@ -19,12 +19,23 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="p_orgId"
+    Kind="viewcriteria"
+    Type="java.math.BigDecimal"/>
   <SQLQuery>
-    <![CDATA[select Name, Transaction_type_id from oe_transaction_types_tl]]>
+    <![CDATA[SELECT
+    ottl.name,
+    ottl.transaction_type_id,
+    otta.org_id
+FROM
+    oe_transaction_types_all   otta,
+    oe_transaction_types_tl    ottl
+WHERE
+    otta.transaction_type_id = ottl.transaction_type_id]]>
   </SQLQuery>
   <ViewAttribute
     Name="Name"
-    IsUpdateable="false"
     IsPersistent="false"
     IsNotNull="true"
     PrecisionRule="true"
@@ -38,6 +49,8 @@
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO.Name_LABEL"/>
         <DISPLAYWIDTH
           Value="20"/>
       </SchemaBasedProperties>
@@ -66,6 +79,63 @@
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewAttribute
+    Name="OrgId"
+    IsPersistent="false"
+    PrecisionRule="true"
+     Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="ORG_ID"
+    Expression="ORG_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="22"/>
+    </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO.OrgId_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewCriteria
+    Name="OrderTypeVOCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow4"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="OrgId"
+        ViewAttribute="OrgId"
+        Operator="="
+        Conjunction="AND"
+        Value=":p_orgId"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="TransactionTypeId"/>
   </AttrArray>

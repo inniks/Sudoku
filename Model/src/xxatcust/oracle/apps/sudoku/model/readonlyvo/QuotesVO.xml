@@ -12,13 +12,11 @@
   UseGlueCode="false"
   FetchMode="FETCH_AS_NEEDED"
   RangeSize="20"
-  MaxFetchSize="10"
   FetchSize="10"
-  RowClass="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVORowImpl"
-  ComponentClass="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl">
+  RowClass="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVORowImpl">
   <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
     <Attr Name="_isExpertMode" Value="true"/>
+    <Attr Name="_codeGenFlag2" Value="Access"/>
     <Attr Name="_isCodegen" Value="true"/>
   </DesignTime>
   <Properties>
@@ -33,12 +31,25 @@
     RowLevelBinds="true"/>
   <ViewAccessor
     Name="OrderTypeVO"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO"
-    RowLevelBinds="true"/>
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO">
+    <ViewCriteriaUsage
+      Name="OrderTypeVOCriteria"
+      FullName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO.OrderTypeVOCriteria"/>
+    <ParameterMap>
+      <PIMap Variable="p_orgId">
+        <TransientExpression><![CDATA[OrgId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <ViewAccessor
     Name="CustomerNameVO"
-    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO"
-    RowLevelBinds="true"/>
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO">
+    <ParameterMap>
+      <PIMap Variable="p_orgId">
+        <TransientExpression><![CDATA[OrgId]]></TransientExpression>
+      </PIMap>
+    </ParameterMap>
+  </ViewAccessor>
   <ViewAccessor
     Name="SalesChannelVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesChannelVO"
@@ -97,8 +108,12 @@
     <AttrArray Name="AttrNames">
       <Item Value="OrganizationUnit"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="OrgId"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="OperatingUnit"/>
+      <Item Value="OrgId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="OperatingUnit"/>
@@ -202,7 +217,7 @@
       <Item Value="Meaning"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="Meaning"/>
+      <Item Value="Description"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -250,7 +265,7 @@
       <Item Value="Name"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="Name"/>
+      <Item Value="Description"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>
@@ -403,10 +418,10 @@
           Value="20"/>
         <LABEL_PLURAL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.OrganizationUnit_LABEL_PLURAL"/>
-        <CONTROLTYPE
-          Value="input_text_lov"/>
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.OrganizationUnit_LABEL"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -504,6 +519,8 @@
     ColumnType="VARCHAR2"
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR">
+    <RecalcCondition><![CDATA[true]]></RecalcCondition>
+    <TransientExpression><![CDATA[adf.currentDate]]></TransientExpression>
     <Properties>
       <SchemaBasedProperties>
         <DISPLAYWIDTH
@@ -555,10 +572,10 @@
     LOVName="LOV_PaymentTerms">
     <Properties>
       <SchemaBasedProperties>
-        <DISPLAYWIDTH
-          Value="20"/>
         <CONTROLTYPE
           Value="choice"/>
+        <DISPLAYWIDTH
+          Value="20"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -618,7 +635,6 @@
   </ViewAttribute>
   <ViewAttribute
     Name="ShipTo"
-    IsUpdateable="false"
     IsSelected="false"
     IsPersistent="false"
     PrecisionRule="true"
@@ -631,10 +647,10 @@
     IsSelected="false"
     IsPersistent="false"
     PrecisionRule="true"
-    Type="oracle.jbo.domain.Number"
-    ColumnType="VARCHAR2"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
     AliasName="VIEW_ATTR"
-    SQLType="VARCHAR"/>
+    SQLType="NUMERIC"/>
   <ViewAttribute
     Name="SalesContactName"
     IsSelected="false"
@@ -721,6 +737,51 @@
         Value="CustomerSupportRepresent"/>
     </Dependencies>
   </ViewAttribute>
+  <ViewAttribute
+    Name="AttentionToOrDept"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.AttentionToOrDept_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="QuoteEmail"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR">
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.QuoteEmail_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="OrgId"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="BIGINT"
+    AliasName="VIEW_ATTR"
+    SQLType="NUMERIC"/>
   <AttrArray Name="KeyAttributes">
     <Item Value="DealId"/>
   </AttrArray>

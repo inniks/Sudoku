@@ -5,12 +5,13 @@
       <document></document>
       <id>ExceptionHandlerTF</id>
     </template-reference>
-    <default-activity id="__1">uploadXML</default-activity>
+    <default-activity id="__8">uploadXML</default-activity>
     <managed-bean id="__11">
       <managed-bean-name id="__12">XMLImportPageBean</managed-bean-name>
       <managed-bean-class id="__13">xxatcust.oracle.apps.sudoku.bean.XMLImportPageBean</managed-bean-class>
       <managed-bean-scope id="__10">session</managed-bean-scope>
     </managed-bean>
+    <initializer id="__9">#{XMLImportPageBean.initUploadXml}</initializer>
     <view id="uploadXML">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff</page>
     </view>

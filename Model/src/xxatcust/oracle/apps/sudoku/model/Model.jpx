@@ -12,7 +12,7 @@
       <Attr Name="_jprName" Value="../../../../../../Model.jpr"/>
       <Attr Name="_appModuleNames0"
          Value="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
-      <Attr Name="_NamedConnection" Value="PTH"/>
+      <Attr Name="_NamedConnection" Value="AdvantestPTH"/>
       <Attr Name="_jbo.TypeMapEntries" Value="Java"/>
    </DesignTime>
    <Containee

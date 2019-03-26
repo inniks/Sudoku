@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
                 version="11.1.1.64.93" id="quotingPageDef"
-                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments"
+                SkipValidation="true">
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
@@ -120,6 +121,26 @@
                   InstanceName="SudokuAMDataControl.dataProvider"
                   DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
                   Action="invokeMethod" MethodName="clearQuoteFields"
+                  IsViewObjectMethod="false"/>
+    <attributeValues IterBinding="QuotesVOIterator" id="AttentionToOrDept">
+      <AttrNames>
+        <Item Value="AttentionToOrDept"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="QuoteEmail">
+      <AttrNames>
+        <Item Value="QuoteEmail"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="QuotesVOIterator" id="ShipTo">
+      <AttrNames>
+        <Item Value="ShipTo"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getQuoteCustmerAddress"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getQuoteCustmerAddress"
                   IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

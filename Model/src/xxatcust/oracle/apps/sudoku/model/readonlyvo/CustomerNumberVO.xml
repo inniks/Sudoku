@@ -26,7 +26,7 @@
   <Variable
     Name="p_partId"
     Kind="viewcriteria"
-    Type="java.lang.String"/>
+    Type="java.math.BigDecimal"/>
   <SQLQuery>
     <![CDATA[SELECT p.party_name customername, p.party_number registryid,
          ca.account_number accountnumber,

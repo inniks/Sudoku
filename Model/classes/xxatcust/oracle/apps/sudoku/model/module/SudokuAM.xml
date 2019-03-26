@@ -31,11 +31,6 @@
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuoteSearchTabVO"/>
   <ClientInterface>
     <Method
-      Name="callQuoteAPI">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
       Name="clearQuoteFields">
       <Return
         Type="void"/>
@@ -49,6 +44,16 @@
       Name="initQuoteSearch">
       <Return
         Type="void"/>
+    </Method>
+    <Method
+      Name="getQuoteCustmerAddress">
+      <Return
+        Type="void"/>
+    </Method>
+    <Method
+      Name="callQuoteAPI">
+      <Return
+        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>

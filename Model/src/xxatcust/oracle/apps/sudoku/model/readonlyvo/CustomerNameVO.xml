@@ -23,18 +23,40 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="p_orgId"
+    Kind="where"
+    Type="java.math.BigDecimal">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[SELECT p.party_name customername, p.party_number registryid,
-         ca.account_number accountnumber,
-         ca.account_name accountdescription, ca.cust_account_id,
-         p.party_type customertype, p.party_id partyid,
-         NULL salesforceid
-      FROM hz_parties p, hz_cust_accounts ca
-      WHERE ca.status(+) = 'A'
-       AND NVL (ca.account_activation_date, SYSDATE) <= SYSDATE
-       AND NVL (ca.account_termination_date, SYSDATE) >= SYSDATE
-       AND p.status = 'A'
-       AND p.party_id = ca.party_id]]>
+       ca.account_number accountnumber, ca.account_name accountdescription,
+       ca.cust_account_id, p.party_type customertype, p.party_id partyid,
+       NULL salesforceid
+  FROM hz_parties p, hz_cust_accounts ca
+WHERE ca.status(+) = 'A'
+   AND ca.party_id = p.party_id
+   AND NVL (ca.account_activation_date, SYSDATE) <= SYSDATE
+   AND NVL (ca.account_termination_date, SYSDATE) >= SYSDATE
+   AND p.status = 'A'
+   AND p.party_id = ca.party_id
+   AND EXISTS (
+          SELECT 1
+            FROM hz_cust_site_uses_all hzsu,
+                 hz_cust_acct_sites_all hzas,
+                 hz_party_sites hzps
+           WHERE hzsu.primary_flag = 'Y'
+             AND hzsu.cust_acct_site_id = hzas.cust_acct_site_id
+             AND hzsu.org_id = hzas.org_id
+             AND hzas.cust_account_id = ca.cust_account_id
+             AND hzps.party_site_id = hzas.party_site_id
+             AND hzsu.org_id = :p_orgId)]]>
   </SQLQuery>
   <ViewAttribute
     Name="Customername"
@@ -186,7 +208,7 @@
     PrecisionRule="true"
     Precision="15"
     Scale="0"
-    Type="oracle.jbo.domain.Number"
+    Type="java.math.BigDecimal"
     ColumnType="NUMBER"
     AliasName="PARTYID"
     Expression="PARTYID"

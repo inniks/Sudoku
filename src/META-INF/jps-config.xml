@@ -12,7 +12,6 @@
    </serviceInstances>
    <jpsContexts default="SudokuConfigSystem">
       <jpsContext name="SudokuConfigSystem">
-         <serviceInstanceRef ref="credstore"/>
       </jpsContext>
    </jpsContexts>
 </jpsConfig>

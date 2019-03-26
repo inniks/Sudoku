@@ -6,7 +6,7 @@ import oracle.jbo.ApplicationModule;
 // ---    Wed Mar 13 21:53:45 IST 2019
 // ---------------------------------------------------------------------
 public interface SudokuAM extends ApplicationModule {
-    void callQuoteAPI();
+   
 
     void clearQuoteFields();
 
@@ -14,4 +14,8 @@ public interface SudokuAM extends ApplicationModule {
     void searchQuote();
 
     void initQuoteSearch();
+
+    void getQuoteCustmerAddress();
+
+    String callQuoteAPI();
 }

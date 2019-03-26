@@ -108,7 +108,7 @@ public class XMLImportPageBean {
     private RichOutputFormatted debugMsgBind;
     private Boolean productsRendered = true;
     private Boolean spaceRendered = false;
-    private final String PROPERTY_FILE =
+    private final String XSD_FILE =
         "xxatcust/oracle/apps/sudoku/view/V93000 C&Q 3.0 - XML File Schema.xsd";
     private Properties mViewProperties = null;
     private RichOutputFormatted modelName;
@@ -120,6 +120,7 @@ public class XMLImportPageBean {
     private RichOutputText extendedPriceBind;
     private RichOutputText validationError;
     private RichPopup errorPopup;
+    private RichOutputText quoteTotal;
 
     public XMLImportPageBean() {
         super();
@@ -167,32 +168,21 @@ public class XMLImportPageBean {
             _logger.info("Print inputStream  fileUploadVCE" + inputStream);
             parseXMLToPojo(inputStream);
             showListHeader = true;
-        } catch (JAXBException jaxbe) {
+        } catch (Exception jaxbe) {
             // TODO: Add catch code
-            validationError.setValue("Error in XML validation " +
-                                     jaxbe.getMessage());
-            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            errorPopup.show(hints);
+            String str = jaxbe.getMessage();
+            Throwable e = null;
+            while (jaxbe.getCause() != null) {
+                jaxbe = (Exception)jaxbe.getCause();
 
-        } catch (JsonMappingException jme) {
-            // TODO: Add catch code
-            validationError.setValue(jme.getMessage());
+            }
+            str = jaxbe.getMessage();
+            validationError.setValue("Error in XML validation " + str);
             RichPopup.PopupHints hints = new RichPopup.PopupHints();
             errorPopup.show(hints);
-        } catch (JsonGenerationException jge) {
-            validationError.setValue(jge.getMessage());
-            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            errorPopup.show(hints);
-        } catch (IOException ioe) {
-            // TODO: Add catch code
-            ADFUtils.routeExceptions(ioe);
-        } catch (SAXException saxe) {
-            // TODO: Add catch code
-            validationError.setValue(saxe.getMessage());
-            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            errorPopup.show(hints);
-
         }
+
+
         //ResetUtils.reset(vce.getComponent());
     }
 
@@ -207,7 +197,7 @@ public class XMLImportPageBean {
         parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
 
         _logger.info("Print parent  parseXMLToPojo" + parent);
-        //Add Session details on the parent object
+        //Add Session detail s on the parent object
         SessionDetails sessionDetails = new SessionDetails();
         sessionDetails.setApplicationId("880");
         sessionDetails.setRespId("51156");
@@ -441,6 +431,10 @@ public class XMLImportPageBean {
                     HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                         new HashMap<String, List<ConfiguratorNodePOJO>>();
                     for (ConfiguratorNodePOJO node : allNodesList) {
+                        if (node.getPrintGroupLevel() != null &&
+                            node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                            quoteTotal.setValue(node.getExtendedPrice());
+                        }
                         if (node.getNodeCategory() != null &&
                             node.getPrintGroupLevel() != null) {
                             catList.add(node.getNodeCategory() + "-" +
@@ -757,11 +751,11 @@ public class XMLImportPageBean {
 
     public void readRes(ActionEvent actionEvent) {
         InputStream asStream =
-            this.getClass().getClassLoader().getResourceAsStream(PROPERTY_FILE);
+            this.getClass().getClassLoader().getResourceAsStream(XSD_FILE);
         if (asStream == null) {
             // file not foun
             System.out.println("File Not found");
-            _logger.info("File not found: '" + PROPERTY_FILE + "'");
+            _logger.info("File not found: '" + XSD_FILE + "'");
             return;
         } else {
             System.out.println("Stream found");
@@ -778,11 +772,11 @@ public class XMLImportPageBean {
     public File readXsdResource() {
         File f = null;
         InputStream asStream =
-            this.getClass().getClassLoader().getResourceAsStream(PROPERTY_FILE);
+            this.getClass().getClassLoader().getResourceAsStream(XSD_FILE);
         if (asStream == null) {
             // file not foun
             System.out.println("File Not found");
-            _logger.info("File not found: '" + PROPERTY_FILE + "'");
+            _logger.info("File not found: '" + XSD_FILE + "'");
         } else {
             System.out.println("Stream found");
 
@@ -814,5 +808,15 @@ public class XMLImportPageBean {
         return errorPopup;
     }
 
-   
+    public void initUploadXml() {
+
+    }
+
+    public void setQuoteTotal(RichOutputText quoteTotal) {
+        this.quoteTotal = quoteTotal;
+    }
+
+    public RichOutputText getQuoteTotal() {
+        return quoteTotal;
+    }
 }

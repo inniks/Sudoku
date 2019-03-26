@@ -22,13 +22,14 @@
   </Properties>
   <SQLQuery>
     <![CDATA[select DISTINCT jreb.resource_id, 
-            pp.phone_number fax,
+          pp.phone_number fax,
           jreb.CATEGORY,
           jreb.source_name AS resource_name, 
           jreb.source_email,
-          jreb.source_phone
-         from jtf_rs_resource_extns jreb, per_phones pp
-         where pp.phone_type ='WF' and pp.parent_id = jreb.source_id]]>
+          jreb.source_phone  from jtf_rs_resource_extns jreb, (select parent_id,PHONE_NUMBER from per_phones where phone_type='WF') pp,
+          (select parent_id,PHONE_NUMBER from per_phones where phone_type='W1') ppfax
+          where jreb.source_id = pp.parent_id(+)
+          and jreb.source_id = ppfax.parent_id(+)]]>
   </SQLQuery>
   <ViewAttribute
     Name="ResourceId"
