@@ -22,6 +22,9 @@
                                 actionListener="#{XMLImportPageBean.importConfiguration}"
                                 immediate="true" partialTriggers="if1"/>
               <af:spacer width="10" height="10" id="s21"/>
+              <af:commandButton text="commandButton 1" id="cb2">
+                <af:showPopupBehavior popupId="imprtSrc" triggerType="click"/>
+              </af:commandButton>
               <af:panelGroupLayout id="pgl2" layout="horizontal"
                                    partialTriggers="if1" valign="baseline">
                 <af:panelLabelAndMessage label="Uploaded By" id="plam3">
@@ -249,6 +252,12 @@
                   <af:outputText id="ot15" inlineStyle="color:Red;"
                                  binding="#{XMLImportPageBean.validationError}"/>
                 </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <af:popup id="imprtSrc">
+              <af:dialog id="d4" contentWidth="600" contentHeight="300">
+                <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
+                           id="r1"/>
               </af:dialog>
             </af:popup>
             <af:popup id="debugPop" autoCancel="disabled">

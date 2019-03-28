@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="ImportSourcePageDef"
+                Package="xxatcust.oracle.apps.sudoku.ui.pageFragments">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="ImportSourceVO1" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="ImportSourceVO1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="ImportSourceVO1Iterator" ListOperMode="navigation"
+          ListIter="ImportSourceVO1Iterator" id="ImportSourceVO1"
+          DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="ImportSourceDesc"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

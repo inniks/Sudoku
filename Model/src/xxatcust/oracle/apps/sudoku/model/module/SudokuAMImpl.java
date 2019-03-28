@@ -646,4 +646,12 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     public ViewObjectImpl getQuoteSearchTabVO() {
         return (ViewObjectImpl)findViewObject("QuoteSearchTabVO");
     }
+
+    /**
+     * Container's getter for ImportSourceVO1.
+     * @return ImportSourceVO1
+     */
+    public ViewObjectImpl getImportSourceVO1() {
+        return (ViewObjectImpl)findViewObject("ImportSourceVO1");
+    }
 }

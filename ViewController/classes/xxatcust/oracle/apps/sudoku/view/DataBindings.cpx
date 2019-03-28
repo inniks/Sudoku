@@ -22,6 +22,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
     <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow@clearQuoteFields"
           usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -38,6 +40,8 @@
           path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_initQuoteSearchPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"
           path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ImportSourcePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="Import Reference Configuration" id="pb1">
+    <f:facet name="toolbar"/>
+    <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
+      <f:facet name="first">
+        <af:panelGroupLayout layout="scroll"
+                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                             id="pgl5">
+          <af:selectOneRadio value="#{bindings.ImportSourceVO1.inputValue}"
+                             label="#{bindings.ImportSourceVO1.label}"
+                             required="#{bindings.ImportSourceVO1.hints.mandatory}"
+                             shortDesc="#{bindings.ImportSourceVO1.hints.tooltip}"
+                             id="sor1">
+            <f:selectItems value="#{bindings.ImportSourceVO1.items}" id="si1"/>
+          </af:selectOneRadio>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="second">
+        <af:panelFormLayout id="pfl1" rows="4" maxColumns="1">
+          <f:facet name="footer"/>
+          <af:panelGroupLayout id="pgl1" layout="horizontal">
+            <af:panelLabelAndMessage label="Quote Id" id="plam1">
+              <af:inputText id="it1"/>
+            </af:panelLabelAndMessage>
+            <af:commandButton text="commandButton 1" id="cb1"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="pgl2" layout="horizontal">
+            <af:panelLabelAndMessage label="Quote Id" id="plam2">
+              <af:inputText id="it2"/>
+            </af:panelLabelAndMessage>
+            <af:commandButton text="commandButton 2" id="cb2"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="pgl3" layout="horizontal">
+            <af:panelLabelAndMessage label="Sales Order" id="plam3">
+              <af:inputText id="it3"/>
+            </af:panelLabelAndMessage>
+            <af:commandButton text="commandButton 3" id="cb3"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="pgl4" layout="horizontal">
+            <af:panelLabelAndMessage label="Select From Local System" id="plam4">
+              <af:inputText id="it4"/>
+            </af:panelLabelAndMessage>
+            <af:commandButton text="commandButton 4" id="cb4"/>
+          </af:panelGroupLayout>
+        </af:panelFormLayout>
+      </f:facet>
+    </af:panelSplitter>
+  </af:panelBox>
+</jsp:root>

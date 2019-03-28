@@ -29,6 +29,9 @@
   <ViewUsage
     Name="QuoteSearchTabVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuoteSearchTabVO"/>
+  <ViewUsage
+    Name="ImportSourceVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSourceVO"/>
   <ClientInterface>
     <Method
       Name="clearQuoteFields">

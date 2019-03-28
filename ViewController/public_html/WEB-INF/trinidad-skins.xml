@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skins xmlns="http://myfaces.apache.org/trinidad/skin">
+  <skin>
+    <id>sudokuCustomSkin.desktop</id>
+    <family>MySkinFamily</family>
+    <extends>skyros-v1.desktop</extends>
+    <render-kit-id>org.apache.myfaces.trinidad.desktop</render-kit-id>
+    <style-sheet-name>css/sudokuCustomSkin.css</style-sheet-name>
+  </skin>
+</skins>
