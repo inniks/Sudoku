@@ -11,6 +11,7 @@ public class V93kQuote {
     List<ConfiguratorNodePOJO> nodeCollection ;
     SessionDetails sessionDetails ;
     ExceptionHandlerPOJO exceptionMap ;
+    InputParams inputParams ;
     public V93kQuote() {
         super();
     }
@@ -53,5 +54,13 @@ public class V93kQuote {
 
     public ExceptionHandlerPOJO getExceptionMap() {
         return exceptionMap;
+    }
+
+    public void setInputParams(InputParams inputParams) {
+        this.inputParams = inputParams;
+    }
+
+    public InputParams getInputParams() {
+        return inputParams;
     }
 }

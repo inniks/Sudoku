@@ -212,8 +212,10 @@ public class XMLImportPageBean {
         ObjectMapper mapper = new ObjectMapper();
         _logger.info("Print mapper  parseXMLToPojo" + mapper);
         //comment this to run locally
+        System.out.println("Input JSON "+jsonStr);
         String responseJson =
             (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+        System.out.println("Response JSON "+responseJson);
         _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
         //String responseJson = (String)JSONUtils.convertJsonToObject(null);
         obj = mapper.readValue(responseJson, V93kQuote.class);
@@ -353,14 +355,7 @@ public class XMLImportPageBean {
                             // debugMsgBind.setValue(debugStr.toString());
                         }
                         warnText.setValue(warningMessage.toString());
-                        RichPopup.PopupHints hints =
-                            new RichPopup.PopupHints();
-                        if (warningMessage != null &&
-                            !warningMessage.toString().equalsIgnoreCase("<html><body>")) {
-                            System.out.println("Warning Message " +
-                                               warningMessage.toString());
-                            warningPopup.show(hints);
-                        }
+
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
                         if (debugList != null && debugList.size() > 0) {
@@ -399,6 +394,7 @@ public class XMLImportPageBean {
                                 for (String str : value) {
                                     errMessage.append("<p><b>" + str +
                                                       "</b></p>");
+                                    //errMessage.append(str) ;
                                 }
                             }
 
@@ -409,12 +405,24 @@ public class XMLImportPageBean {
                             errorMessages.size() > 0) {
                             for (String str : errorMessages) {
                                 errMessage.append("<p><b>" + str + "</b></p>");
+                                //errMessage.append(str) ;
                             }
                             errMessage.append("</body></html>");
                         }
                         if (errMessage != null &&
                             !errMessage.toString().equalsIgnoreCase("<html><body>")) {
-                            throw new JboException(errMessage.toString());
+                            validationError.setValue("Exception occured " + errMessage.toString());
+                            RichPopup.PopupHints hints = new RichPopup.PopupHints();
+                            errorPopup.show(hints);
+                            return null;
+                            //throw new JboException(errMessage.toString());
+                        }
+
+                        RichPopup.PopupHints hints =
+                            new RichPopup.PopupHints();
+                        if (warningMessage != null &&
+                            !warningMessage.toString().equalsIgnoreCase("<html><body>")) {
+                            warningPopup.show(hints);
                         }
                     }
 
@@ -508,8 +516,8 @@ public class XMLImportPageBean {
             }
         } catch (Exception e) {
 
-            //ADFUtils.routeExceptions(e);
-            e.printStackTrace();
+            ADFUtils.routeExceptions(e);
+            //e.printStackTrace();
         } finally {
             //cleanup
             ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -667,6 +675,7 @@ public class XMLImportPageBean {
         productsRendered = true;
         spaceRendered = false;
         validationError.setValue(null);
+        quoteTotal.setValue(null);
         fileUploadVCE();
 
     }

@@ -425,7 +425,7 @@
          <list n="libraryDefinitions">
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/cz121.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/cz121.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Cz121.jar"/>
@@ -434,7 +434,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/fndext.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/fndext.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Fndext.jar"/>
@@ -443,7 +443,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/jackson-annotations-2.6.3.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/jackson-annotations-2.6.3.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Jackson-annotations-2.6.3.jar"/>
@@ -452,7 +452,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/jackson-core-2.6.3.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/jackson-core-2.6.3.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Jackson-core-2.6.3.jar"/>
@@ -461,7 +461,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/jackson-databind-2.6.3.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/jackson-databind-2.6.3.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Jackson-databind-2.6.3.jar"/>
@@ -470,7 +470,7 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url path="../../../../Cz_jars/suncollections.jar" jar-entry=""/>
+                  <url path="../../../Cz_jars/suncollections.jar" jar-entry=""/>
                </list>
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Suncollections.jar"/>
