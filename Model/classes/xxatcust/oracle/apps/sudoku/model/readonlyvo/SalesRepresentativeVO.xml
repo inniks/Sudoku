@@ -20,11 +20,23 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="bindContactName"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[select DISTINCT jreb.resource_id, 
           pp.phone_number fax,
           jreb.CATEGORY,
-          jreb.source_name AS resource_name, 
+          jreb.source_name AS resource_name,
+--decode(jreb.source_last_name||','||' '||jreb.source_first_name,', ',jreb.source_name, jreb.source_last_name||','||' '||jreb.source_first_name) name, 
           jreb.source_email,
           jreb.source_phone  from jtf_rs_resource_extns jreb, (select parent_id,PHONE_NUMBER from per_phones where phone_type='WF') pp,
           (select parent_id,PHONE_NUMBER from per_phones where phone_type='W1') ppfax
@@ -94,6 +106,8 @@
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
         <DISPLAYWIDTH
           Value="20"/>
       </SchemaBasedProperties>
@@ -169,6 +183,43 @@
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewCriteria
+    Name="SalesRepresentativeVOCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow94"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="ResourceName"
+        ViewAttribute="ResourceName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindContactName"
+        IsBindVarValue="true"
+        Required="Optional"
+        GenerateIsNullClauseForBindVars="false"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="ResourceId"/>
   </AttrArray>

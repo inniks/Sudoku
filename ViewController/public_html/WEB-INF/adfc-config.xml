@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <metadata-resource>/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/HomeMenuFlow.xml</metadata-resource>
+  <managed-bean id="__5">
+    <managed-bean-name id="__8">DynamicBindingBean</managed-bean-name>
+    <managed-bean-class id="__7">xxatcust.oracle.apps.sudoku.bean.DynamicRegionBinding</managed-bean-class>
+    <managed-bean-scope id="__6">backingBean</managed-bean-scope>
+  </managed-bean>
 </adfc-config>

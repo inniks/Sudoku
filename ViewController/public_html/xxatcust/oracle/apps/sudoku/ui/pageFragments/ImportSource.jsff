@@ -5,47 +5,116 @@
   <af:panelBox text="Import Reference Configuration" id="pb1">
     <f:facet name="toolbar"/>
     <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
-      <f:facet name="first">
-        <af:panelGroupLayout layout="scroll"
-                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                             id="pgl5">
-          <af:selectOneRadio value="#{bindings.ImportSourceVO1.inputValue}"
-                             label="#{bindings.ImportSourceVO1.label}"
-                             required="#{bindings.ImportSourceVO1.hints.mandatory}"
-                             shortDesc="#{bindings.ImportSourceVO1.hints.tooltip}"
-                             id="sor1">
-            <f:selectItems value="#{bindings.ImportSourceVO1.items}" id="si1"/>
-          </af:selectOneRadio>
-        </af:panelGroupLayout>
-      </f:facet>
       <f:facet name="second">
-        <af:panelFormLayout id="pfl1" rows="4" maxColumns="1">
-          <f:facet name="footer"/>
-          <af:panelGroupLayout id="pgl1" layout="horizontal">
-            <af:panelLabelAndMessage label="Quote Id" id="plam1">
-              <af:inputText id="it1"/>
-            </af:panelLabelAndMessage>
-            <af:commandButton text="commandButton 1" id="cb1"/>
-          </af:panelGroupLayout>
-          <af:panelGroupLayout id="pgl2" layout="horizontal">
-            <af:panelLabelAndMessage label="Quote Id" id="plam2">
-              <af:inputText id="it2"/>
-            </af:panelLabelAndMessage>
-            <af:commandButton text="commandButton 2" id="cb2"/>
-          </af:panelGroupLayout>
-          <af:panelGroupLayout id="pgl3" layout="horizontal">
-            <af:panelLabelAndMessage label="Sales Order" id="plam3">
-              <af:inputText id="it3"/>
-            </af:panelLabelAndMessage>
-            <af:commandButton text="commandButton 3" id="cb3"/>
-          </af:panelGroupLayout>
-          <af:panelGroupLayout id="pgl4" layout="horizontal">
-            <af:panelLabelAndMessage label="Select From Local System" id="plam4">
-              <af:inputText id="it4"/>
-            </af:panelLabelAndMessage>
-            <af:commandButton text="commandButton 4" id="cb4"/>
-          </af:panelGroupLayout>
-        </af:panelFormLayout>
+        <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                             id="pgl6" styleClass="AFStretchWidth"
+                             layout="scroll">
+          <af:panelFormLayout id="pfl1" rows="1" maxColumns="2">
+            <f:facet name="footer">
+              <af:group id="g1">
+                <af:panelGroupLayout id="pgl4">
+                  <af:panelGroupLayout id="pgl5" layout="horizontal">
+                    <af:selectBooleanCheckbox value="#{bindings.CopyRefConfig.inputValue}"
+                                              shortDesc="#{bindings.CopyRefConfig.hints.tooltip}"
+                                              id="sbc1" autoSubmit="true"
+                                              valueChangeListener="#{pageFlowScope.ImportSourceBean.copyRefChanged}"/>
+                    <af:panelLabelAndMessage label="Copy all items of the Reference Configuration into the Target Configuration,to build a new System, not just an Upgrade."
+                                             id="plam2"/>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl3" layout="horizontal">
+                    <af:selectOneRadio value="#{bindings.ReuseQuote.inputValue}"
+                                       required="#{bindings.ReuseQuote.hints.mandatory}"
+                                       shortDesc="#{bindings.ReuseQuote.hints.tooltip}"
+                                       id="sor2" autoSubmit="true"
+                                       valueChangeListener="#{pageFlowScope.ImportSourceBean.reuseQuoteChange}">
+                      <f:selectItems value="#{bindings.ReuseQuote.items}"
+                                     id="si2"/>
+                    </af:selectOneRadio>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:group>
+            </f:facet>
+            <af:panelGroupLayout id="pgl1">
+              <af:selectOneRadio value="#{bindings.ImportSrcMeaning.inputValue}"
+                                 label="Source"
+                                 required="#{bindings.ImportSrcMeaning.hints.mandatory}"
+                                 shortDesc="#{bindings.ImportSrcMeaning.hints.tooltip}"
+                                 id="sor1" valuePassThru="true"
+                                 valueChangeListener="#{pageFlowScope.ImportSourceBean.importSrcSelected}"
+                                 autoSubmit="true">
+                <f:selectItems value="#{bindings.ImportSrcMeaning.items}"
+                               id="si1"/>
+              </af:selectOneRadio>
+            </af:panelGroupLayout>
+            <af:panelFormLayout id="pfl2" rows="4" maxColumns="1"
+                                partialTriggers="sor1">
+              <af:panelFormLayout id="pfl3" rows="1" maxColumns="2">
+                <af:panelGroupLayout id="pgl2" layout="horizontal">
+                  <af:panelLabelAndMessage label="Budgetary Quote" id="plam1">
+                    <af:inputText id="it1"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
+                                  binding="#{pageFlowScope.ImportSourceBean.budgetQuote}"
+                                  value="#{bindings.BudgetQuoteId.inputValue}"
+                                  required="#{bindings.BudgetQuoteId.hints.mandatory}"
+                                  columns="#{bindings.BudgetQuoteId.hints.displayWidth}"
+                                  maximumLength="#{bindings.BudgetQuoteId.hints.precision}">
+                      <f:validator binding="#{bindings.BudgetQuoteId.validator}"/>
+                    </af:inputText>
+                  </af:panelLabelAndMessage>
+                  <af:commandButton text="Search" id="cb1"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
+                                    action="searchQuote">
+                    <af:setActionListener from="#{bindings.BudgetQuoteId.inputValue}"
+                                          to="#{pageFlowScope.quoteId}"/>
+                  </af:commandButton>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl22" layout="horizontal">
+                  <af:panelLabelAndMessage label="Formal Quote" id="pla2m1">
+                    <af:inputText id="it21"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
+                                  binding="#{pageFlowScope.ImportSourceBean.formalQuote}"
+                                  value="#{bindings.FormalQuoteId.inputValue}"
+                                  required="#{bindings.FormalQuoteId.hints.mandatory}"
+                                  columns="#{bindings.FormalQuoteId.hints.displayWidth}"
+                                  maximumLength="#{bindings.FormalQuoteId.hints.precision}">
+                      <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
+                    </af:inputText>
+                  </af:panelLabelAndMessage>
+                  <af:commandButton text="Search" id="cb21"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl122" layout="horizontal">
+                  <af:panelLabelAndMessage label="Sales Order Number"
+                                           id="pl2am1">
+                    <af:inputText id="i2t1"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'SALES_ORDER'}"
+                                  value="#{bindings.SalesOrderNumber.inputValue}"
+                                  required="#{bindings.SalesOrderNumber.hints.mandatory}"
+                                  columns="#{bindings.SalesOrderNumber.hints.displayWidth}"
+                                  maximumLength="#{bindings.SalesOrderNumber.hints.precision}">
+                      <f:validator binding="#{bindings.SalesOrderNumber.validator}"/>
+                    </af:inputText>
+                  </af:panelLabelAndMessage>
+                  <af:commandButton text="Search" id="cb211"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="p2gl2" layout="horizontal">
+                  <af:panelLabelAndMessage label="Select from Local System"
+                                           id="ppp">
+                    <af:inputFile id="it111"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
+                                  label="Label 1"/>
+                    <af:commandButton text="Import Configuration" id="cb11"
+                                      actionListener="#{pageFlowScope.ImportSourceBean.importConfiguration}"
+                                      immediate="true"/>
+                  </af:panelLabelAndMessage>
+                  <af:commandButton text="Import" id="cb111"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"/>
+                </af:panelGroupLayout>
+              </af:panelFormLayout>
+            </af:panelFormLayout>
+          </af:panelFormLayout>
+        </af:panelGroupLayout>
       </f:facet>
     </af:panelSplitter>
   </af:panelBox>

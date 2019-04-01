@@ -9,7 +9,8 @@
   BindingStyle="OracleName"
   CustomQuery="true"
   PageIterMode="Full"
-  UseGlueCode="false">
+  UseGlueCode="false"
+  OrderBy='"NAME"'>
   <DesignTime>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
@@ -21,8 +22,26 @@
   </Properties>
   <Variable
     Name="p_orgId"
+    Kind="where"
+    Type="java.math.BigDecimal">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
+  <Variable
+    Name="bindName"
     Kind="viewcriteria"
-    Type="java.math.BigDecimal"/>
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[SELECT
     ottl.name,
@@ -32,7 +51,8 @@ FROM
     oe_transaction_types_all   otta,
     oe_transaction_types_tl    ottl
 WHERE
-    otta.transaction_type_id = ottl.transaction_type_id]]>
+    otta.transaction_type_id = ottl.transaction_type_id
+   and otta.org_id= :p_orgId]]>
   </SQLQuery>
   <ViewAttribute
     Name="Name"
@@ -93,8 +113,8 @@ WHERE
     </DesignTime>
     <Properties>
       <SchemaBasedProperties>
-        <LABEL
-          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.OrderTypeVO.OrgId_LABEL"/>
+        <DISPLAYHINT
+          Value="Hide"/>
         <DISPLAYWIDTH
           Value="20"/>
       </SchemaBasedProperties>
@@ -127,11 +147,11 @@ WHERE
       Name="vcrow4"
       UpperColumns="1">
       <ViewCriteriaItem
-        Name="OrgId"
-        ViewAttribute="OrgId"
-        Operator="="
+        Name="OrderTypeVOCriteria_vcrow4_Name"
+        ViewAttribute="Name"
+        Operator="STARTSWITH"
         Conjunction="AND"
-        Value=":p_orgId"
+        Value=":bindName"
         IsBindVarValue="true"
         Required="Optional"/>
     </ViewCriteriaRow>

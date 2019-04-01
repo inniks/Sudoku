@@ -9,12 +9,36 @@
               DataControl="SudokuAMDataControl" id="ImportSourceVO1Iterator"/>
   </executables>
   <bindings>
-    <list IterBinding="ImportSourceVO1Iterator" ListOperMode="navigation"
-          ListIter="ImportSourceVO1Iterator" id="ImportSourceVO1"
-          DTSupportsMRU="false">
+    <list IterBinding="ImportSourceVO1Iterator" StaticList="false"
+          Uses="LOV_ImportSrcMeaning" id="ImportSrcMeaning"
+          DTSupportsMRU="false"/>
+    <button IterBinding="ImportSourceVO1Iterator" id="CopyRefConfig"
+            DTSupportsMRU="false" StaticList="true">
       <AttrNames>
-        <Item Value="ImportSourceDesc"/>
+        <Item Value="CopyRefConfig"/>
       </AttrNames>
-    </list>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <list IterBinding="ImportSourceVO1Iterator" StaticList="false"
+          Uses="LOV_ReuseQuote" id="ReuseQuote" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="ImportSourceVO1Iterator" id="BudgetQuoteId">
+      <AttrNames>
+        <Item Value="BudgetQuoteId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImportSourceVO1Iterator" id="FormalQuoteId">
+      <AttrNames>
+        <Item Value="FormalQuoteId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ImportSourceVO1Iterator"
+                     id="SalesOrderNumber">
+      <AttrNames>
+        <Item Value="SalesOrderNumber"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

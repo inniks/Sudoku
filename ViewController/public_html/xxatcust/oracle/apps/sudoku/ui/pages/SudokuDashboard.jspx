@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Sudoku Dashboard">
+      <af:form id="f1">
+        <af:panelStretchLayout id="psl1" topHeight="110px" endWidth="10px"
+                               bottomHeight="30px" startWidth="10px">
+          <f:facet name="bottom">
+            <af:panelGroupLayout id="pgl2" halign="right">
+              <af:panelBox text="Welcome : #{sessionScope.UserName}" id="pb1">
+                <f:facet name="toolbar">
+                  <af:outputText value="V93000 Configurator" id="pt_ot5"
+                                 styleClass="AFHeaderLevelTwo"
+                                 inlineStyle="font-size:x-large; color:#910048; font-weight:bold;"/>
+                </f:facet>
+              </af:panelBox>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelGroupLayout layout="scroll"
+                                 xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                 id="pgl7">
+              <af:panelGroupLayout layout="scroll"
+                                   xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                   id="pgl6">
+                <af:commandLink text="QuotingFlow"
+                                action="#{backingBeanScope.DynamicBindingBean.quotingFlow}"
+                                id="cl1" rendered="false"/>
+                <af:region value="#{bindings.dynamicRegion1.regionModel}"
+                           id="r1" partialTriggers="::cl1 ::cl2"/>
+                <af:commandLink text="ImportSrcFlow"
+                                action="#{backingBeanScope.DynamicBindingBean.importSrcFlow}"
+                                id="cl2" rendered="false"/>
+              </af:panelGroupLayout>
+              <af:popup id="p1">
+                <af:dialog id="d2" contentWidth="600" contentHeight="200">
+                  <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
+                             id="r2"/>
+                </af:dialog>
+              </af:popup>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="start">
+            <af:panelGroupLayout id="pt_pgl8"/>
+          </f:facet>
+          <f:facet name="end">
+            <af:panelGroupLayout id="pt_pgl9"/>
+          </f:facet>
+          <f:facet name="top">
+            <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                                 id="pt_pgl1" styleClass="AFStretchWidth"
+                                 layout="vertical">
+              <af:panelGroupLayout id="pt_pgl7" layout="horizontal"
+                                   styleClass="AFStretchWidth">
+                <af:panelGroupLayout id="pgl1" layout="horizontal"
+                                     styleClass="AFStretchWidth">
+                  <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
+                    <af:spacer width="6" height="10" id="pt_s6"/>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl0" layout="horizontal"
+                                       halign="right" visible="false"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
+                                     halign="center"
+                                     styleClass="AFStretchWidth">
+                  <af:panelGroupLayout id="pgl3">
+                    <af:toolbar id="t1">
+                      <af:panelGroupLayout id="pgl4">
+                        <af:commandToolbarButton text="View Reference"
+                                                 id="ctb1"/>
+                        <af:commandToolbarButton text="Import Reference Configuration"
+                                                 id="ct2b1">
+                          <af:showPopupBehavior popupId="p1"
+                                                triggerType="click"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Configurator"
+                                                 id="ct1b1"/>
+                        <af:commandToolbarButton text="Quote Header" id="ctb2"
+                                                 action="#{backingBeanScope.DynamicBindingBean.quotingFlow}"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout id="pgl5">
+                        <af:commandToolbarButton text="Export Target Configuration"
+                                                 id="ctb3"/>
+                        <af:commandToolbarButton text="View Target" id="ctb4"/>
+                        <af:commandToolbarButton text="Save as System to target quote"
+                                                 id="ctb5"/>
+                        <af:commandToolbarButton text="Save as oracle to upgrade quote"
+                                                 id="ctb6"/>
+                      </af:panelGroupLayout>
+                    </af:toolbar>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pt_pgl3" layout="vertical"
+                                       styleClass="AFStretchWidth" halign="end">
+                    <af:panelGroupLayout id="pt_pgl10" halign="end">
+                      <af:image id="pt_i1" source="/Resources/images/adv.gif"
+                                inlineStyle="width:215px;"/>
+                    </af:panelGroupLayout>
+                    <af:spacer width="20" height="5" id="spacer1"/>
+                    <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
+                                         halign="left">
+                      <af:commandImageLink id="pt_cil2"
+                                           icon="/Resources/images/icons8-shutdown-32.png"
+                                           actionListener="#{pageFlowScope.TemplateBean.logout}"
+                                           shortDesc="Logout.."/>
+                      <af:spacer width="20" height="10" id="pt_s2"/>
+                      <af:commandImageLink id="pt_cil1"
+                                           icon="/Resources/images/icons8-home-page-32.png"
+                                           actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
+                                           shortDesc="Redirect to EBS Home.."
+                                           rendered="true"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:spacer width="10" height="10" id="pt_s1"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pt_pgl2" styleClass="AFStretchWidth"
+                                   layout="vertical" rendered="false">
+                <af:panelGroupLayout id="pt_pgl6" styleClass="AFStretchWidth"
+                                     halign="right" rendered="false"></af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

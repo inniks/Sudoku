@@ -34,6 +34,17 @@
       </SchemaBasedProperties>
     </Properties>
   </Variable>
+  <Variable
+    Name="bindCustName"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[SELECT p.party_name customername, p.party_number registryid,
        ca.account_number accountnumber, ca.account_name accountdescription,
@@ -242,6 +253,43 @@ WHERE ca.status(+) = 'A'
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewCriteria
+    Name="CustomerNameVOCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerNameVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow66"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="Customername"
+        ViewAttribute="Customername"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        UpperColumns="1"
+        Required="Optional"
+        Value=":bindCustName"
+        IsBindVarValue="true"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="Registryid"/>
   </AttrArray>

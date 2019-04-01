@@ -4,4 +4,5 @@
    <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/HomeMenuFlow.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false"/>
    <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml" id="QuotingFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
    <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml" id="ImportSrcFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="META-INF/adfc-config.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false"/>
 </task-flow-registry>

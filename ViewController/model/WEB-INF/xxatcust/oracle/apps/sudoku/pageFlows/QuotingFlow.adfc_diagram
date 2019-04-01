@@ -49,9 +49,9 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">77.33887</property>
+         name="y">77.637695</property>
       <property
-         name="x">244.0</property>
+         name="x">-66.0</property>
       <property
          name="pageFragment">true</property>
    </View>
@@ -70,9 +70,9 @@
       <property
          name="activityId">clearQuoteFields</property>
       <property
-         name="start">false</property>
+         name="start">true</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>clearQuoteFields&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>clearQuoteFields&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
@@ -80,40 +80,20 @@
       <property
          name="x">150.35449</property>
    </MethodCall>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase9"
-      from="View5"
-      to="MethodCall8">
-      <property
-         name="fromOutcome">createQuote</property>
-      <property
-         name="sdm:polyPoints">L58,203.0,83.98828,150.35449,158.09766,T50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase10"
-      from="View2"
-      to="MethodCall13">
-      <property
-         name="fromOutcome">backToSearch</property>
-      <property
-         name="sdm:polyPoints">T50,487.5,159.56836,174.02539,-40.902344,R50</property>
-   </ControlFlowCase>
    <MethodCall
       id="MethodCall13">
       <property
          name="activityId">initQuoteSearch</property>
       <property
-         name="start">true</property>
+         name="start">false</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>initQuoteSearch&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>initQuoteSearch&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">-40.551758</property>
+         name="y">-12.25293</property>
       <property
-         name="x">133.02539</property>
+         name="x">338.0254</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
@@ -123,7 +103,7 @@
       <property
          name="fromOutcome">initQuoteSearch</property>
       <property
-         name="sdm:polyPoints">B56,136.52539,13.097656,203.0,69.98828,L42</property>
+         name="sdm:polyPoints">L46,296.06534,-16.103516,-25.0,73.78711,R46</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -133,6 +113,6 @@
       <property
          name="fromOutcome">clear</property>
       <property
-         name="sdm:polyPoints">L50,200.39787,76.98828,129.52539,16.266088,B44</property>
+         name="sdm:polyPoints">R54,-24.04133,80.78711,297.0254,-9.103516,L54</property>
    </ControlFlowCase>
 </SDM>

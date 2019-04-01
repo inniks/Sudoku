@@ -22,6 +22,17 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerSupportRepresentVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="bindCustName"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[select ppf.person_id, 
        pp.PHONE_NUMBER,
@@ -157,6 +168,42 @@
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewCriteria
+    Name="CustomerSupportRepresentVOCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerSupportRepresentVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow92"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="CustomerSupportRepresentVOCriteria_vcrow92_CustomerName"
+        ViewAttribute="CustomerName"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindCustName"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="PersonId"/>
   </AttrArray>

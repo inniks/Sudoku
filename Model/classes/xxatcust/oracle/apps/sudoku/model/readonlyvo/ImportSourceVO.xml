@@ -11,7 +11,6 @@
   PageIterMode="Full"
   UseGlueCode="false">
   <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
   <Properties>
@@ -20,9 +19,56 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSourceVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <ViewAccessor
+    Name="ImportSrcLOV1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSrcLOV"
+    RowLevelBinds="true"/>
+  <ViewAccessor
+    Name="ReuseQuoteLOV1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ReuseQuoteLOV"
+    RowLevelBinds="true"/>
+  <ListBinding
+    Name="LOV_ImportSrcMeaning"
+    ListVOName="ImportSrcLOV1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ImportSrcMeaning_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ImportSrcMeaning"/>
+    </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="ImportSrcCode"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ImpSrcMeaning"/>
+      <Item Value="ImpSrcCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ImpSrcMeaning"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
+  <ListBinding
+    Name="LOV_ReuseQuote"
+    ListVOName="ReuseQuoteLOV1"
+    ListRangeSize="-1"
+    NullValueFlag="none"
+    NullValueId="LOV_ReuseQuote_LOVUIHints_NullValueId"
+    MRUCount="0">
+    <AttrArray Name="AttrNames">
+      <Item Value="ReuseQuote"/>
+    </AttrArray>
+    <AttrArray Name="ListAttrNames">
+      <Item Value="ReuseCode"/>
+    </AttrArray>
+    <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="ReuseMeaning"/>
+    </AttrArray>
+    <DisplayCriteria/>
+  </ListBinding>
   <ViewAttribute
-    Name="ImportSourceCode"
-    IsUpdateable="false"
+    Name="ImportSrcCode"
     IsPersistent="false"
     PrecisionRule="true"
     Type="java.lang.String"
@@ -30,8 +76,77 @@
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
   <ViewAttribute
-    Name="ImportSourceDesc"
-    IsUpdateable="false"
+    Name="ImportSrcMeaning"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"
+    LOVName="LOV_ImportSrcMeaning">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="ReuseQuote"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.Boolean"
+    ColumnType="BIT"
+    AliasName="VIEW_ATTR"
+    SQLType="BIT"
+    LOVName="LOV_ReuseQuote">
+    <Properties>
+      <SchemaBasedProperties>
+        <CONTROLTYPE
+          Value="radio"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </ViewAttribute>
+  <ViewAttribute
+    Name="CopyRefConfig"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="BudgetQuoteId"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="QuoteType"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="FormalQuoteId"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="SalesOrderNumber"
     IsSelected="false"
     IsPersistent="false"
     PrecisionRule="true"
@@ -40,11 +155,8 @@
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
   <AttrArray Name="KeyAttributes">
-    <Item Value="ImportSourceCode"/>
+    <Item Value="ImportSrcCode"/>
   </AttrArray>
-  <StaticList
-    Rows="4"
-    Columns="2"/>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="xxatcust.oracle.apps.sudoku.model.ModelBundle"/>

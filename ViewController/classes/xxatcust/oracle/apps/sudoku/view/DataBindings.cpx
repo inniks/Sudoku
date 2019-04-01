@@ -24,6 +24,12 @@
           usageId="xxatcust_oracle_apps_sudoku_view_QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff"
           usageId="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow@CreateInsert"
+          usageId="xxatcust_oracle_apps_sudoku_view_ImportSrcFlow_ImportSrcFlow_CreateInsertPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/templates/SudokuTemplate.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SudokuTemplatePageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuDashboard.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -42,6 +48,12 @@
           path="xxatcust.oracle.apps.sudoku.pageFlows.QuotingFlow_QuotingFlow_clearQuoteFieldsPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_ImportSourcePageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.ImportSourcePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_ImportSrcFlow_ImportSrcFlow_CreateInsertPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.ImportSrcFlow_ImportSrcFlow_CreateInsertPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SudokuTemplatePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.templates.SudokuTemplatePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuDashboardPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

@@ -142,5 +142,15 @@
                   DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
                   Action="invokeMethod" MethodName="getQuoteCustmerAddress"
                   IsViewObjectMethod="false"/>
+    <listOfValues StaticList="false" IterBinding="QuotesVOIterator"
+                  Uses="LOV_PriceList" id="PriceList"/>
+    <list IterBinding="QuotesVOIterator" StaticList="false"
+          Uses="LOV_BusinessAgreement" id="BusinessAgreement"
+          DTSupportsMRU="true"/>
+    <attributeValues IterBinding="QuotesVOIterator" id="Discount">
+      <AttrNames>
+        <Item Value="Discount"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

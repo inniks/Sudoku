@@ -9,16 +9,41 @@
       <property
          name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportSource.jsff</property>
       <property
-         name="start">true</property>
+         name="start">false</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>ImportSource&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>ImportSource&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">139.29883</property>
+         name="y">138.59766</property>
       <property
          name="x">367.0</property>
       <property
          name="pageFragment">true</property>
    </View>
+   <MethodCall
+      id="MethodCall3">
+      <property
+         name="activityId">CreateInsert</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>CreateInsert&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">199.14941</property>
+      <property
+         name="x">106.01465</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="MethodCall3"
+      to="View2">
+      <property
+         name="fromOutcome">CreateInsert</property>
+      <property
+         name="sdm:polyPoints">R50,147.01465,198.79883,326.0,138.24707,L50</property>
+   </ControlFlowCase>
 </SDM>

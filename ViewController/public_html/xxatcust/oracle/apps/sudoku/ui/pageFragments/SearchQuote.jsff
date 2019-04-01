@@ -2,7 +2,7 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
-  <af:panelHeader text="Quote Search Page" id="ph1">
+  <af:panelHeader text="Quote Search Page #{pageFlowScope.quoteId}" id="ph1">
     <f:facet name="context"/>
     <f:facet name="toolbar">
       <af:toolbar id="t3">

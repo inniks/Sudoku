@@ -20,6 +20,17 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.OUVO_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="bindOU"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[SELECT ou.organization_id   org_id, 
        ou.name              operating_unit,
@@ -99,6 +110,43 @@ ORDER BY ou.name]]>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <ViewCriteria
+    Name="OUVOCriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.OUVO"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow65"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="OUVOCriteria_vcrow65_OperatingUnit"
+        ViewAttribute="OperatingUnit"
+        Operator="STARTSWITH"
+        Conjunction="AND"
+        Value=":bindOU"
+        UpperColumns="1"
+        Required="Optional"
+        IsBindVarValue="true"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="OrgId"/>
   </AttrArray>

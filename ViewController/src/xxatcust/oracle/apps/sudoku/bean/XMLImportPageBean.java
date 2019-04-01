@@ -291,12 +291,14 @@ public class XMLImportPageBean {
 
 
     public ChildPropertyTreeModel getCategoryTree() {
+        
         try {
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y")) {
                 //resetAllBindings();
+                System.out.println("Inside getCategoryTree "+refreshImport);
                 Object parentObj =
                     ADFUtils.getSessionScopeValue("parentObject");
                 ADFUtils.setSessionScopeValue("refreshImport", null);

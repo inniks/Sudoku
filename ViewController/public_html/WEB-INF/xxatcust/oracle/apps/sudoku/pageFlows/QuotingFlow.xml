@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
   <task-flow-definition id="QuotingFlow">
-    <default-activity id="__9">initQuoteSearch</default-activity>
+    <default-activity id="__81">clearQuoteFields</default-activity>
     <data-control-scope id="__8">
       <isolated/>
     </data-control-scope>
@@ -21,42 +21,20 @@
     <view id="SearchQuote">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/SearchQuote.jsff</page>
     </view>
-    <method-call id="clearQuoteFields">
-      <method>#{bindings.clearQuoteFields.execute}</method>
-      <outcome id="__22">
-        <fixed-outcome>clearQuoteFields</fixed-outcome>
-      </outcome>
-    </method-call>
     <method-call id="initQuoteSearch">
       <method>#{bindings.initQuoteSearch.execute}</method>
       <outcome id="__1">
         <fixed-outcome>initQuoteSearch</fixed-outcome>
       </outcome>
     </method-call>
-    <control-flow-rule id="__17">
-      <from-activity-id id="__18">quoting</from-activity-id>
-      <control-flow-case id="__19">
-        <from-outcome id="__21">clear</from-outcome>
-        <to-activity-id id="__20">clearQuoteFields</to-activity-id>
-      </control-flow-case>
-      <control-flow-case id="__33">
-        <from-outcome id="__35">backToSearch</from-outcome>
-        <to-activity-id id="__34">initQuoteSearch</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__23">
-      <from-activity-id id="__24">clearQuoteFields</from-activity-id>
-      <control-flow-case id="__25">
-        <from-outcome id="__26">clearQuoteFields</from-outcome>
-        <to-activity-id id="__27">quoting</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
+    <method-call id="clearQuoteFields">
+      <method>#{bindings.clearQuoteFields.execute}</method>
+      <outcome id="__70">
+        <fixed-outcome>clearQuoteFields</fixed-outcome>
+      </outcome>
+    </method-call>
     <control-flow-rule id="__28">
       <from-activity-id id="__29">SearchQuote</from-activity-id>
-      <control-flow-case id="__31">
-        <from-outcome id="__32">createQuote</from-outcome>
-        <to-activity-id id="__30">clearQuoteFields</to-activity-id>
-      </control-flow-case>
       <control-flow-case id="__37">
         <from-outcome id="__38">clear</from-outcome>
         <to-activity-id id="__36">initQuoteSearch</to-activity-id>
@@ -67,6 +45,20 @@
       <control-flow-case id="__12">
         <from-outcome id="__14">initQuoteSearch</from-outcome>
         <to-activity-id id="__13">SearchQuote</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__71">
+      <from-activity-id id="__72">quoting</from-activity-id>
+      <control-flow-case id="__74">
+        <from-outcome id="__75">clear</from-outcome>
+        <to-activity-id id="__73">clearQuoteFields</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__76">
+      <from-activity-id id="__77">clearQuoteFields</from-activity-id>
+      <control-flow-case id="__79">
+        <from-outcome id="__80">clearQuoteFields</from-outcome>
+        <to-activity-id id="__78">quoting</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <use-page-fragments/>

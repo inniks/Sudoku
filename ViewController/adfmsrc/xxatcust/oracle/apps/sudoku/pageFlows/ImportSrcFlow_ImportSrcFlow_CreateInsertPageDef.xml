@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="ImportSrcFlow_ImportSrcFlow_CreateInsertPageDef"
+                Package="xxatcust.oracle.apps.sudoku.pageFlows"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="ImportSourceVO1" RangeSize="25"
+              DataControl="SudokuAMDataControl" id="ImportSourceVO1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="ImportSourceVO1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

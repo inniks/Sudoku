@@ -5,10 +5,6 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
-    <taskFlow id="ImportSrcFlow1"
-              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow"
-              activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
   </executables>
   <bindings/>
 </pageDefinition>
