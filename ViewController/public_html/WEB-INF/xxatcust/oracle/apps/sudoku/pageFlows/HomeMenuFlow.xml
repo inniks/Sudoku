@@ -6,11 +6,14 @@
   <view id="Quoting">
     <page>/xxatcust/oracle/apps/sudoku/ui/pages/Quoting.jspx</page>
   </view>
+  <view id="SudokuDashboard">
+    <page>/xxatcust/oracle/apps/sudoku/ui/pages/SudokuDashboard.jspx</page>
+  </view>
   <control-flow-rule id="__7">
     <from-activity-id id="__6">*</from-activity-id>
     <control-flow-case id="__8">
       <from-outcome id="__10">SudokuHome</from-outcome>
-      <to-activity-id id="__9">SudokuHome</to-activity-id>
+      <to-activity-id id="__9">SudokuDashboard</to-activity-id>
     </control-flow-case>
     <control-flow-case id="__1">
       <from-outcome id="__3">Quoting</from-outcome>

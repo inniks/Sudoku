@@ -20,7 +20,7 @@
     </SchemaBasedProperties>
   </Properties>
   <ViewAccessor
-    Name="ImportSrcLOV1"
+    Name="ImportSrcLOV2"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSrcLOV"
     RowLevelBinds="true"/>
   <ViewAccessor
@@ -29,7 +29,7 @@
     RowLevelBinds="true"/>
   <ListBinding
     Name="LOV_ImportSrcMeaning"
-    ListVOName="ImportSrcLOV1"
+    ListVOName="ImportSrcLOV2"
     ListRangeSize="-1"
     NullValueFlag="none"
     NullValueId="LOV_ImportSrcMeaning_LOVUIHints_NullValueId"
@@ -41,11 +41,11 @@
       <Item Value="ImportSrcCode"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
-      <Item Value="ImpSrcMeaning"/>
-      <Item Value="ImpSrcCode"/>
+      <Item Value="ImportSrcMeaning"/>
+      <Item Value="ImportSrcCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="ImpSrcMeaning"/>
+      <Item Value="ImportSrcMeaning"/>
     </AttrArray>
     <DisplayCriteria/>
   </ListBinding>

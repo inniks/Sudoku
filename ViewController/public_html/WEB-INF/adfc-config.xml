@@ -6,4 +6,9 @@
     <managed-bean-class id="__7">xxatcust.oracle.apps.sudoku.bean.DynamicRegionBinding</managed-bean-class>
     <managed-bean-scope id="__6">backingBean</managed-bean-scope>
   </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name id="__1">PanelTabbedBean</managed-bean-name>
+    <managed-bean-class id="__2">xxatcust.oracle.apps.sudoku.bean.PabelTabHandler</managed-bean-class>
+    <managed-bean-scope id="__3">session</managed-bean-scope>
+  </managed-bean>
 </adfc-config>

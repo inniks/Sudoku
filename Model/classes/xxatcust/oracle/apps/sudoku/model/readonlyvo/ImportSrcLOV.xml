@@ -8,11 +8,10 @@
   InheritPersonalization="true"
   BindingStyle="OracleName"
   CustomQuery="true"
-  ComponentClass="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSrcLOVImpl"
   PageIterMode="Full"
   UseGlueCode="false">
   <DesignTime>
-    <Attr Name="_codeGenFlag2" Value="Access|Coll|VarAccess"/>
+    <Attr Name="_codeGenFlag2" Value="Access|VarAccess"/>
     <Attr Name="_isExpertMode" Value="true"/>
   </DesignTime>
   <Properties>
@@ -22,7 +21,7 @@
     </SchemaBasedProperties>
   </Properties>
   <ViewAttribute
-    Name="ImpSrcCode"
+    Name="ImportSrcCode"
     IsUpdateable="false"
     IsPersistent="false"
     PrecisionRule="true"
@@ -31,7 +30,7 @@
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
   <ViewAttribute
-    Name="ImpSrcMeaning"
+    Name="ImportSrcMeaning"
     IsUpdateable="false"
     IsSelected="false"
     IsPersistent="false"
@@ -41,7 +40,7 @@
     AliasName="VIEW_ATTR"
     SQLType="VARCHAR"/>
   <AttrArray Name="KeyAttributes">
-    <Item Value="ImpSrcCode"/>
+    <Item Value="ImportSrcCode"/>
   </AttrArray>
   <StaticList
     Rows="4"

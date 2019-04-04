@@ -5,7 +5,7 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <f:view>
     <af:document id="d1" title="Sudoku Dashboard">
-      <af:form id="f1">
+      <af:form id="f1" usesUpload="true">
         <af:panelStretchLayout id="psl1" topHeight="110px" endWidth="10px"
                                bottomHeight="30px" startWidth="10px">
           <f:facet name="bottom">
@@ -22,23 +22,29 @@
           <f:facet name="center">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                 id="pgl7">
-              <af:panelGroupLayout layout="scroll"
-                                   xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                   id="pgl6">
-                <af:commandLink text="QuotingFlow"
-                                action="#{backingBeanScope.DynamicBindingBean.quotingFlow}"
-                                id="cl1" rendered="false"/>
-                <af:region value="#{bindings.dynamicRegion1.regionModel}"
-                           id="r1" partialTriggers="::cl1 ::cl2"/>
-                <af:commandLink text="ImportSrcFlow"
-                                action="#{backingBeanScope.DynamicBindingBean.importSrcFlow}"
-                                id="cl2" rendered="false"/>
-              </af:panelGroupLayout>
-              <af:popup id="p1">
-                <af:dialog id="d2" contentWidth="600" contentHeight="200">
-                  <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
+                                 id="pgl5">
+              <af:panelTabbed id="pt1" dimensionsFrom="disclosedChild"
+                              childCreation="lazyUncached">
+                <af:showDetailItem text="Configurator" id="sdi3">
+                  <af:region value="#{bindings.ConfiguratorFlow1.regionModel}"
+                             id="r4"/>
+                </af:showDetailItem>
+                <af:showDetailItem text="View Reference" id="sdi1"
+                                   binding="#{PanelTabbedBean.viewReferenceTab}"
+                                   disclosureListener="#{PanelTabbedBean.viewReferenceDisclosed}">
+                  <af:region value="#{bindings.UploadXMLFlow1.regionModel}"
+                             id="r1"/>
+                </af:showDetailItem>
+                <af:showDetailItem text="Quote Header" id="sdi2">
+                  <af:region value="#{bindings.QuotingFlow1.regionModel}"
                              id="r2"/>
+                </af:showDetailItem>
+              </af:panelTabbed>
+              <af:popup id="imSrcP1">
+                <af:dialog id="d2" contentWidth="700" contentHeight="300"
+                           type="none">
+                  <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
+                             id="r3"/>
                 </af:dialog>
               </af:popup>
             </af:panelGroupLayout>
@@ -68,27 +74,17 @@
                                      styleClass="AFStretchWidth">
                   <af:panelGroupLayout id="pgl3">
                     <af:toolbar id="t1">
-                      <af:panelGroupLayout id="pgl4">
+                      <af:panelGroupLayout id="pgl4" layout="horizontal">
                         <af:commandToolbarButton text="View Reference"
-                                                 id="ctb1"/>
+                                                 id="ctb1" rendered="false"/>
                         <af:commandToolbarButton text="Import Reference Configuration"
                                                  id="ct2b1">
-                          <af:showPopupBehavior popupId="p1"
+                          <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandToolbarButton>
-                        <af:commandToolbarButton text="Configurator"
-                                                 id="ct1b1"/>
                         <af:commandToolbarButton text="Quote Header" id="ctb2"
-                                                 action="#{backingBeanScope.DynamicBindingBean.quotingFlow}"/>
-                      </af:panelGroupLayout>
-                      <af:panelGroupLayout id="pgl5">
-                        <af:commandToolbarButton text="Export Target Configuration"
-                                                 id="ctb3"/>
-                        <af:commandToolbarButton text="View Target" id="ctb4"/>
-                        <af:commandToolbarButton text="Save as System to target quote"
-                                                 id="ctb5"/>
-                        <af:commandToolbarButton text="Save as oracle to upgrade quote"
-                                                 id="ctb6"/>
+                                                 action="#{backingBeanScope.DynamicBindingBean.quotingFlow}"
+                                                 rendered="false"/>
                       </af:panelGroupLayout>
                     </af:toolbar>
                   </af:panelGroupLayout>

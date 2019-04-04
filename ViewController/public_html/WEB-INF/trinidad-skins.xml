@@ -3,7 +3,7 @@
   <skin>
     <id>sudokuCustomSkin.desktop</id>
     <family>MySkinFamily</family>
-    <extends>skyros-v1.desktop</extends>
+    <extends>fusionFx-v1.desktop</extends>
     <render-kit-id>org.apache.myfaces.trinidad.desktop</render-kit-id>
     <style-sheet-name>css/sudokuCustomSkin.css</style-sheet-name>
   </skin>

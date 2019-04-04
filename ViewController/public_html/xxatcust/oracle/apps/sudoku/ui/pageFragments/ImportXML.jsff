@@ -17,12 +17,17 @@
               <af:inputFile label="Upload File" id="if1"
                             styleClass="inputFile" immediate="true"
                             binding="#{XMLImportPageBean.uploadFileBinding}"
-                            shortDesc="Select and upload the import configuration XML file to load the configuration."/>
+                            shortDesc="Select and upload the import configuration XML file to load the configuration."
+                            rendered="false"/>
               <af:spacer width="10" height="10" id="s2"/>
               <af:commandButton text="Import Configuration" id="cb1"
                                 actionListener="#{XMLImportPageBean.importConfiguration}"
-                                immediate="true" partialTriggers="if1"/>
+                                immediate="true" partialTriggers="if1"
+                                rendered="false"/>
               <af:spacer width="10" height="10" id="s21"/>
+              <af:commandButton text="Refresh View" id="cb2"
+                                actionListener="#{XMLImportPageBean.refreshView}"
+                                immediate="true"/>
               <af:panelGroupLayout id="pgl2" layout="horizontal"
                                    partialTriggers="if1" valign="baseline">
                 <af:panelLabelAndMessage label="Uploaded By" id="plam3">
@@ -110,7 +115,7 @@
                                  value="#{XMLImportPageBean.categoryTree}"
                                  var="node" selection="single"
                                  groupDisclosurePolicy="noDisclosure"
-                                 partialTriggers="::ctb1 ::ctb2"
+                                 partialTriggers="::ctb1 ::ctb2 ::cb2"
                                  selectionListener="#{XMLImportPageBean.listViewRowSelection}">
                       <f:facet name="groupHeaderStamp">
                         <af:listItem id="li3" styleClass="ABHeader">

@@ -123,7 +123,9 @@ public class XMLImportPageBean {
     private RichOutputText quoteTotal;
 
     public XMLImportPageBean() {
+
         super();
+
     }
     private static ADFLogger _logger =
         ADFLogger.createADFLogger(XMLImportPageBean.class);
@@ -150,37 +152,36 @@ public class XMLImportPageBean {
     }
 
     public void fileUploadVCE() {
-        try {
-            UploadedFile fileVal =
-                (UploadedFile)uploadFileBinding.getValue(); //(UploadedFile)vce.getNewValue();
-
-            InputStream inputStream = uploadFile(fileVal);
-            ADFUtils.clearControllerException();
-            ADFUtils.setSessionScopeValue("parentObject", null);
-            categoryTree = null;
-            _logger.info("Print parentObject from session in fileUploadVCE " +
-                         ADFUtils.getSessionScopeValue("parentObject"));
-            allNodes = null;
-            fileNameBinding.setValue(fileVal.getFilename());
-            uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
-            timestampBinding.setValue(new Date());
-            _logger.info("Print fileVal  fileUploadVCE" + fileVal);
-            _logger.info("Print inputStream  fileUploadVCE" + inputStream);
-            parseXMLToPojo(inputStream);
-            showListHeader = true;
-        } catch (Exception jaxbe) {
-            // TODO: Add catch code
-            String str = jaxbe.getMessage();
-            Throwable e = null;
-            while (jaxbe.getCause() != null) {
-                jaxbe = (Exception)jaxbe.getCause();
-
-            }
-            str = jaxbe.getMessage();
-            validationError.setValue("Error in XML validation " + str);
-            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-            errorPopup.show(hints);
-        }
+        //        try {
+        ////            UploadedFile fileVal =
+        ////                (UploadedFile)ADFUtils.getSessionScopeValue("importFile");
+        //            //(UploadedFile)uploadFileBinding.getValue();
+        //
+        //            //System.out.println("FileVal "+fileVal);
+        ////            InputStream inputStream =
+        ////                fileVal.getInputStream(); //uploadFile(fileVal);
+        //            ADFUtils.clearControllerException();
+        //            ADFUtils.setSessionScopeValue("parentObject", null);
+        //            categoryTree = null;
+        //            allNodes = null;
+        //            fileNameBinding.setValue(fileVal.getFilename());
+        //            uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
+        //            timestampBinding.setValue(new Date());
+        //           // parseXMLToPojo(inputStream);
+        //            showListHeader = true;
+        //        } catch (Exception jaxbe) {
+        //            // TODO: Add catch code
+        //            String str = jaxbe.getMessage();
+        //            Throwable e = null;
+        //            while (jaxbe.getCause() != null) {
+        //                jaxbe = (Exception)jaxbe.getCause();
+        //
+        //            }
+        //            str = jaxbe.getMessage();
+        //            validationError.setValue("Error in XML validation " + str);
+        //            RichPopup.PopupHints hints = new RichPopup.PopupHints();
+        //            errorPopup.show(hints);
+        //        }
 
 
         //ResetUtils.reset(vce.getComponent());
@@ -212,10 +213,10 @@ public class XMLImportPageBean {
         ObjectMapper mapper = new ObjectMapper();
         _logger.info("Print mapper  parseXMLToPojo" + mapper);
         //comment this to run locally
-        System.out.println("Input JSON "+jsonStr);
+        System.out.println("Input JSON " + jsonStr);
         String responseJson =
             (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-        System.out.println("Response JSON "+responseJson);
+        System.out.println("Response JSON " + responseJson);
         _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
         //String responseJson = (String)JSONUtils.convertJsonToObject(null);
         obj = mapper.readValue(responseJson, V93kQuote.class);
@@ -229,13 +230,16 @@ public class XMLImportPageBean {
 
     /**Method to upload file to actual path on Server*/
     private InputStream uploadFile(UploadedFile file) {
-        UploadedFile myfile = file;
+        //UploadedFile myfile = file;
+        System.out.println("Uploaded File is " + file.getClass());
         InputStream inputStream = null;
-        if (myfile == null) {
+        if (file == null) {
 
         } else {
             try {
-                inputStream = myfile.getInputStream();
+                System.out.println("Get input stream");
+                inputStream = file.getInputStream();
+                System.out.println("IP st " + inputStream);
             } catch (IOException e) {
                 ADFUtils.routeExceptions(e);
             }
@@ -291,17 +295,20 @@ public class XMLImportPageBean {
 
 
     public ChildPropertyTreeModel getCategoryTree() {
-        
+
         try {
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
+            Object parentObj =
+                ADFUtils.getSessionScopeValue("parentObject");
+            System.out.println("Refresh Import is " + refreshImport);
             if (categoryTree == null && refreshImport != null &&
-                refreshImport.equalsIgnoreCase("Y")) {
+                refreshImport.equalsIgnoreCase("Y") && parentObj!=null) {
                 //resetAllBindings();
-                System.out.println("Inside getCategoryTree "+refreshImport);
-                Object parentObj =
-                    ADFUtils.getSessionScopeValue("parentObject");
-                ADFUtils.setSessionScopeValue("refreshImport", null);
+                System.out.println("Inside getCategoryTree " + refreshImport);
+               
+                System.out.println("Check point 1");
+                //ADFUtils.setSessionScopeValue("refreshImport", null);
                 if (parentObj != null) {
                     V93kQuote obj = (V93kQuote)parentObj;
                     //Check if no exceptions from configurator
@@ -357,7 +364,7 @@ public class XMLImportPageBean {
                             // debugMsgBind.setValue(debugStr.toString());
                         }
                         warnText.setValue(warningMessage.toString());
-
+                        System.out.println("Check point 2");
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
                         if (debugList != null && debugList.size() > 0) {
@@ -403,6 +410,7 @@ public class XMLImportPageBean {
                             errMessage.append("</body></html>");
 
                         }
+                        System.out.println("Debug 0.1");
                         if (errorMessages != null &&
                             errorMessages.size() > 0) {
                             for (String str : errorMessages) {
@@ -413,10 +421,12 @@ public class XMLImportPageBean {
                         }
                         if (errMessage != null &&
                             !errMessage.toString().equalsIgnoreCase("<html><body>")) {
-                            validationError.setValue("Exception occured " + errMessage.toString());
-                            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-                            errorPopup.show(hints);
-                            return null;
+                            validationError.setValue("Exception occured " +
+                                                     errMessage.toString());
+                            RichPopup.PopupHints hints =
+                                new RichPopup.PopupHints();
+                            //errorPopup.show(hints);
+                           // return null;
                             //throw new JboException(errMessage.toString());
                         }
 
@@ -433,7 +443,7 @@ public class XMLImportPageBean {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
                         System.out.println("Model Name is " + modelName);
                     }
-
+                    System.out.println("Debug ---1");
                     List<String> catList = new ArrayList<String>();
                     List<String> distinctList = new ArrayList<String>();
                     List<ConfiguratorNodePOJO> allNodesList =
@@ -452,6 +462,7 @@ public class XMLImportPageBean {
                                          node.getPrintGroupLevel() : "0"));
                         }
                     }
+                    System.out.println("Debug ---2");
                     distinctList = removeDuplicatesFromList(catList);
                     for (String distinctCategory : distinctList) {
                         List<ConfiguratorNodePOJO> temp =
@@ -466,6 +477,7 @@ public class XMLImportPageBean {
                         }
                         allNodesByCategoriesMap.put(distinctCategory, temp);
                     }
+                    System.out.println("Debug ---3");
                     root = new ArrayList<NodeCategory>();
                     Iterator it =
                         allNodesByCategoriesMap.entrySet().iterator();
@@ -498,6 +510,7 @@ public class XMLImportPageBean {
                         }
 
                     }
+                    System.out.println("Debug ---4");
                     //Trying to sort root
                     for (NodeCategory nc : root) {
                         System.out.println(nc.getCategory() + " " +
@@ -510,6 +523,7 @@ public class XMLImportPageBean {
                         System.out.println(nc.getCategory() + " " +
                                            nc.getPrintGroupLevel());
                     }
+                    System.out.println("Debug ---5");
                     categoryTree =
                             new ChildPropertyTreeModel(root, "childNodes");
 
@@ -517,14 +531,14 @@ public class XMLImportPageBean {
 
             }
         } catch (Exception e) {
-
-            ADFUtils.routeExceptions(e);
+                e.printStackTrace();
+            //ADFUtils.routeExceptions(e);
             //e.printStackTrace();
         } finally {
             //cleanup
             ADFUtils.setSessionScopeValue("refreshImport", null);
-            ADFUtils.setSessionScopeValue("parentObject", null);
-            //categoryTree = null ;
+//            ADFUtils.setSessionScopeValue("parentObject", null);
+           // categoryTree = null ;
         }
         return categoryTree;
 
@@ -682,6 +696,13 @@ public class XMLImportPageBean {
 
     }
 
+    public void refreshViewReferenceTab() {
+
+    }
+
+    public void initViewReference(UploadedFile fileVal) {
+
+    }
 
     public void setUploadFileBinding(RichInputFile uploadFileBinding) {
         this.uploadFileBinding = uploadFileBinding;
@@ -829,5 +850,24 @@ public class XMLImportPageBean {
 
     public RichOutputText getQuoteTotal() {
         return quoteTotal;
+    }
+
+    public void refreshView(ActionEvent actionEvent) {
+        String refreshImport = (String)ADFUtils.getSessionScopeValue("refreshImport");
+            UIComponent uiComponent = (UIComponent)actionEvent.getSource();
+            uiComponent.processUpdates(FacesContext.getCurrentInstance());
+            ADFUtils.setSessionScopeValue("refreshImport", "Y");
+            System.out.println("Button Pressed");
+            //Trying to clear previous values here
+            warnText.setValue(null);
+            showListHeader = false;
+            debugMsgBind.setValue(null);
+            productsRendered = true;
+            spaceRendered = false;
+            validationError.setValue(null);
+            quoteTotal.setValue(null);
+            showListHeader = true;
+            categoryTree = null;
+            allNodes = null;
     }
 }

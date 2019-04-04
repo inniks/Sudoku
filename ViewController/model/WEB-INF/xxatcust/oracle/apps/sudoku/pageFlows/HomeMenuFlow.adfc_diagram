@@ -60,10 +60,25 @@
       islink="true"
       id="ControlFlowCase6"
       from="WildcardControlFlowRule2"
-      to="View3">
+      to="View7">
       <property
          name="fromOutcome">SudokuHome</property>
       <property
-         name="sdm:polyPoints">R55,124.01758,174.0,211.38965,255.85059,L50</property>
+         name="sdm:polyPoints">R55,124.01758,174.0,445.70215,203.44824,L50</property>
    </ControlFlowCase>
+   <View
+      id="View7">
+      <property
+         name="activityId">SudokuDashboard</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pages/SudokuDashboard.jspx</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>SudokuDashboard&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">203.79883</property>
+      <property
+         name="x">486.70215</property>
+   </View>
 </SDM>
