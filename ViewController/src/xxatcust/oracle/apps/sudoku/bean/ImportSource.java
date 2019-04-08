@@ -28,6 +28,8 @@ import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputFile;
 import oracle.adf.view.rich.component.rich.input.RichInputText;
 
+import oracle.adf.view.rich.component.rich.layout.RichPanelGroupLayout;
+
 import oracle.binding.BindingContainer;
 
 import oracle.jbo.Row;
@@ -35,6 +37,7 @@ import oracle.jbo.uicli.binding.JUCtrlListBinding;
 
 import org.apache.commons.io.IOUtils;
 
+import org.apache.myfaces.trinidad.context.RequestContext;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import org.xml.sax.SAXException;
@@ -311,6 +314,22 @@ public class ImportSource {
             v93k.setInputParams(inputParam);
             v93k.setSessionDetails(sessionDetails);
             obj = v93k;
+            String jsonStr = JSONUtils.convertObjToJson(obj);
+            //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+            //ADFUtils.setSessionScopeValue("parentObject", obj);
+            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+
+            //Reading JSOn from File to POJO
+            ObjectMapper mapper = new ObjectMapper();
+            _logger.info("Print mapper  parseXMLToPojo" + mapper);
+            //comment this to run locally
+            System.out.println("Input JSON " + jsonStr);
+            String responseJson =
+                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            System.out.println("Response JSON " + responseJson);
+            _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
+            //String responseJson = (String)JSONUtils.convertJsonToObject(null);
+            obj = mapper.readValue(responseJson, V93kQuote.class);
 
         }
         ADFUtils.setSessionScopeValue("parentObject", obj);
@@ -358,4 +377,23 @@ public class ImportSource {
     }
 
 
+    public void cancelPopup(ActionEvent actionEvent) {
+        RichPopup impSrcPopup =
+            (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+        if (impSrcPopup != null) {
+            //impSrcPopup.hide();
+            impSrcPopup.cancel();
+        }
+    }
+
+    public void openQuote(ActionEvent actionEvent) {
+        RichPopup impSrcPopup =
+            (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+        if (impSrcPopup != null) {
+            //impSrcPopup.hide();
+            impSrcPopup.cancel();
+        }
+        RichPanelGroupLayout pgl = (RichPanelGroupLayout)ADFUtils.findComponentInRoot("dashPGL");
+        RequestContext.getCurrentInstance().addPartialTarget(pgl);
+    }
 }

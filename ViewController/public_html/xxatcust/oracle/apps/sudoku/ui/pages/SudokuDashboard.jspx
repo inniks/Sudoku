@@ -22,7 +22,7 @@
           <f:facet name="center">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                 id="pgl5">
+                                 id="dashPGL">
               <af:panelTabbed id="pt1" dimensionsFrom="disclosedChild"
                               childCreation="lazyUncached">
                 <af:showDetailItem text="Configurator" id="sdi3">
@@ -47,6 +47,8 @@
                              id="r3"/>
                 </af:dialog>
               </af:popup>
+              <af:region value="#{bindings.dynamicRegion1.regionModel}"
+                         id="r5" rendered="false"/>
             </af:panelGroupLayout>
           </f:facet>
           <f:facet name="start">

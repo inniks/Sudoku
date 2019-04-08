@@ -7,7 +7,8 @@
       <af:toolbar id="t1">
         <af:commandToolbarButton text="Ok" id="ctb1"
                                  actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"/>
-        <af:commandToolbarButton text="Cancel" id="ctb2"/>
+        <af:commandToolbarButton text="Cancel" id="ctb2"
+                                 actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"/>
       </af:toolbar>
     </f:facet>
     <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
@@ -75,9 +76,13 @@
                 <af:spacer width="10" height="10" id="s6"/>
                 <af:commandButton text="Search" id="cb1"
                                   disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
-                                  action="searchQuote">
+                                  action="searchQuote"
+                                  actionListener="#{pageFlowScope.ImportSourceBean.openQuote}">
                   <af:setActionListener from="#{bindings.BudgetQuoteId.inputValue}"
                                         to="#{pageFlowScope.quoteId}"/>
+                  <af:setPropertyListener from="quote"
+                                          to="#{backingBeanScope.DynamicBindingBean.currentTF}"
+                                          type="action"/>
                 </af:commandButton>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl22" layout="horizontal">

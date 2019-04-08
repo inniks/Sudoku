@@ -297,16 +297,16 @@ public class XMLImportPageBean {
     public ChildPropertyTreeModel getCategoryTree() {
 
         try {
+            StringBuilder errMessage = new StringBuilder("<html><body>");
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
-            Object parentObj =
-                ADFUtils.getSessionScopeValue("parentObject");
+            Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
             System.out.println("Refresh Import is " + refreshImport);
             if (categoryTree == null && refreshImport != null &&
-                refreshImport.equalsIgnoreCase("Y") && parentObj!=null) {
+                refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
                 //resetAllBindings();
                 System.out.println("Inside getCategoryTree " + refreshImport);
-               
+
                 System.out.println("Check point 1");
                 //ADFUtils.setSessionScopeValue("refreshImport", null);
                 if (parentObj != null) {
@@ -392,8 +392,7 @@ public class XMLImportPageBean {
 
                         List<String> errorMessages =
                             obj.getExceptionMap().getErrorsMessages();
-                        StringBuilder errMessage =
-                            new StringBuilder("<html><body>");
+
                         if (exceptionMap != null && exceptionMap.size() > 0) {
 
                             for (Map.Entry<String, ArrayList<String>> entry :
@@ -426,7 +425,7 @@ public class XMLImportPageBean {
                             RichPopup.PopupHints hints =
                                 new RichPopup.PopupHints();
                             //errorPopup.show(hints);
-                           // return null;
+                            // return null;
                             //throw new JboException(errMessage.toString());
                         }
 
@@ -443,102 +442,114 @@ public class XMLImportPageBean {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
                         System.out.println("Model Name is " + modelName);
                     }
-                    System.out.println("Debug ---1");
-                    List<String> catList = new ArrayList<String>();
-                    List<String> distinctList = new ArrayList<String>();
-                    List<ConfiguratorNodePOJO> allNodesList =
-                        obj.getNodeCollection();
-                    HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
-                        new HashMap<String, List<ConfiguratorNodePOJO>>();
-                    for (ConfiguratorNodePOJO node : allNodesList) {
-                        if (node.getPrintGroupLevel() != null &&
-                            node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-                            quoteTotal.setValue(node.getExtendedPrice());
-                        }
-                        if (node.getNodeCategory() != null &&
-                            node.getPrintGroupLevel() != null) {
-                            catList.add(node.getNodeCategory() + "-" +
-                                        (node.getPrintGroupLevel() != null ?
-                                         node.getPrintGroupLevel() : "0"));
-                        }
-                    }
-                    System.out.println("Debug ---2");
-                    distinctList = removeDuplicatesFromList(catList);
-                    for (String distinctCategory : distinctList) {
-                        List<ConfiguratorNodePOJO> temp =
-                            new ArrayList<ConfiguratorNodePOJO>();
+                    if (errMessage != null &&
+                        errMessage.toString().equalsIgnoreCase("<html><body>")) {
+                        System.out.println("Debug ---1");
+                        List<String> catList = new ArrayList<String>();
+                        List<String> distinctList = new ArrayList<String>();
+                        List<ConfiguratorNodePOJO> allNodesList =
+                            obj.getNodeCollection();
+                        HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                            new HashMap<String, List<ConfiguratorNodePOJO>>();
                         for (ConfiguratorNodePOJO node : allNodesList) {
-                            if (distinctCategory != null &&
-                                distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
-                                                                  "-" +
-                                                                  node.getPrintGroupLevel())) {
-                                temp.add(node);
+                            if (node.getPrintGroupLevel() != null &&
+                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                quoteTotal.setValue(node.getExtendedPrice());
+                            }
+                            if (node.getNodeCategory() != null &&
+                                node.getPrintGroupLevel() != null) {
+                                catList.add(node.getNodeCategory() + "-" +
+                                            (node.getPrintGroupLevel() !=
+                                             null ? node.getPrintGroupLevel() :
+                                             "0"));
                             }
                         }
-                        allNodesByCategoriesMap.put(distinctCategory, temp);
-                    }
-                    System.out.println("Debug ---3");
-                    root = new ArrayList<NodeCategory>();
-                    Iterator it =
-                        allNodesByCategoriesMap.entrySet().iterator();
-                    NodeCategory firstLevel = null;
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
-                        String Key = (String)pair.getKey();
-                        System.out.println("Key " + Key);
-                        String[] arr = Key.split("-");
-                        String category = arr[0];
-                        String printGrpLevel = arr[1];
-                        firstLevel =
-                                new NodeCategory(category, null, null, null,
-                                                 null, null, null, null,
-                                                 printGrpLevel);
-                        root.add(firstLevel);
-                        List<ConfiguratorNodePOJO> childList =
-                            (List<ConfiguratorNodePOJO>)pair.getValue();
-                        for (ConfiguratorNodePOJO node : childList) {
-                            NodeCategory secondLevel =
-                                new NodeCategory(category, node.getNodeName(),
-                                                 node.getNodeDescription(),
-                                                 node.getNodeQty(),
-                                                 node.getNodeValue(),
-                                                 node.getUnitPrice(),
-                                                 node.getExtendedPrice(),
-                                                 node.getNodeColor(),
-                                                 node.getPrintGroupLevel());
-                            firstLevel.addNodes(secondLevel);
+                        System.out.println("Debug ---2");
+                        distinctList = removeDuplicatesFromList(catList);
+                        for (String distinctCategory : distinctList) {
+                            List<ConfiguratorNodePOJO> temp =
+                                new ArrayList<ConfiguratorNodePOJO>();
+                            for (ConfiguratorNodePOJO node : allNodesList) {
+                                if (distinctCategory != null &&
+                                    distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
+                                                                      "-" +
+                                                                      node.getPrintGroupLevel())) {
+                                    temp.add(node);
+                                }
+                            }
+                            allNodesByCategoriesMap.put(distinctCategory,
+                                                        temp);
                         }
+                        System.out.println("Debug ---3");
+                        root = new ArrayList<NodeCategory>();
+                        Iterator it =
+                            allNodesByCategoriesMap.entrySet().iterator();
+                        NodeCategory firstLevel = null;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            String Key = (String)pair.getKey();
+                            System.out.println("Key " + Key);
+                            String[] arr = Key.split("-");
+                            String category = arr[0];
+                            String printGrpLevel = arr[1];
+                            firstLevel =
+                                    new NodeCategory(category, null, null, null,
+                                                     null, null, null, null,
+                                                     printGrpLevel);
+                            root.add(firstLevel);
+                            List<ConfiguratorNodePOJO> childList =
+                                (List<ConfiguratorNodePOJO>)pair.getValue();
+                            for (ConfiguratorNodePOJO node : childList) {
+                                NodeCategory secondLevel =
+                                    new NodeCategory(category,
+                                                     node.getNodeName(),
+                                                     node.getNodeDescription(),
+                                                     node.getNodeQty(),
+                                                     node.getNodeValue(),
+                                                     node.getUnitPrice(),
+                                                     node.getExtendedPrice(),
+                                                     node.getNodeColor(),
+                                                     node.getPrintGroupLevel());
+                                firstLevel.addNodes(secondLevel);
+                            }
 
-                    }
-                    System.out.println("Debug ---4");
-                    //Trying to sort root
-                    for (NodeCategory nc : root) {
-                        System.out.println(nc.getCategory() + " " +
-                                           nc.getPrintGroupLevel());
-                    }
-                    NodeComparator comparator = new NodeComparator();
-                    Collections.sort(root, comparator);
+                        }
+                        System.out.println("Debug ---4");
+                        //Trying to sort root
+                        for (NodeCategory nc : root) {
+                            System.out.println(nc.getCategory() + " " +
+                                               nc.getPrintGroupLevel());
+                        }
+                        NodeComparator comparator = new NodeComparator();
+                        Collections.sort(root, comparator);
 
-                    for (NodeCategory nc : root) {
-                        System.out.println(nc.getCategory() + " " +
-                                           nc.getPrintGroupLevel());
-                    }
-                    System.out.println("Debug ---5");
-                    categoryTree =
-                            new ChildPropertyTreeModel(root, "childNodes");
+                        for (NodeCategory nc : root) {
+                            System.out.println(nc.getCategory() + " " +
+                                               nc.getPrintGroupLevel());
+                        }
+                        System.out.println("Debug ---5");
+                        categoryTree =
+                                new ChildPropertyTreeModel(root, "childNodes");
 
+                    } else {
+                        categoryTree =
+                                new ChildPropertyTreeModel(root, "childNodes");
+                        RichPopup.PopupHints hints =
+                            new RichPopup.PopupHints();
+                        errorPopup.show(hints);
+                    }
                 }
 
             }
         } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
             //ADFUtils.routeExceptions(e);
             //e.printStackTrace();
         } finally {
             //cleanup
             ADFUtils.setSessionScopeValue("refreshImport", null);
-//            ADFUtils.setSessionScopeValue("parentObject", null);
-           // categoryTree = null ;
+            //            ADFUtils.setSessionScopeValue("parentObject", null);
+            // categoryTree = null ;
         }
         return categoryTree;
 
@@ -853,21 +864,22 @@ public class XMLImportPageBean {
     }
 
     public void refreshView(ActionEvent actionEvent) {
-        String refreshImport = (String)ADFUtils.getSessionScopeValue("refreshImport");
-            UIComponent uiComponent = (UIComponent)actionEvent.getSource();
-            uiComponent.processUpdates(FacesContext.getCurrentInstance());
-            ADFUtils.setSessionScopeValue("refreshImport", "Y");
-            System.out.println("Button Pressed");
-            //Trying to clear previous values here
-            warnText.setValue(null);
-            showListHeader = false;
-            debugMsgBind.setValue(null);
-            productsRendered = true;
-            spaceRendered = false;
-            validationError.setValue(null);
-            quoteTotal.setValue(null);
-            showListHeader = true;
-            categoryTree = null;
-            allNodes = null;
+        String refreshImport =
+            (String)ADFUtils.getSessionScopeValue("refreshImport");
+        UIComponent uiComponent = (UIComponent)actionEvent.getSource();
+        uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        ADFUtils.setSessionScopeValue("refreshImport", "Y");
+        System.out.println("Button Pressed");
+        //Trying to clear previous values here
+        warnText.setValue(null);
+        showListHeader = false;
+        debugMsgBind.setValue(null);
+        productsRendered = true;
+        spaceRendered = false;
+        validationError.setValue(null);
+        quoteTotal.setValue(null);
+        showListHeader = true;
+        categoryTree = null;
+        allNodes = null;
     }
 }
