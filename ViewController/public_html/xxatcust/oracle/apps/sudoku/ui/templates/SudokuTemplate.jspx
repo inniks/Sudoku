@@ -11,12 +11,7 @@
                            dimensionsFrom="parent" startWidth="10px"
                            endWidth="10px" bottomHeight="30px">
       <f:facet name="center">
-        <af:panelGroupLayout layout="scroll"
-                             xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                             id="pt_pgl12">
-          
-          <af:facetRef facetName="ConsumerFacet"/>
-        </af:panelGroupLayout>
+        <af:facetRef facetName="ConsumerFacet"/>
       </f:facet>
       <f:facet name="top">
         <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -43,7 +38,6 @@
                     </af:commandNavigationItem>
                   </f:facet>
                 </af:navigationPane>
-               
               </af:panelGroupLayout>
              
               <af:panelGroupLayout id="pgl0" layout="horizontal" halign="right"

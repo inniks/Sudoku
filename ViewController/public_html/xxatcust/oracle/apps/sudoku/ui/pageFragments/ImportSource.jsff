@@ -6,9 +6,11 @@
     <f:facet name="toolbar">
       <af:toolbar id="t1">
         <af:commandToolbarButton text="Ok" id="ctb1"
-                                 actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"/>
+                                 actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
+                                 rendered="false"/>
         <af:commandToolbarButton text="Cancel" id="ctb2"
-                                 actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"/>
+                                 actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
+                                 rendered="false"/>
       </af:toolbar>
     </f:facet>
     <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
@@ -77,7 +79,8 @@
                 <af:commandButton text="Search" id="cb1"
                                   disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
                                   action="searchQuote"
-                                  actionListener="#{pageFlowScope.ImportSourceBean.openQuote}">
+                                  actionListener="#{pageFlowScope.ImportSourceBean.openQuote}"
+                                  rendered="false">
                   <af:setActionListener from="#{bindings.BudgetQuoteId.inputValue}"
                                         to="#{pageFlowScope.quoteId}"/>
                   <af:setPropertyListener from="quote"
@@ -99,7 +102,8 @@
                 </af:panelLabelAndMessage>
                 <af:spacer width="10" height="10" id="s7"/>
                 <af:commandButton text="Search" id="cb21"
-                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"/>
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
+                                  rendered="false"/>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl122" layout="horizontal">
                 <af:panelLabelAndMessage label="Sales Order Number" id="pl2am1">
@@ -114,7 +118,8 @@
                   </af:inputText>
                 </af:panelLabelAndMessage>
                 <af:commandButton text="Search" id="cb211"
-                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"/>
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
+                                  rendered="false"/>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="p2gl2" layout="horizontal">
                 <af:panelLabelAndMessage label="Select from Local System"
@@ -122,7 +127,9 @@
                   <af:inputFile id="it111"
                                 disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
                                 binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
-                                styleClass="inputFile" immediate="true"/>
+                                styleClass="inputFile" immediate="true"
+                                valueChangeListener="#{pageFlowScope.ImportSourceBean.newFileUploaded}"
+                                autoSubmit="true"/>
                 </af:panelLabelAndMessage>
               </af:panelGroupLayout>
             </af:panelGroupLayout>

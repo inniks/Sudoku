@@ -5,7 +5,7 @@
       <document></document>
       <id>ExceptionHandlerTF</id>
     </template-reference>
-    <default-activity id="__8">uploadXML</default-activity>
+    <default-activity id="__8">initXMLUpload</default-activity>
     <managed-bean id="__11">
       <managed-bean-name id="__12">XMLImportPageBean</managed-bean-name>
       <managed-bean-class id="__13">xxatcust.oracle.apps.sudoku.bean.XMLImportPageBean</managed-bean-class>
@@ -15,6 +15,19 @@
     <view id="uploadXML">
       <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/ImportXML.jsff</page>
     </view>
+    <method-call id="initXMLUpload">
+      <method>#{sessionScope.XMLImportPageBean.initUploadXml}</method>
+      <outcome id="__6">
+        <fixed-outcome>init</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__1">
+      <from-activity-id id="__2">initXMLUpload</from-activity-id>
+      <control-flow-case id="__3">
+        <from-outcome id="__5">init</from-outcome>
+        <to-activity-id id="__4">uploadXML</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
     <use-page-fragments/>
   </task-flow-definition>
 </adfc-config>

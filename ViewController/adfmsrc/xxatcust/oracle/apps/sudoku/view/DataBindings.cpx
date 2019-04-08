@@ -30,6 +30,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_SudokuTemplatePageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SudokuDashboard.jspx"
           usageId="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -54,6 +56,8 @@
           path="xxatcust.oracle.apps.sudoku.ui.templates.SudokuTemplatePageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuDashboardPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pageFragments.QuoteUpdatePageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

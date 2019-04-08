@@ -35,14 +35,9 @@
       <value id="__21">/WEB-INF/menu/Menu.xml</value>
     </managed-property>
   </managed-bean>
-  <managed-bean id="__4">
-    <managed-bean-name id="__22">TemplateBean</managed-bean-name>
-    <managed-bean-class id="__5">xxatcust.oracle.apps.sudoku.bean.TemplateBean</managed-bean-class>
-    <managed-bean-scope id="__23">pageFlow</managed-bean-scope>
-  </managed-bean>
-  <managed-bean id="__27">
-    <managed-bean-name id="__24">DynamicBindingBean</managed-bean-name>
-    <managed-bean-class id="__26">xxatcust.oracle.apps.sudoku.bean.DynamicBinding</managed-bean-class>
-    <managed-bean-scope id="__25">backingBean</managed-bean-scope>
+  <managed-bean id="__31">
+    <managed-bean-name id="__29">LoadDynamicRegionBean</managed-bean-name>
+    <managed-bean-class id="__28">xxatcust.oracle.apps.sudoku.bean.LoadDynamicRegionBean</managed-bean-class>
+    <managed-bean-scope id="__30">view</managed-bean-scope>
   </managed-bean>
 </adfc-config>

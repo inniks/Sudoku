@@ -33,6 +33,9 @@
         <fixed-outcome>clearQuoteFields</fixed-outcome>
       </outcome>
     </method-call>
+    <view id="QuoteUpdate">
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff</page>
+    </view>
     <control-flow-rule id="__28">
       <from-activity-id id="__29">SearchQuote</from-activity-id>
       <control-flow-case id="__37">
@@ -52,6 +55,10 @@
       <control-flow-case id="__74">
         <from-outcome id="__75">clear</from-outcome>
         <to-activity-id id="__73">clearQuoteFields</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__9">
+        <from-outcome id="__18">update</from-outcome>
+        <to-activity-id id="__17">QuoteUpdate</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__76">

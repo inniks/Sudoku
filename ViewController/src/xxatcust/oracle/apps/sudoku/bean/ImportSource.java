@@ -148,8 +148,8 @@ public class ImportSource {
     }
 
     public void dialogActionListener(ActionEvent actionEvent) {
-        UIComponent uiComponent = (UIComponent)actionEvent.getSource();
-        uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        //UIComponent uiComponent = (UIComponent)actionEvent.getSource();
+        //uiComponent.processUpdates(FacesContext.getCurrentInstance());
         //Take Values from VO binding
         String budgetQuoteNum = null;
         String formalQuoteNum = null;
@@ -229,13 +229,13 @@ public class ImportSource {
         }
 
 
-        if (str == null) {
-            RichPopup impSrcPopup =
-                (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
-            if (impSrcPopup != null) {
-                impSrcPopup.cancel();
-            }
-        }
+//        if (str == null) {
+//            RichPopup impSrcPopup =
+//                (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+//            if (impSrcPopup != null) {
+//                impSrcPopup.cancel();
+//            }
+//        }
     }
 
     public void setInputFileBinding(RichInputFile inputFileBinding) {
@@ -395,5 +395,13 @@ public class ImportSource {
         }
         RichPanelGroupLayout pgl = (RichPanelGroupLayout)ADFUtils.findComponentInRoot("dashPGL");
         RequestContext.getCurrentInstance().addPartialTarget(pgl);
+    }
+
+    public void newFileUploaded(ValueChangeEvent valueChangeEvent) {
+        
+        UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
+        uiComp.processUpdates(FacesContext.getCurrentInstance());
+        System.out.println("Inside new File Uploaded");
+        dialogActionListener(null);
     }
 }

@@ -152,5 +152,10 @@
         <Item Value="Discount"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="getUpdateQuote"
+                  InstanceName="SudokuAMDataControl.dataProvider"
+                  DataControl="SudokuAMDataControl" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getUpdateQuote"
+                  IsViewObjectMethod="false"/>
   </bindings>
 </pageDefinition>

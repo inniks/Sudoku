@@ -32,6 +32,15 @@
   <ViewUsage
     Name="ImportSourceVO1"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.ImportSourceVO"/>
+  <ViewUsage
+    Name="QuoteUpdateVO1"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.views.QuoteUpdateVO"/>
+  <ViewUsage
+    Name="SalesRepresentativeVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.SalesRepresentativeVO"/>
+  <ViewUsage
+    Name="CustomerSupportRepresentVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerSupportRepresentVO"/>
   <ClientInterface>
     <Method
       Name="clearQuoteFields">
@@ -58,57 +67,13 @@
       <Return
         Type="java.lang.String"/>
     </Method>
-  </ClientInterface>
-  <ClientInterface>
     <Method
-      Name="clearQuoteFields">
+      Name="getUpdateQuote">
       <Return
         Type="void"/>
     </Method>
     <Method
-      Name="searchQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="initQuoteSearch">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="getQuoteCustmerAddress">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callQuoteAPI">
-      <Return
-        Type="java.lang.String"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="clearQuoteFields">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="searchQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="initQuoteSearch">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="getQuoteCustmerAddress">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callQuoteAPI">
+      Name="callUpdateQuoteAPI">
       <Return
         Type="java.lang.String"/>
     </Method>

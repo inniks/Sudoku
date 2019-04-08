@@ -164,6 +164,9 @@ WHERE
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="LookupCode"/>
+  </AttrArray>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="xxatcust.oracle.apps.sudoku.model.ModelBundle"/>

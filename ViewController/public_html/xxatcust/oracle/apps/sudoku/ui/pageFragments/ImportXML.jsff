@@ -18,7 +18,7 @@
                             styleClass="inputFile" immediate="true"
                             binding="#{XMLImportPageBean.uploadFileBinding}"
                             shortDesc="Select and upload the import configuration XML file to load the configuration."
-                            rendered="false"/>
+                            rendered="false" autoSubmit="true"/>
               <af:spacer width="10" height="10" id="s2"/>
               <af:commandButton text="Import Configuration" id="cb1"
                                 actionListener="#{XMLImportPageBean.importConfiguration}"

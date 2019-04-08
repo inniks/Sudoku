@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
    <AppModuleConfigBag ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
-      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" name="SudokuAMLocal" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM" java.naming.factory.initial="oracle.jbo.common.JboInitialContextFactory">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" name="SudokuAMLocal" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
          <Database jbo.locking.mode="optimistic"/>
          <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
          <Custom JDBCDataSource="jdbc/myDS6"/>

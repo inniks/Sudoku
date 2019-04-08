@@ -22,9 +22,9 @@
       <property
          name="y">213.91895</property>
       <property
-         name="x">487.5</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">487.5</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -51,9 +51,9 @@
       <property
          name="y">77.637695</property>
       <property
-         name="x">-66.0</property>
-      <property
          name="pageFragment">true</property>
+      <property
+         name="x">-66.0</property>
    </View>
    <ControlFlowCase
       islink="true"
@@ -114,5 +114,32 @@
          name="fromOutcome">clear</property>
       <property
          name="sdm:polyPoints">R54,-24.04133,80.78711,297.0254,-9.103516,L54</property>
+   </ControlFlowCase>
+   <View
+      id="View10">
+      <property
+         name="activityId">QuoteUpdate</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>QuoteUpdate&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">191.5918</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">692.6924</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase11"
+      from="View2"
+      to="View10">
+      <property
+         name="fromOutcome">update</property>
+      <property
+         name="sdm:polyPoints">R50,528.5,213.56836,651.6924,191.24121,L50</property>
    </ControlFlowCase>
 </SDM>

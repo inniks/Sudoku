@@ -32,7 +32,7 @@
   </Variable>
   <SQLQuery>
     <![CDATA[SELECT 
-  --qlhb.list_header_id price_list_id,
+  qlhb.list_header_id price_list_id,
 --  qlhb.currency_code,
 --  qlhb.start_date_active,
 --  qlhb.end_date_active,
@@ -45,6 +45,21 @@ FROM
 where qlhb.active_flag = 'Y' 
 and qlhb.list_type_code = 'PRL']]>
   </SQLQuery>
+  <ViewAttribute
+    Name="PriceListId"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="java.math.BigDecimal"
+    ColumnType="NUMBER"
+    AliasName="PRICE_LIST_ID"
+    Expression="PRICE_LIST_ID"
+    SQLType="NUMERIC">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="39"/>
+    </DesignTime>
+  </ViewAttribute>
   <ViewAttribute
     Name="Name"
     IsPersistent="false"

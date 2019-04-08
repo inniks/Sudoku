@@ -18,4 +18,8 @@ public interface SudokuAM extends ApplicationModule {
     void getQuoteCustmerAddress();
 
     String callQuoteAPI();
+
+    void getUpdateQuote();
+
+    String callUpdateQuoteAPI();
 }

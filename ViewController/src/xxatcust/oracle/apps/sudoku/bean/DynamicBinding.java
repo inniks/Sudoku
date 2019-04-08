@@ -9,18 +9,26 @@ public class DynamicBinding {
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow";
     private String viewReferenceTFId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow";
-        String currentTF = "configurator";
+    String currentTF = "configurator";
 
     public DynamicBinding() {
     }
 
     public TaskFlowId getDynamicTaskFlowId() {
-        if (this.getCurrentTF().equalsIgnoreCase("configurator"))
+        System.out.println("enter to TaskFLow getDynamicTaskFlowId " +
+                           this.getCurrentTF());
+        if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
+            System.out.println("Return config");
             return TaskFlowId.parse(configuratorTFId);
-        else if (this.getCurrentTF().equalsIgnoreCase("viewRef"))
+        } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
+            System.out.println("Return View Ref");
             return TaskFlowId.parse(viewReferenceTFId);
-        else  
-            return TaskFlowId.parse(quoteTFId);      
+        } else
+
+        {
+            System.out.println("Return Quote");
+            return TaskFlowId.parse(quoteTFId);
+        }
     }
 
     public String getConfiguratorTFId() {

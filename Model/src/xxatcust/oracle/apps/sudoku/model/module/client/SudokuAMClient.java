@@ -16,6 +16,7 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
     public SudokuAMClient() {
     }
 
+
     public void clearQuoteFields() {
         Object _ret =
             this.riInvokeExportedMethod(this,"clearQuoteFields",null,null);
@@ -41,6 +42,17 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
 
     public String callQuoteAPI() {
         Object _ret = this.riInvokeExportedMethod(this,"callQuoteAPI",null,null);
+        return (String)_ret;
+    }
+
+    public void getUpdateQuote() {
+        Object _ret = this.riInvokeExportedMethod(this,"getUpdateQuote",null,null);
+        return;
+    }
+
+    public String callUpdateQuoteAPI() {
+        Object _ret =
+            this.riInvokeExportedMethod(this,"callUpdateQuoteAPI",null,null);
         return (String)_ret;
     }
 }

@@ -103,6 +103,9 @@ WHERE
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
+  <AttrArray Name="KeyAttributes">
+    <Item Value="TermId"/>
+  </AttrArray>
   <ResourceBundle>
     <PropertiesBundle
       PropertiesFile="xxatcust.oracle.apps.sudoku.model.ModelBundle"/>

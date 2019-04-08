@@ -203,38 +203,39 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     //
     //
     //        }
+    String query = "SELECT \n" + 
+    "  hzsu.site_use_id   SITE_USE_ID,\n" + 
+    "  hzl.address1||DECODE(hzl.address2,\n" + 
+    "  NULL,\n" + 
+    "  NULL,\n" + 
+    "  ',\n" + 
+    "  '||hzl.address2)||',\n" + 
+    "  '||hzl.city||',\n" + 
+    "  '||hzl.country||',\n" + 
+    "  '||hzl.postal_code LOCATION,\n" + 
+    "  hzp.party_id,\n" + 
+    "  hzp.PARTY_NAME\n" + 
+    "FROM \n" + 
+    "  hz_parties hzp,\n" + 
+    "  hz_cust_accounts hza,\n" + 
+    "  hz_cust_acct_sites_all hzas,\n" + 
+    "  hz_cust_site_uses_all hzsu,\n" + 
+    "  hz_party_sites hzps,\n" + 
+    "  hz_locations hzl\n" + 
+    "WHERE \n" + 
+    "hzp.party_id = ?    and\n" + 
+    "  hza.party_id = hzp.party_id      AND\n" + 
+    "  hzas.cust_account_id = hza.cust_account_id      --AND\n" + 
+    "  and hzps.party_site_id = hzas.party_site_id      AND\n" + 
+    "  hzl.location_id = hzps.location_id      AND\n" + 
+    "  hzsu.site_use_code = ?      AND\n" + 
+    "  hzsu.PRIMARY_FLAG='Y' AND\n" + 
+    "  hzsu.ORG_ID=? AND\n" + 
+    "  hzsu.cust_acct_site_id = hzas.cust_acct_site_id      AND\n" + 
+    "  hzsu.org_id = hzas.org_id\n "; 
+    
     
     public void getQuoteCustmerAddress(){
-        String query = "SELECT \n" + 
-        "  hzsu.site_use_id   SITE_USE_ID,\n" + 
-        "  hzl.address1||DECODE(hzl.address2,\n" + 
-        "  NULL,\n" + 
-        "  NULL,\n" + 
-        "  ',\n" + 
-        "  '||hzl.address2)||',\n" + 
-        "  '||hzl.city||',\n" + 
-        "  '||hzl.country||',\n" + 
-        "  '||hzl.postal_code LOCATION,\n" + 
-        "  hzp.party_id,\n" + 
-        "  hzp.PARTY_NAME\n" + 
-        "FROM \n" + 
-        "  hz_parties hzp,\n" + 
-        "  hz_cust_accounts hza,\n" + 
-        "  hz_cust_acct_sites_all hzas,\n" + 
-        "  hz_cust_site_uses_all hzsu,\n" + 
-        "  hz_party_sites hzps,\n" + 
-        "  hz_locations hzl\n" + 
-        "WHERE \n" + 
-        "hzp.party_id = ?    and\n" + 
-        "  hza.party_id = hzp.party_id      AND\n" + 
-        "  hzas.cust_account_id = hza.cust_account_id      --AND\n" + 
-        "  and hzps.party_site_id = hzas.party_site_id      AND\n" + 
-        "  hzl.location_id = hzps.location_id      AND\n" + 
-        "  hzsu.site_use_code = ?      AND\n" + 
-        "  hzsu.PRIMARY_FLAG='Y' AND\n" + 
-        "  hzsu.ORG_ID=? AND\n" + 
-        "  hzsu.cust_acct_site_id = hzas.cust_acct_site_id      AND\n" + 
-        "  hzsu.org_id = hzas.org_id\n "; 
         String shipTo ="";
         String quoteTo = "";
         PreparedStatement cs = null,cs1 = null;
@@ -276,7 +277,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                 }                    
             }
             }
-        }
+        }   
 
     public String callQuoteAPI() {
         ViewObjectImpl quoteVO = this.getQuotesVO();
@@ -513,6 +514,303 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
             }
         return returnval;
     }
+    
+    public void getUpdateQuote(){
+        System.out.println("getUpdateQuote : start");
+            ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
+            Row row =null;
+            if(quoteVO !=null){
+                    quoteVO.applyViewCriteria(null);
+                    quoteVO.reset();
+                    quoteVO.setNamedWhereClauseParam("bindQuoteNum", null);
+                    BigDecimal quoteVal = new BigDecimal(77398);
+                    quoteVO.setNamedWhereClauseParam("bindQuoteNum", quoteVal);
+                 quoteVO.executeQuery();
+//                 quoteVO.getEstimatedRowCount();
+                 System.out.println("after Execution");
+                 RowSetIterator iter = quoteVO.createRowSetIterator("");
+//                    System.out.println("after Execution"+ quoteVO.getEstimatedRowCount());
+                 
+                 while(iter.hasNext()){
+                      row = iter.next();
+                   quoteVO.setCurrentRow(row);
+                                 }      
+                    getSalesRepDetails(row);
+                    getCustSupportRepDetails(row);
+                    getUpdateQuoteCustmerAddress();
+                 iter.closeRowSetIterator();
+                    
+                    
+                }
+        }
+    
+    public void getSalesRepDetails(Row row){
+        ViewObjectImpl vo = this.getSalesRepresentativeVO();
+        if(vo !=null){
+            if(row !=null){
+                System.out.println(" resource Name"+row.getAttribute("Salesrepresentative"));
+                vo.setWhereClause("resource_name ='"+row.getAttribute("Salesrepresentative")+"'");   //Businesscentercsr
+               System.out.println("Sales Rep Query:"+vo.getQuery()); 
+                vo.executeQuery();
+                RowSetIterator iter = vo.createRowSetIterator("");
+                Row salesRow = null;
+                while(iter.hasNext()){
+                salesRow = iter.next();
+                }
+                    if(salesRow !=null){
+                    vo.setCurrentRow(salesRow);
+                      row.setAttribute("SalesFaxNum",salesRow.getAttribute("Fax"));
+                      row.setAttribute("SalesContactName",salesRow.getAttribute("ResourceName"));
+                      row.setAttribute("SalesPhoneNum",salesRow.getAttribute("SourcePhone"));
+                      row.setAttribute("SalesEmail",salesRow.getAttribute("SourceEmail")); 
+                    }
+                }
+            }
+        }
+    
+    public void getCustSupportRepDetails(Row row){
+        ViewObjectImpl vo = this.getCustomerSupportRepresentVO();
+        if(vo !=null){
+            if(row !=null){
+                System.out.println(" Business center csr"+row.getAttribute("Businesscentercsr"));
+                vo.setWhereClause("Customer_name = '"+row.getAttribute("Businesscentercsr")+"'");   //Businesscentercsr
+                vo.executeQuery();
+                RowSetIterator iter = vo.createRowSetIterator("");
+                Row salesRow = null;
+                while(iter.hasNext()){
+                salesRow = iter.next();
+                }
+                    if(salesRow !=null){
+                    vo.setCurrentRow(salesRow);
+                      row.setAttribute("CustomerFaxNum",salesRow.getAttribute("Fax"));
+                      row.setAttribute("CustomerContactName",salesRow.getAttribute("CustomerName"));
+                      row.setAttribute("CustomerPhoneNum",salesRow.getAttribute("PhoneNumber"));
+                      row.setAttribute("CustomerEmail",salesRow.getAttribute("EmailAddress")); 
+                    }
+                }
+            }
+        }
+    
+    
+    public void getUpdateQuoteCustmerAddress(){
+        String shipTo ="";
+        String quoteTo = "";
+        PreparedStatement cs = null,cs1 = null;
+        
+        ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
+        System.out.println("Query is:"+query);
+        if(quoteVO !=null){
+        Row  row = quoteVO.getCurrentRow();
+            if(row!=null){
+            BigDecimal partyId = (BigDecimal)row.getAttribute("PartyId");
+            BigDecimal orgid = (BigDecimal)row.getAttribute("OrgId");
+            
+                    try {
+            cs = this.getDBTransaction().createPreparedStatement(query, 0);   
+                    cs.setBigDecimal(1, partyId);
+                    cs.setString(2, "BILL_TO");
+                    cs.setBigDecimal(3, orgid);
+                       
+              ResultSet rs = cs.executeQuery();
+                        while(rs.next()){
+                          quoteTo = rs.getString(2);
+                            System.out.println("quoteTo is:"+quoteTo);
+                            }
+                cs1 = this.getDBTransaction().createPreparedStatement(query, 0);       
+                    cs1.setBigDecimal(1, partyId);
+                    cs1.setString(2, "SHIP_TO");
+                    cs1.setBigDecimal(3, orgid);
+                    ResultSet rs1 = cs1.executeQuery();
+                        while(rs1.next()){
+                          shipTo = rs1.getString(2);
+                                System.out.println("ShipTo is:"+shipTo);
+                            }
+             row.setAttribute("QuoteTo", quoteTo);   
+             row.setAttribute("ShipTo", shipTo);   
+            System.out.println("QuoteTo:"+quoteTo+":shipto:"+shipTo);
+             
+                } catch (SQLException e) {
+                        e.printStackTrace();
+                }                    
+            }
+            }
+        }
+    
+    public String callUpdateQuoteAPI(){
+        ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
+        
+            String returnval = null;
+                    StringBuilder errorMsg = new StringBuilder("<html><body>");
+                    String returnMessage = "";
+                                    if(quoteVO !=null){
+                   Row quoteVORow = quoteVO.getCurrentRow();
+                        if (quoteVORow != null) {
+                            CallableStatement cs = null;
+                            String stmt =
+                                "apps.XXAT_ASO_QUOTE_PKG.update_quote_hdr(:1,:2,:3,:4,:5,:6,:7,:8,:9,:10,:11,:12,:13,:14,:15,:16)";
+                                 try {
+                                         cs = this.getDBTransaction().createCallableStatement("begin " + stmt + "; end;",0);
+                                     
+                                         if (quoteVORow.getAttribute("QuoteNumber") != null) {
+                                                                 cs.setString(1,
+                                                                              quoteVORow.getAttribute("QuoteNumber").toString());
+                                                                 System.out.println("QuoteNumber:" +
+                                                                                    quoteVORow.getAttribute("QuoteNumber").toString());
+                                                             }
+//                                                             else{
+//                                                                 errorMsg.append("<p><b>QuoteNumber is required.</b></p>");
+//                                                                 }
+                                         if (quoteVORow.getAttribute("Ordertypename") != null) {
+                                                                 cs.setString(2,
+                                                                              quoteVORow.getAttribute("Ordertypename").toString());
+                                                                 System.out.println("Ordertypename:" +
+                                                                                    quoteVORow.getAttribute("Ordertypename").toString());
+                                                             }
+                                                             else{
+                                                                 errorMsg.append("<p><b>OrderType is required.</b></p>");
+                                                                 }
+                                         if (quoteVORow.getAttribute("Pricelistname") != null) {
+                                                                 cs.setString(3,
+                                                                              quoteVORow.getAttribute("Pricelistname").toString());
+                                                                 System.out.println("Pricelistname:" +
+                                                                                    quoteVORow.getAttribute("Pricelistname").toString());
+                                                             }
+                                                             else{
+                                                                 errorMsg.append("<p><b>Price List is required.</b></p>");
+                                                                 }
+                                     //-------------------
+                                     
+                                     if (quoteVORow.getAttribute("Saleschannel") != null) {
+                                                             cs.setString(4,
+                                                                          quoteVORow.getAttribute("Saleschannel").toString());
+                                                             System.out.println("Saleschannel:" +
+                                                                                quoteVORow.getAttribute("Saleschannel").toString());
+                                                         }
+                                                         else{
+                                                             cs.setString(4, null);
+                                                             }
+                                                         //                if(quoteVORow.getAttribute("OrganizationUnit")!=null)
+                                                         if(quoteVORow.getAttribute("Salesrepresentative")!=null){
+                                                         cs.setString(5, quoteVORow.getAttribute("Salesrepresentative").toString());
+                                                             System.out.println("Sales representative" +
+                                                                                quoteVORow.getAttribute("Salesrepresentative"));
+                                                         }
+                                                         else{
+                                                                 errorMsg.append("<p><b> Sales Representative is required.</b></p>");
+                                                             }
+                                                         
+                                                         if (quoteVORow.getAttribute("Paymentterms") != null) {
+                                                             cs.setString(6,
+                                                                          quoteVORow.getAttribute("Paymentterms").toString());
+                                                             System.out.println("Paymentterms:" +
+                                                                                quoteVORow.getAttribute("Paymentterms").toString());
+                                                         }
+                                                         else{
+//                                                                 cs.setString(6,null);
+                                                             errorMsg.append("<p><b> Payment Terms is required.</b></p>");
+                                                             }
+                                                         if (quoteVORow.getAttribute("CurrencyCode") !=null) {
+                                                             cs.setString(7,
+                                                                          quoteVORow.getAttribute("CurrencyCode").toString());
+                                                             System.out.println("Currency:" +
+                                                                                quoteVORow.getAttribute("CurrencyCode").toString());
+                                                         }
+                                                         else{
+                                                             errorMsg.append("<p><b>Currency Code is required.</b></p>");
+                                                                                 }
+                                                         
+                                                         if (quoteVORow.getAttribute("Businesscentercsr") != null) {
+                                                             cs.setString(8,
+                                                                          quoteVORow.getAttribute("Businesscentercsr").toString());
+                                                             System.out.println("Businesscentercsr:" +
+                                                                                quoteVORow.getAttribute("Businesscentercsr").toString());
+                                                         }
+                                                         else{
+                                                             cs.setString(8, null);
+//                                                             errorMsg.append("<p><b>Businesscentercsr is required.</b></p>");
+                                                             }
+                                                         if (quoteVORow.getAttribute("Attribute8") != null) {
+                                                             cs.setString(9,
+                                                                          quoteVORow.getAttribute("Attribute8").toString());
+                                                             System.out.println("Attribute8:" +
+                                                                                quoteVORow.getAttribute("Attribute8").toString());
+                                                         }
+                                                         else{
+                                                                 cs.setString(9, null);
+//                                                             errorMsg.append("<p><b>Deal id is required.</b></p>");
+                                                             }
+                                                         
+                                                         if (quoteVORow.getAttribute("Attribute12") != null) {
+                                                             cs.setString(10,
+                                                                          quoteVORow.getAttribute("Attribute12").toString());
+                                                             System.out.println("Attribute12:" +
+                                                                                quoteVORow.getAttribute("Attribute12").toString());
+                                                         }
+                                                         else{
+                                                             errorMsg.append("<p><b>Attentiom/Department To is required.</b></p>");
+                                                             }
+                                                         if (quoteVORow.getAttribute("Attribute13") !=null) {
+                                                             cs.setString(11,
+                                                                          quoteVORow.getAttribute("Attribute13").toString());
+                                                             System.out.println("Attribute13:" +
+                                                                                quoteVORow.getAttribute("Attribute13").toString());
+                                                         }
+                                                         else{
+                                                                 cs.setString(11,null);
+                                     //                        errorMsg.append("<p><b>Organization Unit is required.</b></p>");
+                                                             }
+                                                                cs.setInt(12, 11639);
+                                                                 cs.setInt(13, 51157);
+//                                                         if(quoteVORow.getAttribute("DealId")!=null){
+//                                                                 cs.setString(12,quoteVORow.getAttribute("DealId").toString());
+//                                                                 }
+//                                                         else{
+//                                                                 cs.setString(12,null);
+//                                     //                        errorMsg.append("<p><b>Deal Id is required.</b></p>");
+//                                                             }
+                                                         if(quoteVORow.getAttribute("Agrimentname")!=null){
+                                                                 cs.setString(14,quoteVORow.getAttribute("Agrimentname").toString());
+                                                                 }
+                                                         else{
+                                                                 cs.setString(14,null);
+                                     //                        errorMsg.append("<p><b>AttentionTo/Dept is required.</b></p>");
+                                                             }
+                                                         if(quoteVORow.getAttribute("Attribute2")!=null){
+                                                                 cs.setString(15,quoteVORow.getAttribute("Attribute2").toString());
+                                                                 }
+                                                         else{
+                                                                 cs.setString(15,null);
+                                                             }
+                                                        cs.registerOutParameter(16, Types.VARCHAR);
+                                                            errorMsg.append("</body></html>");
+                                                             String err = "<html><body></body></html>";
+                                                                 if("<html><body></body></html>".equalsIgnoreCase(errorMsg.toString())){
+                                                                         cs.executeUpdate();
+                                                                         returnMessage = cs.getString(16);
+                                                                         if (returnMessage != null)
+                                                                    System.out.println("return Message is:" +returnMessage + " ::msg::");
+                                                                     }
+                                     }
+                                 catch(Exception e){
+                                     e.printStackTrace();
+                                     }
+                                    finally {
+                                                        try {
+                                                            if (cs != null)
+                                                                cs.close();
+                                                        } catch (SQLException s) {
+                                                            s.printStackTrace();
+                                                        }
+                                                    }
+                        }
+                                }      
+            if(errorMsg.toString() !=null && !"<html><body></body></html>".equals(errorMsg.toString()))
+                        returnval = errorMsg.toString();
+                    else
+                            returnval = returnMessage;
+                    return returnval;               
+       
+        }
 
     public void searchQuote() {
         ViewObjectImpl quoteSearchVO = this.getQuoteSearchVO();
@@ -691,5 +989,37 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
      */
     public ViewObjectImpl getQuoteSearchTabVO() {
         return (ViewObjectImpl)findViewObject("QuoteSearchTabVO");
+    }
+
+    /**
+     * Container's getter for ImportSourceVO1.
+     * @return ImportSourceVO1
+     */
+    public ViewObjectImpl getImportSourceVO1() {
+        return (ViewObjectImpl)findViewObject("ImportSourceVO1");
+    }
+
+    /**
+     * Container's getter for QuoteUpdateVO1.
+     * @return QuoteUpdateVO1
+     */
+    public ViewObjectImpl getQuoteUpdateVO1() {
+        return (ViewObjectImpl)findViewObject("QuoteUpdateVO1");
+    }
+
+    /**
+     * Container's getter for SalesRepresentativeVO.
+     * @return SalesRepresentativeVO
+     */
+    public ViewObjectImpl getSalesRepresentativeVO() {
+        return (ViewObjectImpl)findViewObject("SalesRepresentativeVO");
+    }
+
+    /**
+     * Container's getter for CustomerSupportRepresentVO.
+     * @return CustomerSupportRepresentVO
+     */
+    public ViewObjectImpl getCustomerSupportRepresentVO() {
+        return (ViewObjectImpl)findViewObject("CustomerSupportRepresentVO");
     }
 }

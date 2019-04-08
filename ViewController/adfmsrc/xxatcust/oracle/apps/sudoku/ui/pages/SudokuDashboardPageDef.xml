@@ -5,26 +5,12 @@
   <parameters/>
   <executables>
     <variableIterator id="variables"/>
-    <taskFlow id="UploadXMLFlow1"
-              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow"
-              activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"
-              RefreshCondition="#{sessionScope.refreshImport eq 'Y'}"
-              Refresh="ifNeeded"/>
-    <taskFlow id="QuotingFlow1"
-              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow"
+    <taskFlow id="dynamicRegion1"
+              taskFlowId="${viewScope.LoadDynamicRegionBean.dynamicTaskFlowId}"
               activation="deferred"
               xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
     <taskFlow id="ImportSrcFlow1"
               taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow"
-              activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
-    <taskFlow id="ConfiguratorFlow1"
-              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow"
-              activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
-    <taskFlow id="dynamicRegion1"
-              taskFlowId="${backingBeanScope.DynamicBindingBean.dynamicTaskFlowId}"
               activation="deferred"
               xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
   </executables>

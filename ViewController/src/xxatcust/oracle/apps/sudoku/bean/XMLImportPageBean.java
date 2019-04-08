@@ -852,7 +852,7 @@ public class XMLImportPageBean {
     }
 
     public void initUploadXml() {
-
+        System.out.println("Inside Init Upload xml flow");
     }
 
     public void setQuoteTotal(RichOutputText quoteTotal) {
