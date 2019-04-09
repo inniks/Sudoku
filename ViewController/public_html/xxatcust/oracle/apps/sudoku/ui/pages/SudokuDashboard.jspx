@@ -24,7 +24,7 @@
           <f:facet name="center">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
-                                 id="dashPGL">
+                                 id="dashPGL" styleClass="AFStretchWidth">
               <af:popup id="imSrcP1">
                 <af:dialog id="d2" type="none" contentWidth="600"
                            contentHeight="300">
@@ -35,7 +35,7 @@
                   <af:commandButton text="Ok" id="cb11"
                                     actionListener="#{viewScope.LoadDynamicRegionBean.viewReference}">
                     <af:setPropertyListener to="#{viewScope.LoadDynamicRegionBean.currentTF}"
-                                            from="viewRef" type="action"/>
+                                            from="#{viewScope.LoadDynamicRegionBean.navString}" type="action"/>
                   </af:commandButton>
                   <af:commandButton text="Cancel" id="cb1"/>
                 </af:panelGroupLayout>
@@ -70,15 +70,28 @@
                   <af:panelGroupLayout id="pgl_3">
                     <af:toolbar id="t1">
                       <af:panelGroupLayout id="pgl_4" layout="horizontal">
-                        <af:commandToolbarButton text="View Reference"
-                                                 id="ctb1" rendered="false"/>
                         <af:commandToolbarButton text="Import Reference Configuration"
                                                  id="ct2b1">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandToolbarButton>
+                        <af:commandToolbarButton text="View Reference" id="ctb1"
+                                                 rendered="true">
+                          <af:setPropertyListener from="viewRef"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Configurator" id="ctb3">
+                          <af:setPropertyListener from="configurator"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
                         <af:commandToolbarButton text="Quote Header" id="ctb2"
-                                                 rendered="false"/>
+                                                 rendered="true">
+                          <af:setPropertyListener from="quote"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
                       </af:panelGroupLayout>
                     </af:toolbar>
                   </af:panelGroupLayout>

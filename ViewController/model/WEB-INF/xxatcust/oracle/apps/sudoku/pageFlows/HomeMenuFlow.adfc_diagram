@@ -62,7 +62,7 @@
       from="WildcardControlFlowRule2"
       to="View7">
       <property
-         name="fromOutcome">SudokuHome</property>
+         name="fromOutcome">*</property>
       <property
          name="sdm:polyPoints">R55,124.01758,174.0,445.70215,203.44824,L50</property>
    </ControlFlowCase>

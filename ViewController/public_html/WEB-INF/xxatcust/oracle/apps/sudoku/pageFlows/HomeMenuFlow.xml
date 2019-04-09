@@ -12,7 +12,6 @@
   <control-flow-rule id="__7">
     <from-activity-id id="__6">*</from-activity-id>
     <control-flow-case id="__8">
-      <from-outcome id="__10">SudokuHome</from-outcome>
       <to-activity-id id="__9">SudokuDashboard</to-activity-id>
     </control-flow-case>
     <control-flow-case id="__1">
