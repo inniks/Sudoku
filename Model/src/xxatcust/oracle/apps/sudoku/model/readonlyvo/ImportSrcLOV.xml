@@ -43,7 +43,7 @@
     <Item Value="ImportSrcCode"/>
   </AttrArray>
   <StaticList
-    Rows="4"
+    Rows="3"
     Columns="2"/>
   <ResourceBundle>
     <PropertiesBundle

@@ -218,7 +218,8 @@
                 </af:commandButton>
                 <af:spacer width="10" height="10" id="s25"/>
                 <af:commandButton text="Update Quote" id="cb4"
-                                  action="#{pageFlowScope.QuotingBean.updateQuote}"/>
+                                  action="#{pageFlowScope.QuotingBean.updateQuote}"
+                                  rendered="false"/>
                 <af:resetButton text="Clear" id="rb1" rendered="false"/>
                 <af:commandButton text="Return" id="cb3" action="backToSearch"
                                   rendered="false"/>
@@ -473,7 +474,7 @@
     <f:facet name="top">
      <af:panelGroupLayout id="pgl5" layout="horizontal">
                <af:image id="pt_i1" source="/Resources/images/adv.gif"
-                            inlineStyle="width:215px;"/>
+                            inlineStyle="width:215px;" rendered="false"/>
         <af:spacer width="20" height="10" id="s11"/>
         <af:outputText value="Quote Header Customer &amp; Deal Related Data"
                              id="ot1"

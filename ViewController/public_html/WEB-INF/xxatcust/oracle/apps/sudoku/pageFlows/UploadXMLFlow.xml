@@ -6,6 +6,11 @@
       <id>ExceptionHandlerTF</id>
     </template-reference>
     <default-activity id="__8">initXMLUpload</default-activity>
+    <input-parameter-definition id="__7">
+      <name id="__14">refreshFlag</name>
+      <value>#{pageFlowScope.refreshFlag}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
     <managed-bean id="__11">
       <managed-bean-name id="__12">XMLImportPageBean</managed-bean-name>
       <managed-bean-class id="__13">xxatcust.oracle.apps.sudoku.bean.XMLImportPageBean</managed-bean-class>

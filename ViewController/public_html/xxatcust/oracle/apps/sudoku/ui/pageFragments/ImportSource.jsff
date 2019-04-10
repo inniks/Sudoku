@@ -3,16 +3,7 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core">
   <af:panelBox text="Import Reference Configuration" id="pb1">
-    <f:facet name="toolbar">
-      <af:toolbar id="t1">
-        <af:commandToolbarButton text="Ok" id="ctb1"
-                                 actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
-                                 rendered="false"/>
-        <af:commandToolbarButton text="Cancel" id="ctb2"
-                                 actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
-                                 rendered="false"/>
-      </af:toolbar>
-    </f:facet>
+    <f:facet name="toolbar"/>
     <af:panelSplitter id="ps1" styleClass="AFStretchWidth">
       <f:facet name="second">
         <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -23,7 +14,8 @@
               <af:group id="g1">
                 <af:panelGroupLayout id="pgl4">
                   <af:separator id="s5"/>
-                  <af:panelGroupLayout id="pgl5" layout="horizontal">
+                  <af:panelGroupLayout id="pgl5" layout="horizontal"
+                                       partialTriggers="sor1">
                     <af:spacer width="10" height="10" id="s4"/>
                     <af:selectBooleanCheckbox value="#{bindings.CopyRefConfig.inputValue}"
                                               shortDesc="#{bindings.CopyRefConfig.hints.tooltip}"
@@ -36,7 +28,8 @@
                   <af:spacer width="10" height="10" id="s2"/>
                   <af:separator id="s1"/>
                   <af:spacer width="10" height="10" id="s3"/>
-                  <af:panelGroupLayout id="pgl3" layout="horizontal">
+                  <af:panelGroupLayout id="pgl3" layout="horizontal"
+                                       partialTriggers="sor1">
                     <af:selectOneRadio value="#{bindings.ReuseQuote.inputValue}"
                                        required="#{bindings.ReuseQuote.hints.mandatory}"
                                        shortDesc="#{bindings.ReuseQuote.hints.tooltip}"
@@ -79,7 +72,8 @@
                       </af:inputText>
                     </af:panelLabelAndMessage>
                     <af:commandButton text="Search" id="cb1"
-                                      actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"/>
+                                      actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
+                                      rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
                 <af:panelFormLayout id="pfl4">
@@ -95,10 +89,10 @@
                         <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
                       </af:inputText>
                     </af:panelLabelAndMessage>
-                    <af:commandButton text="Search" id="cb2"/>
+                    <af:commandButton text="Search" id="cb2" rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
-                <af:panelFormLayout id="pfl5">
+                <af:panelFormLayout id="pfl5" rendered="false">
                   <af:panelGroupLayout id="pgl9" layout="horizontal">
                     <af:panelLabelAndMessage label="Sales Order Number"
                                              id="pl2am1">
@@ -112,20 +106,38 @@
                         <f:validator binding="#{bindings.SalesOrderNumber.validator}"/>
                       </af:inputText>
                     </af:panelLabelAndMessage>
-                    <af:commandButton text="Search" id="cb3"/>
+                    <af:commandButton text="Search" id="cb3" rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
                 <af:panelFormLayout id="pfl6">
-                  <af:inputFile id="it111"
-                                disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
-                                binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
-                                styleClass="inputFile" immediate="true"
-                                valueChangeListener="#{pageFlowScope.ImportSourceBean.newFileUploaded}"
-                                autoSubmit="true"/>
+                  <af:panelGroupLayout id="pgl10" layout="horizontal">
+                    <af:panelLabelAndMessage label="Select From Local File System" id="plam3">
+                      <af:inputFile id="it111"
+                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
+                                    binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
+                                    styleClass="inputFile" immediate="true"/>
+                    </af:panelLabelAndMessage>
+                    <af:commandButton text="Call Configurator" id="cb4"
+                                      rendered="false"/>
+                  </af:panelGroupLayout>
                 </af:panelFormLayout>
               </af:panelFormLayout>
             </af:panelGroupLayout>
           </af:panelFormLayout>
+          <af:panelGroupLayout id="pgl11" halign="end">
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Ok" id="ctb1"
+                                       actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
+                                       rendered="true">
+                <af:setPropertyListener from="#{pageFlowScope.ImportSourceBean.refreshToken}"
+                                        to="#{sessionScope.refreshFlag}"
+                                        type="action"/>
+              </af:commandToolbarButton>
+              <af:commandToolbarButton text="Cancel" id="ctb2"
+                                       actionListener="#{pageFlowScope.ImportSourceBean.cancelPopup}"
+                                       rendered="true"/>
+            </af:toolbar>
+          </af:panelGroupLayout>
         </af:panelGroupLayout>
       </f:facet>
     </af:panelSplitter>

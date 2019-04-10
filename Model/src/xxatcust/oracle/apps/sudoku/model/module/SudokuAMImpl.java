@@ -36,6 +36,7 @@ import oracle.jbo.server.DBTransaction;
 
 import oracle.jbo.server.ViewObjectImpl;
 
+
 import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
 //import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
 
@@ -523,7 +524,10 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                     quoteVO.applyViewCriteria(null);
                     quoteVO.reset();
                     quoteVO.setNamedWhereClauseParam("bindQuoteNum", null);
-                    BigDecimal quoteVal = new BigDecimal(77398);
+                String quoteFromSesion = (String)ADFContext.getCurrent().getSessionScope().get("quoteNumber");
+                System.out.println("from AMPIML:"+quoteFromSesion);
+                Integer quoteNum =Integer.parseInt(quoteFromSesion);
+                    BigDecimal quoteVal = new BigDecimal(quoteNum);
                     quoteVO.setNamedWhereClauseParam("bindQuoteNum", quoteVal);
                  quoteVO.executeQuery();
 //                 quoteVO.getEstimatedRowCount();
@@ -699,11 +703,11 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                                                                  errorMsg.append("<p><b> Sales Representative is required.</b></p>");
                                                              }
                                                          
-                                                         if (quoteVORow.getAttribute("Paymentterms") != null) {
+                                                         if (quoteVORow.getAttribute("PaymentTermsName") != null) {
                                                              cs.setString(6,
-                                                                          quoteVORow.getAttribute("Paymentterms").toString());
-                                                             System.out.println("Paymentterms:" +
-                                                                                quoteVORow.getAttribute("Paymentterms").toString());
+                                                                          quoteVORow.getAttribute("PaymentTermsName").toString());
+                                                             System.out.println("PaymentTermsName:" +
+                                                                                quoteVORow.getAttribute("PaymentTermsName").toString());
                                                          }
                                                          else{
 //                                                                 cs.setString(6,null);

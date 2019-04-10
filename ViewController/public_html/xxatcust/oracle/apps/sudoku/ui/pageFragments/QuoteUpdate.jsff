@@ -3,7 +3,8 @@
           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
           xmlns:f="http://java.sun.com/jsf/core"
           xmlns:h="http://java.sun.com/jsf/html">
- <af:panelStretchLayout id="psl1" startWidth="158px" topHeight="69px">
+ <af:panelStretchLayout id="psl1" startWidth="158px" topHeight="69px"
+                        dimensionsFrom="children">
     <f:facet name="bottom"/>
     <f:facet name="center">
       <af:panelGroupLayout xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -28,7 +29,7 @@
       </af:inputText>-->
         <af:panelSplitter id="ps1" splitterPosition="445"
                           styleClass="AFStretchWidth"
-                          inlineStyle="height:20.0cm;">
+                          inlineStyle="height:17.0cm;">
           <f:facet name="first">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -435,7 +436,7 @@
     <f:facet name="top">
      <af:panelGroupLayout id="pgl5" layout="horizontal">
                <af:image id="pt_i1" source="/Resources/images/adv.gif"
-                            inlineStyle="width:215px;"/>
+                            inlineStyle="width:215px;" rendered="false"/>
         <af:spacer width="20" height="10" id="s11"/>
         <af:outputText value="Quote Header Customer &amp; Deal Related Data"
                              id="ot1"

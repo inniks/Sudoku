@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">QuoteUpdate</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff</property>
+      <property
+         name="start">false</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>QuoteUpdate&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">173.09766</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">523.6924</property>
+   </View>
+   <MethodCall
+      id="MethodCall3">
+      <property
+         name="activityId">getUpdateQuote</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>getUpdateQuote&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">178.14941</property>
+      <property
+         name="x">259.0332</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="MethodCall3"
+      to="View2">
+      <property
+         name="fromOutcome">getUpdateQuote</property>
+      <property
+         name="sdm:polyPoints">R50,300.0332,177.79883,482.69238,172.74707,L50</property>
+   </ControlFlowCase>
+</SDM>

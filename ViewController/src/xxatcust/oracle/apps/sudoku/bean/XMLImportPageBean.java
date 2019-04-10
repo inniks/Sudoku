@@ -59,6 +59,7 @@ import oracle.adf.view.rich.component.rich.data.RichListView;
 import oracle.adf.view.rich.component.rich.data.RichTable;
 
 import oracle.adf.view.rich.component.rich.input.RichInputFile;
+import oracle.adf.view.rich.component.rich.layout.RichPanelBorderLayout;
 import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
 import oracle.adf.view.rich.component.rich.output.RichOutputText;
 import oracle.adf.view.rich.util.ResetUtils;
@@ -76,6 +77,7 @@ import oracle.jbo.uicli.binding.JUCtrlHierTypeBinding;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.myfaces.trinidad.context.RequestContext;
 import org.apache.myfaces.trinidad.event.SelectionEvent;
 import org.apache.myfaces.trinidad.model.ChildPropertyTreeModel;
 import org.apache.myfaces.trinidad.model.CollectionModel;
@@ -121,6 +123,8 @@ public class XMLImportPageBean {
     private RichOutputText validationError;
     private RichPopup errorPopup;
     private RichOutputText quoteTotal;
+    private RichPanelBorderLayout panelBorderBinding;
+    private RichOutputText pageInitText;
 
     public XMLImportPageBean() {
 
@@ -363,7 +367,7 @@ public class XMLImportPageBean {
 
                             // debugMsgBind.setValue(debugStr.toString());
                         }
-                        warnText.setValue(warningMessage.toString());
+                        warnText.setValue(warningMessage.toString()); // Probable change 1
                         System.out.println("Check point 2");
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
@@ -388,7 +392,7 @@ public class XMLImportPageBean {
                                                     "</b></p>");
                             }
                         }
-                        debugMsgBind.setValue(debugMessage.toString());
+                        debugMsgBind.setValue(debugMessage.toString()); // Probable change 2
 
                         List<String> errorMessages =
                             obj.getExceptionMap().getErrorsMessages();
@@ -421,7 +425,7 @@ public class XMLImportPageBean {
                         if (errMessage != null &&
                             !errMessage.toString().equalsIgnoreCase("<html><body>")) {
                             validationError.setValue("Exception occured " +
-                                                     errMessage.toString());
+                                                     errMessage.toString()); /// Probable change 3
                             RichPopup.PopupHints hints =
                                 new RichPopup.PopupHints();
                             //errorPopup.show(hints);
@@ -532,6 +536,7 @@ public class XMLImportPageBean {
                                 new ChildPropertyTreeModel(root, "childNodes");
 
                     } else {
+                        root = new ArrayList();
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
                         RichPopup.PopupHints hints =
@@ -853,6 +858,7 @@ public class XMLImportPageBean {
 
     public void initUploadXml() {
         System.out.println("Inside Init Upload xml flow");
+        //RequestContext.getCurrentInstance().addPartialTarget(panelBorderBinding);
     }
 
     public void setQuoteTotal(RichOutputText quoteTotal) {
@@ -866,8 +872,8 @@ public class XMLImportPageBean {
     public void refreshView(ActionEvent actionEvent) {
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
-        UIComponent uiComponent = (UIComponent)actionEvent.getSource();
-        uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        // UIComponent uiComponent = (UIComponent)actionEvent.getSource();
+        //uiComponent.processUpdates(FacesContext.getCurrentInstance());
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         System.out.println("Button Pressed");
         //Trying to clear previous values here
@@ -881,5 +887,25 @@ public class XMLImportPageBean {
         showListHeader = true;
         categoryTree = null;
         allNodes = null;
+    }
+
+    public void setPanelBorderBinding(RichPanelBorderLayout panelBorderBinding) {
+        this.panelBorderBinding = panelBorderBinding;
+    }
+
+    public RichPanelBorderLayout getPanelBorderBinding() {
+        return panelBorderBinding;
+    }
+
+    public void setPageInitText(RichOutputText pageInitText) {
+        this.pageInitText = pageInitText;
+    }
+
+    public RichOutputText getPageInitText() {
+        System.out.println("Warning popup created " + warningPopup);
+        System.out.println("Error Popup created " + validationError);
+        refreshView(null);
+        RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
+        return pageInitText;
     }
 }

@@ -32,6 +32,10 @@
           usageId="xxatcust_oracle_apps_sudoku_view_SudokuDashboardPageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/QuoteUpdate.jsff"
           usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml#QuoteUpdateFlow@getUpdateQuote"
+          usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow@initXMLUpload"
+          usageId="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -58,6 +62,10 @@
           path="xxatcust.oracle.apps.sudoku.ui.pages.SudokuDashboardPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_QuoteUpdatePageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.QuoteUpdatePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

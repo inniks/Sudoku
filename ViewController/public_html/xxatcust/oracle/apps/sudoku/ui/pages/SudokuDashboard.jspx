@@ -7,7 +7,7 @@
     <af:document id="d1" title="Sudoku Dashboard">
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
-        <af:panelStretchLayout id="psl1" topHeight="110px" endWidth="10px"
+        <af:panelStretchLayout id="psl1" topHeight="120px" endWidth="10px"
                                bottomHeight="30px" startWidth="10px"
                                dimensionsFrom="children">
           <f:facet name="bottom">
@@ -31,13 +31,15 @@
                   <af:region value="#{bindings.ImportSrcFlow1.regionModel}"
                              id="r2"/>
                 </af:dialog>
-                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                <af:panelGroupLayout id="pgl3" layout="horizontal"
+                                     rendered="false">
                   <af:commandButton text="Ok" id="cb11"
                                     actionListener="#{viewScope.LoadDynamicRegionBean.viewReference}">
                     <af:setPropertyListener to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                             from="#{viewScope.LoadDynamicRegionBean.navString}" type="action"/>
                   </af:commandButton>
-                  <af:commandButton text="Cancel" id="cb1"/>
+                  <af:commandButton text="Cancel" id="cb1"
+                                    actionListener="#{viewScope.LoadDynamicRegionBean.cancelPopup}"/>
                 </af:panelGroupLayout>
               </af:popup>
               <af:region value="#{bindings.dynamicRegion1.regionModel}"
@@ -67,43 +69,17 @@
                 <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
                                      halign="center"
                                      styleClass="AFStretchWidth">
-                  <af:panelGroupLayout id="pgl_3">
-                    <af:toolbar id="t1">
-                      <af:panelGroupLayout id="pgl_4" layout="horizontal">
-                        <af:commandToolbarButton text="Import Reference Configuration"
-                                                 id="ct2b1">
-                          <af:showPopupBehavior popupId="imSrcP1"
-                                                triggerType="click"/>
-                        </af:commandToolbarButton>
-                        <af:commandToolbarButton text="View Reference" id="ctb1"
-                                                 rendered="true">
-                          <af:setPropertyListener from="viewRef"
-                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
-                                                  type="action"/>
-                        </af:commandToolbarButton>
-                        <af:commandToolbarButton text="Configurator" id="ctb3">
-                          <af:setPropertyListener from="configurator"
-                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
-                                                  type="action"/>
-                        </af:commandToolbarButton>
-                        <af:commandToolbarButton text="Quote Header" id="ctb2"
-                                                 rendered="true">
-                          <af:setPropertyListener from="quote"
-                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
-                                                  type="action"/>
-                        </af:commandToolbarButton>
-                      </af:panelGroupLayout>
-                    </af:toolbar>
-                  </af:panelGroupLayout>
-                  <af:panelGroupLayout id="pt_pgl3" layout="vertical"
-                                       styleClass="AFStretchWidth" halign="end">
+                                     <af:panelGroupLayout id="pt_pgl3" layout="vertical"
+                                       styleClass="AFStretchWidth"
+                                                          halign="left">
                     <af:panelGroupLayout id="pt_pgl10" halign="end">
                       <af:image id="pt_i1" source="/Resources/images/adv.gif"
                                 inlineStyle="width:215px;"/>
+                      <af:statusIndicator id="si1"/>
                     </af:panelGroupLayout>
-                    <af:spacer width="20" height="5" id="spacer1"/>
+                    <af:spacer width="20" height="1" id="spacer1"/>
                     <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
-                                         halign="left">
+                                         halign="left" valign="baseline">
                       <af:commandImageLink id="pt_cil2"
                                            icon="/Resources/images/icons8-shutdown-32.png"
                                            actionListener="#{pageFlowScope.TemplateBean.logout}"
@@ -116,6 +92,38 @@
                                            rendered="true"/>
                     </af:panelGroupLayout>
                   </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl_3" layout="horizontal"
+                                       halign="center" valign="bottom">
+                    <af:toolbar id="t1">
+                      <af:panelGroupLayout id="pgl_4" layout="horizontal"
+                                           partialTriggers="ct2b1">
+                        <af:commandToolbarButton text="Import Reference Configuration"
+                                                 id="ct2b1"
+                                                 inlineStyle="color:Maroon; font-weight:bold;">
+                          <af:showPopupBehavior popupId="imSrcP1"
+                                                triggerType="click"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="View Reference" id="ctb1"
+                                                 inlineStyle="color:Maroon; font-weight:bold;">
+                          <af:setPropertyListener from="viewRef"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Configurator" id="ctb3">
+                          <af:setPropertyListener from="configurator"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Quote Header" id="ctb2"
+                                                 rendered="true">
+                          <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.navString}"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
+                      </af:panelGroupLayout>
+                    </af:toolbar>
+                  </af:panelGroupLayout>
+                  
                 </af:panelGroupLayout>
                 <af:spacer width="10" height="10" id="pt_s1"/>
               </af:panelGroupLayout>

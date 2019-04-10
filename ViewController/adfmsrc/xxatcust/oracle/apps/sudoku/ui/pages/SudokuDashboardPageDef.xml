@@ -8,7 +8,13 @@
     <taskFlow id="dynamicRegion1"
               taskFlowId="${viewScope.LoadDynamicRegionBean.dynamicTaskFlowId}"
               activation="deferred"
-              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"
+              Refresh="ifNeeded">
+      <parameters>
+        <parameter id="refreshFlag" value="#{sessionScope.refreshFlag}"
+                   xmlns="http://xmlns.oracle.com/adfm/uimodel"/>
+      </parameters>
+    </taskFlow>
     <taskFlow id="ImportSrcFlow1"
               taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow"
               activation="deferred"

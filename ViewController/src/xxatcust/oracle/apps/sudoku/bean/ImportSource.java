@@ -23,6 +23,7 @@ import javax.xml.bind.JAXBException;
 import oracle.adf.model.BindingContext;
 
 import oracle.adf.model.binding.DCIteratorBinding;
+import oracle.adf.share.ADFContext;
 import oracle.adf.share.logging.ADFLogger;
 import oracle.adf.view.rich.component.rich.RichPopup;
 import oracle.adf.view.rich.component.rich.input.RichInputFile;
@@ -38,6 +39,7 @@ import oracle.jbo.uicli.binding.JUCtrlListBinding;
 import org.apache.commons.io.IOUtils;
 
 import org.apache.myfaces.trinidad.context.RequestContext;
+import org.apache.myfaces.trinidad.event.ReturnEvent;
 import org.apache.myfaces.trinidad.model.UploadedFile;
 
 import org.xml.sax.SAXException;
@@ -65,6 +67,7 @@ public class ImportSource {
 
     public void importSrcSelected(ValueChangeEvent valueChangeEvent) {
         if (valueChangeEvent.getNewValue() != null) {
+            ADFUtils.setSessionScopeValue("inputParamsMap", new HashMap());
             String selectedVal = null;
             UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
             uiComp.processUpdates(FacesContext.getCurrentInstance());
@@ -75,6 +78,8 @@ public class ImportSource {
                 if (currRw != null) {
                     currRw.setAttribute("BudgetQuoteId", null);
                     currRw.setAttribute("FormalQuoteId", null);
+                    currRw.setAttribute("CopyRefConfig", null);
+                    currRw.setAttribute("ReuseQuote", null);
                     inputFileBinding.setValue(null);
                 }
             }
@@ -148,8 +153,8 @@ public class ImportSource {
     }
 
     public void dialogActionListener(ActionEvent actionEvent) {
-        //UIComponent uiComponent = (UIComponent)actionEvent.getSource();
-        //uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        UIComponent uiComponent = (UIComponent)actionEvent.getSource();
+        uiComponent.processUpdates(FacesContext.getCurrentInstance());
         //Take Values from VO binding
         String budgetQuoteNum = null;
         String formalQuoteNum = null;
@@ -186,7 +191,10 @@ public class ImportSource {
                     importSource.equalsIgnoreCase("FORMAL_QUOTE")) {
                     quoteNumber = formalQuoteNum;
                 }
-
+                
+                
+                
+                ADFContext af = ADFContext.getCurrent();
                 HashMap inputParamsMap = new HashMap();
                 inputParamsMap.put("importSource", importSource);
                 inputParamsMap.put("quoteNumber", quoteNumber);
@@ -194,19 +202,15 @@ public class ImportSource {
                 inputParamsMap.put("copyRefConf", copyRefConf);
                 ADFUtils.setSessionScopeValue("inputParamsMap",
                                               inputParamsMap);
-                System.out.println(" ImportSrcCode " +
-                                   currRow.getAttribute("ImportSrcCode"));
-                System.out.println(" ReuseQuote " +
-                                   currRow.getAttribute("ReuseQuote"));
-                System.out.println(" CopyRefConfig " +
-                                   currRow.getAttribute("CopyRefConfig"));
-                //System.out.println(" ImportSrcCode "+currRow.getAttribute("ImportSrcCode"));
+                 
+                af.getSessionScope().put("quoteNumber", quoteNumber);
             }
         }
         String str = null;
         UploadedFile xmlFile = (UploadedFile)inputFileBinding.getValue();
         // if (xmlFile != null) {
 
+      
         ADFUtils.setSessionScopeValue("refreshImport", "Y");
         try {
             if (importSource != null &&
@@ -229,13 +233,15 @@ public class ImportSource {
         }
 
 
-//        if (str == null) {
-//            RichPopup impSrcPopup =
-//                (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
-//            if (impSrcPopup != null) {
-//                impSrcPopup.cancel();
-//            }
-//        }
+        if (str == null) {
+            RichPopup impSrcPopup =
+                (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+            if (impSrcPopup != null) {
+                impSrcPopup.cancel();
+            }
+        }
+        RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
+
     }
 
     public void setInputFileBinding(RichInputFile inputFileBinding) {
@@ -402,6 +408,10 @@ public class ImportSource {
         UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
         uiComp.processUpdates(FacesContext.getCurrentInstance());
         System.out.println("Inside new File Uploaded");
-        dialogActionListener(null);
+        //dialogActionListener(null);
+    }
+    
+    public String getRefreshToken(){
+        return String.valueOf(System.currentTimeMillis()) ;
     }
 }

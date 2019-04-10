@@ -12,13 +12,25 @@ color:blue;
 font-weight:bold
 }
 
+af|commandToolbarButton{
+
+}
+
+af|panelGroupLayout{
+
+}
+
+
+af|panelSplitter{
+
+ 
+}
+
+
 .AFDefaultFontFamily:alias {
        font-family: Tahoma, Verdana, Helvetica, sans-serif;
 }
 
-af|inputText::content {
-         background-color: red;
-}
 
 af|panelBox::medium af|panelBox::top-end:rtl {
           background-image: url(/skins/purple/images/panelBoxStart.png);

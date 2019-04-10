@@ -6,6 +6,8 @@ import javax.faces.event.ActionEvent;
 
 import oracle.adf.controller.TaskFlowId;
 
+import oracle.adf.view.rich.component.rich.RichPopup;
+
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 
 public class LoadDynamicRegionBean {
@@ -13,6 +15,8 @@ public class LoadDynamicRegionBean {
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml#ConfiguratorFlow";
     private String quoteTFId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml#QuotingFlow";
+    private String quoteTFUpdateId =
+        "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml#QuoteUpdateFlow";
     private String viewReferenceTFId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow";
     private String currentTF = "configurator";
@@ -29,9 +33,10 @@ public class LoadDynamicRegionBean {
         } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
             System.out.println("Return View Ref");
             return TaskFlowId.parse(viewReferenceTFId);
-        } else
-
-        {
+        } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
+            System.out.println("Quote Update::");
+            return TaskFlowId.parse(quoteTFUpdateId);
+        } else {
             System.out.println("Return Quote");
             return TaskFlowId.parse(quoteTFId);
         }
@@ -75,30 +80,53 @@ public class LoadDynamicRegionBean {
     }
 
     public String getNavString() {
-        String importSource = null;
+        String importSource = null, quoteNumber = null;
         HashMap inputParamsMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
         if (inputParamsMap != null && !inputParamsMap.isEmpty()) {
             if (inputParamsMap.get("importSource") != null) {
                 importSource = (String)inputParamsMap.get("importSource");
             }
-//            if (inputParamsMap.get("quoteNumber") != null) {
-//                quoteNumber = (String)inputParamsMap.get("quoteNumber");
-//            }
-//            if (inputParamsMap.get("reuseQuote") != null) {
-//                reuseQuote = (Boolean)inputParamsMap.get("reuseQuote");
-//            }
-//            if (inputParamsMap.get("copyRefConf") != null) {
-//                copyRefConf = (Boolean)inputParamsMap.get("copyRefConf");
-//            }
+            if (inputParamsMap.get("quoteNumber") != null) {
+                quoteNumber = (String)inputParamsMap.get("quoteNumber");
+            }
+            //            if (inputParamsMap.get("reuseQuote") != null) {
+            //                reuseQuote = (Boolean)inputParamsMap.get("reuseQuote");
+            //            }
+            //            if (inputParamsMap.get("copyRefConf") != null) {
+            //                copyRefConf = (Boolean)inputParamsMap.get("copyRefConf");
+            //            }
         }
+        //        if (importSource != null &&
+        //            (importSource.equalsIgnoreCase("BUDGET_QUOTE") ||
+        //             importSource.equalsIgnoreCase("FORMAL_QUOTE")))
+        //            return "quote";
         if (importSource != null &&
-            (importSource.equalsIgnoreCase("BUDGET_QUOTE") ||
-             importSource.equalsIgnoreCase("FORMAL_QUOTE")))
+            importSource.equalsIgnoreCase("BUDGET_QUOTE") &&
+            quoteNumber != null)
+            return "quoteUpdate";
+        if (importSource == null || quoteNumber == null)
             return "quote";
+
         if (importSource != null && importSource.equalsIgnoreCase("XML_FILE"))
             return "viewRef";
         else
             return "configurator";
+    }
+
+    public void cancelPopup(ActionEvent actionEvent) {
+        RichPopup impSrcPopup =
+            (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
+        if (impSrcPopup != null) {
+            impSrcPopup.cancel();
+        }
+    }
+
+    public void setQuoteTFUpdateId(String quoteTFUpdateId) {
+        this.quoteTFUpdateId = quoteTFUpdateId;
+    }
+
+    public String getQuoteTFUpdateId() {
+        return quoteTFUpdateId;
     }
 }

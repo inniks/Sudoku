@@ -34,5 +34,9 @@
    <Containee
       Name="views"
       PackageName="xxatcust.oracle.apps.sudoku.model.views"
-      ObjectType="JboPackage"/>
+      ObjectType="JboPackage">
+      <DesignTime>
+         <Attr Name="_VO" Value="true"/>
+      </DesignTime>
+   </Containee>
 </JboProject>

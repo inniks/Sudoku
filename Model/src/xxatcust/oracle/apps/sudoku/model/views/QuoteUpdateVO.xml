@@ -270,7 +270,11 @@
     <AttrArray Name="AttrNames">
       <Item Value="Paymentterms"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="PaymentTermsName"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
+      <Item Value="Description"/>
       <Item Value="Name"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -288,7 +292,11 @@
     <AttrArray Name="AttrNames">
       <Item Value="Incoterms"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="IncoTermsMeaning"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
+      <Item Value="Description"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
@@ -297,163 +305,142 @@
     <DisplayCriteria/>
   </ListBinding>
   <SQLQuery>
-    <![CDATA[SELECT AsoQuoteHeadersAll.QUOTE_HEADER_ID, 
-       AsoQuoteHeadersAll.CREATION_DATE, 
-       AsoQuoteHeadersAll.CREATED_BY, 
-       AsoQuoteHeadersAll.LAST_UPDATE_DATE, 
-       AsoQuoteHeadersAll.LAST_UPDATED_BY, 
-       AsoQuoteHeadersAll.LAST_UPDATE_LOGIN, 
-       AsoQuoteHeadersAll.REQUEST_ID, 
-       AsoQuoteHeadersAll.PROGRAM_APPLICATION_ID, 
-       AsoQuoteHeadersAll.PROGRAM_ID, 
-       AsoQuoteHeadersAll.PROGRAM_UPDATE_DATE, 
-       AsoQuoteHeadersAll.ORG_ID, 
-       AsoQuoteHeadersAll.QUOTE_NAME, 
-       AsoQuoteHeadersAll.QUOTE_NUMBER, 
-       AsoQuoteHeadersAll.QUOTE_VERSION, 
-       AsoQuoteHeadersAll.QUOTE_STATUS_ID, 
-       AsoQuoteHeadersAll.QUOTE_SOURCE_CODE, 
-       AsoQuoteHeadersAll.QUOTE_EXPIRATION_DATE, 
-       AsoQuoteHeadersAll.PRICE_FROZEN_DATE, 
-       AsoQuoteHeadersAll.QUOTE_PASSWORD, 
-       AsoQuoteHeadersAll.ORIGINAL_SYSTEM_REFERENCE, 
-       AsoQuoteHeadersAll.PARTY_ID, 
-       AsoQuoteHeadersAll.CUST_ACCOUNT_ID, 
-       AsoQuoteHeadersAll.ORG_CONTACT_ID, 
-       AsoQuoteHeadersAll.PHONE_ID, 
-       AsoQuoteHeadersAll.INVOICE_TO_PARTY_SITE_ID, 
-       AsoQuoteHeadersAll.INVOICE_TO_PARTY_ID, 
-       AsoQuoteHeadersAll.ORIG_MKTG_SOURCE_CODE_ID, 
-       AsoQuoteHeadersAll.MARKETING_SOURCE_CODE_ID, 
-       AsoQuoteHeadersAll.ORDER_TYPE_ID, 
-       AsoQuoteHeadersAll.QUOTE_CATEGORY_CODE, 
-       AsoQuoteHeadersAll.ORDERED_DATE, 
-       AsoQuoteHeadersAll.ACCOUNTING_RULE_ID, 
-       AsoQuoteHeadersAll.INVOICING_RULE_ID, 
-       AsoQuoteHeadersAll.EMPLOYEE_PERSON_ID, 
-       AsoQuoteHeadersAll.PRICE_LIST_ID, 
-       AsoQuoteHeadersAll.CURRENCY_CODE, 
-       AsoQuoteHeadersAll.TOTAL_LIST_PRICE, 
-       AsoQuoteHeadersAll.TOTAL_ADJUSTED_AMOUNT, 
-       AsoQuoteHeadersAll.TOTAL_ADJUSTED_PERCENT, 
-       AsoQuoteHeadersAll.TOTAL_TAX, 
-       AsoQuoteHeadersAll.TOTAL_SHIPPING_CHARGE, 
-       AsoQuoteHeadersAll.SURCHARGE, 
-       AsoQuoteHeadersAll.TOTAL_QUOTE_PRICE, 
-       AsoQuoteHeadersAll.PAYMENT_AMOUNT, 
-       AsoQuoteHeadersAll.EXCHANGE_RATE, 
-       AsoQuoteHeadersAll.EXCHANGE_TYPE_CODE, 
-       AsoQuoteHeadersAll.EXCHANGE_RATE_DATE, 
-       AsoQuoteHeadersAll.CONTRACT_ID, 
-       AsoQuoteHeadersAll.SALES_CHANNEL_CODE, 
-       AsoQuoteHeadersAll.ORDER_ID, 
-       AsoQuoteHeadersAll.ATTRIBUTE_CATEGORY, 
-       AsoQuoteHeadersAll.ATTRIBUTE1, 
-       AsoQuoteHeadersAll.ATTRIBUTE2, 
-       AsoQuoteHeadersAll.ATTRIBUTE3, 
-       AsoQuoteHeadersAll.ATTRIBUTE4, 
-       AsoQuoteHeadersAll.ATTRIBUTE5, 
-       AsoQuoteHeadersAll.ATTRIBUTE6, 
-       AsoQuoteHeadersAll.ATTRIBUTE7, 
-       AsoQuoteHeadersAll.ATTRIBUTE8, 
-       AsoQuoteHeadersAll.ATTRIBUTE9, 
-       AsoQuoteHeadersAll.ATTRIBUTE10, 
-       AsoQuoteHeadersAll.ATTRIBUTE11, 
-       AsoQuoteHeadersAll.ATTRIBUTE12, 
-       AsoQuoteHeadersAll.ATTRIBUTE13, 
-       AsoQuoteHeadersAll.ATTRIBUTE14, 
-       AsoQuoteHeadersAll.ATTRIBUTE15, 
-       AsoQuoteHeadersAll.SECURITY_GROUP_ID, 
-       AsoQuoteHeadersAll.OBJECT_VERSION_NUMBER, 
-       AsoQuoteHeadersAll.INVOICE_TO_CUST_ACCOUNT_ID, 
-       AsoQuoteHeadersAll.RESOURCE_ID, 
-       AsoQuoteHeadersAll.CONTRACT_TEMPLATE_ID, 
-       AsoQuoteHeadersAll.CONTRACT_TEMPLATE_MAJOR_VER, 
-       AsoQuoteHeadersAll.CONTRACT_REQUESTER_ID, 
-       AsoQuoteHeadersAll.CONTRACT_APPROVAL_LEVEL, 
-       AsoQuoteHeadersAll.PUBLISH_FLAG, 
-       AsoQuoteHeadersAll.RESOURCE_GRP_ID, 
-       AsoQuoteHeadersAll.SOLD_TO_PARTY_SITE_ID, 
-       AsoQuoteHeadersAll.DISPLAY_ARITHMETIC_OPERATOR, 
-       AsoQuoteHeadersAll.MAX_VERSION_FLAG, 
-       AsoQuoteHeadersAll.QUOTE_DESCRIPTION, 
-       AsoQuoteHeadersAll.QUOTE_TYPE, 
-       AsoQuoteHeadersAll.MINISITE_ID, 
-       AsoQuoteHeadersAll.CUST_PARTY_ID, 
-       AsoQuoteHeadersAll.INVOICE_TO_CUST_PARTY_ID, 
-       AsoQuoteHeadersAll.PRICING_STATUS_INDICATOR, 
-       AsoQuoteHeadersAll.TAX_STATUS_INDICATOR, 
-       AsoQuoteHeadersAll.PRICE_UPDATED_DATE, 
-       AsoQuoteHeadersAll.TAX_UPDATED_DATE, 
-       AsoQuoteHeadersAll.RECALCULATE_FLAG, 
-       AsoQuoteHeadersAll.PRICE_REQUEST_ID, 
-       AsoQuoteHeadersAll.CREDIT_UPDATE_DATE, 
-       AsoQuoteHeadersAll.CUSTOMER_NAME_AND_TITLE, 
-       AsoQuoteHeadersAll.CUSTOMER_SIGNATURE_DATE, 
-       AsoQuoteHeadersAll.SUPPLIER_NAME_AND_TITLE, 
-       AsoQuoteHeadersAll.SUPPLIER_SIGNATURE_DATE, 
-       AsoQuoteHeadersAll.END_CUSTOMER_PARTY_ID, 
-       AsoQuoteHeadersAll.END_CUSTOMER_PARTY_SITE_ID, 
-       AsoQuoteHeadersAll.END_CUSTOMER_CUST_ACCOUNT_ID, 
-       AsoQuoteHeadersAll.END_CUSTOMER_CUST_PARTY_ID, 
-       AsoQuoteHeadersAll.AUTOMATIC_PRICE_FLAG, 
-       AsoQuoteHeadersAll.AUTOMATIC_TAX_FLAG, 
-       AsoQuoteHeadersAll.ASSISTANCE_REQUESTED, 
-       AsoQuoteHeadersAll.ASSISTANCE_REASON_CODE, 
-       AsoQuoteHeadersAll.HEADER_PAYNOW_CHARGES, 
-       AsoQuoteHeadersAll.ATTRIBUTE16, 
-       AsoQuoteHeadersAll.ATTRIBUTE17, 
-       AsoQuoteHeadersAll.ATTRIBUTE18, 
-       AsoQuoteHeadersAll.ATTRIBUTE19, 
-       AsoQuoteHeadersAll.ATTRIBUTE20, 
-       AsoQuoteHeadersAll.PRODUCT_FISC_CLASSIFICATION, 
-       AsoQuoteHeadersAll.TRX_BUSINESS_CATEGORY,
-       HP.party_name CustomerName, 
-       hou.name  OperatingUnitName, 
-       hcaa.Account_number CustomerNumber, 
-       qlhb.name pricelistName,  
-       fctl.NAME CurrencyName,
-       ottl.name OrderTypeName,
-       flv.MEANING SalesChannel,
-       oat.NAME AgrimentName,  
-       jreb.source_name SalesRepresentative,  
-       ppf.full_name BusinessCenterCsr,  
-       rtt.description PaymentTerms,  
-       flv1.Description IncoTerms
-FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll,HZ_PARTIES HP, hr_operating_units HOU,HZ_CUST_accounts_all hcaa, 
-QP_LIST_HEADERS_VL qlhb,
-fnd_currencies_tl fctl,
-oe_transaction_types_tl ottl,
-fnd_lookup_values flv,
-oe_agreements_tl oat,
-jtf_rs_resource_extns jreb,
-per_all_people_f ppf,
-ASO_PAYMENTS ASP,
-ra_terms_tl rtt,
-ASO_SHIPMENTS ASS,
-fnd_lookup_values flv1
-where hp.party_id=AsoQuoteHeadersAll.party_id
-and HOU.organization_id=AsoQuoteHeadersAll.org_id
-and hcaa.party_id=hp.party_id
-and hcaa.cust_account_id=AsoQuoteHeadersAll.cust_account_id
-and AsoQuoteHeadersAll.price_list_id=qlhb.list_header_id
-and AsoQuoteHeadersAll.currency_code=fctl.currency_code
-and AsoQuoteHeadersAll.order_type_id=ottl.transaction_type_id
-and flv.lookup_type = 'SALES_CHANNEL'
-and AsoQuoteHeadersAll.sales_channel_code=flv.LOOKUP_CODE
-AND flv.enabled_flag = 'Y' 
-AND flv.language = USERENV('LANG') 
-AND flv.view_application_id=660
-and trunc(nvl(flv.start_date_active, sysdate)) <= trunc(sysdate) AND trunc(nvl(flv.end_date_active, sysdate)) >= trunc(sysdate) 
-and oat.agreement_id=AsoQuoteHeadersAll.CONTRACT_ID
-and jreb.resource_id=AsoQuoteHeadersAll.resource_id
-and ppf.person_id=AsoQuoteHeadersAll.ATTRIBUTE10
-and AsoQuoteHeadersAll.QUOTE_HEADER_ID=ASP.QUOTE_HEADER_ID
-AND ASP.PAYMENT_TERM_ID=rtt.term_id 
-and AsoQuoteHeadersAll.QUOTE_HEADER_ID=ASS.QUOTE_HEADER_ID
-and ASS.FOB_CODE=flv1.lookup_code
-and flv1.lookup_type = 'FOB'
-and AsoQuoteHeadersAll.quote_number = :bindQuoteNum]]>
+    <![CDATA[SELECT AsoQuoteHeadersAll.QUOTE_HEADER_ID,
+  AsoQuoteHeadersAll.CREATION_DATE,
+  AsoQuoteHeadersAll.CREATED_BY,
+  AsoQuoteHeadersAll.LAST_UPDATE_DATE,
+  AsoQuoteHeadersAll.LAST_UPDATED_BY,
+  AsoQuoteHeadersAll.LAST_UPDATE_LOGIN,
+  AsoQuoteHeadersAll.REQUEST_ID,
+  AsoQuoteHeadersAll.PROGRAM_APPLICATION_ID,
+  AsoQuoteHeadersAll.PROGRAM_ID,
+  AsoQuoteHeadersAll.PROGRAM_UPDATE_DATE,
+  AsoQuoteHeadersAll.ORG_ID,
+  AsoQuoteHeadersAll.QUOTE_NAME,
+  AsoQuoteHeadersAll.QUOTE_NUMBER,
+  AsoQuoteHeadersAll.QUOTE_VERSION,
+  AsoQuoteHeadersAll.QUOTE_STATUS_ID,
+  AsoQuoteHeadersAll.QUOTE_SOURCE_CODE,
+  AsoQuoteHeadersAll.QUOTE_EXPIRATION_DATE,
+  AsoQuoteHeadersAll.PRICE_FROZEN_DATE,
+  AsoQuoteHeadersAll.QUOTE_PASSWORD,
+  AsoQuoteHeadersAll.ORIGINAL_SYSTEM_REFERENCE,
+  AsoQuoteHeadersAll.PARTY_ID,
+  AsoQuoteHeadersAll.CUST_ACCOUNT_ID,
+  AsoQuoteHeadersAll.ORG_CONTACT_ID,
+  AsoQuoteHeadersAll.PHONE_ID,
+  AsoQuoteHeadersAll.INVOICE_TO_PARTY_SITE_ID,
+  AsoQuoteHeadersAll.INVOICE_TO_PARTY_ID,
+  AsoQuoteHeadersAll.ORIG_MKTG_SOURCE_CODE_ID,
+  AsoQuoteHeadersAll.MARKETING_SOURCE_CODE_ID,
+  AsoQuoteHeadersAll.ORDER_TYPE_ID,
+  AsoQuoteHeadersAll.QUOTE_CATEGORY_CODE,
+  AsoQuoteHeadersAll.ORDERED_DATE,
+  AsoQuoteHeadersAll.ACCOUNTING_RULE_ID,
+  AsoQuoteHeadersAll.INVOICING_RULE_ID,
+  AsoQuoteHeadersAll.EMPLOYEE_PERSON_ID,
+  AsoQuoteHeadersAll.PRICE_LIST_ID,
+  AsoQuoteHeadersAll.CURRENCY_CODE,
+  AsoQuoteHeadersAll.TOTAL_LIST_PRICE,
+  AsoQuoteHeadersAll.TOTAL_ADJUSTED_AMOUNT,
+  AsoQuoteHeadersAll.TOTAL_ADJUSTED_PERCENT,
+  AsoQuoteHeadersAll.TOTAL_TAX,
+  AsoQuoteHeadersAll.TOTAL_SHIPPING_CHARGE,
+  AsoQuoteHeadersAll.SURCHARGE,
+  AsoQuoteHeadersAll.TOTAL_QUOTE_PRICE,
+  AsoQuoteHeadersAll.PAYMENT_AMOUNT,
+  AsoQuoteHeadersAll.EXCHANGE_RATE,
+  AsoQuoteHeadersAll.EXCHANGE_TYPE_CODE,
+  AsoQuoteHeadersAll.EXCHANGE_RATE_DATE,
+  AsoQuoteHeadersAll.CONTRACT_ID,
+  AsoQuoteHeadersAll.SALES_CHANNEL_CODE,
+  AsoQuoteHeadersAll.ORDER_ID,
+  AsoQuoteHeadersAll.ATTRIBUTE_CATEGORY,
+  AsoQuoteHeadersAll.ATTRIBUTE1,
+  AsoQuoteHeadersAll.ATTRIBUTE2,
+  AsoQuoteHeadersAll.ATTRIBUTE3,
+  AsoQuoteHeadersAll.ATTRIBUTE4,
+  AsoQuoteHeadersAll.ATTRIBUTE5,
+  AsoQuoteHeadersAll.ATTRIBUTE6,
+  AsoQuoteHeadersAll.ATTRIBUTE7,
+  AsoQuoteHeadersAll.ATTRIBUTE8,
+  AsoQuoteHeadersAll.ATTRIBUTE9,
+  AsoQuoteHeadersAll.ATTRIBUTE10,
+  AsoQuoteHeadersAll.ATTRIBUTE11,
+  AsoQuoteHeadersAll.ATTRIBUTE12,
+  AsoQuoteHeadersAll.ATTRIBUTE13,
+  AsoQuoteHeadersAll.ATTRIBUTE14,
+  AsoQuoteHeadersAll.ATTRIBUTE15,
+  AsoQuoteHeadersAll.SECURITY_GROUP_ID,
+  AsoQuoteHeadersAll.OBJECT_VERSION_NUMBER,
+  AsoQuoteHeadersAll.INVOICE_TO_CUST_ACCOUNT_ID,
+  AsoQuoteHeadersAll.RESOURCE_ID,
+  AsoQuoteHeadersAll.CONTRACT_TEMPLATE_ID,
+  AsoQuoteHeadersAll.CONTRACT_TEMPLATE_MAJOR_VER,
+  AsoQuoteHeadersAll.CONTRACT_REQUESTER_ID,
+  AsoQuoteHeadersAll.CONTRACT_APPROVAL_LEVEL,
+  AsoQuoteHeadersAll.PUBLISH_FLAG,
+  AsoQuoteHeadersAll.RESOURCE_GRP_ID,
+  AsoQuoteHeadersAll.SOLD_TO_PARTY_SITE_ID,
+  AsoQuoteHeadersAll.DISPLAY_ARITHMETIC_OPERATOR,
+  AsoQuoteHeadersAll.MAX_VERSION_FLAG,
+  AsoQuoteHeadersAll.QUOTE_DESCRIPTION,
+  AsoQuoteHeadersAll.QUOTE_TYPE,
+  AsoQuoteHeadersAll.MINISITE_ID,
+  AsoQuoteHeadersAll.CUST_PARTY_ID,
+  AsoQuoteHeadersAll.INVOICE_TO_CUST_PARTY_ID,
+  AsoQuoteHeadersAll.PRICING_STATUS_INDICATOR,
+  AsoQuoteHeadersAll.TAX_STATUS_INDICATOR,
+  AsoQuoteHeadersAll.PRICE_UPDATED_DATE,
+  AsoQuoteHeadersAll.TAX_UPDATED_DATE,
+  AsoQuoteHeadersAll.RECALCULATE_FLAG,
+  AsoQuoteHeadersAll.PRICE_REQUEST_ID,
+  AsoQuoteHeadersAll.CREDIT_UPDATE_DATE,
+  AsoQuoteHeadersAll.CUSTOMER_NAME_AND_TITLE,
+  AsoQuoteHeadersAll.CUSTOMER_SIGNATURE_DATE,
+  AsoQuoteHeadersAll.SUPPLIER_NAME_AND_TITLE,
+  AsoQuoteHeadersAll.SUPPLIER_SIGNATURE_DATE,
+  AsoQuoteHeadersAll.END_CUSTOMER_PARTY_ID,
+  AsoQuoteHeadersAll.END_CUSTOMER_PARTY_SITE_ID,
+  AsoQuoteHeadersAll.END_CUSTOMER_CUST_ACCOUNT_ID,
+  AsoQuoteHeadersAll.END_CUSTOMER_CUST_PARTY_ID,
+  AsoQuoteHeadersAll.AUTOMATIC_PRICE_FLAG,
+  AsoQuoteHeadersAll.AUTOMATIC_TAX_FLAG,
+  AsoQuoteHeadersAll.ASSISTANCE_REQUESTED,
+  AsoQuoteHeadersAll.ASSISTANCE_REASON_CODE,
+  AsoQuoteHeadersAll.HEADER_PAYNOW_CHARGES,
+  AsoQuoteHeadersAll.ATTRIBUTE16,
+  AsoQuoteHeadersAll.ATTRIBUTE17,
+  AsoQuoteHeadersAll.ATTRIBUTE18,
+  AsoQuoteHeadersAll.ATTRIBUTE19,
+  AsoQuoteHeadersAll.ATTRIBUTE20,
+  AsoQuoteHeadersAll.PRODUCT_FISC_CLASSIFICATION,
+  AsoQuoteHeadersAll.TRX_BUSINESS_CATEGORY,
+  AsoQuoteHeadersAll.ROWID,
+  (select party_name from hz_parties where party_id = AsoQuoteHeadersAll.party_id) CustomerName,  
+  (select name from hr_operating_units where organization_id=AsoQuoteHeadersAll.org_id)OperatingUnitName,
+  (select Account_number from HZ_CUST_accounts_all where cust_account_id=AsoQuoteHeadersAll.cust_account_id)CustomerNumber,
+  (select name from QP_LIST_HEADERS_VL where list_header_id=AsoQuoteHeadersAll.price_list_id)pricelistName,
+  (select NAME from fnd_currencies_tl where currency_code = AsoQuoteHeadersAll.currency_code)CurrencyName,
+  (select name from oe_transaction_types_tl where transaction_type_id=AsoQuoteHeadersAll.order_type_id) OrderTypeName,
+  (select MEANING from  fnd_lookup_values where  lookup_type = 'SALES_CHANNEL'
+and AsoQuoteHeadersAll.sales_channel_code=LOOKUP_CODE
+AND enabled_flag = 'Y' 
+AND language = USERENV('LANG') 
+AND view_application_id=660)SalesChannel,
+(select NAME from oe_agreements_tl where agreement_id=AsoQuoteHeadersAll.CONTRACT_ID)AgrimentName,
+(select source_name from  jtf_rs_resource_extns where resource_id =AsoQuoteHeadersAll.resource_id)SalesRepresentative,
+(select full_name from per_all_people_f where   person_id=AsoQuoteHeadersAll.ATTRIBUTE10 AND TRUNC (SYSDATE) BETWEEN effective_start_date AND effective_end_date)BusinessCenterCsr,
+(select rtt.description from  ra_terms_tl rtt, ASO_PAYMENTS ASP 
+where ASP.PAYMENT_TERM_ID=rtt.term_id
+AND AsoQuoteHeadersAll.QUOTE_HEADER_ID =ASP.QUOTE_HEADER_ID)PaymentTerms,
+(select flv1.Description from fnd_lookup_values flv1, ASO_SHIPMENTS ASS 
+where flv1.lookup_type = 'FOB' 
+and ASS.FOB_CODE =flv1.lookup_code 
+and AsoQuoteHeadersAll.QUOTE_HEADER_ID          =ASS.QUOTE_HEADER_ID)IncoTerms
+FROM ASO_QUOTE_HEADERS_ALL AsoQuoteHeadersAll
+where AsoQuoteHeadersAll.quote_number =:bindQuoteNum
+and quote_version in(select max(quote_version) from ASO_QUOTE_HEADERS_ALL where quote_number =:bindQuoteNum)]]>
   </SQLQuery>
   <ViewAttribute
     Name="QuoteHeaderId"
@@ -1992,6 +1979,20 @@ and AsoQuoteHeadersAll.quote_number = :bindQuoteNum]]>
     </DesignTime>
   </ViewAttribute>
   <ViewAttribute
+    Name="Rowid1"
+    IsUpdateable="false"
+    IsPersistent="false"
+    IsNotNull="true"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="ROWID"
+    Expression="ROWID"
+    SQLType="VARCHAR">
+    <DesignTime>
+      <Attr Name="_DisplaySize" Value="1"/>
+    </DesignTime>
+  </ViewAttribute>
+  <ViewAttribute
     Name="Customername"
     IsPersistent="false"
     IsNotNull="true"
@@ -2324,6 +2325,24 @@ and AsoQuoteHeadersAll.quote_number = :bindQuoteNum]]>
     SQLType="VARCHAR"/>
   <ViewAttribute
     Name="Discount"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="PaymentTermsName"
+    IsSelected="false"
+    IsPersistent="false"
+    PrecisionRule="true"
+    Type="java.lang.String"
+    ColumnType="VARCHAR2"
+    AliasName="VIEW_ATTR"
+    SQLType="VARCHAR"/>
+  <ViewAttribute
+    Name="IncoTermsMeaning"
     IsSelected="false"
     IsPersistent="false"
     PrecisionRule="true"
