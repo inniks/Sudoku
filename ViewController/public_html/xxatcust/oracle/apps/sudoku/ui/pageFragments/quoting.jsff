@@ -213,7 +213,7 @@
                 <af:commandButton text="Apply" id="cb1"
                                   actionListener="#{pageFlowScope.QuotingBean.saveQuoteDetails}"/>
                 <af:spacer width="10" height="10" id="s18"/>
-                <af:commandButton text="Cancel" id="cb2" immediate="true"
+                <af:commandButton text="Clear" id="cb2" immediate="true"
                                   action="#{pageFlowScope.QuotingBean.clearFields}">
                   <af:resetActionListener/>
                 </af:commandButton>

@@ -57,41 +57,57 @@
             <af:panelGroupLayout id="pgl7" layout="vertical"
                                  partialTriggers="sor1" halign="left">
               <af:panelFormLayout id="pfl2">
-                <af:panelFormLayout id="pfl3">
-                  <af:panelGroupLayout id="pgl8" layout="horizontal">
-                    <af:panelLabelAndMessage label="Budgetary Quote" id="plam1">
-                      <af:inputText id="it1"
-                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
-                                    binding="#{pageFlowScope.ImportSourceBean.budgetQuote}"
-                                    value="#{bindings.BudgetQuoteId.inputValue}"
-                                    required="#{bindings.BudgetQuoteId.hints.mandatory}"
-                                    columns="#{bindings.BudgetQuoteId.hints.displayWidth}"
-                                    maximumLength="#{bindings.BudgetQuoteId.hints.precision}"
-                                    autoSubmit="true"
-                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}">
-                        <f:validator binding="#{bindings.BudgetQuoteId.validator}"/>
-                      </af:inputText>
-                    </af:panelLabelAndMessage>
+                <af:panelGroupLayout id="pgl12">
+                  <af:panelLabelAndMessage label="Budgetary Quote" id="plam1">
+                    <af:inputText id="it1"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'BUDGET_QUOTE'}"
+                                  binding="#{pageFlowScope.ImportSourceBean.budgetQuote}"
+                                  value="#{bindings.BudgetQuoteId.inputValue}"
+                                  required="#{bindings.BudgetQuoteId.hints.mandatory}"
+                                  columns="20"
+                                  maximumLength="#{bindings.BudgetQuoteId.hints.precision}"
+                                  autoSubmit="true"
+                                  valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}">
+                      <f:validator binding="#{bindings.BudgetQuoteId.validator}"/>
+                    </af:inputText>
+                  </af:panelLabelAndMessage>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl13" layout="horizontal">
+                  <af:spacer width="18" height="10" id="s6"/>
+                  <af:panelLabelAndMessage label="Formal Quote" id="pla2m1">
+                    <af:inputText id="it21"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
+                                  binding="#{pageFlowScope.ImportSourceBean.formalQuote}"
+                                  value="#{bindings.FormalQuoteId.inputValue}"
+                                  required="#{bindings.FormalQuoteId.hints.mandatory}"
+                                  columns="20"
+                                  valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
+                                  autoSubmit="true"
+                                  maximumLength="#{bindings.FormalQuoteId.hints.precision}">
+                      <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
+                    </af:inputText>
+                  </af:panelLabelAndMessage>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl14" layout="horizontal">
+                  <af:spacer width="47" height="10" id="s7"/>
+                  <af:panelLabelAndMessage label="Select From Local File System"
+                                           id="plam3">
+                    <af:inputFile id="it111"
+                                  disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
+                                  binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
+                                  styleClass="inputFile" immediate="true"
+                                  valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
+                                  columns="20"/>
+                  </af:panelLabelAndMessage>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl8" layout="horizontal">
                     <af:commandButton text="Search" id="cb1"
                                       actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"
                                       rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
-                <af:panelFormLayout id="pfl4">
+                <af:panelFormLayout id="pfl4" rendered="false">
                   <af:panelGroupLayout id="pgl2" layout="horizontal">
-                    <af:panelLabelAndMessage label="Formal Quote" id="pla2m1">
-                      <af:inputText id="it21"
-                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'FORMAL_QUOTE'}"
-                                    binding="#{pageFlowScope.ImportSourceBean.formalQuote}"
-                                    value="#{bindings.FormalQuoteId.inputValue}"
-                                    required="#{bindings.FormalQuoteId.hints.mandatory}"
-                                    columns="#{bindings.FormalQuoteId.hints.displayWidth}"
-                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
-                                    autoSubmit="true"
-                                    maximumLength="#{bindings.FormalQuoteId.hints.precision}">
-                        <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
-                      </af:inputText>
-                    </af:panelLabelAndMessage>
                     <af:commandButton text="Search" id="cb2" rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
@@ -104,23 +120,19 @@
                     <af:commandButton text="Search" id="cb3" rendered="false"/>
                   </af:panelGroupLayout>
                 </af:panelFormLayout>
-                <af:panelFormLayout id="pfl6">
+                <af:panelFormLayout id="pfl6" rendered="false">
                   <af:panelGroupLayout id="pgl10" layout="horizontal">
-                    <af:panelLabelAndMessage label="Select From Local File System" id="plam3">
-                      <af:inputFile id="it111"
-                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
-                                    binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
-                                    styleClass="inputFile" immediate="true"
-                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"/>
-                    </af:panelLabelAndMessage>
                     <af:commandButton text="Call Configurator" id="cb4"
                                       rendered="false"/>
                   </af:panelGroupLayout>
-                </af:panelFormLayout>
+               
               </af:panelFormLayout>
             </af:panelGroupLayout>
           </af:panelFormLayout>
-          <af:panelGroupLayout id="pgl11" halign="end">
+          <af:spacer width="10" height="10" id="s10"/>
+          <af:panelGroupLayout id="pgl11" layout="horizontal"
+                               styleClass="AFStretchWidth">
+            <af:spacer width="230" height="10" id="s11"/>
             <af:toolbar id="t1">
               <af:commandToolbarButton text="Ok" id="ctb1"
                                        actionListener="#{pageFlowScope.ImportSourceBean.dialogActionListener}"

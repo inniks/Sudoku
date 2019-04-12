@@ -76,7 +76,8 @@ public class LoadDynamicRegionBean {
     }
 
     public String getNavString() {
-        String importSource = null, quoteNumber = null;
+        String importSource = null, quoteNumber = null, quoteNumFromSession =
+            null;
         HashMap inputParamsMap =
             (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");
         if (inputParamsMap != null && !inputParamsMap.isEmpty()) {
@@ -88,11 +89,14 @@ public class LoadDynamicRegionBean {
             }
         }
 
+        quoteNumFromSession =
+                (String)ADFUtils.getSessionScopeValue("quoteNumber");
+        System.out.println("Quote Number is  " + quoteNumber);
         if (importSource != null &&
-            importSource.equalsIgnoreCase("BUDGET_QUOTE") &&
-            quoteNumber != null)
+            (importSource.equalsIgnoreCase("BUDGET_QUOTE")||importSource.equalsIgnoreCase("FORMAL_QUOTE")) &&
+            quoteNumFromSession != null)
             return "quoteUpdate";
-        if (importSource == null || quoteNumber == null)
+        if (importSource == null || quoteNumFromSession == null)
             return "quote";
 
         if (importSource != null && importSource.equalsIgnoreCase("XML_FILE"))

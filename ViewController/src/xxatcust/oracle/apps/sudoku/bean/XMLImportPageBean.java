@@ -301,14 +301,18 @@ public class XMLImportPageBean {
     public ChildPropertyTreeModel getCategoryTree() {
 
         try {
-            StringBuilder errMessage = new StringBuilder("<html><body>");
+            StringBuilder errMessage = new StringBuilder("Error");
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
-            String impSrcChanged = (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
-            System.out.println("Get Category Tree "+categoryTree+" RefreshImport "+refreshImport+" Parent Obj "+parentObj+" impSrcChnged "+impSrcChanged);
-            if(impSrcChanged!=null && impSrcChanged.equalsIgnoreCase("Y")){
-                categoryTree = null ;
+            String impSrcChanged =
+                (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
+            System.out.println("Get Category Tree " + categoryTree +
+                               " RefreshImport " + refreshImport +
+                               " Parent Obj " + parentObj + " impSrcChnged " +
+                               impSrcChanged);
+            if (impSrcChanged != null && impSrcChanged.equalsIgnoreCase("Y")) {
+                categoryTree = null;
                 quoteTotal.setValue(null);
             }
             if (categoryTree == null && refreshImport != null &&
@@ -409,26 +413,25 @@ public class XMLImportPageBean {
                                 String key = entry.getKey();
                                 ArrayList<String> value = entry.getValue();
                                 for (String str : value) {
-                                    errMessage.append("<p><b>" + str +
-                                                      "</b></p>");
+                                    errMessage.append(str);
                                     //errMessage.append(str) ;
                                 }
                             }
 
-                            errMessage.append("</body></html>");
+                           // errMessage.append("</body></html>");
 
                         }
                         System.out.println("Debug 0.1");
                         if (errorMessages != null &&
                             errorMessages.size() > 0) {
                             for (String str : errorMessages) {
-                                errMessage.append("<p><b>" + str + "</b></p>");
+                                errMessage.append(str);
                                 //errMessage.append(str) ;
                             }
-                            errMessage.append("</body></html>");
+                            //errMessage.append("</body></html>");
                         }
                         if (errMessage != null &&
-                            !errMessage.toString().equalsIgnoreCase("<html><body>")) {
+                            !errMessage.toString().equalsIgnoreCase("Error")) {
                             validationError.setValue("Exception occured " +
                                                      errMessage.toString()); /// Probable change 3
                             RichPopup.PopupHints hints =
@@ -452,8 +455,8 @@ public class XMLImportPageBean {
                         System.out.println("Model Name is " + modelName);
                     }
                     if (errMessage != null &&
-                        errMessage.toString().equalsIgnoreCase("<html><body>")) {
-                        ADFUtils.setSessionScopeValue("quoteNumber", null);//If exception occurs , Quoting should be loaded in create mode, Not in update mode
+                        errMessage.toString().equalsIgnoreCase("Error")) {
+
                         System.out.println("Debug ---1");
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
@@ -542,6 +545,8 @@ public class XMLImportPageBean {
                                 new ChildPropertyTreeModel(root, "childNodes");
 
                     } else {
+                        ADFUtils.setSessionScopeValue("quoteNumber",
+                                                      null); //If exception occurs , Quoting should be loaded in create mode, Not in update mode
                         root = new ArrayList();
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
@@ -558,7 +563,7 @@ public class XMLImportPageBean {
             //e.printStackTrace();
         } finally {
             //cleanup
-           // ADFUtils.setSessionScopeValue("refreshImport", null);
+            // ADFUtils.setSessionScopeValue("refreshImport", null);
             //            ADFUtils.setSessionScopeValue("parentObject", null);
             // categoryTree = null ;
             ADFUtils.setSessionScopeValue("ImpSrcChanged", null);

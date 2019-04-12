@@ -59,7 +59,6 @@
                   <af:spacer width="10" height="10" id="s2"/>
                   <af:selectOneChoice value="#{bindings.Saleschannel.inputValue}"
                                       label="#{bindings.Saleschannel.label}"
-                                      required="#{bindings.Saleschannel.hints.mandatory}"
                                       shortDesc="#{bindings.Saleschannel.hints.tooltip}"
                                       id="soc3" contentStyle="width:138.0px">
                     <f:selectItems value="#{bindings.Saleschannel.items}"
