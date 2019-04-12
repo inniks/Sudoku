@@ -52,10 +52,6 @@
                                       inlineStyle="font-size:small; color:Navy;"/>
                 </af:panelLabelAndMessage>
                 <af:spacer width="10" height="10" id="s16" rendered="false"/>
-                <af:panelLabelAndMessage label="Currency :" id="plam4">
-                  <af:outputText value="USD" id="ot13"
-                                 inlineStyle="font-size:small; color:Navy; font-weight:bolder;"/>
-                </af:panelLabelAndMessage>
               </af:panelGroupLayout>
             </af:panelGroupLayout>
             <af:spacer width="10" height="10" id="s18"/>
@@ -64,7 +60,8 @@
             <af:group id="g1">
               <af:commandImageLink id="gil1" shortDesc="Refresh the view..."
                                    icon="/Resources/images/refresh.png"
-                                   actionListener="#{XMLImportPageBean.refreshView}"/>
+                                   actionListener="#{XMLImportPageBean.refreshView}"
+                                   rendered="false"/>
               <af:spacer width="10" height="10" id="s27"/>
               <af:statusIndicator id="si1" shortDesc="Processing....."
                                   rendered="false"/>
@@ -94,6 +91,11 @@
                                      id="ctb5">
               <af:showPopupBehavior popupId="wrnPop" triggerType="click"/>
             </af:commandToolbarButton>
+            <af:spacer width="50" height="10" id="s25"/>
+            <af:panelLabelAndMessage label="Currency :" id="plam4">
+              <af:outputText value="USD" id="ot13"
+                             inlineStyle="font-size:small; color:Navy; font-weight:bolder;"/>
+            </af:panelLabelAndMessage>
           </af:toolbar>
         </af:panelHeader>
         <!--   <af:resource type="css" source="/css/Style.css"/> -->

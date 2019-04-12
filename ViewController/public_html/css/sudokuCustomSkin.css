@@ -12,6 +12,16 @@ color:blue;
 font-weight:bold
 }
 
+
+af|button {
+    width: 150px;
+    text-align: center;
+    vertical-align: bottom;
+    color: green;
+    border: skyblue 2.0px solid;
+    font-style: italic;
+}
+
 af|commandToolbarButton{
 
 }

@@ -7,7 +7,7 @@
     <af:document id="d1" title="Sudoku Dashboard">
       <af:messages id="m1"/>
       <af:form id="f1" usesUpload="true">
-        <af:panelStretchLayout id="psl1" topHeight="120px" endWidth="10px"
+        <af:panelStretchLayout id="psl1" topHeight="80px" endWidth="10px"
                                bottomHeight="30px" startWidth="10px"
                                dimensionsFrom="children">
           <f:facet name="bottom">
@@ -43,7 +43,7 @@
                 </af:panelGroupLayout>
               </af:popup>
               <af:region value="#{bindings.dynamicRegion1.regionModel}"
-                         id="r1"/>
+                         id="r1" partialTriggers="::imSrcP1"/>
             </af:panelGroupLayout>
           </f:facet>
           <f:facet name="start">
@@ -61,7 +61,13 @@
                 <af:panelGroupLayout id="pgl_11" layout="horizontal"
                                      styleClass="AFStretchWidth">
                   <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
-                    <af:spacer width="6" height="10" id="pt_s6"/>
+                    <af:panelGroupLayout id="pt_pgl10" halign="start"
+                                         layout="horizontal">
+                      <af:image id="pt_i1" source="/Resources/images/adv.gif"
+                                inlineStyle="width:215px;"/>
+                      <af:spacer width="10" height="10" id="s1"/>
+                      <af:statusIndicator id="si1" inlineStyle="color:Red;"/>
+                    </af:panelGroupLayout>
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pgl0" layout="horizontal"
                                        halign="right" visible="false"/>
@@ -69,42 +75,17 @@
                 <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
                                      halign="center"
                                      styleClass="AFStretchWidth">
-                                     <af:panelGroupLayout id="pt_pgl3" layout="vertical"
-                                       styleClass="AFStretchWidth"
-                                                          halign="left">
-                    <af:panelGroupLayout id="pt_pgl10" halign="end">
-                      <af:image id="pt_i1" source="/Resources/images/adv.gif"
-                                inlineStyle="width:215px;"/>
-                      <af:statusIndicator id="si1"/>
-                    </af:panelGroupLayout>
-                    <af:spacer width="20" height="1" id="spacer1"/>
-                    <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
-                                         halign="left" valign="baseline">
-                      <af:commandImageLink id="pt_cil2"
-                                           icon="/Resources/images/icons8-shutdown-32.png"
-                                           actionListener="#{pageFlowScope.TemplateBean.logout}"
-                                           shortDesc="Logout.."/>
-                      <af:spacer width="20" height="10" id="pt_s2"/>
-                      <af:commandImageLink id="pt_cil1"
-                                           icon="/Resources/images/icons8-home-page-32.png"
-                                           actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
-                                           shortDesc="Redirect to EBS Home.."
-                                           rendered="true"/>
-                    </af:panelGroupLayout>
-                  </af:panelGroupLayout>
                   <af:panelGroupLayout id="pgl_3" layout="horizontal"
                                        halign="center" valign="bottom">
                     <af:toolbar id="t1">
                       <af:panelGroupLayout id="pgl_4" layout="horizontal"
                                            partialTriggers="ct2b1">
                         <af:commandToolbarButton text="Import Reference Configuration"
-                                                 id="ct2b1"
-                                                 inlineStyle="color:Maroon; font-weight:bold;">
+                                                 id="ct2b1">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandToolbarButton>
-                        <af:commandToolbarButton text="View Reference" id="ctb1"
-                                                 inlineStyle="color:Maroon; font-weight:bold;">
+                        <af:commandToolbarButton text="View Reference" id="ctb1">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -120,10 +101,27 @@
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandToolbarButton>
+                        <af:commandImageLink
+                                             id="cil1"
+                                             icon="/Resources/images/rectangle-icon.png"
+                                             inlineStyle="color:Fuchsia;"
+                                             rendered="false"/>
                       </af:panelGroupLayout>
                     </af:toolbar>
                   </af:panelGroupLayout>
-                  
+                  <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
+                                       halign="left" valign="baseline">
+                    <af:commandImageLink id="pt_cil2"
+                                         icon="/Resources/images/icons8-shutdown-32.png"
+                                         actionListener="#{pageFlowScope.TemplateBean.logout}"
+                                         shortDesc="Logout.."/>
+                    <af:spacer width="20" height="10" id="pt_s2"/>
+                    <af:commandImageLink id="pt_cil1"
+                                         icon="/Resources/images/icons8-home-page-32.png"
+                                         actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
+                                         shortDesc="Redirect to EBS Home.."
+                                         rendered="true"/>
+                  </af:panelGroupLayout>
                 </af:panelGroupLayout>
                 <af:spacer width="10" height="10" id="pt_s1"/>
               </af:panelGroupLayout>

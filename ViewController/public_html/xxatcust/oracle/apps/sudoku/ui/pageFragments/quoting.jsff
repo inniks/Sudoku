@@ -29,7 +29,7 @@
       </af:inputText>-->
         <af:panelSplitter id="ps1" splitterPosition="445"
                           styleClass="AFStretchWidth"
-                          inlineStyle="height:40.0cm;">
+                          inlineStyle="height:15.0cm;">
           <f:facet name="first">
             <af:panelGroupLayout layout="scroll"
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
@@ -94,6 +94,23 @@
                     <f:validator binding="#{bindings.CustomerSupportRepresent.validator}"/>
                   </af:inputListOfValues>
                   <af:spacer width="10" height="10" id="s3"/>
+                  <af:inputListOfValues id="customerNumberId"
+                                        popupTitle="Search and Select: #{bindings.CustomerNumber.hints.label}"
+                                        value="#{bindings.CustomerNumber.inputValue}"
+                                        label="Customer Number"
+                                        model="#{bindings.CustomerNumber.listOfValuesModel}"
+                                        columns="#{bindings.CustomerNumber.hints.displayWidth}"
+                                        shortDesc="#{bindings.CustomerNumber.hints.tooltip}"
+                                        partialTriggers="organizationUnitId"
+                                        requiredMessageDetail="Please Enter Customer Number"
+                                        returnPopupListener="#{pageFlowScope.QuotingBean.custNameRPL}"
+                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
+                                        showRequired="true"
+                                        binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
+                                        autoSubmit="true"
+                                        disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}">
+                    <f:validator binding="#{bindings.CustomerNumber.validator}"/>
+                  </af:inputListOfValues>
                   <af:inputListOfValues id="customerNameId"
                                         popupTitle="Search and Select: #{bindings.CustomerName.hints.label}"
                                         value="#{bindings.CustomerName.inputValue}"
@@ -102,28 +119,12 @@
                                         columns="#{bindings.CustomerName.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerName.hints.tooltip}"
                                         autoSubmit="true"
-                                        returnPopupListener="#{pageFlowScope.QuotingBean.custNameRPL}"
                                         requiredMessageDetail="Please Enter Customer Name"
                                         showRequired="true"
                                         binding="#{pageFlowScope.QuotingBean.bindCustomerName}"
                                         disabled="#{pageFlowScope.QuotingBean.isCustEnable eq false}"
-                                        valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
-                                        partialTriggers="organizationUnitId">
+                                        partialTriggers="organizationUnitId customerNumberId">
                     <f:validator binding="#{bindings.CustomerName.validator}"/>
-                  </af:inputListOfValues>
-                  <af:inputListOfValues id="customerNumberId"
-                                        popupTitle="Search and Select: #{bindings.CustomerNumber.hints.label}"
-                                        value="#{bindings.CustomerNumber.inputValue}"
-                                        label="Customer Number"
-                                        model="#{bindings.CustomerNumber.listOfValuesModel}"
-                                        columns="#{bindings.CustomerNumber.hints.displayWidth}"
-                                        shortDesc="#{bindings.CustomerNumber.hints.tooltip}"
-                                        partialTriggers="customerNameId"
-                                        requiredMessageDetail="Please Enter Customer Number"
-                                        showRequired="true"
-                                        binding="#{pageFlowScope.QuotingBean.bindCustNumber}"
-                                        autoSubmit="true">
-                    <f:validator binding="#{bindings.CustomerNumber.validator}"/>
                   </af:inputListOfValues>
                   <af:spacer width="10" height="10" id="s1"/>
                 </af:panelFormLayout>

@@ -742,9 +742,24 @@ public class QuotesVORowImpl extends ViewRowImpl {
      * Gets the attribute value for the calculated attribute CustomerName.
      * @return the CustomerName
      */
+//    public String getCustomerName() {
+//        return (String) getAttributeInternal(CUSTOMERNAME);
+//    }
     public String getCustomerName() {
-        return (String) getAttributeInternal(CUSTOMERNAME);
-    }
+  Object partyId = getAttributeInternal(PARTYID);
+  System.out.println("partyId:"+partyId);
+  String custName = null;
+  if(partyId!=null){
+      Object[] obj = {partyId};
+      Key key = new Key(obj);
+      Row[] rows = this.getCustomerNumberVO().findByKey(key, 1);
+      if(rows!=null &&rows.length>0){
+              custName = (String)rows[0].getAttribute("Customername"); 
+          }
+      System.out.println("custName from VORowImpl:"+custName);
+      }
+  return custName;
+}
 
     /**
      * Sets <code>value</code> as the attribute value for the calculated attribute CustomerName.
@@ -758,24 +773,24 @@ public class QuotesVORowImpl extends ViewRowImpl {
      * Gets the attribute value for the calculated attribute CustomerNumber.
      * @return the CustomerNumber
      */
-//    public String getCustomerNumber() {
-//        return (String) getAttributeInternal(CUSTOMERNUMBER);
-//    }
     public String getCustomerNumber() {
-        Object partyId = getAttributeInternal(PARTYID);
-        String custNum = null;
-        if(partyId!=null){
-            Object[] obj = {partyId};
-            Key key = new Key(obj);
-            Row[] rows = this.getCustomerNumberVO().findByKey(key, 1);
-            if(rows!=null &&rows.length>0){
-                    custNum = (String)rows[0].getAttribute("Accountnumber"); 
-                }
-            
-            }
-        return custNum;
-//        return (String) getAttributeInternal(CUSTOMERNUMBER);
+        return (String) getAttributeInternal(CUSTOMERNUMBER);
     }
+//    public String getCustomerNumber() {
+//        Object partyId = getAttributeInternal(PARTYID);
+//        String custNum = null;
+//        if(partyId!=null){
+//            Object[] obj = {partyId};
+//            Key key = new Key(obj);
+//            Row[] rows = this.getCustomerNumberVO().findByKey(key, 1);
+//            if(rows!=null &&rows.length>0){
+//                    custNum = (String)rows[0].getAttribute("Accountnumber"); 
+//                }
+//            
+//            }
+//        return custNum;
+////        return (String) getAttributeInternal(CUSTOMERNUMBER);
+//    }
 
     /**
      * Sets <code>value</code> as the attribute value for the calculated attribute CustomerNumber.

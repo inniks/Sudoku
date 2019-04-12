@@ -305,7 +305,12 @@ public class XMLImportPageBean {
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
-            System.out.println("Refresh Import is " + refreshImport);
+            String impSrcChanged = (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
+            if(impSrcChanged!=null && impSrcChanged.equalsIgnoreCase("Y")){
+                categoryTree = null ;
+                quoteTotal.setValue(null);
+            }
+            System.out.println("Refresh Import is " + refreshImport+" CategoryTree "+categoryTree+" Parent Ob "+parentObj);
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
                 //resetAllBindings();
@@ -552,9 +557,10 @@ public class XMLImportPageBean {
             //e.printStackTrace();
         } finally {
             //cleanup
-            ADFUtils.setSessionScopeValue("refreshImport", null);
+           // ADFUtils.setSessionScopeValue("refreshImport", null);
             //            ADFUtils.setSessionScopeValue("parentObject", null);
             // categoryTree = null ;
+            ADFUtils.setSessionScopeValue("ImpSrcChanged", null);
         }
         return categoryTree;
 
@@ -904,8 +910,10 @@ public class XMLImportPageBean {
     public RichOutputText getPageInitText() {
         System.out.println("Warning popup created " + warningPopup);
         System.out.println("Error Popup created " + validationError);
-        refreshView(null);
+        //categoryTree = null;
+        //refreshView(null);
         RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
+        //ADFUtils.setSessionScopeValue("refreshImport", null);
         return pageInitText;
     }
 }

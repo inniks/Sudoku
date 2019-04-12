@@ -67,7 +67,8 @@
                                     required="#{bindings.BudgetQuoteId.hints.mandatory}"
                                     columns="#{bindings.BudgetQuoteId.hints.displayWidth}"
                                     maximumLength="#{bindings.BudgetQuoteId.hints.precision}"
-                                    autoSubmit="true">
+                                    autoSubmit="true"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}">
                         <f:validator binding="#{bindings.BudgetQuoteId.validator}"/>
                       </af:inputText>
                     </af:panelLabelAndMessage>
@@ -85,6 +86,8 @@
                                     value="#{bindings.FormalQuoteId.inputValue}"
                                     required="#{bindings.FormalQuoteId.hints.mandatory}"
                                     columns="#{bindings.FormalQuoteId.hints.displayWidth}"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"
+                                    autoSubmit="true"
                                     maximumLength="#{bindings.FormalQuoteId.hints.precision}">
                         <f:validator binding="#{bindings.FormalQuoteId.validator}"/>
                       </af:inputText>
@@ -97,14 +100,6 @@
                     <af:panelLabelAndMessage label="Sales Order Number"
                                              id="pl2am1">
                       <af:spacer width="10" height="10" id="s8"/>
-                      <af:inputText id="i2t1"
-                                    disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'SALES_ORDER'}"
-                                    value="#{bindings.SalesOrderNumber.inputValue}"
-                                    required="#{bindings.SalesOrderNumber.hints.mandatory}"
-                                    columns="#{bindings.SalesOrderNumber.hints.displayWidth}"
-                                    maximumLength="#{bindings.SalesOrderNumber.hints.precision}">
-                        <f:validator binding="#{bindings.SalesOrderNumber.validator}"/>
-                      </af:inputText>
                     </af:panelLabelAndMessage>
                     <af:commandButton text="Search" id="cb3" rendered="false"/>
                   </af:panelGroupLayout>
@@ -115,7 +110,8 @@
                       <af:inputFile id="it111"
                                     disabled="#{pageFlowScope.ImportSourceBean.sourceSelected ne 'XML_FILE'}"
                                     binding="#{pageFlowScope.ImportSourceBean.inputFileBinding}"
-                                    styleClass="inputFile" immediate="true"/>
+                                    styleClass="inputFile" immediate="true"
+                                    valueChangeListener="#{pageFlowScope.ImportSourceBean.valueChanged}"/>
                     </af:panelLabelAndMessage>
                     <af:commandButton text="Call Configurator" id="cb4"
                                       rendered="false"/>

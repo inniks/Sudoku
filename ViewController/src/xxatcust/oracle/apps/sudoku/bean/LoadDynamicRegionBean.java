@@ -28,16 +28,12 @@ public class LoadDynamicRegionBean {
         System.out.println("enter to TaskFLow getDynamicTaskFlowId " +
                            this.getCurrentTF());
         if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
-            System.out.println("Return config");
             return TaskFlowId.parse(taskFlowId);
         } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
-            System.out.println("Return View Ref");
             return TaskFlowId.parse(viewReferenceTFId);
         } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
-            System.out.println("Quote Update::");
             return TaskFlowId.parse(quoteTFUpdateId);
         } else {
-            System.out.println("Return Quote");
             return TaskFlowId.parse(quoteTFId);
         }
 
@@ -90,17 +86,8 @@ public class LoadDynamicRegionBean {
             if (inputParamsMap.get("quoteNumber") != null) {
                 quoteNumber = (String)inputParamsMap.get("quoteNumber");
             }
-            //            if (inputParamsMap.get("reuseQuote") != null) {
-            //                reuseQuote = (Boolean)inputParamsMap.get("reuseQuote");
-            //            }
-            //            if (inputParamsMap.get("copyRefConf") != null) {
-            //                copyRefConf = (Boolean)inputParamsMap.get("copyRefConf");
-            //            }
         }
-        //        if (importSource != null &&
-        //            (importSource.equalsIgnoreCase("BUDGET_QUOTE") ||
-        //             importSource.equalsIgnoreCase("FORMAL_QUOTE")))
-        //            return "quote";
+
         if (importSource != null &&
             importSource.equalsIgnoreCase("BUDGET_QUOTE") &&
             quoteNumber != null)

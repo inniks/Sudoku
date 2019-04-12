@@ -34,11 +34,5 @@
         <Item Value="FormalQuoteId"/>
       </AttrNames>
     </attributeValues>
-    <attributeValues IterBinding="ImportSourceVO1Iterator"
-                     id="SalesOrderNumber">
-      <AttrNames>
-        <Item Value="SalesOrderNumber"/>
-      </AttrNames>
-    </attributeValues>
   </bindings>
 </pageDefinition>

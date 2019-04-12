@@ -541,6 +541,7 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                                  }      
                     getSalesRepDetails(row);
                     getCustSupportRepDetails(row);
+                    getPaymentTermsForUpdate(row);
                     getUpdateQuoteCustmerAddress();
                  iter.closeRowSetIterator();
                     
@@ -570,6 +571,27 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                     }
                 }
             }
+        }
+    
+    public void getPaymentTermsForUpdate(Row row){
+        ViewObjectImpl vo = this.getPaymentTermsVO();
+        if(vo!=null){
+            if(row!=null){
+                System.out.println("PaymentTerms from getPaymentTermsForUpdate method :"+row.getAttribute("Paymentterms"));
+                vo.setWhereClause("description = '"+row.getAttribute("Paymentterms")+"'");
+                vo.executeQuery();
+                    RowSetIterator iter = vo.createRowSetIterator("");
+                    Row PaymentRow = null;
+                    while(iter.hasNext()){
+                    PaymentRow = iter.next();
+                    }
+                        if(PaymentRow !=null){
+                        vo.setCurrentRow(PaymentRow);
+                          row.setAttribute("PaymentTermsName",PaymentRow.getAttribute("Name"));
+                        }
+                }
+            }
+        
         }
     
     public void getCustSupportRepDetails(Row row){
@@ -642,7 +664,6 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     
     public String callUpdateQuoteAPI(){
         ViewObjectImpl quoteVO = this.getQuoteUpdateVO1();
-        
             String returnval = null;
                     StringBuilder errorMsg = new StringBuilder("<html><body>");
                     String returnMessage = "";
@@ -1025,5 +1046,13 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
      */
     public ViewObjectImpl getCustomerSupportRepresentVO() {
         return (ViewObjectImpl)findViewObject("CustomerSupportRepresentVO");
+    }
+
+    /**
+     * Container's getter for PaymentTermsVO.
+     * @return PaymentTermsVO
+     */
+    public ViewObjectImpl getPaymentTermsVO() {
+        return (ViewObjectImpl)findViewObject("PaymentTermsVO");
     }
 }

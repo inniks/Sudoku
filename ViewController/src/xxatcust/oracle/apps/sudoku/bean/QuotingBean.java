@@ -178,9 +178,9 @@ public class QuotingBean {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             fc.addMessage(null, message);
         }
-        //        else if(msg.contains("A new quote has been created")){
-        //         message.setSeverity(FacesMessage.SEVERITY_INFO);
-        //               fc.addMessage(null, message);   }
+                else if(msg.contains("Quote Header Updated Successfully")){
+                 message.setSeverity(FacesMessage.SEVERITY_INFO);
+                       fc.addMessage(null, message);   }
         else {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             fc.addMessage(null, message);

@@ -35,7 +35,7 @@
     </Properties>
   </Variable>
   <Variable
-    Name="bindCustName"
+    Name="bindCustNumber"
     Kind="viewcriteria"
     Type="java.lang.String">
     <Properties>
@@ -280,14 +280,15 @@ WHERE ca.status(+) = 'A'
       Name="vcrow66"
       UpperColumns="1">
       <ViewCriteriaItem
-        Name="Customername"
-        ViewAttribute="Customername"
+        Name="Accountnumber"
+        ViewAttribute="Accountnumber"
         Operator="STARTSWITH"
         Conjunction="AND"
         UpperColumns="1"
         Required="Optional"
-        Value=":bindCustName"
-        IsBindVarValue="true"/>
+        Value=":bindCustNumber"
+        IsBindVarValue="true"
+        GenerateIsNullClauseForBindVars="false"/>
     </ViewCriteriaRow>
   </ViewCriteria>
   <AttrArray Name="KeyAttributes">

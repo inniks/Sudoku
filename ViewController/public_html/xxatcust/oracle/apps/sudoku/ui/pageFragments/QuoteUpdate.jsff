@@ -35,7 +35,7 @@
                                  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
                                  id="pgl25">
               <af:panelGroupLayout id="pgl8" layout="horizontal">
-                <af:spacer width="30" height="10" id="s24"/>
+                <af:spacer width="50" height="10" id="s24"/>
                 <af:panelFormLayout id="pfl1"
                                     >
                   <af:inputText value="#{bindings.Operatingunitname.inputValue}"
@@ -111,7 +111,7 @@
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl26" layout="horizontal"
                                    >
-                <af:spacer width="98" height="10" id="s12"/>
+                <af:spacer width="100" height="10" id="s12"/>
                 <af:outputLabel value="Quote To" id="ol1"
                                 inlineStyle="font-weight:bold; color:Black;"/>
                 <h:inputTextarea id="it9" value="#{bindings.QuoteTo.inputValue}"
@@ -123,6 +123,7 @@
               <af:panelGroupLayout id="pgl21" layout="vertical">
                 <af:panelGroupLayout id="pgl20" valign="middle" halign="left"
                                      layout="horizontal">
+                  <af:spacer width="10" height="10" id="s26"/>
                   <af:outputLabel value="Attention To/Department" id="ol6"
                                   inlineStyle="color:Black; font-weight:bold;"/>
                   <af:panelLabelAndMessage label="Attention To/Department"
@@ -263,6 +264,7 @@
                   <af:panelGroupLayout id="pgl17"
                                        inlineStyle="border-color:Black;"
                                        layout="horizontal">
+                    <af:spacer width="5" height="10" id="s27"/>
                     <af:panelLabelAndMessage label="Advantest Quotation"
                                              id="plam2"/>
                     <af:inputText value="#{bindings.QuoteNumber.inputValue}"

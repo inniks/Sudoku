@@ -3,7 +3,6 @@ package xxatcust.oracle.apps.sudoku.bean;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +19,8 @@ import javax.faces.event.ValueChangeEvent;
 
 import javax.xml.bind.JAXBException;
 
+import oracle.adf.controller.ControllerContext;
+import oracle.adf.controller.ViewPortContext;
 import oracle.adf.model.BindingContext;
 
 import oracle.adf.model.binding.DCIteratorBinding;
@@ -67,6 +68,7 @@ public class ImportSource {
 
     public void importSrcSelected(ValueChangeEvent valueChangeEvent) {
         if (valueChangeEvent.getNewValue() != null) {
+           
             ADFUtils.setSessionScopeValue("inputParamsMap", new HashMap());
             String selectedVal = null;
             UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
@@ -155,6 +157,7 @@ public class ImportSource {
     public void dialogActionListener(ActionEvent actionEvent) {
         UIComponent uiComponent = (UIComponent)actionEvent.getSource();
         uiComponent.processUpdates(FacesContext.getCurrentInstance());
+        ADFContext af = ADFContext.getCurrent();
         //Take Values from VO binding
         String budgetQuoteNum = null;
         String formalQuoteNum = null;
@@ -194,7 +197,7 @@ public class ImportSource {
                 
                 
                 
-                ADFContext af = ADFContext.getCurrent();
+                
                 HashMap inputParamsMap = new HashMap();
                 inputParamsMap.put("importSource", importSource);
                 inputParamsMap.put("quoteNumber", quoteNumber);
@@ -215,6 +218,8 @@ public class ImportSource {
         try {
             if (importSource != null &&
                 importSource.equalsIgnoreCase("XML_FILE")) {
+                
+                af.getSessionScope().put("quoteNumber", null);
                 parseXMLToPojo(xmlFile.getInputStream());
             } else {
                 parseXMLToPojo(null);
@@ -240,7 +245,9 @@ public class ImportSource {
                 impSrcPopup.cancel();
             }
         }
-        RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
+       
+
+        // RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
 
     }
 
@@ -297,6 +304,12 @@ public class ImportSource {
             //Add session and input params
             parent.setSessionDetails(sessionDetails);
             parent.setInputParams(inputParam);
+            //Check if xml file contains quote Numner
+            if(parent!=null && parent.getQheaderObject()!=null && parent.getQheaderObject().getDealObject()!=null){
+               String quoteNumFromXML = parent.getQheaderObject().getDealObject().getQuoteid() ;
+               ADFUtils.setSessionScopeValue("quoteNumber", quoteNumFromXML);
+            }
+            
             _logger.info("Print parent  parseXMLToPojo" + parent);
 
             String jsonStr = JSONUtils.convertObjToJson(parent);
@@ -336,6 +349,7 @@ public class ImportSource {
             _logger.info("Print responseJson  parseXMLToPojo" + responseJson);
             //String responseJson = (String)JSONUtils.convertJsonToObject(null);
             obj = mapper.readValue(responseJson, V93kQuote.class);
+           
 
         }
         ADFUtils.setSessionScopeValue("parentObject", obj);
@@ -410,8 +424,20 @@ public class ImportSource {
         System.out.println("Inside new File Uploaded");
         //dialogActionListener(null);
     }
+    public void dialogReturnListener(ReturnEvent returnEvent) {
+      RequestContext.getCurrentInstance().addPartialTarget(returnEvent.getComponent().getParent().getParent());
+
+    }
     
     public String getRefreshToken(){
         return String.valueOf(System.currentTimeMillis()) ;
+    }
+
+    public void valueChanged(ValueChangeEvent valueChangeEvent) {
+        if(valueChangeEvent!=null && valueChangeEvent.getOldValue()!=valueChangeEvent.getNewValue()){
+            //Some Parameters have changed
+            System.out.println("Value changed in popup");
+            ADFUtils.setSessionScopeValue("ImpSrcChanged", "Y");
+        }
     }
 }
