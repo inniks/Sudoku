@@ -101,7 +101,7 @@
                                         model="#{bindings.CustomerNumber.listOfValuesModel}"
                                         columns="#{bindings.CustomerNumber.hints.displayWidth}"
                                         shortDesc="#{bindings.CustomerNumber.hints.tooltip}"
-                                        partialTriggers="organizationUnitId"
+                                        partialTriggers="organizationUnitId customerNameId"
                                         requiredMessageDetail="Please Enter Customer Number"
                                         returnPopupListener="#{pageFlowScope.QuotingBean.custNameRPL}"
                                         valueChangeListener="#{pageFlowScope.QuotingBean.custNameVCE}"
@@ -130,7 +130,7 @@
                 </af:panelFormLayout>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pgl26" layout="horizontal"
-                                   partialTriggers="customerNameId">
+                                   partialTriggers="customerNameId customerNumberId">
                 <af:spacer width="98" height="10" id="s12"/>
                 <af:outputLabel value="Quote To" id="ol1"
                                 inlineStyle="font-weight:bold; color:Black;"/>
@@ -268,7 +268,7 @@
                                     shortDesc="#{bindings.BusinessAgreement.hints.tooltip}"
                                     id="soc5"
                                     disabled="#{pageFlowScope.QuotingBean.businessAgrement eq false}"
-                                    partialTriggers="customerNameId"
+                                    partialTriggers="customerNameId customerNumberId"
                                     contentStyle="width:138.0px">
                   <f:selectItems value="#{bindings.BusinessAgreement.items}"
                                  id="si5"/>
@@ -392,7 +392,7 @@
               </af:panelBox>
               <af:spacer width="10" height="10" id="s6"/>
               <af:panelGroupLayout id="pgl27" layout="horizontal"
-                                   partialTriggers="customerNameId">
+                                   partialTriggers="customerNameId customerNumberId">
                 <af:spacer width="57" height="10" id="s19"/>
                 <af:outputLabel value="Ship To" id="ol2"
                                 inlineStyle="font-weight:bold; color:Black;"/>

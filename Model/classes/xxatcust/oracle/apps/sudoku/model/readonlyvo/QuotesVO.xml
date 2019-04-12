@@ -177,14 +177,21 @@
     <AttrArray Name="AttrNames">
       <Item Value="CustomerNumber"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="PartyId"/>
+      <Item Value="CustAccid"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="Accountnumber"/>
+      <Item Value="Partyid"/>
+      <Item Value="CustAccountId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Accountnumber"/>
       <Item Value="Customername"/>
     </AttrArray>
-    <DisplayCriteria/>
+    <DisplayCriteria
+      Name="CustomerNameVOCriteria"/>
   </ListBinding>
   <ListBinding
     Name="LOV_SalesChannel"
@@ -562,10 +569,10 @@
       <SchemaBasedProperties>
         <DISPLAYWIDTH
           Value="20"/>
-        <CONTROLTYPE
-          Value="input_text_lov"/>
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVO.CustomerNumber_LABEL"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

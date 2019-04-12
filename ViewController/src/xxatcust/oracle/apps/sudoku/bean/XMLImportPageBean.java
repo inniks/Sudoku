@@ -306,11 +306,11 @@ public class XMLImportPageBean {
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
             String impSrcChanged = (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
+            System.out.println("Get Category Tree "+categoryTree+" RefreshImport "+refreshImport+" Parent Obj "+parentObj+" impSrcChnged "+impSrcChanged);
             if(impSrcChanged!=null && impSrcChanged.equalsIgnoreCase("Y")){
                 categoryTree = null ;
                 quoteTotal.setValue(null);
             }
-            System.out.println("Refresh Import is " + refreshImport+" CategoryTree "+categoryTree+" Parent Ob "+parentObj);
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
                 //resetAllBindings();
@@ -453,6 +453,7 @@ public class XMLImportPageBean {
                     }
                     if (errMessage != null &&
                         errMessage.toString().equalsIgnoreCase("<html><body>")) {
+                        ADFUtils.setSessionScopeValue("quoteNumber", null);//If exception occurs , Quoting should be loaded in create mode, Not in update mode
                         System.out.println("Debug ---1");
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
@@ -908,10 +909,8 @@ public class XMLImportPageBean {
     }
 
     public RichOutputText getPageInitText() {
-        System.out.println("Warning popup created " + warningPopup);
-        System.out.println("Error Popup created " + validationError);
         //categoryTree = null;
-        //refreshView(null);
+        refreshView(null);
         RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
         //ADFUtils.setSessionScopeValue("refreshImport", null);
         return pageInitText;

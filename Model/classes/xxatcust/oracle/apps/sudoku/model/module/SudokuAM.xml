@@ -41,6 +41,9 @@
   <ViewUsage
     Name="CustomerSupportRepresentVO"
     ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.CustomerSupportRepresentVO"/>
+  <ViewUsage
+    Name="PaymentTermsVO"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.PaymentTermsVO"/>
   <ClientInterface>
     <Method
       Name="clearQuoteFields">

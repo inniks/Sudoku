@@ -317,8 +317,14 @@
     <AttrArray Name="AttrNames">
       <Item Value="CustomerName"/>
     </AttrArray>
+    <AttrArray Name="DerivedAttrNames">
+      <Item Value="PartyId"/>
+      <Item Value="CustAccid"/>
+    </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="Customername"/>
+      <Item Value="Partyid"/>
+      <Item Value="CustAccountId"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="Customername"/>

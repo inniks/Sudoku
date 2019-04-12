@@ -34,8 +34,8 @@ import oracle.jbo.ViewCriteria;
 import oracle.jbo.server.ApplicationModuleImpl;
 import oracle.jbo.server.DBTransaction;
 
-import oracle.jbo.server.ViewObjectImpl;
 
+import oracle.jbo.server.ViewObjectImpl;
 
 import xxatcust.oracle.apps.sudoku.model.module.common.SudokuAM;
 //import xxatcust.oracle.apps.sudoku.model.readonlyvo.QuotesVOImpl;
@@ -575,8 +575,11 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
     
     public void getPaymentTermsForUpdate(Row row){
         ViewObjectImpl vo = this.getPaymentTermsVO();
+        
         if(vo!=null){
+            System.out.println("1 "+ vo);
             if(row!=null){
+                System.out.println("2 "+row);
                 System.out.println("PaymentTerms from getPaymentTermsForUpdate method :"+row.getAttribute("Paymentterms"));
                 vo.setWhereClause("description = '"+row.getAttribute("Paymentterms")+"'");
                 vo.executeQuery();
@@ -587,7 +590,9 @@ public class SudokuAMImpl extends ApplicationModuleImpl implements SudokuAM {
                     }
                         if(PaymentRow !=null){
                         vo.setCurrentRow(PaymentRow);
+                        
                           row.setAttribute("PaymentTermsName",PaymentRow.getAttribute("Name"));
+                          System.out.println("Tst "+row.getAttribute("PaymentTermsName"));
                         }
                 }
             }

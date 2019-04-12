@@ -1,11 +1,11 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <task-flow-registry xmlns="http://xmlns.oracle.com/adf/controller/rc">
+   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml" id="QuoteUpdateFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/HomeMenuFlow.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml" id="ImportSrcFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml" id="ConfiguratorFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml" id="QuotingFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
    <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml" id="UploadXMLFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
       <input-parameter name="refreshFlag"/>
    </task-flow-descriptor>
-   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml" id="QuoteUpdateFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
-   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/HomeMenuFlow.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false"/>
-   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuotingFlow.xml" id="QuotingFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
-   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml" id="ImportSrcFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
-   <task-flow-descriptor path="WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ConfiguratorFlow.xml" id="ConfiguratorFlow" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
 </task-flow-registry>

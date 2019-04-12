@@ -236,7 +236,6 @@
                 <af:spacer width="10" height="10" id="s8"/>
                 <af:selectOneChoice value="#{bindings.Agrimentname.inputValue}"
                                     label="Business Agreement"
-                                    required="#{bindings.Agrimentname.hints.mandatory}"
                                     shortDesc="#{bindings.Agrimentname.hints.tooltip}"
                                     id="soc4" contentStyle="width:138.0px">
                   <f:selectItems value="#{bindings.Agrimentname.items}"
