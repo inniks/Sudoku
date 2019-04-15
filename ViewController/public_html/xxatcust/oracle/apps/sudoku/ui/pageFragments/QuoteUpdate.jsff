@@ -116,7 +116,7 @@
                 <h:inputTextarea id="it9" value="#{bindings.QuoteTo.inputValue}"
                                  label="Quote To" disabled="false" cols="25"
                                  readonly="true"
-                                 style="height:23mm; font-weight:bold; color:Black;"/>
+                                 style="height:23mm; font-weight:bold; color:Black;background-color:#e6f2ff;"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="40" id="s5"/>
               <af:panelGroupLayout id="pgl21" layout="vertical">
@@ -359,7 +359,7 @@
                                 inlineStyle="font-weight:bold; color:Black;"/>
                 <h:inputTextarea id="it1" value="#{bindings.ShipTo.inputValue}"
                                  cols="25"
-                                 style="height:23mm; font-weight:bold;"
+                                 style="height:23mm; font-weight:bold;background-color:#e6f2ff;"
                                  readonly="true" disabled="false"/>
               </af:panelGroupLayout>
               <af:spacer width="10" height="10" id="s7"/>

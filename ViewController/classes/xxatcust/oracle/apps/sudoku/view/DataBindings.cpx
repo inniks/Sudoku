@@ -36,6 +36,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
     <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow@initXMLUpload"
           usageId="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
+    <page path="/xxatcust/oracle/apps/sudoku/ui/pages/SkinningDemo.jspx"
+          usageId="xxatcust_oracle_apps_sudoku_view_SkinningDemoPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -66,6 +68,8 @@
           path="xxatcust.oracle.apps.sudoku.pageFlows.QuoteUpdateFlow_QuoteUpdateFlow_getUpdateQuotePageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"
           path="xxatcust.oracle.apps.sudoku.pageFlows.UploadXMLFlow_UploadXMLFlow_initXMLUploadPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_SkinningDemoPageDef"
+          path="xxatcust.oracle.apps.sudoku.ui.pages.SkinningDemoPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

@@ -3,51 +3,106 @@
 @namespace af "http://xmlns.oracle.com/adf/faces/rich";
 @namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
 
-af|panelCollection.myPCClass div[id$='_qbeTbr'] {
-    display: none;
+.AFButtonForeground:alias {
+    color: #C63100; 
+    text-decoration: underline; 
 }
 
-af|commandButton{
-color:blue;
-font-weight:bold
+.AFButtonBorderColor:alias {
+    color: Red; 
+}
+
+.AFButtonGradientStartActiveColor:alias {
+    color: #C60063; 
+}
+
+.AFButtonBorderTopActiveColor:alias {
+    color: #D71D7A; 
+}
+
+.AFButtonBorderActiveColor:alias {
+    color: #BA1166; 
+}
+
+.AFButtonGradientEndActiveColor:alias {
+    color: #73013A; 
+}
+
+.AFTextColor:alias {
+    color: Black; 
+}
+
+/*INFO: Color value exceeded range after adjustment: HSL(0, 0%, -20%)*/
+.AFTextPrimaryColor:alias {
+    color: #000000; 
+}
+
+.AFLabelColor:alias {
+    color: #1C1C1C; 
+}
+
+.AFTextSecondaryColor:alias {
+    color: #1C1C1C; 
+}
+
+.AFTextTertiaryColor:alias {
+    color: #000000; 
+}
+
+.AFPanelBoxHeaderCoreDefault:alias {
+    background-color: #e6f2ff; 
+}
+
+.AFPanelBoxContentCoreDefault:alias {
+    background-color: #e6f2ff; 
 }
 
 
-af|button {
-    width: 150px;
-    text-align: center;
-    vertical-align: bottom;
-    color: green;
-    border: skyblue 2.0px solid;
-    font-style: italic;
+af|selectOneChoice{
+     background-color: #e6f2ff; 
 }
 
-af|commandToolbarButton{
-
+af|inputListOfValues {
+    background-color: #e6f2ff; 
 }
 
-af|panelGroupLayout{
+af|inputText {
+    background-color: #e6f2ff; 
+    }
 
+af|listItem {
+    background-color: #e6f2ff; 
+    color: Black; 
+        }
+
+af|panelLabelAndMessage::label {
+    color: Black; 
 }
 
+af|panelSplitter::pane {
+    }
 
-af|panelSplitter{
-
- 
+af|popup {
+    background-color: #f7f7f7; 
 }
 
-
-.AFDefaultFontFamily:alias {
-       font-family: Tahoma, Verdana, Helvetica, sans-serif;
+af|separator {
+    color: Black; 
 }
 
+af|commandToolbarButton {
+        }
 
-af|panelBox::medium af|panelBox::top-end:rtl {
-          background-image: url(/skins/purple/images/panelBoxStart.png);
-          width:8px; 
-          height:8px
+af|inputFile {
+    background-color: #008484; 
 }
 
-.mysor af|selectOneRadio::content div {
-    padding: 10px 0px 20px 0px; 
+af|inputFile::label {
+    text-align: center; 
 }
+
+af|selectBooleanRadio[theme="medium"] {
+        }
+
+af|commandToolbarButton[theme="medium"] {
+            }

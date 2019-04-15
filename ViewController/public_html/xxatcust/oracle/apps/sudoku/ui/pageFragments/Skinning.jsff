@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps1">
+    <f:facet name="first">
+      <af:panelFormLayout id="pfl1">
+        <f:facet name="footer"/>
+        <af:inputFile label="Label 1" id="if1"/>
+        <af:inputListOfValues label="Label 1"
+                              popupTitle="Search and Result Dialog" id="ilov1"/>
+        <af:inputText label="Label 1" id="it1"/>
+        <af:selectBooleanRadio text="selectBooleanRadio 1" label="Label 1"
+                               id="sbr1"/>
+        <af:selectBooleanCheckbox text="selectBooleanCheckbox 1"
+                                  label="Label 1" id="sbc1"/>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelGroupLayout id="pgl1">
+        <af:commandToolbarButton text="commandToolbarButton 1" id="ctb1"/>
+        <af:commandButton text="commandButton 1" id="cb1"/>
+        <af:panelBox text="PanelBox1" id="pb1">
+          <f:facet name="toolbar"/>
+        </af:panelBox>
+        <af:panelLabelAndMessage label="Label 1" id="plam1">
+          <af:spacer width="10" height="10" id="s1"/>
+          <af:outputText value="outputText1" id="ot1"/>
+        </af:panelLabelAndMessage>
+        <af:selectOneChoice label="Label 1" id="soc1">
+          <af:selectItem label="A" value="A" id="si2"/>
+          <af:selectItem label="B" value="B" id="si1"/>
+        </af:selectOneChoice>
+        <af:inputListOfValues label="Label 2"
+                              popupTitle="Search and Result Dialog" id="ilov2"
+                              disabled="true"/>
+        <af:inputText label="Label 2" id="it2" disabled="true"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>
