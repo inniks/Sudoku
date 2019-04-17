@@ -96,6 +96,9 @@
               <af:outputText value="USD" id="ot13"
                              inlineStyle="font-size:small; color:Navy; font-weight:bolder;"/>
             </af:panelLabelAndMessage>
+            <af:spacer width="10" height="10" id="s29"/>
+            <af:commandToolbarButton text="Export &amp; Download" id="ctb7"
+                                     actionListener="#{XMLImportPageBean.exportDownload}"/>
           </af:toolbar>
         </af:panelHeader>
         <!--   <af:resource type="css" source="/css/Style.css"/> -->
@@ -280,6 +283,18 @@
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
               </af:dialog>
+            </af:popup>
+            <af:popup id="p2" binding="#{XMLImportPageBean.downloadPopup}">
+              <af:panelGroupLayout id="pgl13">
+                <af:inputText label="File Name" id="it1"/>
+                <af:commandButton text="Download" id="cb3"
+                                  actionListener="#{XMLImportPageBean.downloadConfirmation}">
+                  <af:fileDownloadActionListener contentType="text/xml"
+                                                 filename="ExportedConfig"
+                                                 method="#{XMLImportPageBean.downloadFile}"/>
+                </af:commandButton>
+                <af:commandButton text="Cancel" id="cb4"/>
+              </af:panelGroupLayout>
             </af:popup>
             <af:outputText value="outputText1" id="ot17" visible="false"
                            binding="#{XMLImportPageBean.pageInitText}"/>

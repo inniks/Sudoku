@@ -18,6 +18,7 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import javax.xml.validation.Schema;
@@ -81,6 +82,19 @@ public class JaxbParser {
         Schema employeeSchema = sf.newSchema((xsdFile));
         un.setSchema(employeeSchema);
         return parent;
+    }
+    
+    public static void jaxbObjectToXML(V93kQuote v93k){
+        JAXBContext jaxbContext;
+        try {
+            jaxbContext = JAXBContext.newInstance(V93kQuote.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            File file = new File("D://Projects//Advantest//JsonResponse/exportTarget.xml");
+            jaxbMarshaller.marshal(v93k, file);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
     }
 
     public static InputStream trimWhiteSpaces(InputStream inputStream) {

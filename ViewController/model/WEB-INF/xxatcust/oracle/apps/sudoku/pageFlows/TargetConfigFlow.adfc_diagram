@@ -1,0 +1,49 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">TargetConfiguration</property>
+      <property
+         name="page">/xxatcust/oracle/apps/sudoku/ui/pageFragments/TargetConfiguration.jsff</property>
+      <property
+         name="start">false</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>TargetConfiguration&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">158.89648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">337.0</property>
+   </View>
+   <MethodCall
+      id="MethodCall3">
+      <property
+         name="activityId">initTargetConfig</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>initTargetConfig&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">146.59766</property>
+      <property
+         name="x">130.0</property>
+   </MethodCall>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="MethodCall3"
+      to="View2">
+      <property
+         name="fromOutcome">init</property>
+      <property
+         name="sdm:polyPoints">R50,171.0,146.24707,296.0,158.5459,L50</property>
+   </ControlFlowCase>
+</SDM>

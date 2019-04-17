@@ -1081,4 +1081,20 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     public ViewObjectImpl getPaymentTermsVO() {
         return (ViewObjectImpl)findViewObject("PaymentTermsVO");
     }
+
+    /**
+     * Container's getter for RuleSetBaseVO1.
+     * @return RuleSetBaseVO1
+     */
+    public ViewObjectImpl getRuleSetBaseVO1() {
+        return (ViewObjectImpl)findViewObject("RuleSetBaseVO1");
+    }
+
+    /**
+     * Container's getter for RuleSetVO1.
+     * @return RuleSetVO1
+     */
+    public ViewObjectImpl getRuleSetVO1() {
+        return (ViewObjectImpl)findViewObject("RuleSetVO1");
+    }
 }

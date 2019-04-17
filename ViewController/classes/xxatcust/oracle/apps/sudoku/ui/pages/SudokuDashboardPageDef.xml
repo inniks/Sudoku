@@ -19,6 +19,10 @@
               taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/ImportSrcFlow.xml#ImportSrcFlow"
               activation="deferred"
               xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
+    <taskFlow id="RuleSetFlow1"
+              taskFlowId="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/RuleSetFlow.xml#RuleSetFlow"
+              activation="deferred"
+              xmlns="http://xmlns.oracle.com/adf/controller/binding"/>
   </executables>
   <bindings/>
 </pageDefinition>

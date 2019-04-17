@@ -77,15 +77,17 @@
                                      styleClass="AFStretchWidth">
                   <af:panelGroupLayout id="pgl_3" layout="horizontal"
                                        halign="center" valign="bottom">
-                    <af:toolbar id="t1">
-                      <af:panelGroupLayout id="pgl_4" layout="horizontal"
-                                           partialTriggers="ct2b1">
+                    <af:panelFormLayout id="pfl1" rows="2">
+                      <f:facet name="footer"/>
+                      <af:panelGroupLayout id="pgl_4" partialTriggers="ct2b1"
+                                           layout="horizontal">
                         <af:commandToolbarButton text="Import Reference Configuration"
                                                  id="ct2b1">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandToolbarButton>
-                        <af:commandToolbarButton text="View Reference" id="ctb1">
+                        <af:commandToolbarButton text="View Reference"
+                                                 id="ctb1">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -101,16 +103,28 @@
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandToolbarButton>
-                        <af:commandImageLink
-                                             id="cil1"
-                                             icon="/Resources/images/rectangle-icon.png"
-                                             inlineStyle="color:Fuchsia;"
-                                             rendered="false"/>
                       </af:panelGroupLayout>
-                    </af:toolbar>
+                      <af:panelGroupLayout id="pgl5" layout="horizontal">
+                        <af:commandToolbarButton text="Export Target Configuration"
+                                                 id="ctb5" disabled="true"/>
+                        <af:commandToolbarButton text="View Target" id="ctb4">
+                          <af:setPropertyListener from="targetRef"
+                                                  to="#{viewScope.LoadDynamicRegionBean.currentTF}"
+                                                  type="action"/>
+                        </af:commandToolbarButton>
+                        <af:commandToolbarButton text="Save as System to Oracle Quote"
+                                                 id="ctb6" disabled="true"/>
+                        <af:commandToolbarButton text="Save as Upgrage to Oracle Quote"
+                                                 id="ctb7" disabled="true"/>
+                      </af:panelGroupLayout>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout id="pgl1" halign="left">
+                    <af:region value="#{bindings.RuleSetFlow1.regionModel}"
+                               id="r3"/>
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
-                                       halign="left" valign="baseline">
+                                       halign="right" valign="baseline">
                     <af:commandImageLink id="pt_cil2"
                                          icon="/Resources/images/icons8-shutdown-32.png"
                                          actionListener="#{pageFlowScope.TemplateBean.logout}"

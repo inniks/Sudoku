@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox id="pb1" showDisclosure="false">
+    <f:facet name="toolbar"/>
+    <af:panelGroupLayout id="pgl1">
+      <af:panelFormLayout id="pfl1">
+        <af:selectOneChoice value="#{bindings.TopLevelMeaning.inputValue}"
+                            label="Rule Set"
+                            required="#{bindings.TopLevelMeaning.hints.mandatory}"
+                            shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
+                            id="soc1" autoSubmit="true"
+                            contentStyle="width:85px;"
+                            valueChangeListener="#{pageFlowScope.RuleSetBean.topLevelChanged}">
+          <f:selectItems value="#{bindings.TopLevelMeaning.items}" id="si1"/>
+        </af:selectOneChoice>
+        <af:spacer width="10" height="10" id="s1"/>
+        <af:inputListOfValues id="secondLevelMeaningId"
+                              popupTitle="Search and Select: #{bindings.SecondLevelMeaning.hints.label}"
+                              value="#{bindings.SecondLevelMeaning.inputValue}"
+                              label="Value"
+                              model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
+                              required="#{bindings.SecondLevelMeaning.hints.mandatory}"
+                              columns="18"
+                              shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
+                              partialTriggers="soc1">
+          <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
+        </af:inputListOfValues>
+      </af:panelFormLayout>
+    </af:panelGroupLayout>
+  </af:panelBox>
+</jsp:root>

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -125,6 +126,7 @@ public class XMLImportPageBean {
     private RichOutputText quoteTotal;
     private RichPanelBorderLayout panelBorderBinding;
     private RichOutputText pageInitText;
+    private RichPopup downloadPopup;
 
     public XMLImportPageBean() {
 
@@ -418,7 +420,7 @@ public class XMLImportPageBean {
                                 }
                             }
 
-                           // errMessage.append("</body></html>");
+                            // errMessage.append("</body></html>");
 
                         }
                         System.out.println("Debug 0.1");
@@ -543,6 +545,7 @@ public class XMLImportPageBean {
                         System.out.println("Debug ---5");
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
+                        ADFUtils.setSessionScopeValue("categoryTree", categoryTree);
 
                     } else {
                         ADFUtils.setSessionScopeValue("quoteNumber",
@@ -550,6 +553,7 @@ public class XMLImportPageBean {
                         root = new ArrayList();
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
+                        ADFUtils.setSessionScopeValue("categoryTree", categoryTree);
                         RichPopup.PopupHints hints =
                             new RichPopup.PopupHints();
                         errorPopup.show(hints);
@@ -919,5 +923,56 @@ public class XMLImportPageBean {
         RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
         //ADFUtils.setSessionScopeValue("refreshImport", null);
         return pageInitText;
+    }
+
+    public void exportDownload(ActionEvent actionEvent) {
+        Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+        if (parentObj != null) {
+            V93kQuote v93k = (V93kQuote)parentObj;
+            JaxbParser.jaxbObjectToXML(v93k);
+        }
+        RichPopup.PopupHints hints =
+            new RichPopup.PopupHints();
+        downloadPopup.show(hints);
+    }
+
+    public void setDownloadPopup(RichPopup downloadPopup) {
+        this.downloadPopup = downloadPopup;
+    }
+
+    public RichPopup getDownloadPopup() {
+        return downloadPopup;
+    }
+
+    public void downloadFile(FacesContext facesContext,
+                             OutputStream outputStream) {
+        System.out.println("Download Listener Fired");
+        try {
+            File file = new File("D://Projects//Advantest//JsonResponse/exportTarget.xml");
+            FileInputStream fis;
+            byte[] b;
+            fis = new FileInputStream(file);
+
+            int n;
+            while ((n = fis.available()) > 0) {
+                b = new byte[n];
+                int result = fis.read(b);
+                outputStream.write(b, 0, b.length);
+                if (result == -1)
+                    break;
+            }
+            outputStream.flush();
+        } catch (FileNotFoundException fnfe) {
+            // TODO: Add catch code
+            fnfe.printStackTrace();
+        } catch (IOException ioe) {
+            // TODO: Add catch code
+            ioe.printStackTrace();
+        }
+    }
+
+    public void downloadConfirmation(ActionEvent actionEvent) {
+       System.out.println("Download Confirmation Fired");
+       downloadPopup.hide();
     }
 }

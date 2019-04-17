@@ -19,6 +19,8 @@ public class LoadDynamicRegionBean {
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/QuoteUpdateFlow.xml#QuoteUpdateFlow";
     private String viewReferenceTFId =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/UploadXMLFlow.xml#UploadXMLFlow";
+    private String targetRefTF =
+        "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/TargetConfigFlow.xml#TargetConfigFlow";
     private String currentTF = "configurator";
 
     public LoadDynamicRegionBean() {
@@ -33,7 +35,11 @@ public class LoadDynamicRegionBean {
             return TaskFlowId.parse(viewReferenceTFId);
         } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
             return TaskFlowId.parse(quoteTFUpdateId);
-        } else {
+        }
+        else if(this.getCurrentTF().equalsIgnoreCase("targetRef")){
+            return TaskFlowId.parse(targetRefTF); 
+        }
+        else {
             return TaskFlowId.parse(quoteTFId);
         }
 

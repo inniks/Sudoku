@@ -26,7 +26,7 @@ public class ConfiguratorUtils {
         // Add event code here...
         StringBuffer strBuf = new StringBuffer();
         try {
-            URL url = new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP2");
+            URL url = new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP4");
                // new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServlet?configHdrId=10196240&configRevNbr=3");
             _logger.info("Print url in callConfiguratorServlet " +url);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();

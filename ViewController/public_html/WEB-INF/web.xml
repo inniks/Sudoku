@@ -20,6 +20,23 @@
     <param-name>APPL_SERVER_ID</param-name>
     <param-value>83F919179B4D05C0E0533CBF730AF1AF31999857741945185128259873087247</param-value>
   </context-param>
+   <context-param>
+   <param-name>oracle.adf.view.rich.HIDE_UNSUPPORTED_BROWSER_ALERTS</param-name>
+   <param-value>IECompatibilityModes</param-value>
+  </context-param>
+   <context-param>
+    <param-name>oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT</param-name>
+    <param-value>HTML5</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <description>Security precaution to prevent clickjacking: bust frames if the ancestor window domain(protocol, host, and port) and the frame domain are different. Another options for this parameter are always and never.</description>
+    <param-name>org.apache.myfaces.trinidad.security.FRAME_BUSTING</param-name>
+    <param-value>differentOrigin</param-value>
+  </context-param>
   <filter>
     <filter-name>JpsFilter</filter-name>
     <filter-class>oracle.security.jps.ee.http.JpsFilter</filter-class>
@@ -32,9 +49,21 @@
     <filter-name>trinidad</filter-name>
     <filter-class>org.apache.myfaces.trinidad.webapp.TrinidadFilter</filter-class>
   </filter>
+  <filter> 
+   <filter-name>IECompatibleFilter</filter-name> 
+   <filter-class>xxatcust.oracle.apps.sudoku.bean.IECompatibleFilter</filter-class> 
+  </filter>
   <filter>
     <filter-name>adfBindings</filter-name>
     <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
+  </filter>
+   <filter>
+    <filter-name>ADFLibraryFilter</filter-name>
+    <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>AppSessionFilter</filter-name>
+    <filter-class>xxatcust.oracle.apps.sudoku.bean.MyFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>JpsFilter</filter-name>
@@ -43,6 +72,12 @@
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
   </filter-mapping>
+  <filter-mapping>  
+    <filter-name>IECompatibleFilter</filter-name>  
+    <servlet-name>Faces Servlet</servlet-name>  
+    <dispatcher>FORWARD</dispatcher>  
+    <dispatcher>REQUEST</dispatcher>  
+  </filter-mapping> 
   <filter-mapping>
     <filter-name>trinidad</filter-name>
     <servlet-name>Faces Servlet</servlet-name>
@@ -54,6 +89,10 @@
     <servlet-name>Faces Servlet</servlet-name>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+   <filter-mapping>
+    <filter-name>AppSessionFilter</filter-name>
+    <servlet-name>Faces Servlet</servlet-name>
   </filter-mapping>
   <listener>
     <listener-class>oracle.bc4j.mbean.BC4JConfigLifeCycleCallBack</listener-class>
@@ -121,6 +160,9 @@
     <servlet-name>GatewayServlet</servlet-name>
     <url-pattern>/flashbridge/*</url-pattern>
   </servlet-mapping>
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
   <mime-mapping>
     <extension>swf</extension>
     <mime-type>application/x-shockwave-flash</mime-type>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="RuleSetFlow">
+    <default-activity id="__1">CreateInsert</default-activity>
+    <managed-bean id="__10">
+      <managed-bean-name id="__9">RuleSetBean</managed-bean-name>
+      <managed-bean-class id="__8">xxatcust.oracle.apps.sudoku.bean.RuleSet</managed-bean-class>
+      <managed-bean-scope id="__11">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="RuleSet">
+      <page>/xxatcust/oracle/apps/sudoku/ui/pageFragments/RuleSet.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">CreateInsert</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__7">CreateInsert</from-outcome>
+        <to-activity-id id="__6">RuleSet</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>
