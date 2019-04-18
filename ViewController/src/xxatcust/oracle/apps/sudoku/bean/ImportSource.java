@@ -68,8 +68,6 @@ public class ImportSource {
 
     public void importSrcSelected(ValueChangeEvent valueChangeEvent) {
         if (valueChangeEvent.getNewValue() != null) {
-           
-            ADFUtils.setSessionScopeValue("inputParamsMap", new HashMap());
             String selectedVal = null;
             UIComponent uiComp = (UIComponent)valueChangeEvent.getSource();
             uiComp.processUpdates(FacesContext.getCurrentInstance());
@@ -198,7 +196,10 @@ public class ImportSource {
                 
                 
                 
-                HashMap inputParamsMap = new HashMap();
+                HashMap inputParamsMap = (HashMap)ADFUtils.getSessionScopeValue("inputParamsMap");//new HashMap();
+                if(inputParamsMap==null){
+                    inputParamsMap = new HashMap() ;
+                }
                 inputParamsMap.put("importSource", importSource);
                 inputParamsMap.put("quoteNumber", quoteNumber);
                 inputParamsMap.put("reuseQuote", reuseQuote);
@@ -292,6 +293,14 @@ public class ImportSource {
             }
             if (inputParamsMap.get("copyRefConf") != null) {
                 inputParam.setCopyReferenceConfiguration((Boolean)inputParamsMap.get("copyRefConf"));
+            }
+            //Get values of rules set choices from session
+            if (inputParamsMap.get("ruleSetTop") != null) {
+               inputParam.setRuleSetTopLevelChoice((String)inputParamsMap.get("ruleSetTop"));
+            }
+            
+            if (inputParamsMap.get("ruleSetSecond") != null) {
+               inputParam.setRuleSetSecondLevelChoice((String)inputParamsMap.get("ruleSetSecond"));
             }
         }
         //Check what is the import source

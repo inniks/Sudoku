@@ -27,8 +27,6 @@ public class LoadDynamicRegionBean {
     }
 
     public TaskFlowId getDynamicTaskFlowId() {
-        System.out.println("enter to TaskFLow getDynamicTaskFlowId " +
-                           this.getCurrentTF());
         if (this.getCurrentTF().equalsIgnoreCase("configurator")) {
             return TaskFlowId.parse(taskFlowId);
         } else if (this.getCurrentTF().equalsIgnoreCase("viewRef")) {
@@ -97,7 +95,6 @@ public class LoadDynamicRegionBean {
 
         quoteNumFromSession =
                 (String)ADFUtils.getSessionScopeValue("quoteNumber");
-        System.out.println("Quote Number is  " + quoteNumber);
         if (importSource != null &&
             (importSource.equalsIgnoreCase("BUDGET_QUOTE")||importSource.equalsIgnoreCase("FORMAL_QUOTE")) &&
             quoteNumFromSession != null)

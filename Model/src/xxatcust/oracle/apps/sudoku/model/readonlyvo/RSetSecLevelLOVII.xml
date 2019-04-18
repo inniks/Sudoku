@@ -19,6 +19,28 @@
         ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RSetSecLevelLOVII_LABEL"/>
     </SchemaBasedProperties>
   </Properties>
+  <Variable
+    Name="bindLookupCode"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
+  <Variable
+    Name="bindMeaning"
+    Kind="viewcriteria"
+    Type="java.lang.String">
+    <Properties>
+      <SchemaBasedProperties>
+        <DISPLAYHINT
+          Value="Hide"/>
+      </SchemaBasedProperties>
+    </Properties>
+  </Variable>
   <SQLQuery>
     <![CDATA[select lookup_code, meaning from fnd_lookup_values where lookup_type = 'XXAT_SUDOKU_RULE_SET_E8000SYS']]>
   </SQLQuery>
@@ -36,6 +58,14 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="30"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RSetSecLevelLOVII.LookupCode_LABEL"/>
+        <DISPLAYWIDTH
+          Value="20"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
   <ViewAttribute
     Name="Meaning"
@@ -52,7 +82,59 @@
     <DesignTime>
       <Attr Name="_DisplaySize" Value="80"/>
     </DesignTime>
+    <Properties>
+      <SchemaBasedProperties>
+        <LABEL
+          ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RSetSecLevelLOVII.Meaning_LABEL"/>
+        <DISPLAYWIDTH
+          Value="40"/>
+      </SchemaBasedProperties>
+    </Properties>
   </ViewAttribute>
+  <ViewCriteria
+    Name="RSetSecLevelLOVIICriteria"
+    ViewObjectName="xxatcust.oracle.apps.sudoku.model.readonlyvo.RSetSecLevelLOVII"
+    Conjunction="AND">
+    <Properties>
+      <CustomProperties>
+        <Property
+          Name="displayOperators"
+          Value="InAdvancedMode"/>
+        <Property
+          Name="autoExecute"
+          Value="false"/>
+        <Property
+          Name="allowConjunctionOverride"
+          Value="true"/>
+        <Property
+          Name="showInList"
+          Value="true"/>
+        <Property
+          Name="mode"
+          Value="Basic"/>
+      </CustomProperties>
+    </Properties>
+    <ViewCriteriaRow
+      Name="vcrow9"
+      UpperColumns="1">
+      <ViewCriteriaItem
+        Name="RSetSecLevelLOVIICriteria_vcrow9_LookupCode"
+        ViewAttribute="LookupCode"
+        Operator="CONTAINS"
+        Conjunction="AND"
+        Value=":bindLookupCode"
+        IsBindVarValue="true"
+        Required="Optional"/>
+      <ViewCriteriaItem
+        Name="RSetSecLevelLOVIICriteria_vcrow9_Meaning"
+        ViewAttribute="Meaning"
+        Operator="CONTAINS"
+        Conjunction="OR"
+        Value=":bindMeaning"
+        IsBindVarValue="true"
+        Required="Optional"/>
+    </ViewCriteriaRow>
+  </ViewCriteria>
   <AttrArray Name="KeyAttributes">
     <Item Value="LookupCode"/>
   </AttrArray>

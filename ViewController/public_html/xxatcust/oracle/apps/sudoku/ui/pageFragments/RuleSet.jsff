@@ -24,7 +24,9 @@
                               required="#{bindings.SecondLevelMeaning.hints.mandatory}"
                               columns="18"
                               shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
-                              partialTriggers="soc1">
+                              partialTriggers="soc1"
+                              autoSubmit="true"
+                              valueChangeListener="#{pageFlowScope.RuleSetBean.secLevelValSelected}">
           <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
         </af:inputListOfValues>
       </af:panelFormLayout>

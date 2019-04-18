@@ -71,6 +71,7 @@
       <Item Value="LookupCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupCode"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <DisplayCriteria
@@ -94,6 +95,7 @@
       <Item Value="LookupCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
+      <Item Value="LookupCode"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <DisplayCriteria
@@ -159,10 +161,10 @@
       <SchemaBasedProperties>
         <LABEL
           ResId="xxatcust.oracle.apps.sudoku.model.readonlyvo.RuleSetVO.SecondLevelMeaning_LABEL"/>
-        <CONTROLTYPE
-          Value="input_text_lov"/>
         <DISPLAYWIDTH
           Value="30"/>
+        <CONTROLTYPE
+          Value="input_text_lov"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>
@@ -177,9 +179,9 @@
     SQLType="VARCHAR">
     <RecalcCondition><![CDATA[true]]></RecalcCondition>
     <TransientExpression><![CDATA[if(TopLevelCode!=null && TopLevelCode=='E8000SYS')
-return 'LOV_SecondLevelMeaning' ;
+return 'LOV_SecondLevelMeaning1' ;
 else if(TopLevelCode!=null && TopLevelCode=='E8008SYS')
-return 'LOV_SecondLevelMeaning1' ;]]></TransientExpression>
+return 'LOV_SecondLevelMeaning' ;]]></TransientExpression>
     <Dependencies>
       <Item
         Value="TopLevelCode"/>
