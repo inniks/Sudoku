@@ -99,7 +99,7 @@
             <af:spacer width="10" height="10" id="s29"/>
             <af:commandToolbarButton text="Export &amp; Download" id="ctb7"
                                      actionListener="#{XMLImportPageBean.exportDownload}"
-                                     rendered="false"/>
+                                     immediate="true"/>
           </af:toolbar>
         </af:panelHeader>
         <!--   <af:resource type="css" source="/css/Style.css"/> -->

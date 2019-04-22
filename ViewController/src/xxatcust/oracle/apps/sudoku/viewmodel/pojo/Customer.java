@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="customer")
 public class Customer {
-    private String globalcmpy;
+     private String globalcmpy;
      private String cname;
      private String cnumber;
      private String ccontact;

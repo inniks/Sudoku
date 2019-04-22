@@ -9,6 +9,7 @@ import oracle.adf.controller.TaskFlowId;
 import oracle.adf.view.rich.component.rich.RichPopup;
 
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.StaxParser;
 
 public class LoadDynamicRegionBean {
     private String taskFlowId =
@@ -122,5 +123,9 @@ public class LoadDynamicRegionBean {
 
     public String getQuoteTFUpdateId() {
         return quoteTFUpdateId;
+    }
+
+    public void export(ActionEvent actionEvent) {
+        StaxParser.StaxCreateXml(null);
     }
 }

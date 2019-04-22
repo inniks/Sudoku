@@ -493,6 +493,10 @@
             <value n="id" v="BC4J Oracle Domains"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Javax.xml-1.3.4.jar.zip"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
       <hash n="internalDefinitions">
          <list n="libraryDefinitions">
@@ -548,6 +552,15 @@
                <value n="deployedByDefault" v="true"/>
                <value n="description" v="Suncollections.jar"/>
                <value n="id" v="Suncollections.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Users/nsrivastava/Downloads/javax.xml-1.3.4.jar.zip!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Javax.xml-1.3.4.jar.zip"/>
+               <value n="id" v="Javax.xml-1.3.4.jar.zip"/>
                <value n="locked" v="true"/>
             </hash>
          </list>
@@ -703,6 +716,10 @@
          </hash>
          <hash>
             <value n="id" v="BC4J Oracle Domains"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Javax.xml-1.3.4.jar.zip"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>

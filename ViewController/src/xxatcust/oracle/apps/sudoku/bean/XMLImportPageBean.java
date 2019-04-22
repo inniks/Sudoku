@@ -90,9 +90,11 @@ import org.xml.sax.SAXException;
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
 import xxatcust.oracle.apps.sudoku.util.ConfigNodeComparator;
 import xxatcust.oracle.apps.sudoku.util.ConfiguratorUtils;
+import xxatcust.oracle.apps.sudoku.util.DOMParser;
 import xxatcust.oracle.apps.sudoku.util.JSONUtils;
 import xxatcust.oracle.apps.sudoku.util.JaxbParser;
 import xxatcust.oracle.apps.sudoku.util.NodeComparator;
+import xxatcust.oracle.apps.sudoku.util.StaxParser;
 import xxatcust.oracle.apps.sudoku.util.XMLUtils;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.*;
 
@@ -202,7 +204,6 @@ public class XMLImportPageBean {
         File xsdFile = readXsdResource();
         V93kQuote parent = null;
         parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
-
         _logger.info("Print parent  parseXMLToPojo" + parent);
         //Add Session detail s on the parent object
         SessionDetails sessionDetails = new SessionDetails();
@@ -926,14 +927,17 @@ public class XMLImportPageBean {
     }
 
     public void exportDownload(ActionEvent actionEvent) {
-        Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
-        if (parentObj != null) {
-            V93kQuote v93k = (V93kQuote)parentObj;
-            JaxbParser.jaxbObjectToXML(v93k);
+       V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("inputObject");
+        if (v93k != null) {
+            
+            DOMParser.XMLWriterDOM(v93k) ;
+            //JaxbParser.jaxbObjectToXML(v93k);
+            //StaxParser.StaxCreateXml(v93k);
         }
-        RichPopup.PopupHints hints =
-            new RichPopup.PopupHints();
-        downloadPopup.show(hints);
+//        RichPopup.PopupHints hints =
+//            new RichPopup.PopupHints();
+//        downloadPopup.show(hints);
+        
     }
 
     public void setDownloadPopup(RichPopup downloadPopup) {

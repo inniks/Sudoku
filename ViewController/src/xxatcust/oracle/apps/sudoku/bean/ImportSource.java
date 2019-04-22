@@ -230,12 +230,14 @@ public class ImportSource {
             Throwable e = null;
             while (jaxbe.getCause() != null) {
                 jaxbe = (Exception)jaxbe.getCause();
-
+                
             }
             str = jaxbe.getMessage();
             //                ADFUtils.showFacesMessage("XML Validation failed :" + str,
             //                                          FacesMessage.SEVERITY_ERROR, null);
             // }
+            ADFUtils.addMessage(FacesMessage.SEVERITY_ERROR, jaxbe.getMessage());
+            jaxbe.printStackTrace();
         }
 
 
@@ -310,6 +312,8 @@ public class ImportSource {
             File xsdFile = readXsdResource();
             V93kQuote parent = null;
             parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
+            //Adding this in session temporarily
+            ADFUtils.setSessionScopeValue("inputObject", parent);
             //Add session and input params
             parent.setSessionDetails(sessionDetails);
             parent.setInputParams(inputParam);

@@ -196,6 +196,8 @@ public class SudokuPagePhaseListener implements PagePhaseListener {
             try {
                 ApplicationModule am = getAppModule();
                 EBSconn = getConnFromDS((ApplicationModuleImpl)am);
+                SudokuAMImpl amClient = (SudokuAMImpl)am;
+                manageAttributes(amClient);
                 ServletContext servContext =
                     (ServletContext)ADFContext.getCurrent().getEnvironment().getContext();
                 _logger.info("servLetContext : " + servContext);

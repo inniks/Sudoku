@@ -106,7 +106,8 @@
                       </af:panelGroupLayout>
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
                         <af:commandToolbarButton text="Export Target Configuration"
-                                                 id="ctb5" disabled="true"/>
+                                                 id="ctb5"
+                                                 actionListener="#{viewScope.LoadDynamicRegionBean.export}"/>
                         <af:commandToolbarButton text="View Target" id="ctb4">
                           <af:setPropertyListener from="targetRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
@@ -125,16 +126,16 @@
                   </af:panelGroupLayout>
                   <af:panelGroupLayout id="pt_pgl11" layout="horizontal"
                                        halign="right" valign="baseline">
-                    <af:commandImageLink id="pt_cil2"
-                                         icon="/Resources/images/icons8-shutdown-32.png"
-                                         actionListener="#{pageFlowScope.TemplateBean.logout}"
-                                         shortDesc="Logout.."/>
+                    <af:goImageLink id="pt_cil1"
+                                    icon="/Resources/images/icons8-home-page-32.png"
+                                    shortDesc="Redirect to EBS Home.."
+                                    rendered="true" text="Home"
+                                    destination="#{sessionScope._home_url  }"/>
                     <af:spacer width="20" height="10" id="pt_s2"/>
-                    <af:commandImageLink id="pt_cil1"
-                                         icon="/Resources/images/icons8-home-page-32.png"
-                                         actionListener="#{pageFlowScope.TemplateBean.redirectToHome}"
-                                         shortDesc="Redirect to EBS Home.."
-                                         rendered="true"/>
+                    <af:goImageLink id="pt_cil2"
+                                    icon="/Resources/images/icons8-shutdown-32.png"
+                                    shortDesc="Logout.." text="Logout"
+                                    destination="#{sessionScope._logout_url} "/>
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
                 <af:spacer width="10" height="10" id="pt_s1"/>
