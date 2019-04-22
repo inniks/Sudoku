@@ -68,6 +68,7 @@ import oracle.adf.view.rich.util.ResetUtils;
 import oracle.binding.BindingContainer;
 import oracle.binding.OperationBinding;
 
+import oracle.jbo.ConfigException;
 import oracle.jbo.JboException;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
@@ -255,12 +256,19 @@ public class XMLImportPageBean {
     }
 
     private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj) {
-        List<ConfiguratorNodePOJO> nodeList =
-            new ArrayList<ConfiguratorNodePOJO>();
-        if (v93Obj != null) {
-            //Get All ModelBom Nodes
-            nodeList = v93Obj.getNodeCollection();
+        List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
+        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceCollection = v93Obj.getReferenceNodeCollection();
+        if(referenceCollection!=null && !referenceCollection.isEmpty()){
+            //get Line1 node collection
+            nodeList = referenceCollection.get("1.0") ;
         }
+        
+//        List<ConfiguratorNodePOJO> nodeList =
+//            new ArrayList<ConfiguratorNodePOJO>();
+//        if (v93Obj != null) {
+//            //Get All ModelBom Nodes
+//            nodeList = v93Obj.getNodeCollection();
+//        }
         return nodeList;
     }
 
@@ -463,8 +471,8 @@ public class XMLImportPageBean {
                         System.out.println("Debug ---1");
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
-                        List<ConfiguratorNodePOJO> allNodesList =
-                            obj.getNodeCollection();
+                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes() ;
+                           // obj.getNodeCollection();
                         HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                             new HashMap<String, List<ConfiguratorNodePOJO>>();
                         for (ConfiguratorNodePOJO node : allNodesList) {

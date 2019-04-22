@@ -1,6 +1,10 @@
 package xxatcust.oracle.apps.sudoku.viewmodel.pojo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import java.util.TreeMap;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,6 +13,8 @@ public class V93kQuote {
     QHeader QheaderObject;
     Config ConfigObject;
     List<ConfiguratorNodePOJO> nodeCollection ;
+    TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection ;
+    TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection ;
     SessionDetails sessionDetails ;
     ExceptionHandlerPOJO exceptionMap ;
     InputParams inputParams ;
@@ -62,5 +68,21 @@ public class V93kQuote {
 
     public InputParams getInputParams() {
         return inputParams;
+    }
+
+    public void setReferenceNodeCollection(TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection) {
+        this.referenceNodeCollection = referenceNodeCollection;
+    }
+
+    public TreeMap<String, ArrayList<ConfiguratorNodePOJO>> getReferenceNodeCollection() {
+        return referenceNodeCollection;
+    }
+
+    public void setTargetNodeCollection(TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection) {
+        this.targetNodeCollection = targetNodeCollection;
+    }
+
+    public TreeMap<String, ArrayList<ConfiguratorNodePOJO>> getTargetNodeCollection() {
+        return targetNodeCollection;
     }
 }

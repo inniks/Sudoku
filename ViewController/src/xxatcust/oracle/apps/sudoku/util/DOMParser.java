@@ -34,57 +34,57 @@ public class DOMParser {
     }
 
     public static File XMLWriterDOM(V93kQuote v93kObj) {
-        DocumentBuilderFactory dbFactory =
-            DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder;
-        try {
-            TransformerFactory transformerFactory =
-                TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            //for pretty print
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-            dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.newDocument();
-            DOMSource source = new DOMSource(doc);
-            //This is the Root element v93000-Quote
-            Element rootElement = doc.createElementNS(null, "V93000-Quote");
-            //Attach the root to document
-            doc.appendChild(rootElement);
-
-            List<ConfiguratorNodePOJO> nodeCollection =
-                v93kObj.getNodeCollection();
-            ArrayList<String> nodeCategoryList = new ArrayList<String>();
-            if (nodeCollection != null) {
-                for (ConfiguratorNodePOJO node : nodeCollection) {
-                    String nodeCategory = node.getNodeCategory();
-                    nodeCategoryList.add(nodeCategory);
-                    System.out.println("Node category is " + nodeCategory);
-
-                }
-            }
-            if (!nodeCategoryList.isEmpty()) {
-                nodeCategoryList = removeDuplicatesFromList(nodeCategoryList);
-            }
-            //Each category is a child node of root element , So in a loop append nodes to each category
-
-
-            if (v93kObj.getQheaderObject() != null) {
-                //First create qheader if it exists
-                rootElement.appendChild(qHeaderNode(v93kObj.getQheaderObject(),
-                                                    doc));
-            }
-
-
-            StreamResult console = new StreamResult(System.out);
-            //            StreamResult file =
-            //                new StreamResult(new File("D://Projects//Advantest//JsonResponse/DOMExport.xml"));
-            transformer.transform(source, console);
-            //transformer.transform(source, file);
-        } catch (Exception pce) {
-            // TODO: Add catch code
-            pce.printStackTrace();
-        }
+//        DocumentBuilderFactory dbFactory =
+//            DocumentBuilderFactory.newInstance();
+//        DocumentBuilder dBuilder;
+//        try {
+//            TransformerFactory transformerFactory =
+//                TransformerFactory.newInstance();
+//            Transformer transformer = transformerFactory.newTransformer();
+//            //for pretty print
+//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+//
+//            dBuilder = dbFactory.newDocumentBuilder();
+//            Document doc = dBuilder.newDocument();
+//            DOMSource source = new DOMSource(doc);
+//            //This is the Root element v93000-Quote
+//            Element rootElement = doc.createElementNS(null, "V93000-Quote");
+//            //Attach the root to document
+//            doc.appendChild(rootElement);
+//
+//            List<ConfiguratorNodePOJO> nodeCollection =
+//                v93kObj.getNodeCollection();
+//            ArrayList<String> nodeCategoryList = new ArrayList<String>();
+//            if (nodeCollection != null) {
+//                for (ConfiguratorNodePOJO node : nodeCollection) {
+//                    String nodeCategory = node.getNodeCategory();
+//                    nodeCategoryList.add(nodeCategory);
+//                    System.out.println("Node category is " + nodeCategory);
+//
+//                }
+//            }
+//            if (!nodeCategoryList.isEmpty()) {
+//                nodeCategoryList = removeDuplicatesFromList(nodeCategoryList);
+//            }
+//            //Each category is a child node of root element , So in a loop append nodes to each category
+//
+//
+//            if (v93kObj.getQheaderObject() != null) {
+//                //First create qheader if it exists
+//                rootElement.appendChild(qHeaderNode(v93kObj.getQheaderObject(),
+//                                                    doc));
+//            }
+//
+//
+//            StreamResult console = new StreamResult(System.out);
+//            //            StreamResult file =
+//            //                new StreamResult(new File("D://Projects//Advantest//JsonResponse/DOMExport.xml"));
+//            transformer.transform(source, console);
+//            //transformer.transform(source, file);
+//        } catch (Exception pce) {
+//            // TODO: Add catch code
+//            pce.printStackTrace();
+//        }
         return null;
     }
 

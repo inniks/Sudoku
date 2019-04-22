@@ -21,7 +21,7 @@ public class JSONUtils {
         Object obj = null;
         try {
             obj =
-mapper.readValue(new File("D://Projects//Advantest//JsonResponse/response3.json"),
+mapper.readValue(new File("D://Projects//Advantest//JsonResponse/P4Response.json"),
                  V93kQuote.class);
         } catch (JsonParseException e) {
             e.printStackTrace();
