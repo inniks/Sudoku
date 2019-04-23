@@ -14,14 +14,13 @@
           <af:panelGroupLayout id="pgl9" layout="vertical">
             <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle"
                                  partialTriggers="if1">
-              <af:inputFile label="Upload File" id="if1"
-                            styleClass="inputFile" immediate="true"
+              <af:inputFile label="Upload File" id="if1" styleClass="inputFile"
+                            immediate="true"
                             binding="#{XMLImportPageBean.uploadFileBinding}"
                             shortDesc="Select and upload the import configuration XML file to load the configuration."
                             rendered="false" autoSubmit="true"/>
               <af:spacer width="10" height="10" id="s2"/>
               <af:commandButton text="Import Configuration" id="cb1"
-                                actionListener="#{XMLImportPageBean.importConfiguration}"
                                 immediate="true" partialTriggers="if1"
                                 rendered="false"/>
               <af:spacer width="10" height="10" id="s21"/>
@@ -183,6 +182,69 @@
                         </af:panelGridLayout>
                       </af:listItem>
                     </af:listView>
+                    <af:separator id="s30"/>
+                    <!--Line 2 starts here-->
+                    <af:listView id="lv21"
+                                 value="#{XMLImportPageBean.categroryTreeLineTwo}"
+                                 var="nodeL2" selection="single"
+                                 groupDisclosurePolicy="noDisclosure"
+                                 partialTriggers="::ctb1 ::ctb2 ::cb2"
+                                 selectionListener="#{XMLImportPageBean.listViewRowSelection}">
+                      <f:facet name="groupHeaderStamp">
+                        <af:listItem id="li32" styleClass="ABHeader">
+                          <af:outputText value="#{nodeL2.category}" id="ot21"
+                                         inlineStyle="font-weight:bold;"/>
+                        </af:listItem>
+                      </f:facet>
+                      <af:listItem id="li22">
+                        <af:panelGridLayout id="pgl15ik">
+                          <af:gridRow marginTop="5px" height="auto" id="gr12">
+                            <af:gridCell marginStart="5px" width="15%" id="gc19"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'
+                                         rendered="#{XMLImportPageBean.productsRendered}">
+                              <af:outputText value="#{nodeL2.nodeName}"
+                                             id="ot11"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="25%" id="gc14"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.nodeDescription}"
+                                             id="o1t2" truncateAt="65"
+                                             shortDesc="#{nodeL2.nodeDescription}"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" marginEnd="5px"
+                                         width="14%" id="gc15"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:spacer width="150" height="10" id="sq4"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gc13"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.nodeQty}"
+                                             id="o1t3"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gc18"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText id="o1t4" value="#{nodeL2.uom}"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%"
+                                         id="gcd11"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.unitPrice}"
+                                             id="oqt5"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gcq6"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.extendedPrice}"
+                                             id="t116"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%"
+                                         id="gc16_1"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <!--<af:outputText value="#{node.extendedPrice}" id="ot6_1"/>-->
+                            </af:gridCell>
+                          </af:gridRow>
+                        </af:panelGridLayout>
+                      </af:listItem>
+                    </af:listView>
                   </af:group>
                 </f:facet>
                 <f:facet name="bottom">
@@ -232,7 +294,7 @@
                       <af:spacer width="122" height="10" id="s10"/>
                       <af:spacer width="15" height="10" id="s20"
                                  rendered="#{XMLImportPageBean.spaceRendered}"/>
-                      <af:outputText value="Unit Price" id="ot11"
+                      <af:outputText value="Unit Price" id="o1t11"
                                      inlineStyle="color:Black;  font-weight:bold;"
                                      styleClass="ABHeader"/>
                       <af:spacer width="88" height="10" id="s11"/>

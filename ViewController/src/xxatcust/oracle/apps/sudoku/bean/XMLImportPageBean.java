@@ -106,6 +106,7 @@ public class XMLImportPageBean {
     private RichOutputFormatted timestampBinding;
     private RichOutputFormatted uploadedByBinding;
     ChildPropertyTreeModel categoryTree;
+    ChildPropertyTreeModel categroryTreeLineTwo ;
     private ArrayList<NodeCategory> root;
     private RichPopup warningPopup;
     private RichOutputFormatted warnText;
@@ -143,65 +144,22 @@ public class XMLImportPageBean {
         this.allNodes = allNodes;
     }
 
-    public List<ConfiguratorNodePOJO> getAllNodes() {
-        if (allNodes == null) {
+    public List<ConfiguratorNodePOJO> getAllNodes(String lineNum) {
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
-            _logger.info("Print parentObj in List<ConfiguratorNodePOJO> " +
-                         parentObj);
             if (parentObj != null) {
                 v93Obj = (V93kQuote)parentObj;
-                _logger.info("Print v93Obj in List<ConfiguratorNodePOJO> " +
-                             v93Obj);
-                allNodes = parseAllNodes(v93Obj);
-                _logger.info("Print allNodes in List<ConfiguratorNodePOJO> " +
-                             allNodes);
+                allNodes = parseAllNodes(v93Obj,lineNum);
             }
-        }
         return allNodes;
     }
 
-    public void fileUploadVCE() {
-        //        try {
-        ////            UploadedFile fileVal =
-        ////                (UploadedFile)ADFUtils.getSessionScopeValue("importFile");
-        //            //(UploadedFile)uploadFileBinding.getValue();
-        //
-        //            //System.out.println("FileVal "+fileVal);
-        ////            InputStream inputStream =
-        ////                fileVal.getInputStream(); //uploadFile(fileVal);
-        //            ADFUtils.clearControllerException();
-        //            ADFUtils.setSessionScopeValue("parentObject", null);
-        //            categoryTree = null;
-        //            allNodes = null;
-        //            fileNameBinding.setValue(fileVal.getFilename());
-        //            uploadedByBinding.setValue(ADFContext.getCurrent().getSessionScope().get("UserName"));
-        //            timestampBinding.setValue(new Date());
-        //           // parseXMLToPojo(inputStream);
-        //            showListHeader = true;
-        //        } catch (Exception jaxbe) {
-        //            // TODO: Add catch code
-        //            String str = jaxbe.getMessage();
-        //            Throwable e = null;
-        //            while (jaxbe.getCause() != null) {
-        //                jaxbe = (Exception)jaxbe.getCause();
-        //
-        //            }
-        //            str = jaxbe.getMessage();
-        //            validationError.setValue("Error in XML validation " + str);
-        //            RichPopup.PopupHints hints = new RichPopup.PopupHints();
-        //            errorPopup.show(hints);
-        //        }
 
-
-        //ResetUtils.reset(vce.getComponent());
-    }
 
     public void parseXMLToPojo(InputStream inputStream) throws IOException,
                                                                JsonGenerationException,
                                                                JsonMappingException,
                                                                JAXBException,
                                                                SAXException {
-        System.out.println("Input Stream is " + inputStream);
         File xsdFile = readXsdResource();
         V93kQuote parent = null;
         parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
@@ -236,39 +194,22 @@ public class XMLImportPageBean {
     }
 
 
-    /**Method to upload file to actual path on Server*/
-    private InputStream uploadFile(UploadedFile file) {
-        //UploadedFile myfile = file;
-        System.out.println("Uploaded File is " + file.getClass());
-        InputStream inputStream = null;
-        if (file == null) {
+   
 
-        } else {
-            try {
-                System.out.println("Get input stream");
-                inputStream = file.getInputStream();
-                System.out.println("IP st " + inputStream);
-            } catch (IOException e) {
-                ADFUtils.routeExceptions(e);
-            }
-        }
-        return inputStream;
-    }
-
-    private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj) {
+    private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj,String lineNum) {
         List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
         TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceCollection = v93Obj.getReferenceNodeCollection();
         if(referenceCollection!=null && !referenceCollection.isEmpty()){
+            if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
             //get Line1 node collection
-            nodeList = referenceCollection.get("1.0") ;
+            nodeList = referenceCollection.get("1.0") ; // Line 1 node collection
+            }
+            else if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
+                nodeList = referenceCollection.get("20000") ; // Line 2 node collection , This key should be 2,0
+            }
         }
-        
-//        List<ConfiguratorNodePOJO> nodeList =
-//            new ArrayList<ConfiguratorNodePOJO>();
-//        if (v93Obj != null) {
-//            //Get All ModelBom Nodes
-//            nodeList = v93Obj.getNodeCollection();
-//        }
+       
+
         return nodeList;
     }
 
@@ -318,21 +259,14 @@ public class XMLImportPageBean {
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
             String impSrcChanged =
                 (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
-            System.out.println("Get Category Tree " + categoryTree +
-                               " RefreshImport " + refreshImport +
-                               " Parent Obj " + parentObj + " impSrcChnged " +
-                               impSrcChanged);
             if (impSrcChanged != null && impSrcChanged.equalsIgnoreCase("Y")) {
                 categoryTree = null;
+                categroryTreeLineTwo = null ;
                 quoteTotal.setValue(null);
             }
+            System.out.println("Cat 2 obj "+categroryTreeLineTwo);
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
-                //resetAllBindings();
-                System.out.println("Inside getCategoryTree " + refreshImport);
-
-                System.out.println("Check point 1");
-                //ADFUtils.setSessionScopeValue("refreshImport", null);
                 if (parentObj != null) {
                     V93kQuote obj = (V93kQuote)parentObj;
                     //Check if no exceptions from configurator
@@ -388,7 +322,6 @@ public class XMLImportPageBean {
                             // debugMsgBind.setValue(debugStr.toString());
                         }
                         warnText.setValue(warningMessage.toString()); // Probable change 1
-                        System.out.println("Check point 2");
                         StringBuilder debugMessage =
                             new StringBuilder("<html><body>");
                         if (debugList != null && debugList.size() > 0) {
@@ -432,7 +365,6 @@ public class XMLImportPageBean {
                             // errMessage.append("</body></html>");
 
                         }
-                        System.out.println("Debug 0.1");
                         if (errorMessages != null &&
                             errorMessages.size() > 0) {
                             for (String str : errorMessages) {
@@ -463,15 +395,12 @@ public class XMLImportPageBean {
                     if (obj != null && obj.getSessionDetails() != null &&
                         obj.getSessionDetails().getModelName() != null) {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
-                        System.out.println("Model Name is " + modelName);
                     }
                     if (errMessage != null &&
                         errMessage.toString().equalsIgnoreCase("Error")) {
-
-                        System.out.println("Debug ---1");
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
-                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes() ;
+                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes("1") ;
                            // obj.getNodeCollection();
                         HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                             new HashMap<String, List<ConfiguratorNodePOJO>>();
@@ -488,7 +417,6 @@ public class XMLImportPageBean {
                                              "0"));
                             }
                         }
-                        System.out.println("Debug ---2");
                         distinctList = removeDuplicatesFromList(catList);
                         for (String distinctCategory : distinctList) {
                             List<ConfiguratorNodePOJO> temp =
@@ -504,7 +432,6 @@ public class XMLImportPageBean {
                             allNodesByCategoriesMap.put(distinctCategory,
                                                         temp);
                         }
-                        System.out.println("Debug ---3");
                         root = new ArrayList<NodeCategory>();
                         Iterator it =
                             allNodesByCategoriesMap.entrySet().iterator();
@@ -512,7 +439,6 @@ public class XMLImportPageBean {
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             String Key = (String)pair.getKey();
-                            System.out.println("Key " + Key);
                             String[] arr = Key.split("-");
                             String category = arr[0];
                             String printGrpLevel = arr[1];
@@ -538,7 +464,6 @@ public class XMLImportPageBean {
                             }
 
                         }
-                        System.out.println("Debug ---4");
                         //Trying to sort root
                         for (NodeCategory nc : root) {
                             System.out.println(nc.getCategory() + " " +
@@ -547,11 +472,6 @@ public class XMLImportPageBean {
                         NodeComparator comparator = new NodeComparator();
                         Collections.sort(root, comparator);
 
-                        for (NodeCategory nc : root) {
-                            System.out.println(nc.getCategory() + " " +
-                                               nc.getPrintGroupLevel());
-                        }
-                        System.out.println("Debug ---5");
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
                         ADFUtils.setSessionScopeValue("categoryTree", categoryTree);
@@ -572,14 +492,9 @@ public class XMLImportPageBean {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //ADFUtils.routeExceptions(e);
-            //e.printStackTrace();
         } finally {
-            //cleanup
-            // ADFUtils.setSessionScopeValue("refreshImport", null);
-            //            ADFUtils.setSessionScopeValue("parentObject", null);
-            // categoryTree = null ;
             ADFUtils.setSessionScopeValue("ImpSrcChanged", null);
+            //categroryTreeLineTwo = null ;
         }
         return categoryTree;
 
@@ -720,22 +635,6 @@ public class XMLImportPageBean {
         return modelName;
     }
 
-    public void importConfiguration(ActionEvent actionEvent) {
-        UIComponent uiComponent = (UIComponent)actionEvent.getSource();
-        uiComponent.processUpdates(FacesContext.getCurrentInstance());
-        ADFUtils.setSessionScopeValue("refreshImport", "Y");
-        System.out.println("Button Pressed");
-        //Trying to clear previous values here
-        warnText.setValue(null);
-        showListHeader = false;
-        debugMsgBind.setValue(null);
-        productsRendered = true;
-        spaceRendered = false;
-        validationError.setValue(null);
-        quoteTotal.setValue(null);
-        fileUploadVCE();
-
-    }
 
     public void refreshViewReferenceTab() {
 
@@ -895,6 +794,7 @@ public class XMLImportPageBean {
     }
 
     public void refreshView(ActionEvent actionEvent) {
+        categroryTreeLineTwo = null ;
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
         // UIComponent uiComponent = (UIComponent)actionEvent.getSource();
@@ -911,6 +811,7 @@ public class XMLImportPageBean {
         quoteTotal.setValue(null);
         showListHeader = true;
         categoryTree = null;
+        
         allNodes = null;
     }
 
@@ -927,7 +828,7 @@ public class XMLImportPageBean {
     }
 
     public RichOutputText getPageInitText() {
-        //categoryTree = null;
+        categroryTreeLineTwo = null;
         refreshView(null);
         RequestContext.getCurrentInstance().addPartialTarget(ADFUtils.findComponentInRoot("ps1imXML"));
         //ADFUtils.setSessionScopeValue("refreshImport", null);
@@ -986,5 +887,175 @@ public class XMLImportPageBean {
     public void downloadConfirmation(ActionEvent actionEvent) {
        System.out.println("Download Confirmation Fired");
        downloadPopup.hide();
+    }
+
+
+    public ChildPropertyTreeModel getCategroryTreeLineTwo() {
+        try {
+            StringBuilder errMessage = new StringBuilder("Error");
+            String refreshImport =
+                (String)ADFUtils.getSessionScopeValue("refreshImport");
+            Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+            String impSrcChanged =
+                (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
+            if (impSrcChanged != null && impSrcChanged.equalsIgnoreCase("Y")) {
+                categroryTreeLineTwo = null;
+                quoteTotal.setValue(null);
+            }
+            System.out.println("For line 2  refresh imp"+refreshImport+" Cat tree "+categroryTreeLineTwo+" Parent obj "+parentObj);
+            if (refreshImport != null &&
+                refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
+                if (parentObj != null) {
+                    V93kQuote obj = (V93kQuote)parentObj;
+                    //Check if no exceptions from configurator
+                    if (obj.getExceptionMap() != null) {
+                        TreeMap<String, ArrayList<String>> exceptionMap =
+                            obj.getExceptionMap().getErrorList();
+                        TreeMap<String, ArrayList<String>> notifications =
+                            obj.getExceptionMap().getNotificationList();
+                        TreeMap<String, ArrayList<String>> warnings =
+                            obj.getExceptionMap().getWarningList();
+                        TreeMap<String, ArrayList<String>> debugList =
+                            obj.getExceptionMap().getDebugMessageList();
+                        List<String> debugMessages =
+                            obj.getExceptionMap().getDebugMessages();
+
+                        //Check for warnings from configurator
+                      
+
+                        List<String> errorMessages =
+                            obj.getExceptionMap().getErrorsMessages();
+
+                        if (exceptionMap != null && exceptionMap.size() > 0) {
+
+                            for (Map.Entry<String, ArrayList<String>> entry :
+                                 exceptionMap.entrySet()) {
+                                String key = entry.getKey();
+                                ArrayList<String> value = entry.getValue();
+                                for (String str : value) {
+                                    errMessage.append(str);
+                                }
+                            }
+                        }
+                        if (errorMessages != null &&
+                            errorMessages.size() > 0) {
+                            for (String str : errorMessages) {
+                                errMessage.append(str);
+                            }
+                        }
+                        if (errMessage != null &&
+                            !errMessage.toString().equalsIgnoreCase("Error")) {
+                            validationError.setValue("Exception occured " +
+                                                     errMessage.toString()); /// Probable change 3
+                            RichPopup.PopupHints hints =
+                                new RichPopup.PopupHints();
+                            //errorPopup.show(hints);
+                            // return null;
+                            //throw new JboException(errMessage.toString());
+                        }
+
+                        
+                    }
+
+                    if (obj != null && obj.getSessionDetails() != null &&
+                        obj.getSessionDetails().getModelName() != null) {
+                        System.out.println("Model Name is " + modelName);
+                    }
+                    if (errMessage != null &&
+                        errMessage.toString().equalsIgnoreCase("Error")) {
+
+                        List<String> catList = new ArrayList<String>();
+                        List<String> distinctList = new ArrayList<String>();
+                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes("2") ;
+                           // obj.getNodeCollection();
+                        HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                            new HashMap<String, List<ConfiguratorNodePOJO>>();
+                        for (ConfiguratorNodePOJO node : allNodesList) {
+//                            if (node.getPrintGroupLevel() != null &&
+//                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+//                                quoteTotal.setValue(node.getExtendedPrice());
+//                            }
+                            if (node.getNodeCategory() != null &&
+                                node.getPrintGroupLevel() != null) {
+                                catList.add(node.getNodeCategory() + "-" +
+                                            (node.getPrintGroupLevel() !=
+                                             null ? node.getPrintGroupLevel() :
+                                             "0"));
+                            }
+                        }
+                        distinctList = removeDuplicatesFromList(catList);
+                        for (String distinctCategory : distinctList) {
+                            List<ConfiguratorNodePOJO> temp =
+                                new ArrayList<ConfiguratorNodePOJO>();
+                            for (ConfiguratorNodePOJO node : allNodesList) {
+                                if (distinctCategory != null &&
+                                    distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
+                                                                      "-" +
+                                                                      node.getPrintGroupLevel())) {
+                                    temp.add(node);
+                                }
+                            }
+                            allNodesByCategoriesMap.put(distinctCategory,
+                                                        temp);
+                        }
+                        root = new ArrayList<NodeCategory>();
+                        Iterator it =
+                            allNodesByCategoriesMap.entrySet().iterator();
+                        NodeCategory firstLevel = null;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            String Key = (String)pair.getKey();
+                            System.out.println("Key " + Key);
+                            String[] arr = Key.split("-");
+                            String category = arr[0];
+                            String printGrpLevel = arr[1];
+                            firstLevel =
+                                    new NodeCategory(category, null, null, null,
+                                                     null, null, null, null,
+                                                     printGrpLevel);
+                            root.add(firstLevel);
+                            List<ConfiguratorNodePOJO> childList =
+                                (List<ConfiguratorNodePOJO>)pair.getValue();
+                            for (ConfiguratorNodePOJO node : childList) {
+                                NodeCategory secondLevel =
+                                    new NodeCategory(category,
+                                                     node.getNodeName(),
+                                                     node.getNodeDescription(),
+                                                     node.getNodeQty(),
+                                                     node.getNodeValue(),
+                                                     node.getUnitPrice(),
+                                                     node.getExtendedPrice(),
+                                                     node.getNodeColor(),
+                                                     node.getPrintGroupLevel());
+                                firstLevel.addNodes(secondLevel);
+                            }
+
+                        }
+                        //Trying to sort root
+
+                        NodeComparator comparator = new NodeComparator();
+                        Collections.sort(root, comparator);
+
+                        categroryTreeLineTwo =
+                                new ChildPropertyTreeModel(root, "childNodes");
+
+                    } else {
+                        root = new ArrayList();
+                        categroryTreeLineTwo =
+                                new ChildPropertyTreeModel(root, "childNodes");
+                        RichPopup.PopupHints hints =
+                            new RichPopup.PopupHints();
+                        errorPopup.show(hints);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //cleanup
+            ADFUtils.setSessionScopeValue("ImpSrcChanged", null);
+        }
+        return categroryTreeLineTwo;
     }
 }
