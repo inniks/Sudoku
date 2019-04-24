@@ -44,6 +44,35 @@
               </af:popup>
               <af:region value="#{bindings.dynamicRegion1.regionModel}"
                          id="r1" partialTriggers="::imSrcP1"/>
+              <af:popup id="p1"
+                        binding="#{viewScope.LoadDynamicRegionBean.expConfigPopup}">
+                <af:panelWindow id="pw1">
+                  <af:panelHeader text="Export Configuration" id="ph1"
+                                  inlineStyle="color:Teal;">
+                    <f:facet name="context"/>
+                    <f:facet name="menuBar"/>
+                    <f:facet name="toolbar">
+                      <af:panelGroupLayout id="pgl6" halign="end">
+                        <af:commandButton text="Download" id="cb2"
+                                          actionListener="#{viewScope.LoadDynamicRegionBean.export}"/>
+                        <af:commandButton text="Cancel" id="cb3"
+                                          actionListener="#{viewScope.LoadDynamicRegionBean.cancelPopup}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="legend"/>
+                    <f:facet name="info">
+                      <af:outputFormatted id="of1"
+                                          binding="#{viewScope.LoadDynamicRegionBean.exportException}"
+                                          inlineStyle="color:Red;"/>
+                    </f:facet>
+                    <af:panelGroupLayout id="pgl4">
+                      <af:inputText label="File Name" id="it1"
+                                    binding="#{viewScope.LoadDynamicRegionBean.fileNameBinding}"/>
+                    </af:panelGroupLayout>
+                    <af:spacer width="10" height="10" id="s2"/>
+                  </af:panelHeader>
+                </af:panelWindow>
+              </af:popup>
             </af:panelGroupLayout>
           </f:facet>
           <f:facet name="start">
@@ -107,7 +136,10 @@
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
                         <af:commandToolbarButton text="Export Target Configuration"
                                                  id="ctb5"
-                                                 actionListener="#{viewScope.LoadDynamicRegionBean.export}"/>
+                                                 >
+                          <af:showPopupBehavior popupId="p1"
+                                                triggerType="action"/>
+                        </af:commandToolbarButton>
                         <af:commandToolbarButton text="View Target" id="ctb4">
                           <af:setPropertyListener from="targetRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"

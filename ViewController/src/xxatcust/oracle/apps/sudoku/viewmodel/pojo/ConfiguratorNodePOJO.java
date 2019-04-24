@@ -23,7 +23,7 @@ public class ConfiguratorNodePOJO {
     String nodeCategory;
     String nodeColor;
     String printGroupLevel;
-
+    String xmlTag;
     public ConfiguratorNodePOJO() {
         super();
     }
@@ -96,5 +96,13 @@ public class ConfiguratorNodePOJO {
 
     public String getPrintGroupLevel() {
         return printGroupLevel;
+    }
+
+    public void setXmlTag(String xmlTag) {
+        this.xmlTag = xmlTag;
+    }
+
+    public String getXmlTag() {
+        return xmlTag;
     }
 }

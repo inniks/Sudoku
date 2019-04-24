@@ -3,10 +3,14 @@ package xxatcust.oracle.apps.sudoku.util;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+import java.util.Map;
 import java.util.Set;
+
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,8 +28,12 @@ import org.w3c.dom.Element;
 
 import org.w3c.dom.Node;
 
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.Config;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ConfiguratorNodePOJO;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.ModelBom;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.PogoMappingFile;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QHeader;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.QuoteLinePOJO;
 import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 public class DOMParser {
@@ -34,57 +42,92 @@ public class DOMParser {
     }
 
     public static File XMLWriterDOM(V93kQuote v93kObj) {
-//        DocumentBuilderFactory dbFactory =
-//            DocumentBuilderFactory.newInstance();
-//        DocumentBuilder dBuilder;
-//        try {
-//            TransformerFactory transformerFactory =
-//                TransformerFactory.newInstance();
-//            Transformer transformer = transformerFactory.newTransformer();
-//            //for pretty print
-//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//
-//            dBuilder = dbFactory.newDocumentBuilder();
-//            Document doc = dBuilder.newDocument();
-//            DOMSource source = new DOMSource(doc);
-//            //This is the Root element v93000-Quote
-//            Element rootElement = doc.createElementNS(null, "V93000-Quote");
-//            //Attach the root to document
-//            doc.appendChild(rootElement);
-//
-//            List<ConfiguratorNodePOJO> nodeCollection =
-//                v93kObj.getNodeCollection();
-//            ArrayList<String> nodeCategoryList = new ArrayList<String>();
-//            if (nodeCollection != null) {
-//                for (ConfiguratorNodePOJO node : nodeCollection) {
-//                    String nodeCategory = node.getNodeCategory();
-//                    nodeCategoryList.add(nodeCategory);
-//                    System.out.println("Node category is " + nodeCategory);
-//
+        DocumentBuilderFactory dbFactory =
+            DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder;
+        try {
+            TransformerFactory transformerFactory =
+                TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            //for pretty print
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
+            DOMSource source = new DOMSource(doc);
+            //This is the Root element v93000-Quote
+            Element rootElement = doc.createElementNS(null, "V93000-Quote");
+            //Attach the root to document
+            doc.appendChild(rootElement);
+
+
+            if (v93kObj.getQheaderObject() != null) {
+                //First create qheader if it exists
+                rootElement.appendChild(qHeaderNode(v93kObj.getQheaderObject(),
+                                                    doc));
+            }
+
+
+            //Now create ModelBom objects based on the print sequence logic ,
+            List<String> catList = new ArrayList<String>();
+            List<String> distinctList = new ArrayList<String>();
+            List<ConfiguratorNodePOJO> allNodesList =
+                getAllNodes(v93kObj, "2");
+            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                new HashMap<String, List<ConfiguratorNodePOJO>>();
+
+            for (ConfiguratorNodePOJO node : allNodesList) {
+                //                            if (node.getPrintGroupLevel() != null &&
+                //                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                //                                quoteTotal.setValue(node.getExtendedPrice());
+                //                            }
+//                if (node.getNodeCategory() != null &&
+//                    node.getPrintGroupLevel() != null) {
+//                    catList.add(node.getNodeCategory() + "-" +
+//                                (node.getPrintGroupLevel() != null ?
+//                                 node.getPrintGroupLevel() : "0"));
 //                }
-//            }
-//            if (!nodeCategoryList.isEmpty()) {
-//                nodeCategoryList = removeDuplicatesFromList(nodeCategoryList);
-//            }
-//            //Each category is a child node of root element , So in a loop append nodes to each category
-//
-//
-//            if (v93kObj.getQheaderObject() != null) {
-//                //First create qheader if it exists
-//                rootElement.appendChild(qHeaderNode(v93kObj.getQheaderObject(),
-//                                                    doc));
-//            }
-//
-//
-//            StreamResult console = new StreamResult(System.out);
-//            //            StreamResult file =
-//            //                new StreamResult(new File("D://Projects//Advantest//JsonResponse/DOMExport.xml"));
-//            transformer.transform(source, console);
-//            //transformer.transform(source, file);
-//        } catch (Exception pce) {
-//            // TODO: Add catch code
-//            pce.printStackTrace();
-//        }
+                if(node.getXmlTag()!=null){
+                    catList.add(node.getXmlTag()) ;
+                }
+            }
+            distinctList = removeDuplicatesFromList(catList);
+
+            for (String distinctCategory : distinctList) {
+                List<ConfiguratorNodePOJO> temp =
+                    new ArrayList<ConfiguratorNodePOJO>();
+                for (ConfiguratorNodePOJO node : allNodesList) {
+//                    if (distinctCategory != null &&
+//                        distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
+//                                                          "-" +
+//                                                          node.getPrintGroupLevel())) {
+//                        temp.add(node);
+//                    }
+                    if(distinctCategory!=null && distinctCategory.equalsIgnoreCase(node.getXmlTag())){
+                        temp.add(node);
+                    }
+                }
+                allNodesByCategoriesMap.put(distinctCategory, temp);
+            }
+            // Now we have the allNodes by category map with us ,Iterate through each category and create nodes based on the node category
+            if (v93kObj.getConfigObject() != null &&
+                v93kObj.getConfigObject().getModelbomObject() != null) {
+                //rootElement.appendChild(modelBomNode(v93kObj.getConfigObject().getModelbomObject(), doc)) ;
+            }
+
+            rootElement.appendChild(configPmfNode(v93kObj, doc,
+                                                  allNodesByCategoriesMap));
+
+
+            StreamResult console = new StreamResult(System.out);
+            //            StreamResult file =
+            //                new StreamResult(new File("D://Projects//Advantest//JsonResponse/DOMExport.xml"));
+            transformer.transform(source, console);
+            //transformer.transform(source, file);
+        } catch (Exception pce) {
+            // TODO: Add catch code
+            pce.printStackTrace();
+        }
         return null;
     }
 
@@ -295,51 +338,170 @@ public class DOMParser {
             }
             qheadernode.appendChild(dealNode);
         }
-        
+
         //Deal node done , Now create Salesteam node
         if (qheaderObj.getSalesteamObject() != null) {
             Element salesteamNode = doc.createElement("salesteam");
-            if (qheaderObj.getSalesteamObject().getOu()!=null) {
+            if (qheaderObj.getSalesteamObject().getOu() != null) {
                 Node ou =
                     getNodeElements(doc, null, "ou", qheaderObj.getSalesteamObject().getOu());
                 salesteamNode.appendChild(ou);
             }
-            if (qheaderObj.getSalesteamObject().getSrespo()!=null) {
+            if (qheaderObj.getSalesteamObject().getSrespo() != null) {
                 Node srespo =
                     getNodeElements(doc, null, "srespo", qheaderObj.getSalesteamObject().getSrespo());
                 salesteamNode.appendChild(srespo);
             }
-            if (qheaderObj.getSalesteamObject().getSphone()!=null) {
+            if (qheaderObj.getSalesteamObject().getSphone() != null) {
                 Node sphone =
                     getNodeElements(doc, null, "sphone", qheaderObj.getSalesteamObject().getSphone());
                 salesteamNode.appendChild(sphone);
             }
-            if (qheaderObj.getSalesteamObject().getSemail()!=null) {
+            if (qheaderObj.getSalesteamObject().getSemail() != null) {
                 Node semail =
                     getNodeElements(doc, null, "semail", qheaderObj.getSalesteamObject().getSemail());
                 salesteamNode.appendChild(semail);
             }
-            if (qheaderObj.getSalesteamObject().getCsrrespo()!=null) {
+            if (qheaderObj.getSalesteamObject().getCsrrespo() != null) {
                 Node csrrespo =
                     getNodeElements(doc, null, "csrrespo", qheaderObj.getSalesteamObject().getCsrrespo());
                 salesteamNode.appendChild(csrrespo);
             }
-            if (qheaderObj.getSalesteamObject().getCsrphone()!=null) {
+            if (qheaderObj.getSalesteamObject().getCsrphone() != null) {
                 Node csrphone =
                     getNodeElements(doc, null, "csrphone", qheaderObj.getSalesteamObject().getCsrphone());
                 salesteamNode.appendChild(csrphone);
             }
-            if (qheaderObj.getSalesteamObject().getCsremail()!=null) {
+            if (qheaderObj.getSalesteamObject().getCsremail() != null) {
                 Node csremail =
                     getNodeElements(doc, null, "csremail", qheaderObj.getSalesteamObject().getCsremail());
                 salesteamNode.appendChild(csremail);
             }
-            
-            qheadernode.appendChild(salesteamNode) ;
+
+            qheadernode.appendChild(salesteamNode);
         }
-        
+
 
         return qheadernode;
     }
+
+    private static Node configPmfNode(V93kQuote v93, Document doc,
+                                      HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap) {
+        Element configNode = doc.createElement("config");
+        Config configObj = v93.getConfigObject();
+        configNode.appendChild(modelBomNode(v93, doc,
+                                            allNodesByCategoriesMap));
+        if (configObj != null && configObj.getVersion() != null) {
+            configNode.setAttribute("version", configObj.getVersion());
+        }
+        if (configObj != null && configObj.getPmfObject() != null) {
+            Node pmfNode = doc.createElement("pmf");
+            List<PogoMappingFile> listPmf =
+                configObj.getPmfObject().getPmfMap();
+            for (PogoMappingFile pmfObj : listPmf) {
+                Element mapNode = doc.createElement("map");
+                if (pmfObj.getRefId() != null)
+                    mapNode.setAttribute("ref-id", pmfObj.getRefId());
+                if (pmfObj.getProductName() != null)
+                    mapNode.setAttribute("card", pmfObj.getProductName());
+                if (pmfObj.getPogoName() != null)
+                    mapNode.setAttribute("cable", pmfObj.getPogoName());
+                if (pmfObj.getPogoMapping() != null)
+                    mapNode.setTextContent(pmfObj.getPogoMapping());
+
+                pmfNode.appendChild(mapNode);
+            }
+            configNode.appendChild(pmfNode);
+        }
+
+
+        return configNode;
+    }
+
+    private static Node modelBomNode(V93kQuote v93, Document doc,
+                                     HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap) {
+        Element modelbomNode = doc.createElement("modelbom");
+        if (v93.getConfigObject() != null) {
+            ModelBom modelBomObj = v93.getConfigObject().getModelbomObject();
+            if (modelBomObj.getId() != null) {
+                modelbomNode.setAttribute("id", modelBomObj.getId());
+            }
+            if (modelBomObj.getCid() != null)
+                modelbomNode.appendChild(getNodeElements(doc, null, "cid",
+                                                         modelBomObj.getCid()));
+            if (modelBomObj.getPricelist() != null)
+                modelbomNode.appendChild(getNodeElements(doc, null,
+                                                         "pricelist",
+                                                         modelBomObj.getPricelist()));
+            if (modelBomObj.getClassObject() != null) {
+                Element classNode = doc.createElement("class");
+                if (modelBomObj.getClassObject().getId() != null)
+                    classNode.setAttribute("id",
+                                           modelBomObj.getClassObject().getId());
+                if (modelBomObj.getClassObject().getCompatibility() != null)
+                    classNode.setAttribute("compatibility",
+                                           modelBomObj.getClassObject().getCompatibility());
+                modelbomNode.appendChild(classNode);
+            }
+        }
+        //Iterate over the allCat map and write to xml
+
+        for (Map.Entry<String, List<ConfiguratorNodePOJO>> entry :
+             allNodesByCategoriesMap.entrySet()) {
+            String key = entry.getKey();
+            System.out.println("Key is " + key);
+            List<ConfiguratorNodePOJO> listItems = entry.getValue();
+
+            Element itemNode = doc.createElement(key);
+
+            for (ConfiguratorNodePOJO node : listItems) {
+                System.out.println("Item is " + node.getNodeName());
+                Element e = doc.createElement("item");
+                if (node.getNodeName() != null) {
+
+                    e.setTextContent(node.getNodeName());
+                }
+                if (node.getNodeQty() != null) {
+                    e.setAttribute("qty", node.getNodeQty());
+                }
+                itemNode.appendChild(e);
+            }
+            modelbomNode.appendChild(itemNode);
+        }
+
+        return modelbomNode;
+    }
+
+    private static List<ConfiguratorNodePOJO> getAllNodes(V93kQuote parentObj,
+                                                          String lineNum) {
+        List allNodes = null;
+        if (parentObj != null) {
+            allNodes = parseAllNodes(parentObj, lineNum);
+        }
+        return allNodes;
+    }
+
+    private static List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj,
+                                                            String lineNum) {
+        ArrayList<ConfiguratorNodePOJO> nodeList = null;
+        ArrayList<QuoteLinePOJO> quoteLineListRef =
+            v93Obj.getReferenceConfigurationLines();
+        ArrayList<QuoteLinePOJO> quoteLineListTarget =
+            v93Obj.getTargetConfigurationLines();
+        System.out.println("Size of quoteLineref " + quoteLineListRef.size());
+        if (lineNum != null && lineNum.equalsIgnoreCase("1")) {
+            //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
+            nodeList = quoteLineListTarget.get(0).getItems(); //First line
+            //}
+        }
+        if (lineNum != null && lineNum.equalsIgnoreCase("2")) {
+            // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
+            nodeList = quoteLineListTarget.get(1).getItems(); //2nd line
+            //  }
+        }
+        return nodeList;
+
+    }
+
 
 }

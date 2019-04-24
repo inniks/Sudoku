@@ -8,8 +8,9 @@
                     dimensionsFrom="children">
     <f:facet name="first">
       <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top">
-        <af:panelHeader text="Exported Target Configuration" id="ph1" size="-1"
-                        inlineStyle="color:Teal;">
+        <af:panelHeader text="Exported Target Configuration" id="ph1"
+                        size="-1"
+                        inlineStyle="color:Teal; font-weight:bolder;" type="default">
           <af:spacer width="10" height="10" id="s17"/>
           <af:spacer width="10" height="10" id="s18"/>
         </af:panelHeader>
@@ -21,7 +22,8 @@
                            id="pgl4" layout="scroll">
         <af:panelGroupLayout id="pgl1">
           <af:commandButton text="Download XML" id="cb1"
-                            actionListener="#{pageFlowScope.TargetConfigurationBean.openDownloadPopup}"/>
+                            actionListener="#{pageFlowScope.TargetConfigurationBean.openDownloadPopup}"
+                            rendered="false"/>
         </af:panelGroupLayout>
         <af:panelBox text=" " id="pb1" showDisclosure="false" showHeader="never"
                      maximized="true" styleClass="AFStretchWidth">
@@ -87,6 +89,66 @@
                         </af:panelGridLayout>
                       </af:listItem>
                     </af:listView>
+                    <af:separator id="s30"/>
+                    <!--Line 2 starts here-->
+                    <af:listView id="lv21"
+                                 value="#{pageFlowScope.TargetConfigurationBean.categroryTreeLineTwo}"
+                                 var="nodeL2" selection="single"
+                                 groupDisclosurePolicy="noDisclosure">
+                      <f:facet name="groupHeaderStamp">
+                        <af:listItem id="li32" styleClass="ABHeader">
+                          <af:outputText value="#{nodeL2.category}" id="ot21"
+                                         inlineStyle="font-weight:bold;"/>
+                        </af:listItem>
+                      </f:facet>
+                      <af:listItem id="li22">
+                        <af:panelGridLayout id="pgl15ik">
+                          <af:gridRow marginTop="5px" height="auto" id="gr12">
+                            <af:gridCell marginStart="5px" width="15%" id="gc19"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.nodeName}"
+                                             id="ot11"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="25%" id="gc14"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.nodeDescription}"
+                                             id="o1t2" truncateAt="65"
+                                             shortDesc="#{nodeL2.nodeDescription}"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" marginEnd="5px"
+                                         width="14%" id="gc15"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:spacer width="150" height="10" id="sq4"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gc13"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.nodeQty}"
+                                             id="o1t3"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gc18"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText id="o1t4" value="#{nodeL2.uom}"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%"
+                                         id="gcd11"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.unitPrice}"
+                                             id="oqt5"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%" id="gcq6"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <af:outputText value="#{nodeL2.extendedPrice}"
+                                             id="t116"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="14%"
+                                         id="gc16_1"
+                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                              <!--<af:outputText value="#{node.extendedPrice}" id="ot6_1"/>-->
+                            </af:gridCell>
+                          </af:gridRow>
+                        </af:panelGridLayout>
+                      </af:listItem>
+                    </af:listView>
                   </af:group>
                 </f:facet>
                 <f:facet name="bottom">
@@ -125,7 +187,7 @@
                                      styleClass="ABHeader"/>
                       <af:spacer width="122" height="10" id="s10"/>
                       <af:spacer width="15" height="10" id="s20"/>
-                      <af:outputText value="Unit Price" id="ot11"
+                      <af:outputText value="Unit Price" id="ot1M1"
                                      inlineStyle="color:Black;  font-weight:bold;"
                                      styleClass="ABHeader"/>
                       <af:spacer width="88" height="10" id="s11"/>
@@ -141,8 +203,6 @@
                 </f:facet>
               </af:panelBorderLayout>
             </af:panelGroupLayout>
-            <af:outputText value="outputText1" id="ot17" visible="false"
-                           binding="#{pageFlowScope.TargetConfigurationBean.pageInitText}"/>
             <af:popup id="p1"
                       binding="#{pageFlowScope.TargetConfigurationBean.downloadPopup}">
               <af:panelBox text="Download Exported Configuration" id="pb2"
@@ -168,7 +228,18 @@
                 </af:panelGroupLayout>
               </af:panelBox>
             </af:popup>
+            <af:outputText value="outputText1" id="ot17" visible="false"
+                           binding="#{pageFlowScope.TargetConfigurationBean.pageInitText}"/>
           </af:panelGroupLayout>
+          <af:popup id="p2"
+                    binding="#{pageFlowScope.TargetConfigurationBean.errPopup}">
+            <af:dialog id="d1" title="Exceptions Occurred :" type="cancel"
+                       contentWidth="450" contentHeight="200">
+              <af:outputFormatted  id="of1"
+                                  binding="#{pageFlowScope.TargetConfigurationBean.errorText}"
+                                  inlineStyle="color:Red;"/>
+            </af:dialog>
+          </af:popup>
         </af:panelBox>
       </af:panelGroupLayout>
     </f:facet>

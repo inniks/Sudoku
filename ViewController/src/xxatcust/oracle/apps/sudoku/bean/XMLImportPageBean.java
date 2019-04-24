@@ -197,18 +197,35 @@ public class XMLImportPageBean {
    
 
     private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj,String lineNum) {
-        List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
-        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceCollection = v93Obj.getReferenceNodeCollection();
-        if(referenceCollection!=null && !referenceCollection.isEmpty()){
-            if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
-            //get Line1 node collection
-            nodeList = referenceCollection.get("1.0") ; // Line 1 node collection
-            }
-            else if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
-                nodeList = referenceCollection.get("20000") ; // Line 2 node collection , This key should be 2,0
-            }
+        ArrayList<ConfiguratorNodePOJO> nodeList = null ;
+        ArrayList<QuoteLinePOJO> quoteLineListRef =
+            v93Obj.getReferenceConfigurationLines();
+        ArrayList<QuoteLinePOJO> quoteLineListTarget =
+            v93Obj.getTargetConfigurationLines();
+        System.out.println("Size of quoteLineref "+quoteLineListRef.size());
+        if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
+        //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
+         nodeList =   quoteLineListRef.get(0).getItems() ; //First line
+        //}
         }
-       
+        if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
+           // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
+             nodeList =   quoteLineListRef.get(1).getItems() ;//2nd line
+             System.out.println("Number of 2nd line nodes "+nodeList.size());
+          //  }
+        }
+//        List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
+//        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceCollection = v93Obj.getReferenceNodeCollection();
+//        if(referenceCollection!=null && !referenceCollection.isEmpty()){
+//            if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
+//            //get Line1 node collection
+//            nodeList = referenceCollection.get("1.0") ; // Line 1 node collection
+//            }
+//            else if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
+//                nodeList = referenceCollection.get("20000") ; // Line 2 node collection , This key should be 2,0
+//            }
+//        }
+//       
 
         return nodeList;
     }
@@ -836,7 +853,7 @@ public class XMLImportPageBean {
     }
 
     public void exportDownload(ActionEvent actionEvent) {
-       V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("inputObject");
+       V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k != null) {
             
             DOMParser.XMLWriterDOM(v93k) ;

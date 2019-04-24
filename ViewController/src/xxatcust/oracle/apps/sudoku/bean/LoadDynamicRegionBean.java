@@ -8,8 +8,14 @@ import oracle.adf.controller.TaskFlowId;
 
 import oracle.adf.view.rich.component.rich.RichPopup;
 
+import oracle.adf.view.rich.component.rich.input.RichInputText;
+
+import oracle.adf.view.rich.component.rich.output.RichOutputFormatted;
+
 import xxatcust.oracle.apps.sudoku.util.ADFUtils;
+import xxatcust.oracle.apps.sudoku.util.DOMParser;
 import xxatcust.oracle.apps.sudoku.util.StaxParser;
+import xxatcust.oracle.apps.sudoku.viewmodel.pojo.V93kQuote;
 
 public class LoadDynamicRegionBean {
     private String taskFlowId =
@@ -23,6 +29,9 @@ public class LoadDynamicRegionBean {
     private String targetRefTF =
         "/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/TargetConfigFlow.xml#TargetConfigFlow";
     private String currentTF = "configurator";
+    private RichPopup expConfigPopup;
+    private RichInputText fileNameBinding;
+    private RichOutputFormatted exportException;
 
     public LoadDynamicRegionBean() {
     }
@@ -110,11 +119,7 @@ public class LoadDynamicRegionBean {
     }
 
     public void cancelPopup(ActionEvent actionEvent) {
-        RichPopup impSrcPopup =
-            (RichPopup)ADFUtils.findComponentInRoot("imSrcP1");
-        if (impSrcPopup != null) {
-            impSrcPopup.cancel();
-        }
+        expConfigPopup.cancel();
     }
 
     public void setQuoteTFUpdateId(String quoteTFUpdateId) {
@@ -126,6 +131,37 @@ public class LoadDynamicRegionBean {
     }
 
     public void export(ActionEvent actionEvent) {
-        StaxParser.StaxCreateXml(null);
+       // For now create the xml file and display in console
+        V93kQuote parentObj = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        if(parentObj==null){
+            exportException.setValue("No configuration exists , Please try new configuration...");
+        }
+        else{
+            DOMParser.XMLWriterDOM(parentObj) ;
+        }
+    }
+
+    public void setExpConfigPopup(RichPopup expConfigPopup) {
+        this.expConfigPopup = expConfigPopup;
+    }
+
+    public RichPopup getExpConfigPopup() {
+        return expConfigPopup;
+    }
+
+    public void setFileNameBinding(RichInputText fileNameBinding) {
+        this.fileNameBinding = fileNameBinding;
+    }
+
+    public RichInputText getFileNameBinding() {
+        return fileNameBinding;
+    }
+
+    public void setExportException(RichOutputFormatted exportException) {
+        this.exportException = exportException;
+    }
+
+    public RichOutputFormatted getExportException() {
+        return exportException;
     }
 }

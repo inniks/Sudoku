@@ -21,7 +21,14 @@ public class SessionDetails {
     private ArrayList<String> nonComplaintsItems = new ArrayList<String>();
     private String servletMode; // value is EBS when using from EBS side manually testing
     private HashMap<String, String> fndMessages = new HashMap<String, String>(); 
+    private HashMap<String, String> categoryToXMLTagMappings = new HashMap<String, String>(); 
     private boolean reloadInExpertMode = false;
+    
+    boolean formalQuote = false;
+    boolean updateQuote = false;
+    boolean duplicateQuote = false;
+    boolean createNewQuote = false;
+
     public SessionDetails() {
         super();
     }
@@ -172,5 +179,45 @@ public class SessionDetails {
 
     public boolean isReloadInExpertMode() {
         return reloadInExpertMode;
+    }
+
+    public void setFormalQuote(boolean isFormalQuote) {
+        this.formalQuote = isFormalQuote;
+    }
+
+    public boolean isFormalQuote() {
+        return formalQuote;
+    }
+
+    public void setUpdateQuote(boolean useExistingQuote) {
+        this.updateQuote = useExistingQuote;
+    }
+
+    public boolean isUpdateQuote() {
+        return updateQuote;
+    }
+
+    public void setDuplicateQuote(boolean duplicateQuote) {
+        this.duplicateQuote = duplicateQuote;
+    }
+
+    public boolean isDuplicateQuote() {
+        return duplicateQuote;
+    }
+
+    public void setCreateNewQuote(boolean createNewQuote) {
+        this.createNewQuote = createNewQuote;
+    }
+
+    public boolean isCreateNewQuote() {
+        return createNewQuote;
+    }
+
+    public void setCategoryToXMLTagMappings(HashMap<String, String> categoryToXMLTagMappings) {
+        this.categoryToXMLTagMappings = categoryToXMLTagMappings;
+    }
+
+    public HashMap<String, String> getCategoryToXMLTagMappings() {
+        return categoryToXMLTagMappings;
     }
 }

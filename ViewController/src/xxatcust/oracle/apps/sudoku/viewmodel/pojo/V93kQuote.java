@@ -13,8 +13,10 @@ public class V93kQuote {
     QHeader QheaderObject;
     Config ConfigObject;
     List<ConfiguratorNodePOJO> nodeCollection ;
+    ArrayList<QuoteLinePOJO> referenceConfigurationLines;
+    ArrayList<QuoteLinePOJO> targetConfigurationLines;
     TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection ;
-    TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection ;
+        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection ;
     SessionDetails sessionDetails ;
     ExceptionHandlerPOJO exceptionMap ;
     InputParams inputParams ;
@@ -68,6 +70,22 @@ public class V93kQuote {
 
     public InputParams getInputParams() {
         return inputParams;
+    }
+
+    public void setReferenceConfigurationLines(ArrayList<QuoteLinePOJO> referenceConfigurationLines) {
+        this.referenceConfigurationLines = referenceConfigurationLines;
+    }
+
+    public ArrayList<QuoteLinePOJO> getReferenceConfigurationLines() {
+        return referenceConfigurationLines;
+    }
+
+    public void setTargetConfigurationLines(ArrayList<QuoteLinePOJO> targetConfigurationLines) {
+        this.targetConfigurationLines = targetConfigurationLines;
+    }
+
+    public ArrayList<QuoteLinePOJO> getTargetConfigurationLines() {
+        return targetConfigurationLines;
     }
 
     public void setReferenceNodeCollection(TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection) {
