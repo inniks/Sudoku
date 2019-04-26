@@ -83,79 +83,10 @@
       <Return
         Type="java.lang.String"/>
     </Method>
-  </ClientInterface>
-  <ClientInterface>
     <Method
-      Name="clearQuoteFields">
+      Name="initRuleSet">
       <Return
         Type="void"/>
-    </Method>
-    <Method
-      Name="searchQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="initQuoteSearch">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="getQuoteCustmerAddress">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callQuoteAPI">
-      <Return
-        Type="java.lang.String"/>
-    </Method>
-    <Method
-      Name="getUpdateQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callUpdateQuoteAPI">
-      <Return
-        Type="java.lang.String"/>
-    </Method>
-  </ClientInterface>
-  <ClientInterface>
-    <Method
-      Name="clearQuoteFields">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="searchQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="initQuoteSearch">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="getQuoteCustmerAddress">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callQuoteAPI">
-      <Return
-        Type="java.lang.String"/>
-    </Method>
-    <Method
-      Name="getUpdateQuote">
-      <Return
-        Type="void"/>
-    </Method>
-    <Method
-      Name="callUpdateQuoteAPI">
-      <Return
-        Type="java.lang.String"/>
     </Method>
   </ClientInterface>
 </AppModule>

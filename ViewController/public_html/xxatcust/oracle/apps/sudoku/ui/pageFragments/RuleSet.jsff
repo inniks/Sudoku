@@ -6,29 +6,35 @@
     <f:facet name="toolbar"/>
     <af:panelGroupLayout id="pgl1">
       <af:panelFormLayout id="pfl1">
-        <af:selectOneChoice value="#{bindings.TopLevelMeaning.inputValue}"
-                            label="Rule Set"
-                            required="#{bindings.TopLevelMeaning.hints.mandatory}"
+        <af:selectOneChoice value="#{bindings.TopLevelCode.inputValue}"
+                            label="#{bindings.TopLevelCode.label}"
+                            required="#{bindings.TopLevelCode.hints.mandatory}"
                             shortDesc="#{bindings.TopLevelMeaning.hints.tooltip}"
                             id="soc1" autoSubmit="true"
                             contentStyle="width:85px;"
-                            valueChangeListener="#{pageFlowScope.RuleSetBean.topLevelChanged}">
-          <f:selectItems value="#{bindings.TopLevelMeaning.items}" id="si1"/>
+                            valueChangeListener="#{pageFlowScope.RuleSetBean.topLevelChanged}"
+                            rendered="false">
+          <f:selectItems value="#{bindings.TopLevelCode.items}" id="si1"/>
         </af:selectOneChoice>
+        <af:panelLabelAndMessage label="#{bindings.TopLevelMeaning1.hints.label}"
+                                 id="plam2">
+          <af:outputText value="#{bindings.TopLevelMeaning1.inputValue}"
+                         id="ot2"/>
+        </af:panelLabelAndMessage>
         <af:spacer width="10" height="10" id="s1"/>
-        <af:inputListOfValues id="secondLevelMeaningId"
-                              popupTitle="Search and Select: #{bindings.SecondLevelMeaning.hints.label}"
-                              value="#{bindings.SecondLevelMeaning.inputValue}"
-                              label="Value"
-                              model="#{bindings.SecondLevelMeaning.listOfValuesModel}"
-                              required="#{bindings.SecondLevelMeaning.hints.mandatory}"
-                              columns="18"
-                              shortDesc="#{bindings.SecondLevelMeaning.hints.tooltip}"
-                              partialTriggers="soc1"
-                              autoSubmit="true"
-                              valueChangeListener="#{pageFlowScope.RuleSetBean.secLevelValSelected}">
-          <f:validator binding="#{bindings.SecondLevelMeaning.validator}"/>
-        </af:inputListOfValues>
+        <af:selectOneChoice value="#{bindings.SecondLevelCode.inputValue}"
+                            label="#{bindings.SecondLevelCode.label}"
+                            required="#{bindings.SecondLevelCode.hints.mandatory}"
+                            shortDesc="#{bindings.SecondLevelCode.hints.tooltip}"
+                            id="soc2" partialTriggers="soc1"
+                            contentStyle="width:115px;" rendered="false">
+          <f:selectItems value="#{bindings.SecondLevelCode.items}" id="si2"/>
+        </af:selectOneChoice>
+        <af:panelLabelAndMessage label="#{bindings.SecondLevelMeaning.hints.label}"
+                                 id="plam1">
+          <af:outputText value="#{bindings.SecondLevelMeaning.inputValue}"
+                         id="ot1"/>
+        </af:panelLabelAndMessage>
       </af:panelFormLayout>
     </af:panelGroupLayout>
   </af:panelBox>

@@ -65,8 +65,8 @@ public class QuoteLinePOJO {
         return configRevNum;
     }
 
-    public void setQuoteNumber(String quoteHeaderId) {
-        this.quoteNumber = quoteHeaderId;
+    public void setQuoteNumber(String quoteNumber) {
+        this.quoteNumber = quoteNumber;
     }
 
     public String getQuoteNumber() {

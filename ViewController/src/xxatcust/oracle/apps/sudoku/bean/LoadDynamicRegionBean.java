@@ -1,7 +1,14 @@
 package xxatcust.oracle.apps.sudoku.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import java.util.HashMap;
 
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import oracle.adf.controller.TaskFlowId;
@@ -43,11 +50,9 @@ public class LoadDynamicRegionBean {
             return TaskFlowId.parse(viewReferenceTFId);
         } else if (this.getCurrentTF().equalsIgnoreCase("quoteUpdate")) {
             return TaskFlowId.parse(quoteTFUpdateId);
-        }
-        else if(this.getCurrentTF().equalsIgnoreCase("targetRef")){
-            return TaskFlowId.parse(targetRefTF); 
-        }
-        else {
+        } else if (this.getCurrentTF().equalsIgnoreCase("targetRef")) {
+            return TaskFlowId.parse(targetRefTF);
+        } else {
             return TaskFlowId.parse(quoteTFId);
         }
 
@@ -106,7 +111,8 @@ public class LoadDynamicRegionBean {
         quoteNumFromSession =
                 (String)ADFUtils.getSessionScopeValue("quoteNumber");
         if (importSource != null &&
-            (importSource.equalsIgnoreCase("BUDGET_QUOTE")||importSource.equalsIgnoreCase("FORMAL_QUOTE")) &&
+            (importSource.equalsIgnoreCase("BUDGET_QUOTE") ||
+             importSource.equalsIgnoreCase("FORMAL_QUOTE")) &&
             quoteNumFromSession != null)
             return "quoteUpdate";
         if (importSource == null || quoteNumFromSession == null)
@@ -131,14 +137,16 @@ public class LoadDynamicRegionBean {
     }
 
     public void export(ActionEvent actionEvent) {
-       // For now create the xml file and display in console
-        V93kQuote parentObj = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
-        if(parentObj==null){
-            exportException.setValue("No configuration exists , Please try new configuration...");
-        }
-        else{
-            DOMParser.XMLWriterDOM(parentObj) ;
-        }
+        // For now create the xml file and display in console
+//        System.out.println("Export button pressed");
+//        V93kQuote parentObj =
+//            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+//        if (parentObj == null) {
+//            exportException.setValue("No configuration exists.");
+//        } else {
+//            File createdXml = DOMParser.XMLWriterDOM(parentObj);
+//            ADFUtils.setPageFlowScopeValue("createdXML", createdXml);
+//        }
     }
 
     public void setExpConfigPopup(RichPopup expConfigPopup) {
@@ -163,5 +171,45 @@ public class LoadDynamicRegionBean {
 
     public RichOutputFormatted getExportException() {
         return exportException;
+    }
+
+    public void fileDownloadListener(FacesContext facesContext,
+                                     OutputStream outputStream) {
+        System.out.println("Download Listener Fired");
+        V93kQuote parentObj =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        File createdXml = null;
+        if (parentObj == null) {
+            exportException.setValue("No configuration exists.");
+        } else {
+            createdXml = DOMParser.XMLWriterDOM(parentObj);
+            ADFUtils.setPageFlowScopeValue("createdXML", createdXml);
+        }
+        try {
+
+            FileInputStream fis;
+            byte[] b;
+            fis = new FileInputStream(createdXml);
+
+            int n;
+            while ((n = fis.available()) > 0) {
+                b = new byte[n];
+                int result = fis.read(b);
+                outputStream.write(b, 0, b.length);
+                if (result == -1)
+                    break;
+            }
+            outputStream.flush();
+        } catch (FileNotFoundException fnfe) {
+            // TODO: Add catch code
+            ADFUtils.routeExceptions(fnfe);
+            
+        } catch (IOException ioe) {
+            // TODO: Add catch code
+           ADFUtils.routeExceptions(ioe);
+        }
+        finally{
+            expConfigPopup.cancel();
+        }
     }
 }

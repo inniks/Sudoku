@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 
 import java.io.UnsupportedEncodingException;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -72,6 +74,7 @@ import oracle.jbo.ConfigException;
 import oracle.jbo.JboException;
 import oracle.jbo.Row;
 import oracle.jbo.RowSetIterator;
+import oracle.jbo.domain.Number;
 import oracle.jbo.uicli.binding.JUCtrlHierBinding;
 import oracle.jbo.uicli.binding.JUCtrlHierNodeBinding;
 
@@ -210,8 +213,10 @@ public class XMLImportPageBean {
         }
         if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
            // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
+            if(quoteLineListRef.size()>1){
              nodeList =   quoteLineListRef.get(1).getItems() ;//2nd line
              System.out.println("Number of 2nd line nodes "+nodeList.size());
+            }
           //  }
         }
 //        List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
@@ -415,16 +420,41 @@ public class XMLImportPageBean {
                     }
                     if (errMessage != null &&
                         errMessage.toString().equalsIgnoreCase("Error")) {
+                        Double sumQuoteTotal = new Double(0) ;
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
                         List<ConfiguratorNodePOJO> allNodesList = getAllNodes("1") ;
+                        //To get Quote total , get the 2nd line as well
+                        List<ConfiguratorNodePOJO> secondLineList = getAllNodes("2") ;
+                        if (secondLineList!=null && !secondLineList.isEmpty()) {
+                            for (ConfiguratorNodePOJO node : secondLineList) {
+                                if (node.getPrintGroupLevel() != null &&
+                                    node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                    if (node.getExtendedPrice() != null) {
+                                        Double b =
+                                            new Double(node.getExtendedPrice());
+
+                                        sumQuoteTotal = sumQuoteTotal + b;
+                                        System.out.println("SumTotal " +
+                                                           sumQuoteTotal);
+                                        //sumQuoteTotal = sumQuoteTotal+Integer.parseInt(node.getExtendedPrice());
+                                    }
+                                    //quoteTotal.setValue(node.getExtendedPrice());
+                                }
+                            }
+                        }
                            // obj.getNodeCollection();
                         HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                             new HashMap<String, List<ConfiguratorNodePOJO>>();
                         for (ConfiguratorNodePOJO node : allNodesList) {
                             if (node.getPrintGroupLevel() != null &&
                                 node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-                                quoteTotal.setValue(node.getExtendedPrice());
+                                if(node.getExtendedPrice()!=null){
+                                    Double b = new Double(node.getExtendedPrice()) ;
+                                    sumQuoteTotal = sumQuoteTotal+b;
+                                    System.out.println("SumTotal "+sumQuoteTotal);
+                                }
+                                //quoteTotal.setValue(node.getExtendedPrice());
                             }
                             if (node.getNodeCategory() != null &&
                                 node.getPrintGroupLevel() != null) {
@@ -434,6 +464,7 @@ public class XMLImportPageBean {
                                              "0"));
                             }
                         }
+                        quoteTotal.setValue(sumQuoteTotal);
                         distinctList = removeDuplicatesFromList(catList);
                         for (String distinctCategory : distinctList) {
                             List<ConfiguratorNodePOJO> temp =
@@ -984,14 +1015,11 @@ public class XMLImportPageBean {
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
                         List<ConfiguratorNodePOJO> allNodesList = getAllNodes("2") ;
+                        if(allNodesList!=null && !allNodesList.isEmpty()){
                            // obj.getNodeCollection();
                         HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                             new HashMap<String, List<ConfiguratorNodePOJO>>();
                         for (ConfiguratorNodePOJO node : allNodesList) {
-//                            if (node.getPrintGroupLevel() != null &&
-//                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-//                                quoteTotal.setValue(node.getExtendedPrice());
-//                            }
                             if (node.getNodeCategory() != null &&
                                 node.getPrintGroupLevel() != null) {
                                 catList.add(node.getNodeCategory() + "-" +
@@ -1055,6 +1083,7 @@ public class XMLImportPageBean {
 
                         categroryTreeLineTwo =
                                 new ChildPropertyTreeModel(root, "childNodes");
+                        }
 
                     } else {
                         root = new ArrayList();

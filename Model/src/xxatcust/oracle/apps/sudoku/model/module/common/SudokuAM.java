@@ -22,4 +22,6 @@ public interface SudokuAM extends ApplicationModule {
     void getUpdateQuote();
 
     String callUpdateQuoteAPI();
+
+    void initRuleSet();
 }

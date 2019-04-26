@@ -55,4 +55,9 @@ public class SudokuAMClient extends ApplicationModuleImpl implements SudokuAM {
             this.riInvokeExportedMethod(this,"callUpdateQuoteAPI",null,null);
         return (String)_ret;
     }
+
+    public void initRuleSet() {
+        Object _ret = this.riInvokeExportedMethod(this,"initRuleSet",null,null);
+        return;
+    }
 }

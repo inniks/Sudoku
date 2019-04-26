@@ -8,9 +8,9 @@
                     dimensionsFrom="children">
     <f:facet name="first">
       <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top">
-        <af:panelHeader text="Exported Target Configuration" id="ph1"
-                        size="-1"
-                        inlineStyle="color:Teal; font-weight:bolder;" type="default">
+        <af:panelHeader text="Exported Target Configuration" id="ph1" size="-1"
+                        inlineStyle="color:Teal; font-weight:bolder;"
+                        type="default">
           <af:spacer width="10" height="10" id="s17"/>
           <af:spacer width="10" height="10" id="s18"/>
         </af:panelHeader>
@@ -155,7 +155,11 @@
                   <af:panelGroupLayout id="pgl12" halign="center"
                                        layout="horizontal">
                     <af:panelLabelAndMessage label="Quote Total :" id="plam5"
-                                             inlineStyle="font-size:small; color:Navy; font-weight:bolder;"/>
+                                             inlineStyle="font-size:small; color:Navy; font-weight:bolder;">
+                      <af:outputText id="ot16"
+                                     binding="#{pageFlowScope.TargetConfigurationBean.quoteTotal}"
+                                     inlineStyle="font-size:small; color:Navy; font-weight:bold;"/>
+                    </af:panelLabelAndMessage>
                   </af:panelGroupLayout>
                 </f:facet>
                 <f:facet name="end"/>
@@ -235,7 +239,7 @@
                     binding="#{pageFlowScope.TargetConfigurationBean.errPopup}">
             <af:dialog id="d1" title="Exceptions Occurred :" type="cancel"
                        contentWidth="450" contentHeight="200">
-              <af:outputFormatted  id="of1"
+              <af:outputFormatted id="of1"
                                   binding="#{pageFlowScope.TargetConfigurationBean.errorText}"
                                   inlineStyle="color:Red;"/>
             </af:dialog>

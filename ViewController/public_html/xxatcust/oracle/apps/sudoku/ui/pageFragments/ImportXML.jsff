@@ -98,7 +98,7 @@
             <af:spacer width="10" height="10" id="s29"/>
             <af:commandToolbarButton text="Export &amp; Download" id="ctb7"
                                      actionListener="#{XMLImportPageBean.exportDownload}"
-                                     immediate="true"/>
+                                     immediate="true" rendered="false"/>
           </af:toolbar>
         </af:panelHeader>
         <!--   <af:resource type="css" source="/css/Style.css"/> -->
@@ -263,7 +263,7 @@
                   <af:group id="g3">
                     <af:spacer width="10" height="20" id="s28"/>
                     <af:panelGroupLayout id="pgl5"
-                                         inlineStyle="background-color:#ebe7ef;"
+                                         inlineStyle="color: Aqua;"
                                          partialTriggers="cb1"
                                          rendered="#{XMLImportPageBean.showListHeader eq true}">
                       <af:outputText value="Line" id="ot14"

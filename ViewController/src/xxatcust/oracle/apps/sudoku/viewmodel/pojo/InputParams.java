@@ -7,6 +7,7 @@ public class InputParams {
     private String quoteNumber;
     private Boolean reuseQuote;//true if "Re-use the existing Quote ID, if possible" is selected 
     private Boolean copyReferenceConfiguration ;
+
     public InputParams() {
         super();
     }

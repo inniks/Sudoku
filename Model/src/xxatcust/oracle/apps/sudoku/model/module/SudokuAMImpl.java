@@ -15,6 +15,8 @@ import java.sql.Types;
 
 import java.util.Hashtable;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -987,6 +989,22 @@ this.getDBTransaction().createPreparedStatement(query, 0);
             quoteVO.insertRow(row);
             quoteVO.setCurrentRow(row);
         }
+    }
+    
+    public void initRuleSet(){
+        System.out.println("Init Rule Set");
+//        Map sessionMap = ADFContext.getCurrent().getSessionScope() ;
+//        ViewObjectImpl ruleSetVO = this.getRuleSetVO1() ;
+//        if(ruleSetVO!=null && sessionMap!=null){
+//            //get value of rulset top level and second level choices
+//            Row cRow = ruleSetVO.createRow() ;
+//            ruleSetVO.insertRow(cRow);
+//            cRow.setAttribute("TopLevelCode", "E8008SYS");
+//            cRow.setAttribute("LOVSwitcher", "LOV_SecondLevelMeaning1");
+//            cRow.setAttribute("SecondLevelCode", "STANDARD");
+//           
+//            ruleSetVO.setCurrentRow(cRow) ;
+//        }
     }
 
     /**

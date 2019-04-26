@@ -26,8 +26,8 @@ public class ConfiguratorUtils {
         // Add event code here...
         StringBuffer strBuf = new StringBuffer();
         try {
-            URL url =// new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP4");
-                new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP2");
+            URL url = new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP4");
+                //new URL("http://usdcnvpthap.adv.advantest.com:8000/OA_HTML/configurator/XXATSudokoCzServletP2");
             _logger.info("Print url in callConfiguratorServlet " +url);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
             // inform the connection that we will send output and accept input
@@ -87,10 +87,6 @@ public class ConfiguratorUtils {
                 configId = configIdStr.replace("=" + revision, "");
             }
             _logger.info(" Print  configId " +configId);  
-            
-            System.out.println("print first button press configId" + configId);
-
-            System.out.println("print first button press revision" + revision);
 
 
             AdfFacesContext context = AdfFacesContext.getCurrentInstance();
@@ -101,7 +97,8 @@ public class ConfiguratorUtils {
 
             System.out.println("Response from servlet::: " +
                                strBuf.toString());
-
+            _logger.info("Response from servlet::: " +
+                               strBuf.toString());
         } catch (Exception fnfe) {
             fnfe.printStackTrace();
         }

@@ -326,33 +326,33 @@ public class ImportSource {
             _logger.info("Print parent  parseXMLToPojo" + parent);
             /*^^^^^^^^^^^Comment this before deploying******************/
             String jsonStr = JSONUtils.convertObjToJson(parent);
-            obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            ADFUtils.setSessionScopeValue("parentObject", obj);
+            //System.out.println("Input JSON "+jsonStr);
+          // obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+           //ADFUtils.setSessionScopeValue("parentObject", obj);
             /* &&&&&Uncomment this code before deploying$$$$$*/
-//            ObjectMapper mapper = new ObjectMapper();
-//            _logger.info("Print mapper  parseXMLToPojo" + mapper);
-//            //comment this to run locally
-//            String responseJson =
-//                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-//            obj = mapper.readValue(responseJson, V93kQuote.class);
+            ObjectMapper mapper = new ObjectMapper();
+            _logger.info("Print mapper  parseXMLToPojo" + mapper);
+            //comment this to run locally
+            String responseJson =
+                (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
+            System.out.println("Configurator Response is "+responseJson);
+            obj = mapper.readValue(responseJson, V93kQuote.class);
         } else if (importSource != null) {
             V93kQuote v93k = new V93kQuote();
             v93k.setInputParams(inputParam);
             v93k.setSessionDetails(sessionDetails);
             obj = v93k;
             String jsonStr = JSONUtils.convertObjToJson(obj);
-            //V93kQuote obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            //ADFUtils.setSessionScopeValue("parentObject", obj);
-            _logger.info("Print jsonStr  parseXMLToPojo" + jsonStr);
+            //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+            ADFUtils.setSessionScopeValue("parentObject", obj);
 
             //Reading JSOn from File to POJO
             ObjectMapper mapper = new ObjectMapper();
             _logger.info("Print mapper  parseXMLToPojo" + mapper);
             //comment this to run locally
-            System.out.println("Input JSON " + jsonStr);
             String responseJson =
                 (String)ConfiguratorUtils.callConfiguratorServlet(jsonStr);
-            System.out.println("Response JSON " + responseJson);
+//            System.out.println("Response JSON " + responseJson);
             obj = mapper.readValue(responseJson, V93kQuote.class);
            
 

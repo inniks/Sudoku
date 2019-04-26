@@ -45,33 +45,42 @@
               <af:region value="#{bindings.dynamicRegion1.regionModel}"
                          id="r1" partialTriggers="::imSrcP1"/>
               <af:popup id="p1"
-                        binding="#{viewScope.LoadDynamicRegionBean.expConfigPopup}">
-                <af:panelWindow id="pw1">
+                        binding="#{viewScope.LoadDynamicRegionBean.expConfigPopup}"
+                        autoCancel="disabled">
+                <af:dialog id="d3" type="none" contentWidth="80"
+                           contentHeight="80">
                   <af:panelHeader text="Export Configuration" id="ph1"
-                                  inlineStyle="color:Teal;">
-                    <f:facet name="context"/>
-                    <f:facet name="menuBar"/>
-                    <f:facet name="toolbar">
-                      <af:panelGroupLayout id="pgl6" halign="end">
-                        <af:commandButton text="Download" id="cb2"
-                                          actionListener="#{viewScope.LoadDynamicRegionBean.export}"/>
-                        <af:commandButton text="Cancel" id="cb3"
-                                          actionListener="#{viewScope.LoadDynamicRegionBean.cancelPopup}"/>
-                      </af:panelGroupLayout>
-                    </f:facet>
-                    <f:facet name="legend"/>
+                                  inlineStyle="color:Teal;"
+                                  partialTriggers="cb2">
+                    <f:facet name="toolbar"/>
                     <f:facet name="info">
                       <af:outputFormatted id="of1"
                                           binding="#{viewScope.LoadDynamicRegionBean.exportException}"
-                                          inlineStyle="color:Red;"/>
+                                          inlineStyle="color:Red;"
+                                          partialTriggers="cb2"/>
                     </f:facet>
-                    <af:panelGroupLayout id="pgl4">
-                      <af:inputText label="File Name" id="it1"
-                                    binding="#{viewScope.LoadDynamicRegionBean.fileNameBinding}"/>
+                    <af:panelGroupLayout id="pgl4" halign="right">
+                      <af:panelLabelAndMessage label="File Name" id="plam1">
+                        <af:inputText id="it1"
+                                      binding="#{viewScope.LoadDynamicRegionBean.fileNameBinding}"/>
+                      </af:panelLabelAndMessage>
+                      <af:spacer width="10" height="30" id="s3"/>
                     </af:panelGroupLayout>
                     <af:spacer width="10" height="10" id="s2"/>
+                    <af:panelGroupLayout id="pgl6" halign="end">
+                      <af:spacer width="70" height="10" id="s5"/>
+                      <af:commandButton text="Download" id="cb2"
+                                        actionListener="#{viewScope.LoadDynamicRegionBean.export}">
+                        <af:fileDownloadActionListener contentType="text/xml"
+                                                       filename="#{viewScope.LoadDynamicRegionBean.fileNameBinding.value}"
+                                                       method="#{viewScope.LoadDynamicRegionBean.fileDownloadListener}"/>
+                      </af:commandButton>
+                      <af:spacer width="10" height="10" id="s4"/>
+                      <af:commandButton text="Cancel" id="cb3"
+                                        actionListener="#{viewScope.LoadDynamicRegionBean.cancelPopup}"/>
+                    </af:panelGroupLayout>
                   </af:panelHeader>
-                </af:panelWindow>
+                </af:dialog>
               </af:popup>
             </af:panelGroupLayout>
           </f:facet>
@@ -98,8 +107,6 @@
                       <af:statusIndicator id="si1" inlineStyle="color:Red;"/>
                     </af:panelGroupLayout>
                   </af:panelGroupLayout>
-                  <af:panelGroupLayout id="pgl0" layout="horizontal"
-                                       halign="right" visible="false"/>
                 </af:panelGroupLayout>
                 <af:panelGroupLayout id="pt_pgl4" layout="horizontal"
                                      halign="center"
@@ -111,23 +118,27 @@
                       <af:panelGroupLayout id="pgl_4" partialTriggers="ct2b1"
                                            layout="horizontal">
                         <af:commandToolbarButton text="Import Reference Configuration"
-                                                 id="ct2b1">
+                                                 id="ct2b1"
+                                                 inlineStyle="background-image: none;background-color:#800000;height: 30px;width: 200px; text-align:center;">
                           <af:showPopupBehavior popupId="imSrcP1"
                                                 triggerType="click"/>
                         </af:commandToolbarButton>
                         <af:commandToolbarButton text="View Reference"
-                                                 id="ctb1">
+                                                 id="ctb1"
+                                                 inlineStyle="background-image: none;background-color:#800000;height: 30px;width:200px; text-align:center;">
                           <af:setPropertyListener from="viewRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandToolbarButton>
-                        <af:commandToolbarButton text="Configurator" id="ctb3">
+                        <af:commandToolbarButton text="Configurator" id="ctb3"
+                                                 inlineStyle="background-image: none;background-color:#004d99;height: 30px;width: 200px; text-align:center;">
                           <af:setPropertyListener from="configurator"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandToolbarButton>
                         <af:commandToolbarButton text="Quote Header" id="ctb2"
-                                                 rendered="true">
+                                                 rendered="true"
+                                                 inlineStyle="background-image: none;background-color:#004d99;height: 30px;width:200px; text-align:center;">
                           <af:setPropertyListener from="#{viewScope.LoadDynamicRegionBean.navString}"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
@@ -136,23 +147,27 @@
                       <af:panelGroupLayout id="pgl5" layout="horizontal">
                         <af:commandToolbarButton text="Export Target Configuration"
                                                  id="ctb5"
-                                                 >
+                                                 inlineStyle="background-image: none;background-color:#009999;height: 30px;width: 200px; text-align:center;">
                           <af:showPopupBehavior popupId="p1"
                                                 triggerType="action"/>
                         </af:commandToolbarButton>
-                        <af:commandToolbarButton text="View Target" id="ctb4">
+                        <af:commandToolbarButton text="View Target" id="ctb4"
+                                                 inlineStyle="background-image: none;background-color:#009999;height: 30px;width: 200px; text-align:center;">
                           <af:setPropertyListener from="targetRef"
                                                   to="#{viewScope.LoadDynamicRegionBean.currentTF}"
                                                   type="action"/>
                         </af:commandToolbarButton>
                         <af:commandToolbarButton text="Save as System to Oracle Quote"
-                                                 id="ctb6" disabled="true"/>
-                        <af:commandToolbarButton text="Save as Upgrage to Oracle Quote"
-                                                 id="ctb7" disabled="true"/>
+                                                 id="ctb6"
+                                                 inlineStyle="background-image: none;background-color:#004d99;height: 30px;width: 200px; text-align:center; "/>
+                        <af:commandToolbarButton text="Save as Upgrade to Oracle Quote"
+                                                 id="ctb7"
+                                                 inlineStyle="background-image: none;background-color:#004d99;height: 30px;width: 200px;vertical-align:middle; text-align:center; "/>
                       </af:panelGroupLayout>
                     </af:panelFormLayout>
                   </af:panelGroupLayout>
-                  <af:panelGroupLayout id="pgl1" halign="left">
+                  <af:panelGroupLayout id="pgl1" halign="left"
+                                       partialTriggers="ct2b1">
                     <af:region value="#{bindings.RuleSetFlow1.regionModel}"
                                id="r3"/>
                   </af:panelGroupLayout>
@@ -161,16 +176,15 @@
                     <af:goImageLink id="pt_cil1"
                                     icon="/Resources/images/icons8-home-page-32.png"
                                     shortDesc="Redirect to EBS Home.."
-                                    rendered="true" text="Home"
+                                    rendered="true"
                                     destination="#{sessionScope._home_url  }"/>
-                    <af:spacer width="20" height="10" id="pt_s2"/>
+                    <af:spacer width="10" height="10" id="pt_s2"/>
                     <af:goImageLink id="pt_cil2"
                                     icon="/Resources/images/icons8-shutdown-32.png"
-                                    shortDesc="Logout.." text="Logout"
+                                    shortDesc="Logout.."
                                     destination="#{sessionScope._logout_url} "/>
                   </af:panelGroupLayout>
                 </af:panelGroupLayout>
-                <af:spacer width="10" height="10" id="pt_s1"/>
               </af:panelGroupLayout>
               <af:panelGroupLayout id="pt_pgl2" styleClass="AFStretchWidth"
                                    layout="vertical" rendered="false">

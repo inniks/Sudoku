@@ -15,8 +15,7 @@ public class V93kQuote {
     List<ConfiguratorNodePOJO> nodeCollection ;
     ArrayList<QuoteLinePOJO> referenceConfigurationLines;
     ArrayList<QuoteLinePOJO> targetConfigurationLines;
-    TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection ;
-        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection ;
+
     SessionDetails sessionDetails ;
     ExceptionHandlerPOJO exceptionMap ;
     InputParams inputParams ;
@@ -86,21 +85,5 @@ public class V93kQuote {
 
     public ArrayList<QuoteLinePOJO> getTargetConfigurationLines() {
         return targetConfigurationLines;
-    }
-
-    public void setReferenceNodeCollection(TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceNodeCollection) {
-        this.referenceNodeCollection = referenceNodeCollection;
-    }
-
-    public TreeMap<String, ArrayList<ConfiguratorNodePOJO>> getReferenceNodeCollection() {
-        return referenceNodeCollection;
-    }
-
-    public void setTargetNodeCollection(TreeMap<String, ArrayList<ConfiguratorNodePOJO>> targetNodeCollection) {
-        this.targetNodeCollection = targetNodeCollection;
-    }
-
-    public TreeMap<String, ArrayList<ConfiguratorNodePOJO>> getTargetNodeCollection() {
-        return targetNodeCollection;
     }
 }

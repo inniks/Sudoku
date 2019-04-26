@@ -95,6 +95,11 @@ af|inputFile::label {
     text-align: center; 
 }
 
+af|commandToolbarButton::text {
+     color: White; 
+     position: center; 
+}
+
 af|selectBooleanRadio[theme="medium"] {
         }
 

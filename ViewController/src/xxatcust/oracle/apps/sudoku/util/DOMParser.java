@@ -42,6 +42,7 @@ public class DOMParser {
     }
 
     public static File XMLWriterDOM(V93kQuote v93kObj) {
+        File f = null;
         DocumentBuilderFactory dbFactory =
             DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -71,64 +72,55 @@ public class DOMParser {
             //Now create ModelBom objects based on the print sequence logic ,
             List<String> catList = new ArrayList<String>();
             List<String> distinctList = new ArrayList<String>();
-            List<ConfiguratorNodePOJO> allNodesList =
-                getAllNodes(v93kObj, "2");
+            List<ConfiguratorNodePOJO> allNodesList =  getAllNodes(v93kObj, "1");
+            List<ConfiguratorNodePOJO> lineTwoNodeList =
+            getAllNodes(v93kObj, "2");
+            if (allNodesList != null && lineTwoNodeList != null &&
+                lineTwoNodeList.size() > 0) {
+                allNodesList.addAll(lineTwoNodeList);
+            }
             HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                 new HashMap<String, List<ConfiguratorNodePOJO>>();
-
-            for (ConfiguratorNodePOJO node : allNodesList) {
-                //                            if (node.getPrintGroupLevel() != null &&
-                //                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-                //                                quoteTotal.setValue(node.getExtendedPrice());
-                //                            }
-//                if (node.getNodeCategory() != null &&
-//                    node.getPrintGroupLevel() != null) {
-//                    catList.add(node.getNodeCategory() + "-" +
-//                                (node.getPrintGroupLevel() != null ?
-//                                 node.getPrintGroupLevel() : "0"));
-//                }
-                if(node.getXmlTag()!=null){
-                    catList.add(node.getXmlTag()) ;
-                }
-            }
-            distinctList = removeDuplicatesFromList(catList);
-
-            for (String distinctCategory : distinctList) {
-                List<ConfiguratorNodePOJO> temp =
-                    new ArrayList<ConfiguratorNodePOJO>();
+            if (allNodesList != null && !allNodesList.isEmpty()) {
                 for (ConfiguratorNodePOJO node : allNodesList) {
-//                    if (distinctCategory != null &&
-//                        distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
-//                                                          "-" +
-//                                                          node.getPrintGroupLevel())) {
-//                        temp.add(node);
-//                    }
-                    if(distinctCategory!=null && distinctCategory.equalsIgnoreCase(node.getXmlTag())){
-                        temp.add(node);
+                    if (node.getXmlTag() != null) {
+                        catList.add(node.getXmlTag());
                     }
                 }
-                allNodesByCategoriesMap.put(distinctCategory, temp);
+                distinctList = removeDuplicatesFromList(catList);
+
+                for (String distinctCategory : distinctList) {
+                    List<ConfiguratorNodePOJO> temp =
+                        new ArrayList<ConfiguratorNodePOJO>();
+                    for (ConfiguratorNodePOJO node : allNodesList) {
+                        if (distinctCategory != null &&
+                            distinctCategory.equalsIgnoreCase(node.getXmlTag())) {
+                            temp.add(node);
+                        }
+                    }
+                    allNodesByCategoriesMap.put(distinctCategory, temp);
+                }
+                // Now we have the allNodes by category map with us ,Iterate through each category and create nodes based on the node category
+                if (v93kObj.getConfigObject() != null &&
+                    v93kObj.getConfigObject().getModelbomObject() != null) {
+                    //rootElement.appendChild(modelBomNode(v93kObj.getConfigObject().getModelbomObject(), doc)) ;
+                }
+
+                rootElement.appendChild(configPmfNode(v93kObj, doc,
+                                                      allNodesByCategoriesMap));
+
+
+                StreamResult console = new StreamResult(System.out);
+                f = new File("DomExport.xml");
+                StreamResult file = new StreamResult(f);
+                transformer.transform(source, console);
+                transformer.transform(source, file);
             }
-            // Now we have the allNodes by category map with us ,Iterate through each category and create nodes based on the node category
-            if (v93kObj.getConfigObject() != null &&
-                v93kObj.getConfigObject().getModelbomObject() != null) {
-                //rootElement.appendChild(modelBomNode(v93kObj.getConfigObject().getModelbomObject(), doc)) ;
-            }
-
-            rootElement.appendChild(configPmfNode(v93kObj, doc,
-                                                  allNodesByCategoriesMap));
-
-
-            StreamResult console = new StreamResult(System.out);
-            //            StreamResult file =
-            //                new StreamResult(new File("D://Projects//Advantest//JsonResponse/DOMExport.xml"));
-            transformer.transform(source, console);
-            //transformer.transform(source, file);
         } catch (Exception pce) {
             // TODO: Add catch code
             pce.printStackTrace();
         }
-        return null;
+        return f;
     }
 
     private static Node getNode(Document doc, String id, String name,
@@ -449,13 +441,11 @@ public class DOMParser {
         for (Map.Entry<String, List<ConfiguratorNodePOJO>> entry :
              allNodesByCategoriesMap.entrySet()) {
             String key = entry.getKey();
-            System.out.println("Key is " + key);
             List<ConfiguratorNodePOJO> listItems = entry.getValue();
 
             Element itemNode = doc.createElement(key);
 
             for (ConfiguratorNodePOJO node : listItems) {
-                System.out.println("Item is " + node.getNodeName());
                 Element e = doc.createElement("item");
                 if (node.getNodeName() != null) {
 
@@ -488,15 +478,18 @@ public class DOMParser {
             v93Obj.getReferenceConfigurationLines();
         ArrayList<QuoteLinePOJO> quoteLineListTarget =
             v93Obj.getTargetConfigurationLines();
-        System.out.println("Size of quoteLineref " + quoteLineListRef.size());
         if (lineNum != null && lineNum.equalsIgnoreCase("1")) {
-            //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
-            nodeList = quoteLineListTarget.get(0).getItems(); //First line
+            if (quoteLineListTarget != null &&
+                quoteLineListTarget.size() > 0) {
+                nodeList = quoteLineListTarget.get(0).getItems(); //First line
+            }
             //}
         }
         if (lineNum != null && lineNum.equalsIgnoreCase("2")) {
-            // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
-            nodeList = quoteLineListTarget.get(1).getItems(); //2nd line
+            if (quoteLineListTarget != null &&
+                quoteLineListTarget.size() > 1) {
+                nodeList = quoteLineListTarget.get(1).getItems(); //2nd line
+            }
             //  }
         }
         return nodeList;

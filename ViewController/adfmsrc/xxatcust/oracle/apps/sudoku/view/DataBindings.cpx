@@ -40,8 +40,8 @@
           usageId="xxatcust_oracle_apps_sudoku_view_SkinningDemoPageDef"/>
     <page path="/xxatcust/oracle/apps/sudoku/ui/pageFragments/RuleSet.jsff"
           usageId="xxatcust_oracle_apps_sudoku_view_RuleSetPageDef"/>
-    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/RuleSetFlow.xml#RuleSetFlow@CreateInsert"
-          usageId="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_CreateInsertPageDef"/>
+    <page path="/WEB-INF/xxatcust/oracle/apps/sudoku/pageFlows/RuleSetFlow.xml#RuleSetFlow@initRuleSet"
+          usageId="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_initRuleSetPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="xxat_apps_sudoku_view_uploadXMLPageDef"
@@ -76,8 +76,8 @@
           path="xxatcust.oracle.apps.sudoku.ui.pages.SkinningDemoPageDef"/>
     <page id="xxatcust_oracle_apps_sudoku_view_RuleSetPageDef"
           path="xxatcust.oracle.apps.sudoku.ui.pageFragments.RuleSetPageDef"/>
-    <page id="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_CreateInsertPageDef"
-          path="xxatcust.oracle.apps.sudoku.pageFlows.RuleSetFlow_RuleSetFlow_CreateInsertPageDef"/>
+    <page id="xxatcust_oracle_apps_sudoku_view_RuleSetFlow_RuleSetFlow_initRuleSetPageDef"
+          path="xxatcust.oracle.apps.sudoku.pageFlows.RuleSetFlow_RuleSetFlow_initRuleSetPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <BC4JDataControl id="SudokuAMDataControl"

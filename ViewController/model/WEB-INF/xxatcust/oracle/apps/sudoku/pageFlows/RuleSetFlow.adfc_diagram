@@ -15,35 +15,35 @@
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">193.89648</property>
-      <property
-         name="x">363.0</property>
+         name="y">127.19531</property>
       <property
          name="pageFragment">true</property>
+      <property
+         name="x">494.0</property>
    </View>
    <MethodCall
-      id="MethodCall3">
+      id="MethodCall5">
       <property
-         name="activityId">CreateInsert</property>
+         name="activityId">initRuleSet</property>
       <property
          name="start">true</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>CreateInsert&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>initRuleSet&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
       <property
          name="exceptionHandler">false</property>
       <property
-         name="y">211.14941</property>
+         name="y">181.14941</property>
       <property
-         name="x">149.01465</property>
+         name="x">210.5</property>
    </MethodCall>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase4"
-      from="MethodCall3"
+      id="ControlFlowCase6"
+      from="MethodCall5"
       to="View2">
       <property
-         name="fromOutcome">CreateInsert</property>
+         name="fromOutcome">initRuleSet</property>
       <property
-         name="sdm:polyPoints">R50,190.01465,210.79883,322.0,193.5459,L50</property>
+         name="sdm:polyPoints">R50,251.5,180.79883,453.0,126.84473,L50</property>
    </ControlFlowCase>
 </SDM>
