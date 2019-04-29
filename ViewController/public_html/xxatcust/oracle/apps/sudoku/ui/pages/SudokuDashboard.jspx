@@ -101,9 +101,11 @@
                   <af:panelGroupLayout id="panelGroupLayout1" layout="vertical">
                     <af:panelGroupLayout id="pt_pgl10" halign="start"
                                          layout="horizontal">
-                      <af:image id="pt_i1" source="/Resources/images/adv.gif"
+                      <af:image id="pt_i1"
+                                source="/Resources/images/advantest1.png"
                                 inlineStyle="width:215px;"/>
-                      <af:spacer width="10" height="10" id="s1"/>
+                      <af:spacer width="10" height="10" id="s1"
+                                 rendered="false"/>
                       <af:statusIndicator id="si1" inlineStyle="color:Red;"/>
                     </af:panelGroupLayout>
                   </af:panelGroupLayout>

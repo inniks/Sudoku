@@ -41,7 +41,7 @@ public class DOMParser {
         super();
     }
 
-    public static File XMLWriterDOM(V93kQuote v93kObj) {
+    public static File XMLWriterDOM(V93kQuote v93kObj) {    
         File f = null;
         DocumentBuilderFactory dbFactory =
             DocumentBuilderFactory.newInstance();
@@ -72,17 +72,18 @@ public class DOMParser {
             //Now create ModelBom objects based on the print sequence logic ,
             List<String> catList = new ArrayList<String>();
             List<String> distinctList = new ArrayList<String>();
-            List<ConfiguratorNodePOJO> allNodesList =  getAllNodes(v93kObj, "1");
+            List<ConfiguratorNodePOJO> lineOneNodeList =
+                getAllNodes(v93kObj, "1");
             List<ConfiguratorNodePOJO> lineTwoNodeList =
-            getAllNodes(v93kObj, "2");
-            if (allNodesList != null && lineTwoNodeList != null &&
-                lineTwoNodeList.size() > 0) {
-                allNodesList.addAll(lineTwoNodeList);
-            }
-            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                getAllNodes(v93kObj, "2");
+
+            List listOfCategoriesMap = new ArrayList();
+
+            //For Line 1
+            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMapL1 =
                 new HashMap<String, List<ConfiguratorNodePOJO>>();
-            if (allNodesList != null && !allNodesList.isEmpty()) {
-                for (ConfiguratorNodePOJO node : allNodesList) {
+            if (lineOneNodeList != null && !lineOneNodeList.isEmpty()) {
+                for (ConfiguratorNodePOJO node : lineOneNodeList) {
                     if (node.getXmlTag() != null) {
                         catList.add(node.getXmlTag());
                     }
@@ -92,30 +93,64 @@ public class DOMParser {
                 for (String distinctCategory : distinctList) {
                     List<ConfiguratorNodePOJO> temp =
                         new ArrayList<ConfiguratorNodePOJO>();
-                    for (ConfiguratorNodePOJO node : allNodesList) {
+                    for (ConfiguratorNodePOJO node : lineOneNodeList) {
                         if (distinctCategory != null &&
                             distinctCategory.equalsIgnoreCase(node.getXmlTag())) {
                             temp.add(node);
                         }
                     }
-                    allNodesByCategoriesMap.put(distinctCategory, temp);
+                    allNodesByCategoriesMapL1.put(distinctCategory, temp);
                 }
-                // Now we have the allNodes by category map with us ,Iterate through each category and create nodes based on the node category
-                if (v93kObj.getConfigObject() != null &&
-                    v93kObj.getConfigObject().getModelbomObject() != null) {
-                    //rootElement.appendChild(modelBomNode(v93kObj.getConfigObject().getModelbomObject(), doc)) ;
-                }
-
-                rootElement.appendChild(configPmfNode(v93kObj, doc,
-                                                      allNodesByCategoriesMap));
-
-
-                StreamResult console = new StreamResult(System.out);
-                f = new File("DomExport.xml");
-                StreamResult file = new StreamResult(f);
-                transformer.transform(source, console);
-                transformer.transform(source, file);
             }
+
+            //For Line2
+            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMapL2 =
+                new HashMap<String, List<ConfiguratorNodePOJO>>();
+            if (lineTwoNodeList != null && !lineTwoNodeList.isEmpty()) {
+                for (ConfiguratorNodePOJO node : lineTwoNodeList) {
+                    if (node.getXmlTag() != null) {
+                        catList.add(node.getXmlTag());
+                    }
+                }
+                distinctList = removeDuplicatesFromList(catList);
+
+                for (String distinctCategory : distinctList) {
+                    List<ConfiguratorNodePOJO> temp =
+                        new ArrayList<ConfiguratorNodePOJO>();
+                    for (ConfiguratorNodePOJO node : lineTwoNodeList) {
+                        if (distinctCategory != null &&
+                            distinctCategory.equalsIgnoreCase(node.getXmlTag())) {
+                            temp.add(node);
+                        }
+                    }
+                    allNodesByCategoriesMapL2.put(distinctCategory, temp);
+                }
+            }
+
+            if (allNodesByCategoriesMapL1 != null &&
+                !allNodesByCategoriesMapL1.isEmpty()) {
+                listOfCategoriesMap.add(allNodesByCategoriesMapL1);
+            }
+
+            if (allNodesByCategoriesMapL2 != null &&
+                !allNodesByCategoriesMapL2.isEmpty()) {
+                listOfCategoriesMap.add(allNodesByCategoriesMapL2);
+            }
+            // Now we have the allNodes by category map with us ,Iterate through each category and create nodes based on the node category
+            if (v93kObj.getConfigObject() != null &&
+                v93kObj.getConfigObject().getModelbomObject() != null) {
+                //rootElement.appendChild(modelBomNode(v93kObj.getConfigObject().getModelbomObject(), doc)) ;
+            }
+
+            rootElement.appendChild(configPmfNode(v93kObj, doc,
+                                                  listOfCategoriesMap));
+
+
+            StreamResult console = new StreamResult(System.out);
+            f = new File("DomExport.xml");
+            StreamResult file = new StreamResult(f);
+            transformer.transform(source, console);
+            transformer.transform(source, file);
         } catch (Exception pce) {
             // TODO: Add catch code
             pce.printStackTrace();
@@ -378,11 +413,15 @@ public class DOMParser {
     }
 
     private static Node configPmfNode(V93kQuote v93, Document doc,
-                                      HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap) {
+                                      List<HashMap> listOfLines)
+    /* HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap*/ {
         Element configNode = doc.createElement("config");
         Config configObj = v93.getConfigObject();
-        configNode.appendChild(modelBomNode(v93, doc,
-                                            allNodesByCategoriesMap));
+        if (listOfLines != null && !listOfLines.isEmpty()) {
+            for (HashMap mapByLine : listOfLines) {
+                configNode.appendChild(modelBomNode(v93, doc, mapByLine));
+            }
+        }
         if (configObj != null && configObj.getVersion() != null) {
             configNode.setAttribute("version", configObj.getVersion());
         }

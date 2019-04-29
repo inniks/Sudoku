@@ -234,7 +234,7 @@ public class TargetConfiguration {
                                                       categoryTree);
                         RichPopup.PopupHints hints =
                             new RichPopup.PopupHints();
-                        errPopup.show(hints); // Show error here
+                        //errPopup.show(hints); // Show error here
                     }
                 }
 

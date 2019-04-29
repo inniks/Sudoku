@@ -13,8 +13,6 @@
           Uses="LOV_TopLevelMeaning" id="TopLevelMeaning" DTSupportsMRU="true"/>
     <list IterBinding="RuleSetVO1Iterator" StaticList="false"
           Uses="LOV_TopLevelCode" id="TopLevelCode" DTSupportsMRU="true"/>
-    <list IterBinding="RuleSetVO1Iterator" StaticList="false"
-          Uses="LOV_SecondLevelCode" id="SecondLevelCode" DTSupportsMRU="true"/>
     <attributeValues IterBinding="RuleSetVO1Iterator" id="SecondLevelMeaning">
       <AttrNames>
         <Item Value="SecondLevelMeaning"/>
@@ -25,5 +23,8 @@
         <Item Value="TopLevelMeaning"/>
       </AttrNames>
     </attributeValues>
+    <list IterBinding="RuleSetVO1Iterator" StaticList="false"
+          Uses="LOV_SecondLevelMeaning" id="SecondLevelMeaning1"
+          DTSupportsMRU="true"/>
   </bindings>
 </pageDefinition>

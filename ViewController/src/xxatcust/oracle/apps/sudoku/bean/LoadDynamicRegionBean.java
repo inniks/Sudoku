@@ -112,7 +112,7 @@ public class LoadDynamicRegionBean {
                 (String)ADFUtils.getSessionScopeValue("quoteNumber");
         if (importSource != null &&
             (importSource.equalsIgnoreCase("BUDGET_QUOTE") ||
-             importSource.equalsIgnoreCase("FORMAL_QUOTE")) &&
+             importSource.equalsIgnoreCase("FORMAL_QUOTE")|| importSource.equalsIgnoreCase("XML_FILE")) &&
             quoteNumFromSession != null)
             return "quoteUpdate";
         if (importSource == null || quoteNumFromSession == null)

@@ -219,7 +219,6 @@ public class ImportSource {
         try {
             if (importSource != null &&
                 importSource.equalsIgnoreCase("XML_FILE")) {
-                
                 af.getSessionScope().put("quoteNumber", null);
                 parseXMLToPojo(xmlFile.getInputStream());
             } else {
@@ -308,12 +307,9 @@ public class ImportSource {
         //Check what is the import source
         if (importSource != null &&
             importSource.equalsIgnoreCase("XML_FILE")) {
-            System.out.println("Input Stream is " + inputStream);
             File xsdFile = readXsdResource();
             V93kQuote parent = null;
             parent = JaxbParser.jaxbXMLToObject(inputStream, xsdFile);
-            //Adding this in session temporarily
-            ADFUtils.setSessionScopeValue("inputObject", parent);
             //Add session and input params
             parent.setSessionDetails(sessionDetails);
             parent.setInputParams(inputParam);
@@ -327,8 +323,8 @@ public class ImportSource {
             /*^^^^^^^^^^^Comment this before deploying******************/
             String jsonStr = JSONUtils.convertObjToJson(parent);
             //System.out.println("Input JSON "+jsonStr);
-          // obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-           //ADFUtils.setSessionScopeValue("parentObject", obj);
+           //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+          //ADFUtils.setSessionScopeValue("parentObject", obj);
             /* &&&&&Uncomment this code before deploying$$$$$*/
             ObjectMapper mapper = new ObjectMapper();
             _logger.info("Print mapper  parseXMLToPojo" + mapper);

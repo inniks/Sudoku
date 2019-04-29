@@ -205,7 +205,6 @@ public class XMLImportPageBean {
             v93Obj.getReferenceConfigurationLines();
         ArrayList<QuoteLinePOJO> quoteLineListTarget =
             v93Obj.getTargetConfigurationLines();
-        System.out.println("Size of quoteLineref "+quoteLineListRef.size());
         if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
         //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
          nodeList =   quoteLineListRef.get(0).getItems() ; //First line
@@ -215,23 +214,8 @@ public class XMLImportPageBean {
            // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
             if(quoteLineListRef.size()>1){
              nodeList =   quoteLineListRef.get(1).getItems() ;//2nd line
-             System.out.println("Number of 2nd line nodes "+nodeList.size());
             }
-          //  }
         }
-//        List<ConfiguratorNodePOJO> nodeList = new ArrayList<ConfiguratorNodePOJO>() ;
-//        TreeMap<String, ArrayList<ConfiguratorNodePOJO>> referenceCollection = v93Obj.getReferenceNodeCollection();
-//        if(referenceCollection!=null && !referenceCollection.isEmpty()){
-//            if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
-//            //get Line1 node collection
-//            nodeList = referenceCollection.get("1.0") ; // Line 1 node collection
-//            }
-//            else if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
-//                nodeList = referenceCollection.get("20000") ; // Line 2 node collection , This key should be 2,0
-//            }
-//        }
-//       
-
         return nodeList;
     }
 
@@ -275,7 +259,7 @@ public class XMLImportPageBean {
     public ChildPropertyTreeModel getCategoryTree() {
 
         try {
-            StringBuilder errMessage = new StringBuilder("Error");
+            StringBuilder errMessage = new StringBuilder();
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
@@ -286,7 +270,6 @@ public class XMLImportPageBean {
                 categroryTreeLineTwo = null ;
                 quoteTotal.setValue(null);
             }
-            System.out.println("Cat 2 obj "+categroryTreeLineTwo);
             if (categoryTree == null && refreshImport != null &&
                 refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
                 if (parentObj != null) {
@@ -380,24 +363,17 @@ public class XMLImportPageBean {
                                 ArrayList<String> value = entry.getValue();
                                 for (String str : value) {
                                     errMessage.append(str);
-                                    //errMessage.append(str) ;
                                 }
                             }
-
-                            // errMessage.append("</body></html>");
-
                         }
                         if (errorMessages != null &&
                             errorMessages.size() > 0) {
                             for (String str : errorMessages) {
                                 errMessage.append(str);
-                                //errMessage.append(str) ;
                             }
-                            //errMessage.append("</body></html>");
                         }
-                        if (errMessage != null &&
-                            !errMessage.toString().equalsIgnoreCase("Error")) {
-                            validationError.setValue("Exception occured " +
+                        if (errMessage != null ) {
+                            validationError.setValue("Exception occured: " +
                                                      errMessage.toString()); /// Probable change 3
                             RichPopup.PopupHints hints =
                                 new RichPopup.PopupHints();
@@ -418,8 +394,7 @@ public class XMLImportPageBean {
                         obj.getSessionDetails().getModelName() != null) {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
                     }
-                    if (errMessage != null &&
-                        errMessage.toString().equalsIgnoreCase("Error")) {
+                    if (errMessage != null) {
                         Double sumQuoteTotal = new Double(0) ;
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
@@ -437,9 +412,7 @@ public class XMLImportPageBean {
                                         sumQuoteTotal = sumQuoteTotal + b;
                                         System.out.println("SumTotal " +
                                                            sumQuoteTotal);
-                                        //sumQuoteTotal = sumQuoteTotal+Integer.parseInt(node.getExtendedPrice());
                                     }
-                                    //quoteTotal.setValue(node.getExtendedPrice());
                                 }
                             }
                         }
@@ -454,7 +427,6 @@ public class XMLImportPageBean {
                                     sumQuoteTotal = sumQuoteTotal+b;
                                     System.out.println("SumTotal "+sumQuoteTotal);
                                 }
-                                //quoteTotal.setValue(node.getExtendedPrice());
                             }
                             if (node.getNodeCategory() != null &&
                                 node.getPrintGroupLevel() != null) {
@@ -940,7 +912,7 @@ public class XMLImportPageBean {
 
     public ChildPropertyTreeModel getCategroryTreeLineTwo() {
         try {
-            StringBuilder errMessage = new StringBuilder("Error");
+            StringBuilder errMessage = new StringBuilder("");
             String refreshImport =
                 (String)ADFUtils.getSessionScopeValue("refreshImport");
             Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
@@ -992,7 +964,7 @@ public class XMLImportPageBean {
                             }
                         }
                         if (errMessage != null &&
-                            !errMessage.toString().equalsIgnoreCase("Error")) {
+                            !errMessage.toString().equalsIgnoreCase("")) {
                             validationError.setValue("Exception occured " +
                                                      errMessage.toString()); /// Probable change 3
                             RichPopup.PopupHints hints =
@@ -1010,7 +982,7 @@ public class XMLImportPageBean {
                         System.out.println("Model Name is " + modelName);
                     }
                     if (errMessage != null &&
-                        errMessage.toString().equalsIgnoreCase("Error")) {
+                        errMessage.toString().equalsIgnoreCase("")) {
 
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();

@@ -74,7 +74,6 @@
       <Item Value="LookupCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="LookupCode"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <DisplayCriteria
@@ -98,7 +97,6 @@
       <Item Value="LookupCode"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
-      <Item Value="LookupCode"/>
       <Item Value="Meaning"/>
     </AttrArray>
     <DisplayCriteria

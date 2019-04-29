@@ -189,36 +189,44 @@ public class RuleSetVORowImpl extends ViewRowImpl {
      * @return the SecondLevelMeaning
      */
     public String getSecondLevelMeaning() {
-        String secLevelMeaning = null;
+        String secondLevelMeaning = null;
         if (getAttributeInternal(TOPLEVELCODE) != null) {
-
-            Object topLevelCode = getAttributeInternal(TOPLEVELCODE);
-            if (topLevelCode != null && topLevelCode.equals("E8000SYS")) {
-                System.out.println("topLevelCode:" + topLevelCode);
-                Object[] obj = { topLevelCode };
+            String secondLevelCode =
+                (String)getAttributeInternal(SECONDLEVELCODE);
+            String lovSwitcher = (String)getAttributeInternal(LOVSWITCHER);
+            String topLevelCode = (String)getAttributeInternal(TOPLEVELCODE);
+            if (secondLevelCode != null) {
+                System.out.println("Second Level Code is " + secondLevelCode);
+                System.out.println("Top Levevl Code "+topLevelCode);
+                Object[] obj = { secondLevelCode };
                 Key key = new Key(obj);
-                Row[] rows = this.getRSetSecLevelLOVII1().findByKey(key, 1);
-                if (rows != null && rows.length > 0) {
-                    secLevelMeaning = (String)rows[0].getAttribute("Meaning");
-                    System.out.println("Second Level Meaning from VORowImpl:" +
-                                       secLevelMeaning);
+                //Based on the value of LOV switcher attribute , Select the LOV to be used here
+                if (topLevelCode != null &&
+                    topLevelCode.equalsIgnoreCase("E8000SYS")) {
+                    //use 1st LOV
+                    Row[] rows =
+                        this.getRSetSecLevelLOVII1().findByKey(key, 1);
+                    if (rows != null && rows.length > 0) {
+                        secondLevelMeaning =
+                                (String)rows[0].getAttribute("Meaning");
+                        System.out.println("Second LEvel Meaning " +
+                                           secondLevelMeaning);
+                    }
                 }
-
-            } else if (topLevelCode != null &&
-                       topLevelCode.equals("E8000SYS")) {
-                Object[] obj = { topLevelCode };
-                Key key = new Key(obj);
-                Row[] rows = this.getRSetSecLevelLOVI1().findByKey(key, 1);
-                if (rows != null && rows.length > 0) {
-                    secLevelMeaning = (String)rows[0].getAttribute("Meaning");
-                    System.out.println("Second Level Meaning from VORowImpl:" +
-                                       secLevelMeaning);
+                if (topLevelCode != null &&
+                    topLevelCode.equalsIgnoreCase("E8008SYS")) {
+                    //use 2nd lov
+                    Row[] rows = this.getRSetSecLevelLOVI1().findByKey(key, 1);
+                    if (rows != null && rows.length > 0) {
+                        secondLevelMeaning =
+                                (String)rows[0].getAttribute("Meaning");
+                        System.out.println("Second LEvel Meaning " +
+                                           secondLevelMeaning);
+                    }
                 }
             }
         }
-
-
-        return secLevelMeaning;
+        return secondLevelMeaning;
     }
 
     /**

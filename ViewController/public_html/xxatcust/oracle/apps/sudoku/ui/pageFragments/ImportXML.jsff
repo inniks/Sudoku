@@ -8,8 +8,7 @@
                     dimensionsFrom="children">
     <f:facet name="first">
       <af:panelGroupLayout id="pgl3" layout="horizontal" valign="top">
-        <af:panelHeader text="Reference Configuration" id="ph1" size="-1"
-                        inlineStyle="color:Green;">
+        <af:panelHeader text="Reference Configuration" id="ph1" size="-1">
           <af:spacer width="10" height="10" id="s17"/>
           <af:panelGroupLayout id="pgl9" layout="vertical">
             <af:panelGroupLayout id="pgl1" layout="horizontal" valign="middle"
@@ -182,7 +181,6 @@
                         </af:panelGridLayout>
                       </af:listItem>
                     </af:listView>
-                    <af:separator id="s30"/>
                     <!--Line 2 starts here-->
                     <af:listView id="lv21"
                                  value="#{XMLImportPageBean.categroryTreeLineTwo}"

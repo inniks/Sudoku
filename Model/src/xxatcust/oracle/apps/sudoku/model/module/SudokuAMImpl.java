@@ -993,18 +993,17 @@ this.getDBTransaction().createPreparedStatement(query, 0);
     
     public void initRuleSet(){
         System.out.println("Init Rule Set");
-//        Map sessionMap = ADFContext.getCurrent().getSessionScope() ;
-//        ViewObjectImpl ruleSetVO = this.getRuleSetVO1() ;
-//        if(ruleSetVO!=null && sessionMap!=null){
-//            //get value of rulset top level and second level choices
-//            Row cRow = ruleSetVO.createRow() ;
-//            ruleSetVO.insertRow(cRow);
-//            cRow.setAttribute("TopLevelCode", "E8008SYS");
-//            cRow.setAttribute("LOVSwitcher", "LOV_SecondLevelMeaning1");
-//            cRow.setAttribute("SecondLevelCode", "STANDARD");
-//           
-//            ruleSetVO.setCurrentRow(cRow) ;
-//        }
+        ViewObjectImpl ruleSetVO = this.getRuleSetVO1() ;
+        if(ruleSetVO!=null){
+            //get value of rulset top level and second level choices
+            Row cRow = ruleSetVO.createRow() ;
+            ruleSetVO.insertRow(cRow);
+            cRow.setAttribute("TopLevelCode", "E8000SYS");
+            cRow.setAttribute("LOVSwitcher", "LOV_SecondLevelMeaning1");
+            cRow.setAttribute("SecondLevelCode", "STANDARD");
+           
+            ruleSetVO.setCurrentRow(cRow) ;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@
 <BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
    <AppModuleConfigBag ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
       <AppModuleConfig DeployPlatform="LOCAL" jbo.project="xxatcust.oracle.apps.sudoku.model.Model" name="SudokuAMLocal" ApplicationName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM">
+         <AM-Pooling jbo.doconnectionpooling="true"/>
          <Database jbo.locking.mode="optimistic"/>
          <Security AppModuleJndiName="xxatcust.oracle.apps.sudoku.model.module.SudokuAM"/>
          <Custom JDBCDataSource="jdbc/myDS6"/>
