@@ -323,8 +323,8 @@ public class ImportSource {
             /*^^^^^^^^^^^Comment this before deploying******************/
             String jsonStr = JSONUtils.convertObjToJson(parent);
             //System.out.println("Input JSON "+jsonStr);
-           //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-          //ADFUtils.setSessionScopeValue("parentObject", obj);
+        //   obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
+         // ADFUtils.setSessionScopeValue("parentObject", obj);
             /* &&&&&Uncomment this code before deploying$$$$$*/
             ObjectMapper mapper = new ObjectMapper();
             _logger.info("Print mapper  parseXMLToPojo" + mapper);
@@ -340,7 +340,7 @@ public class ImportSource {
             obj = v93k;
             String jsonStr = JSONUtils.convertObjToJson(obj);
             //obj = (V93kQuote)JSONUtils.convertJsonToObject(null);
-            ADFUtils.setSessionScopeValue("parentObject", obj);
+            //ADFUtils.setSessionScopeValue("parentObject", obj);
 
             //Reading JSOn from File to POJO
             ObjectMapper mapper = new ObjectMapper();

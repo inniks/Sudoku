@@ -139,12 +139,12 @@
                         <af:panelGridLayout id="pgl15k">
                           <af:gridRow marginTop="5px" height="auto" id="gr2">
                             <af:gridCell marginStart="5px" width="15%" id="gc9"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'
+                                         inlineStyle='color:#{node.nodeColor eq "Red" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'
                                          rendered="#{XMLImportPageBean.productsRendered}">
                               <af:outputText value="#{node.nodeName}" id="ot1"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="25%" id="gc4"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor eq "Red" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{node.nodeDescription}"
                                              id="ot2" truncateAt="65"
                                              shortDesc="#{node.nodeDescription}"/>

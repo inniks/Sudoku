@@ -109,7 +109,7 @@ public class XMLImportPageBean {
     private RichOutputFormatted timestampBinding;
     private RichOutputFormatted uploadedByBinding;
     ChildPropertyTreeModel categoryTree;
-    ChildPropertyTreeModel categroryTreeLineTwo ;
+    ChildPropertyTreeModel categroryTreeLineTwo;
     private ArrayList<NodeCategory> root;
     private RichPopup warningPopup;
     private RichOutputFormatted warnText;
@@ -148,14 +148,13 @@ public class XMLImportPageBean {
     }
 
     public List<ConfiguratorNodePOJO> getAllNodes(String lineNum) {
-            Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
-            if (parentObj != null) {
-                v93Obj = (V93kQuote)parentObj;
-                allNodes = parseAllNodes(v93Obj,lineNum);
-            }
+        Object parentObj = ADFUtils.getSessionScopeValue("parentObject");
+        if (parentObj != null) {
+            v93Obj = (V93kQuote)parentObj;
+            allNodes = parseAllNodes(v93Obj, lineNum);
+        }
         return allNodes;
     }
-
 
 
     public void parseXMLToPojo(InputStream inputStream) throws IOException,
@@ -197,23 +196,26 @@ public class XMLImportPageBean {
     }
 
 
-   
-
-    private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj,String lineNum) {
-        ArrayList<ConfiguratorNodePOJO> nodeList = null ;
+    private List<ConfiguratorNodePOJO> parseAllNodes(V93kQuote v93Obj,
+                                                     String lineNum) {
+        ArrayList<ConfiguratorNodePOJO> nodeList = null;
         ArrayList<QuoteLinePOJO> quoteLineListRef =
             v93Obj.getReferenceConfigurationLines();
         ArrayList<QuoteLinePOJO> quoteLineListTarget =
             v93Obj.getTargetConfigurationLines();
-        if(lineNum!=null && lineNum.equalsIgnoreCase("1")){
-        //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
-         nodeList =   quoteLineListRef.get(0).getItems() ; //First line
-        //}
+        if (lineNum != null && lineNum.equalsIgnoreCase("1")) {
+            //for(QuoteLinePOJO quoteLineRef : quoteLineListRef){
+            if (quoteLineListRef != null && !quoteLineListRef.isEmpty()) {
+                nodeList = quoteLineListRef.get(0).getItems(); //First line
+            }
+            //}
         }
-        if(lineNum!=null && lineNum.equalsIgnoreCase("2")){
-           // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
-            if(quoteLineListRef.size()>1){
-             nodeList =   quoteLineListRef.get(1).getItems() ;//2nd line
+        if (lineNum != null && lineNum.equalsIgnoreCase("2")) {
+            // for(QuoteLinePOJO quoteTargetRef : quoteLineListTarget){
+            if (quoteLineListRef != null && !quoteLineListRef.isEmpty()) {
+                if (quoteLineListRef.size() > 1) {
+                    nodeList = quoteLineListRef.get(1).getItems(); //2nd line
+                }
             }
         }
         return nodeList;
@@ -267,7 +269,7 @@ public class XMLImportPageBean {
                 (String)ADFUtils.getSessionScopeValue("ImpSrcChanged");
             if (impSrcChanged != null && impSrcChanged.equalsIgnoreCase("Y")) {
                 categoryTree = null;
-                categroryTreeLineTwo = null ;
+                categroryTreeLineTwo = null;
                 quoteTotal.setValue(null);
             }
             if (categoryTree == null && refreshImport != null &&
@@ -372,7 +374,7 @@ public class XMLImportPageBean {
                                 errMessage.append(str);
                             }
                         }
-                        if (errMessage != null ) {
+                        if (errMessage != null) {
                             validationError.setValue("Exception occured: " +
                                                      errMessage.toString()); /// Probable change 3
                             RichPopup.PopupHints hints =
@@ -395,13 +397,16 @@ public class XMLImportPageBean {
                         //modelName.setValue(obj.getSessionDetails().getModelName());
                     }
                     if (errMessage != null) {
-                        Double sumQuoteTotal = new Double(0) ;
+                        Double sumQuoteTotal = new Double(0);
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
-                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes("1") ;
+                        List<ConfiguratorNodePOJO> allNodesList =
+                            getAllNodes("1");
                         //To get Quote total , get the 2nd line as well
-                        List<ConfiguratorNodePOJO> secondLineList = getAllNodes("2") ;
-                        if (secondLineList!=null && !secondLineList.isEmpty()) {
+                        List<ConfiguratorNodePOJO> secondLineList =
+                            getAllNodes("2");
+                        if (secondLineList != null &&
+                            !secondLineList.isEmpty()) {
                             for (ConfiguratorNodePOJO node : secondLineList) {
                                 if (node.getPrintGroupLevel() != null &&
                                     node.getPrintGroupLevel().equalsIgnoreCase("1")) {
@@ -416,24 +421,29 @@ public class XMLImportPageBean {
                                 }
                             }
                         }
-                           // obj.getNodeCollection();
+                        // obj.getNodeCollection();
                         HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
                             new HashMap<String, List<ConfiguratorNodePOJO>>();
-                        for (ConfiguratorNodePOJO node : allNodesList) {
-                            if (node.getPrintGroupLevel() != null &&
-                                node.getPrintGroupLevel().equalsIgnoreCase("1")) {
-                                if(node.getExtendedPrice()!=null){
-                                    Double b = new Double(node.getExtendedPrice()) ;
-                                    sumQuoteTotal = sumQuoteTotal+b;
-                                    System.out.println("SumTotal "+sumQuoteTotal);
+                        if (allNodesList != null && !allNodesList.isEmpty()) {
+                            for (ConfiguratorNodePOJO node : allNodesList) {
+                                if (node.getPrintGroupLevel() != null &&
+                                    node.getPrintGroupLevel().equalsIgnoreCase("1")) {
+                                    if (node.getExtendedPrice() != null) {
+                                        Double b =
+                                            new Double(node.getExtendedPrice());
+                                        sumQuoteTotal = sumQuoteTotal + b;
+                                        System.out.println("SumTotal " +
+                                                           sumQuoteTotal);
+                                    }
                                 }
-                            }
-                            if (node.getNodeCategory() != null &&
-                                node.getPrintGroupLevel() != null) {
-                                catList.add(node.getNodeCategory() + "-" +
-                                            (node.getPrintGroupLevel() !=
-                                             null ? node.getPrintGroupLevel() :
-                                             "0"));
+                                if (node.getNodeCategory() != null &&
+                                    node.getPrintGroupLevel() != null) {
+                                    catList.add(node.getNodeCategory() + "-" +
+                                                (node.getPrintGroupLevel() !=
+                                                 null ?
+                                                 node.getPrintGroupLevel() :
+                                                 "0"));
+                                }
                             }
                         }
                         quoteTotal.setValue(sumQuoteTotal);
@@ -494,7 +504,8 @@ public class XMLImportPageBean {
 
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
-                        ADFUtils.setSessionScopeValue("categoryTree", categoryTree);
+                        ADFUtils.setSessionScopeValue("categoryTree",
+                                                      categoryTree);
 
                     } else {
                         ADFUtils.setSessionScopeValue("quoteNumber",
@@ -502,7 +513,8 @@ public class XMLImportPageBean {
                         root = new ArrayList();
                         categoryTree =
                                 new ChildPropertyTreeModel(root, "childNodes");
-                        ADFUtils.setSessionScopeValue("categoryTree", categoryTree);
+                        ADFUtils.setSessionScopeValue("categoryTree",
+                                                      categoryTree);
                         RichPopup.PopupHints hints =
                             new RichPopup.PopupHints();
                         errorPopup.show(hints);
@@ -588,6 +600,7 @@ public class XMLImportPageBean {
                                               nc1.getNodeName() + " " +
                                               nc1.getNodeDescription(),
                                               FacesMessage.SEVERITY_INFO);
+                    System.out.println("Node Color "+ADFUtils.evaluateEL("#{node.nodeColor}"));
                 }
             }
         }
@@ -814,7 +827,7 @@ public class XMLImportPageBean {
     }
 
     public void refreshView(ActionEvent actionEvent) {
-        categroryTreeLineTwo = null ;
+        categroryTreeLineTwo = null;
         String refreshImport =
             (String)ADFUtils.getSessionScopeValue("refreshImport");
         // UIComponent uiComponent = (UIComponent)actionEvent.getSource();
@@ -831,7 +844,7 @@ public class XMLImportPageBean {
         quoteTotal.setValue(null);
         showListHeader = true;
         categoryTree = null;
-        
+
         allNodes = null;
     }
 
@@ -856,17 +869,18 @@ public class XMLImportPageBean {
     }
 
     public void exportDownload(ActionEvent actionEvent) {
-       V93kQuote v93k = (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
+        V93kQuote v93k =
+            (V93kQuote)ADFUtils.getSessionScopeValue("parentObject");
         if (v93k != null) {
-            
-            DOMParser.XMLWriterDOM(v93k) ;
+
+            DOMParser.XMLWriterDOM(v93k);
             //JaxbParser.jaxbObjectToXML(v93k);
             //StaxParser.StaxCreateXml(v93k);
         }
-//        RichPopup.PopupHints hints =
-//            new RichPopup.PopupHints();
-//        downloadPopup.show(hints);
-        
+        //        RichPopup.PopupHints hints =
+        //            new RichPopup.PopupHints();
+        //        downloadPopup.show(hints);
+
     }
 
     public void setDownloadPopup(RichPopup downloadPopup) {
@@ -881,7 +895,8 @@ public class XMLImportPageBean {
                              OutputStream outputStream) {
         System.out.println("Download Listener Fired");
         try {
-            File file = new File("D://Projects//Advantest//JsonResponse/exportTarget.xml");
+            File file =
+                new File("D://Projects//Advantest//JsonResponse/exportTarget.xml");
             FileInputStream fis;
             byte[] b;
             fis = new FileInputStream(file);
@@ -905,8 +920,8 @@ public class XMLImportPageBean {
     }
 
     public void downloadConfirmation(ActionEvent actionEvent) {
-       System.out.println("Download Confirmation Fired");
-       downloadPopup.hide();
+        System.out.println("Download Confirmation Fired");
+        downloadPopup.hide();
     }
 
 
@@ -922,9 +937,11 @@ public class XMLImportPageBean {
                 categroryTreeLineTwo = null;
                 quoteTotal.setValue(null);
             }
-            System.out.println("For line 2  refresh imp"+refreshImport+" Cat tree "+categroryTreeLineTwo+" Parent obj "+parentObj);
-            if (refreshImport != null &&
-                refreshImport.equalsIgnoreCase("Y") && parentObj != null) {
+            System.out.println("For line 2  refresh imp" + refreshImport +
+                               " Cat tree " + categroryTreeLineTwo +
+                               " Parent obj " + parentObj);
+            if (refreshImport != null && refreshImport.equalsIgnoreCase("Y") &&
+                parentObj != null) {
                 if (parentObj != null) {
                     V93kQuote obj = (V93kQuote)parentObj;
                     //Check if no exceptions from configurator
@@ -941,7 +958,7 @@ public class XMLImportPageBean {
                             obj.getExceptionMap().getDebugMessages();
 
                         //Check for warnings from configurator
-                      
+
 
                         List<String> errorMessages =
                             obj.getExceptionMap().getErrorsMessages();
@@ -974,7 +991,7 @@ public class XMLImportPageBean {
                             //throw new JboException(errMessage.toString());
                         }
 
-                        
+
                     }
 
                     if (obj != null && obj.getSessionDetails() != null &&
@@ -986,75 +1003,80 @@ public class XMLImportPageBean {
 
                         List<String> catList = new ArrayList<String>();
                         List<String> distinctList = new ArrayList<String>();
-                        List<ConfiguratorNodePOJO> allNodesList = getAllNodes("2") ;
-                        if(allNodesList!=null && !allNodesList.isEmpty()){
-                           // obj.getNodeCollection();
-                        HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
-                            new HashMap<String, List<ConfiguratorNodePOJO>>();
-                        for (ConfiguratorNodePOJO node : allNodesList) {
-                            if (node.getNodeCategory() != null &&
-                                node.getPrintGroupLevel() != null) {
-                                catList.add(node.getNodeCategory() + "-" +
-                                            (node.getPrintGroupLevel() !=
-                                             null ? node.getPrintGroupLevel() :
-                                             "0"));
-                            }
-                        }
-                        distinctList = removeDuplicatesFromList(catList);
-                        for (String distinctCategory : distinctList) {
-                            List<ConfiguratorNodePOJO> temp =
-                                new ArrayList<ConfiguratorNodePOJO>();
+                        List<ConfiguratorNodePOJO> allNodesList =
+                            getAllNodes("2");
+                        if (allNodesList != null && !allNodesList.isEmpty()) {
+                            // obj.getNodeCollection();
+                            HashMap<String, List<ConfiguratorNodePOJO>> allNodesByCategoriesMap =
+                                new HashMap<String, List<ConfiguratorNodePOJO>>();
                             for (ConfiguratorNodePOJO node : allNodesList) {
-                                if (distinctCategory != null &&
-                                    distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
-                                                                      "-" +
-                                                                      node.getPrintGroupLevel())) {
-                                    temp.add(node);
+                                if (node.getNodeCategory() != null &&
+                                    node.getPrintGroupLevel() != null) {
+                                    catList.add(node.getNodeCategory() + "-" +
+                                                (node.getPrintGroupLevel() !=
+                                                 null ?
+                                                 node.getPrintGroupLevel() :
+                                                 "0"));
                                 }
                             }
-                            allNodesByCategoriesMap.put(distinctCategory,
-                                                        temp);
-                        }
-                        root = new ArrayList<NodeCategory>();
-                        Iterator it =
-                            allNodesByCategoriesMap.entrySet().iterator();
-                        NodeCategory firstLevel = null;
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry)it.next();
-                            String Key = (String)pair.getKey();
-                            System.out.println("Key " + Key);
-                            String[] arr = Key.split("-");
-                            String category = arr[0];
-                            String printGrpLevel = arr[1];
-                            firstLevel =
-                                    new NodeCategory(category, null, null, null,
-                                                     null, null, null, null,
-                                                     printGrpLevel);
-                            root.add(firstLevel);
-                            List<ConfiguratorNodePOJO> childList =
-                                (List<ConfiguratorNodePOJO>)pair.getValue();
-                            for (ConfiguratorNodePOJO node : childList) {
-                                NodeCategory secondLevel =
-                                    new NodeCategory(category,
-                                                     node.getNodeName(),
-                                                     node.getNodeDescription(),
-                                                     node.getNodeQty(),
-                                                     node.getNodeValue(),
-                                                     node.getUnitPrice(),
-                                                     node.getExtendedPrice(),
-                                                     node.getNodeColor(),
-                                                     node.getPrintGroupLevel());
-                                firstLevel.addNodes(secondLevel);
+                            distinctList = removeDuplicatesFromList(catList);
+                            for (String distinctCategory : distinctList) {
+                                List<ConfiguratorNodePOJO> temp =
+                                    new ArrayList<ConfiguratorNodePOJO>();
+                                for (ConfiguratorNodePOJO node :
+                                     allNodesList) {
+                                    if (distinctCategory != null &&
+                                        distinctCategory.equalsIgnoreCase(node.getNodeCategory() +
+                                                                          "-" +
+                                                                          node.getPrintGroupLevel())) {
+                                        temp.add(node);
+                                    }
+                                }
+                                allNodesByCategoriesMap.put(distinctCategory,
+                                                            temp);
                             }
+                            root = new ArrayList<NodeCategory>();
+                            Iterator it =
+                                allNodesByCategoriesMap.entrySet().iterator();
+                            NodeCategory firstLevel = null;
+                            while (it.hasNext()) {
+                                Map.Entry pair = (Map.Entry)it.next();
+                                String Key = (String)pair.getKey();
+                                System.out.println("Key " + Key);
+                                String[] arr = Key.split("-");
+                                String category = arr[0];
+                                String printGrpLevel = arr[1];
+                                firstLevel =
+                                        new NodeCategory(category, null, null,
+                                                         null, null, null,
+                                                         null, null,
+                                                         printGrpLevel);
+                                root.add(firstLevel);
+                                List<ConfiguratorNodePOJO> childList =
+                                    (List<ConfiguratorNodePOJO>)pair.getValue();
+                                for (ConfiguratorNodePOJO node : childList) {
+                                    NodeCategory secondLevel =
+                                        new NodeCategory(category,
+                                                         node.getNodeName(),
+                                                         node.getNodeDescription(),
+                                                         node.getNodeQty(),
+                                                         node.getNodeValue(),
+                                                         node.getUnitPrice(),
+                                                         node.getExtendedPrice(),
+                                                         node.getNodeColor(),
+                                                         node.getPrintGroupLevel());
+                                    firstLevel.addNodes(secondLevel);
+                                }
 
-                        }
-                        //Trying to sort root
+                            }
+                            //Trying to sort root
 
-                        NodeComparator comparator = new NodeComparator();
-                        Collections.sort(root, comparator);
+                            NodeComparator comparator = new NodeComparator();
+                            Collections.sort(root, comparator);
 
-                        categroryTreeLineTwo =
-                                new ChildPropertyTreeModel(root, "childNodes");
+                            categroryTreeLineTwo =
+                                    new ChildPropertyTreeModel(root,
+                                                               "childNodes");
                         }
 
                     } else {

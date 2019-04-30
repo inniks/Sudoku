@@ -47,42 +47,42 @@
                         <af:panelGridLayout id="pgl15k">
                           <af:gridRow marginTop="5px" height="auto" id="gr2">
                             <af:gridCell marginStart="5px" width="15%" id="gc9"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'
                                          rendered="true">
                               <af:outputText value="#{node.nodeName}" id="ot1"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="25%" id="gc4"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{node.nodeDescription}"
                                              id="ot2" truncateAt="65"
                                              shortDesc="#{node.nodeDescription}"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" marginEnd="5px"
                                          width="14%" id="gc5"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:spacer width="150" height="10" id="s4"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc3"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{node.nodeQty}" id="ot3"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc8"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText id="ot4" value="#{node.uom}"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc11"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{node.unitPrice}"
                                              id="ot5"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc6"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{node.extendedPrice}"
                                              id="ot6"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%"
                                          id="gc6_1"
-                                         inlineStyle='color:#{node.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <!--<af:outputText value="#{node.extendedPrice}" id="ot6_1"/>-->
                             </af:gridCell>
                           </af:gridRow>
@@ -105,44 +105,44 @@
                         <af:panelGridLayout id="pgl15ik">
                           <af:gridRow marginTop="5px" height="auto" id="gr12">
                             <af:gridCell marginStart="5px" width="15%" id="gc19"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{nodeL2.nodeName}"
                                              id="ot11"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="25%" id="gc14"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{nodeL2.nodeDescription}"
                                              id="o1t2" truncateAt="65"
                                              shortDesc="#{nodeL2.nodeDescription}"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" marginEnd="5px"
                                          width="14%" id="gc15"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:spacer width="150" height="10" id="sq4"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc13"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{nodeL2.nodeQty}"
                                              id="o1t3"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gc18"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{node.nodeColor eq "header" ? "Bolder" : null}; font-size:#{node.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText id="o1t4" value="#{nodeL2.uom}"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%"
                                          id="gcd11"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{nodeL2.unitPrice}"
                                              id="oqt5"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%" id="gcq6"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <af:outputText value="#{nodeL2.extendedPrice}"
                                              id="t116"/>
                             </af:gridCell>
                             <af:gridCell marginStart="5px" width="14%"
                                          id="gc16_1"
-                                         inlineStyle='color:#{nodeL2.nodeColor eq "RED" ? "Red" : null}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
+                                         inlineStyle='color:#{node.nodeColor}; font-weight:#{nodeL2.nodeColor eq "header" ? "Bolder" : null}; font-size:#{nodeL2.nodeColor eq "header" ? "small" : null};'>
                               <!--<af:outputText value="#{node.extendedPrice}" id="ot6_1"/>-->
                             </af:gridCell>
                           </af:gridRow>
