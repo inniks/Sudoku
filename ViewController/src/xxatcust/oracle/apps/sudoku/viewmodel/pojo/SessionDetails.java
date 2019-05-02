@@ -28,7 +28,9 @@ public class SessionDetails {
     boolean updateQuote = false;
     boolean duplicateQuote = false;
     boolean createNewQuote = false;
-
+    String sourceQuoteNumber;
+    String targetQuoteNumber;
+    
     public SessionDetails() {
         super();
     }
@@ -219,5 +221,21 @@ public class SessionDetails {
 
     public HashMap<String, String> getCategoryToXMLTagMappings() {
         return categoryToXMLTagMappings;
+    }
+
+    public void setSourceQuoteNumber(String sourceQuoteNumber) {
+        this.sourceQuoteNumber = sourceQuoteNumber;
+    }
+
+    public String getSourceQuoteNumber() {
+        return sourceQuoteNumber;
+    }
+
+    public void setTargetQuoteNumber(String targetQuoteNumber) {
+        this.targetQuoteNumber = targetQuoteNumber;
+    }
+
+    public String getTargetQuoteNumber() {
+        return targetQuoteNumber;
     }
 }
